@@ -1,0 +1,17 @@
+role:
+  statements:  # IAM role statements so that services can be accessed in the AWS account
+    - Effect: Allow
+      Resource: '*'
+      Action:
+        # READ ONLY
+        - s3:Get*
+        - s3:List*
+        - s3-object-lambda:Get*
+        - s3-object-lambda:List*
+        # NON-READ
+        - s3:PutObject
+        - s3:CreateBucket
+
+        # READ ONLY
+        - ssm:Get*
+        - ssm:Describe*

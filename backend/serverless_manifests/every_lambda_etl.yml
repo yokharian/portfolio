@@ -1,0 +1,14 @@
+StackOverflowEtl:
+  handler: extractors.stack_overflow_etl.handler
+  layers:
+    - Ref: PythonRequirementsLambdaLayer
+    - ${self:custom.lambda_layers.selfManaged.SlimPanda}
+  events:
+    - schedule: rate(1 day)
+
+GoogleTrendsEtl:
+  handler: extractors.google_trends_etl.handler
+  layers:
+    - Ref: PythonRequirementsLambdaLayer
+  events:
+    - schedule: rate(1 day)

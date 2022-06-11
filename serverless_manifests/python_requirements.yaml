@@ -1,0 +1,34 @@
+pythonBin: python3
+usePoetry: true
+layer: true
+slim: true
+strip: false # https://stackoverflow.com/q/66845303/
+slimPatterns:
+  - '**/*.egg-info*'
+  - '**/*.png'
+  - '**/__pycache__/*'
+  - '**/*.yml'
+  - '**/*.md'
+  - '**/*.csv'
+useDownloadCache: false
+useStaticCache: false
+pipCmdExtraArgs:
+  - --compile
+  - --no-deps
+noDeploy:
+  - botocore
+  - pandas
+  - numpy
+  - boto3
+  - numpy.libs
+  - psycopg2
+  - psycopg2-binary
+  - fastapi
+  - pydantic
+  - dash
+  - dash_bootstrap_components
+  - dash_core_components
+  - dash_html_components
+  - dash_table
+  - flask
+  - flask_compress
