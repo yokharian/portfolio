@@ -32,11 +32,6 @@ layers:
       - python3.8
       - python3.9
     path: "pydantic/lib"
-  Dash:
-    compatibleRuntimes:
-      - python3.8
-      - python3.9
-    path: "dash/lib"
   FastApi:
     compatibleRuntimes:
       - python3.8
@@ -53,8 +48,6 @@ resources:
       UpdateReplacePolicy: Retain
     PydanticLambdaLayer:
       UpdateReplacePolicy: Retain
-    DashLambdaLayer:
-      UpdateReplacePolicy: Retain
     FastApiLambdaLayer:
       UpdateReplacePolicy: Retain
 
@@ -70,11 +63,6 @@ resources:
         Ref: PydanticLambdaLayer
       Export:
         Name: PydanticLambdaLayer
-    DashLayerExport:
-      Value:
-        Ref: DashLambdaLayer
-      Export:
-        Name: DashLambdaLayer
     FastApiLayerExport:
       Value:
         Ref: FastApiLambdaLayer
