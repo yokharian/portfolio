@@ -25,7 +25,6 @@ custom:
     selfManaged:
       SlimPanda: arn:aws:lambda:us-east-1:${self:custom.ownLayersAcc}:layer:SlimPanda:6
       FastApi: arn:aws:lambda:us-east-1:${self:custom.ownLayersAcc}:layer:FastApi:4
-      Dash: arn:aws:lambda:us-east-1:${self:custom.ownLayersAcc}:layer:Dash:7
       Pydantic: arn:aws:lambda:us-east-1:${self:custom.ownLayersAcc}:layer:Pydantic:4
 
   wsgi:
@@ -42,7 +41,6 @@ functions:
     memorySize: 256
     layers:
       - Ref: PythonRequirementsLambdaLayer
-      - ${self:custom.lambdaLayers.selfManaged.Dash}
     events:
       - httpApi: '*'
 
