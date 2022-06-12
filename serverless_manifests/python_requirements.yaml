@@ -1,6 +1,9 @@
+# https://github.com/serverless/serverless-python-requirements/issues/663#issuecomment-1022627264
+dockerImage: lambci/lambda:build-python3.8
 # https://stackoverflow.com/q/66845303/
+dockerizePip: true
 slim: true
-strip: true
+strip: false
 
 pythonBin: python3
 usePoetry: true
@@ -17,7 +20,6 @@ useDownloadCache: false
 useStaticCache: false
 pipCmdExtraArgs:
   - --compile
-  - --no-deps
 noDeploy:
   - botocore
   - pandas
@@ -28,12 +30,3 @@ noDeploy:
   - psycopg2-binary
   - fastapi
   - pydantic
-  - dash
-  - dash_bootstrap_components
-  - dash_core_components
-  - dash_html_components
-  - dash_table
-  - plotly
-  - jupyterlab_plotly
-  - flask
-  - flask_compress
