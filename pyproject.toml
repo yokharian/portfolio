@@ -12,8 +12,8 @@ pandas = "^1.4.2"
 pytrends = "^4.8.0"
 # region pinned libraries version because of https://stackoverflow.com/q/67553537
 #Flask = "^1.1.4"
-Werkzeug = "1.0.1"
-MarkupSafe = "2.0.1"
+#Werkzeug = "1.0.1"
+#MarkupSafe = "2.0.1"
 # endregion
 openpyxl = "^3.0.10"
 fsspec = "^2022.5.0"
@@ -32,6 +32,9 @@ setuptools = "^62.3.4"
 Brotli = "^1.0.9"
 Jinja2 = "^3.1.2"
 importlib-metadata = "^4.11.4"
+Flask = "^2.1.2"
+Werkzeug = "^2.1.2"
+MarkupSafe = "^2.1.1"
 
 [tool.poetry.dev-dependencies]
 boto3 = "^1.24.6"
