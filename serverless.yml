@@ -33,7 +33,7 @@ custom:
     packRequirements: false
 
   pythonRequirements:
-    ${file(serverless_manifests/python_requirements.yaml)}
+    ${file(serverless_manifests/python_requirements.yml)}
 
 functions:
   webPage:

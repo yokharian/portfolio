@@ -20,6 +20,7 @@ useDownloadCache: false
 useStaticCache: false
 pipCmdExtraArgs:
   - --compile
+  - --no-deps
 noDeploy:
   - botocore
   - pandas
