@@ -1,0 +1,56 @@
+# WARNING THIS IS NOT INTENDED TO BE DEPLOYED TO PRODUCTION, IT IS ONLY FOR TESTING
+# YOU CAN GENERATE layer.zip FROM THIS FILE, WITH THE COMMAND
+# ---- AT /lambda_layers/ ROOT DIRECTORY ----
+# bash build.sh dash/Dockerfile
+# AND THEN DEPLOY serverless.yml
+service: dash-lambda-layer
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  memorySize: 512 # Overwrite the default memory size. Default is 1024
+  runtime: python3.9
+  stage: prod
+  region: us-east-1
+
+custom:
+  pythonRequirements:
+
+    # https://stackoverflow.com/q/66845303/
+    dockerizePip: true
+    dockerImage: lambci/lambda:build-python3.8
+    slim: true
+    strip: true
+
+    pythonBin: python3
+    usePoetry: true
+    layer: true
+    useDownloadCache: false
+    useStaticCache: false
+    pipCmdExtraArgs:
+      - --compile
+      - --no-deps
+
+plugins:
+  - serverless-python-requirements
+  - serverless-plugin-optimize
+
+package:
+  excludeDevDependencies: true
+  exclude:
+    - '**/node_modules/**'
+    - '__pycache__/**'
+    - '.serverless/**'
+    - 'lambda_layers/**'
+    - '.idea/**'
+    - 'venv/**'
+    - '*.zip'
+    - 'backend/**'
+    - 'serverless_manifests/**'
+    - '*.json'
+    - '*.toml'
+    - '*.lock'
+    - '*.md'
+    - 'LICENSE'
+    - '**/__pycache__/**'
