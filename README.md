@@ -2,7 +2,7 @@
 
 [![Seed Status](https://api.seed.run/yokharian0/soysofia-portfolio/stages/prod/build_badge)](https://console.seed.run/yokharian0/soysofia-portfolio)
 
-![Alt text](./webapp/assets/arquitectura.svg)
+<p align="center"><img src="./webapp/assets/arquitectura.svg"/></p>
 
 <!--
 title: 'Serverless Framework Python Flask API on AWS'
