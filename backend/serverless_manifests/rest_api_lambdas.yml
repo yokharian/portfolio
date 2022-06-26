@@ -1,44 +1,18 @@
 apiRestProxy:
   handler: app.handler
-  cors: true
   layers:
-    - ${self:custom.lambda_layers.selfManaged.SlimPanda}
-    - ${self:custom.lambda_layers.selfManaged.Fastapi}
-    - ${self:custom.lambda_layers.psycopg2}
+    - Ref: PythonRequirementsLambdaLayer
+    - ${self:custom.lambdaLayers.selfManaged.SlimPanda}
+    - ${self:custom.lambdaLayers.selfManaged.FastApi}
+    - ${self:custom.lambdaLayers.psycopg2}
   events:
     - http:
         method: ANY
-        path: /api/{proxy+}
-        authorizer: aws_iam#
+        path: /v1/{proxy+}
+        authorizer: aws_iam
         cors:
           origin: '*'
           headers: '*'
           allowCredentials: true
-apiRestSwagger:
-  handler: app.handler
-  layers:
-    - ${self:custom.lambda_layers.selfManaged.SlimPanda}
-    - ${self:custom.lambda_layers.selfManaged.Fastapi}
-    - ${self:custom.lambda_layers.psycopg2}
-  events:
-    - http:
-        method: ANY
-        path: /api/
-        cors:
-          origin: '*'
-          headers: '*'
-          allowCredentials: true
-    - http:
-        method: ANY
-        path: /api/openapi.json
-        cors:
-          origin: '*'
-          headers: '*'
-          allowCredentials: true
-    - http:
-        method: ANY
-        path: /api/static/{path+}
-        cors:
-          origin: '*'
-          headers: '*'
-          allowCredentials: true
+    - http: ANY /
+    - http: "ANY {path+}"
