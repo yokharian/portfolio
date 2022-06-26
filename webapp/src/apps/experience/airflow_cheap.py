@@ -1,6 +1,6 @@
 from dash import html
 import dash_bootstrap_components as dbc
-from app import app
+from ...core.app import app
 
 layout = html.Div(
     [
@@ -10,7 +10,8 @@ layout = html.Div(
                     [
                         dbc.Col(
                             html.H1(
-                                "Diagrama de la pagina web",
+                                "Self-managed airflow infrastructure cheaper "
+                                "than aws mwaa service",
                                 className="text-center",
                             ),
                             className="mb-5 mt-5",
@@ -21,7 +22,7 @@ layout = html.Div(
                     [
                         dbc.Col(
                             html.Img(
-                                src=app.get_asset_url("arquitectura.svg"),
+                                src=app.get_asset_url("airflow_cheap.svg"),
                                 style={"height": "100%", "width": "100%"},
                             ),
                             style={"textAlign": "center"},
@@ -29,25 +30,8 @@ layout = html.Div(
                     ],
                 ),
                 dbc.Row([dbc.Col(html.Br())]),
-                dbc.Row(
-                    [
-                        dbc.Col(
-                            html.A(
-                                children=html.H2(
-                                    "Repositorio de GitHub",
-                                    className="text-center",
-                                ),
-                                className="mb-5 mt-5",
-                                href="https://github.com/yokharian/soysofia-portfolio",
-                            )
-                        )
-                    ]
-                ),
                 dbc.Row([dbc.Col(html.Br())]),
-                dbc.Row([dbc.Col(html.Br())]),
-                dbc.Row([dbc.Col(html.Br())]),
-                dbc.Row([dbc.Col(html.Br())]),
-                dbc.Row([dbc.Col(html.Br())]),
+                dbc.Row([dbc.Col(html.Br())])
             ]
         )
     ]

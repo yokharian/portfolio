@@ -1,17 +1,14 @@
-from datetime import datetime, timedelta, date
-from typing import List
+from datetime import datetime
+from functools import reduce
+import locale
 
-import pytrends
 from dateutil.relativedelta import relativedelta
 import pandas as pd
 import pytz
 from pytrends.request import TrendReq
-from pytrends import dailydata
 import plotly.graph_objects as go
-from functools import reduce
+from datetime import timezone
 from plotly.subplots import make_subplots
-import plotly.express as px
-import locale
 from utils import chunker, parse_datetimes
 
 locale.setlocale(locale.LC_TIME, "es_MX.UTF-8")
@@ -35,7 +32,7 @@ ONE_DAY = 60 * 60 * 24
 RELATIVE_TIME_IN_SECONDS = ONE_DAY * 7
 
 if __name__ == "__main__":
-    NOW: datetime = datetime.utcnow().replace(tzinfo=pytz.UTC)
+    NOW: datetime = datetime.now(timezone.utc)
     dates = parse_datetimes(start=NOW - relativedelta(weeks=1), stop=NOW)
     for chunk in chunker(lista_palabras, 4):
         keywords = chunk + ["python"]

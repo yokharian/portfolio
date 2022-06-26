@@ -1,7 +1,5 @@
-import ssl
 import dash_bootstrap_components as dbc
-from dash import dcc, html, Output, Input
-from app import app
+from dash import dcc, html
 
 
 def blog_page():
