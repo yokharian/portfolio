@@ -1,4 +1,6 @@
 pythonBin: python3
+# https://stackoverflow.com/q/66845303/
+dockerizePip: true
 usePoetry: true
 layer: true
 slim: true
@@ -25,11 +27,3 @@ noDeploy:
   - psycopg2-binary
   - fastapi
   - pydantic
-  - dash
-  - dash_bootstrap_components
-  - dash_core_components
-  - dash_html_components
-  - dash_table
-  - plotly
-  - flask
-  - flask_compress
