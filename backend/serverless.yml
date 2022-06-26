@@ -19,7 +19,7 @@ provider:
     maxPreviousDeploymentArtifacts: 3 # On every deployment the framework prunes the bucket to remove artifacts older than this limit. The default is 5
 
 custom:
-  ownLayersAcc: ${param:aws_account, "${AWS::AccountId}" }
+  ownLayersAcc: ${param:aws_account, aws:accountId }
   lambdaLayers:
     psycopg2: arn:aws:lambda:us-east-1:898466741470:layer:psycopg2-py38:2
     selfManaged:
