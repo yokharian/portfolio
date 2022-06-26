@@ -1,8 +1,8 @@
 from dash.dependencies import Input, Output
 
 from src.core.app import app, server
-from src.apps import know_this_web_app, contact, home,about_me
-from src.apps.experience import airflow_cheap, alb, cheap_bi
+from src.apps import contact, home,about_me
+from src.apps.experience import know_this_web_app,airflow_cheap, alb, cheap_bi
 
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])

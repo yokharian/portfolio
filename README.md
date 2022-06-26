@@ -1,8 +1,8 @@
-# Soy Sofia (Personal Portfolio)
+# Sofia (Personal) Portfolio
 
 [![Seed Status](https://api.seed.run/yokharian0/soysofia-portfolio/stages/prod/build_badge)](https://console.seed.run/yokharian0/soysofia-portfolio)
 
-<p align="center"><img src="./webapp/assets/arquitectura.svg"/></p>
+<p align="center"><img src="https://yokharian-portfolio-public.s3.amazonaws.com/arquitectura.svg"/></p>
 
 <!--
 title: 'Serverless Framework Python Flask API on AWS'

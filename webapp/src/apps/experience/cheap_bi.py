@@ -1,6 +1,7 @@
 from dash import html
 import dash_bootstrap_components as dbc
 from ...core.app import app
+from ...core.config import CDN_URL
 
 layout = html.Div(
     [
@@ -22,7 +23,7 @@ layout = html.Div(
                     [
                         dbc.Col(
                             html.Img(
-                                src=app.get_asset_url("cheap_data.svg"),
+                                src=CDN_URL+"cheap_data.svg",
                                 style={"height": "100%", "width": "100%"},
                             ),
                             style={"textAlign": "center"},

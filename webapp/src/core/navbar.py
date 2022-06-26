@@ -6,6 +6,9 @@ from .app import app
 
 # building the navigation bar
 # https://github.com/facultyai/dash-bootstrap-components/blob/master/examples/advanced-component-usage/Navbars.py
+
+from .config import CDN_URL
+
 dropdown = dbc.DropdownMenu(
     children=[
         dbc.DropdownMenuItem("Cheap Airflow", href="/airflow_cheap"),
@@ -14,6 +17,11 @@ dropdown = dbc.DropdownMenu(
         ),
         dbc.DropdownMenuItem(
             "Cheap Bi Infrastructure", href="/cheap_bi_infrastructure"
+        ),
+
+        dbc.DropdownMenuItem(
+            "This web app", href="/meet_web_app"
+
         ),
     ],
     nav=True,
@@ -44,14 +52,9 @@ navbar = dbc.Navbar(
                 dbc.Nav(
                     [
                         dbc.NavItem(dbc.NavLink("Contact", href="/contacto")),
-                        dbc.NavItem(
-                            dbc.NavLink(
-                                "Know this web app", href="/meet_web_app"
-                            )
-                        ),
                         html.A(
                             dbc.NavItem(dbc.NavLink("Curriculum")),
-                            href="https://yokharian-portfolio-public.s3.amazonaws.com/cv.pdf",
+                            href=f"{CDN_URL}cv.pdf",
                         ),
                         dropdown,
                         dbc.NavItem(

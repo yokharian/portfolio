@@ -2,6 +2,7 @@ from dash import html
 import dash_bootstrap_components as dbc
 
 from ..core import app
+from ..core.config import CDN_URL
 
 layout = html.Div(
     [
@@ -49,9 +50,7 @@ layout = html.Div(
                             dbc.Card(
                                 children=[
                                     html.Img(
-                                        src=app.get_asset_url(
-                                            "Paiton_monocroma.png"
-                                        ),
+                                        src=CDN_URL + "Paiton_monocroma_light.png",
                                         style={
                                             "height": "100%",
                                             "width": "100%",
@@ -65,15 +64,14 @@ layout = html.Div(
                             width=4,
                             className="mb-4",
                         ),
-                        dbc.Col(html.Img(
-                                        src=app.get_asset_url(
-                                            "hearth.png"
-                                        ),
-                                        style={
-                                            "height": "100%",
-                                            "width": "100%",
-                                        },
-                                    ),
+                        dbc.Col(
+                            html.Img(
+                                src=CDN_URL+"hearth.png",
+                                style={
+                                    "height": "100%",
+                                    "width": "100%",
+                                },
+                            ),
                             width=4,
                             className="mb-4",
                         ),
@@ -97,7 +95,7 @@ layout = html.Div(
                         ),
                     ],
                     className="mb-5",
-                )
+                ),
             ]
         )
     ]
