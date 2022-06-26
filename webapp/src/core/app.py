@@ -16,6 +16,5 @@ app = dash.Dash(
     serve_locally=False,
     title="Sofia Portfolio",
     assets_folder="../assets",
-    assets_ignore=r".*\.js"
 )
 app.config.suppress_callback_exceptions = True
