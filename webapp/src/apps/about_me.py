@@ -1,7 +1,6 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from ..core import app
 from ..core.config import CDN_URL
 
 layout = html.Div(
@@ -50,7 +49,8 @@ layout = html.Div(
                             dbc.Card(
                                 children=[
                                     html.Img(
-                                        src=CDN_URL + "Paiton_monocroma_light.png",
+                                        src=CDN_URL
+                                        + "Paiton_monocroma_light.png",
                                         style={
                                             "height": "100%",
                                             "width": "100%",
@@ -66,7 +66,7 @@ layout = html.Div(
                         ),
                         dbc.Col(
                             html.Img(
-                                src=CDN_URL+"hearth.png",
+                                src=CDN_URL + "hearth.png",
                                 style={
                                     "height": "100%",
                                     "width": "100%",
@@ -78,13 +78,16 @@ layout = html.Div(
                         dbc.Col(
                             dbc.Card(
                                 children=[
-                                    html.Img(
-                                        src="https://d1.awsstatic.com/training-and-certification/certification-badges/AWS-Certified-Solutions-Architect-Associate_badge.3419559c682629072f1eb968d59dea0741772c0f.png",
-                                        style={
-                                            "height": "100%",
-                                            "width": "100%",
-                                        },
-                                    ),
+                                    html.A(
+                                        html.Img(
+                                            src="https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png",
+                                            style={
+                                                "height": "100%",
+                                                "width": "100%",
+                                            },
+                                        ),
+                                        href="https://www.credly.com/badges/e4b07a5b-596f-4a8e-bce5-9cdafd633646/embedded",
+                                    )
                                 ],
                                 body=True,
                                 color="dark",
@@ -97,6 +100,6 @@ layout = html.Div(
                     className="mb-5",
                 ),
             ]
-        )
+        ),
     ]
 )
