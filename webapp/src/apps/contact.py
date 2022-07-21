@@ -1,6 +1,7 @@
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
 from ..core.app import app
+from ..core.utils import send_email
 
 email_input = dbc.Row(
     [
@@ -101,6 +102,7 @@ layout = html.Div(
 )
 def submit_message(n, email, name, message):
     if n > 0:
+        send_email(email,name,message)
         return [html.P("Email sent !")]
     else:
         return [
