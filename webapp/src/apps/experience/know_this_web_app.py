@@ -37,7 +37,7 @@ layout = html.Div(
                         dbc.Col(
                             html.A(
                                 children=html.H2(
-                                    "GitHub Repositoryww",
+                                    "GitHub Repository",
                                     className="text-center",
                                 ),
                                 className="mb-5 mt-5",
