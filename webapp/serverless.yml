@@ -54,6 +54,7 @@ custom:
     autoDomain: false
 
 plugins:
+  - serverless-better-credentials # as the first plugin
   - serverless-wsgi
   - serverless-python-requirements
   - serverless-deployment-bucket
