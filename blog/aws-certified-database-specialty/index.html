@@ -127,32 +127,23 @@ font-size: inherit;
 </clipPath>
 </defs>
 </svg>
-</div></a></div></div></div></div></div><div class="w-layout-grid uui-blogspot02_content-by-language"><div class="uui-blogpost02_content-english"><div class="uui-text-rich-text w-richtext"><p>Good morning Sofia</p><p>We would like to thank you for your participation in the validation project of the Black Belt Database Track 2022.</p><p>The result of the validation has been: approved.</p><p>Feedback:</p><ul role="list"><li>It is important to demonstrate in a more structured and intentional way the benefits from the cost point of view (e.g.: on-premise or managed database vs serverless database)</li><li>Good presentation of the database concepts (e.g.: structures, how to use each of the services)</li><li>Good clarity in the access patterns</li><li>Very good movement of data from DynamoDB to S3, through DynamoDB Streams, to consider analytics needs.</li><li>We recommend that you manage your time better for future presentations</li></ul></div></div><div class="uui-blogpost02_content"><div class="uui-text-rich-text w-richtext"><p>Buenos días Sofia</p><p>Queremos agradecer su participación en el proyecto de validación del Black Belt Database Track 2022.</p><p>El resultado de la validación ha sido: aprobado.</p><p>Retroalimentación:</p><ul role="list"><li>Es importante demostrar de una forma más estructurada e intencional los beneficios desde el punto de vista de costos (ej: on-premise o managed database vs serverless database)</li><li>Buena presentación de los conceptos de base de datos (p. ej: estructuras, como usar cada uno de los servicios)</li><li>Buena claridad en los patrones de acceso</li><li>Muy bueno el movimiento de datos de DynamoDB a S3, a través de DynamoDB Streams, para contemplar necesidades de analítica.</li><li>Te recomendamos manejar mejor el tiempo para futuras presentaciones</li></ul></div></div></div><div class="w-condition-invisible"><div class="w-layout-vflex uui-blogspot02_content-diagram"><div class="lucid-chart-wrapper-2"><div class="lucid-chart-wrapper"><div by-lucid-chart="iframe" class="lucid-chart-wrapper w-embed" iframe_url=""><iframe allowfullscreen="" class="responsive-iframe" frameborder="0" src="/" style="left: 0; top: 0; width: 100%; height: 100%; border-radius: 1px; pointer-events: auto; background-color: white; position: relative;">
+</div></a></div></div></div></div></div><div class="w-layout-grid uui-blogspot02_content-by-language"><div class="uui-blogpost02_content-english"><div class="uui-text-rich-text w-richtext"><p>Good morning Sofia</p><p>We would like to thank you for your participation in the validation project of the Black Belt Database Track 2022.</p><p>The result of the validation has been: approved.</p><p>Feedback:</p><ul role="list"><li>It is important to demonstrate in a more structured and intentional way the benefits from the cost point of view (e.g.: on-premise or managed database vs serverless database)</li><li>Good presentation of the database concepts (e.g.: structures, how to use each of the services)</li><li>Good clarity in the access patterns</li><li>Very good movement of data from DynamoDB to S3, through DynamoDB Streams, to consider analytics needs.</li><li>We recommend that you manage your time better for future presentations</li></ul></div></div><div class="uui-blogpost02_content"><div class="uui-text-rich-text w-richtext"><p>Buenos días Sofia</p><p>Queremos agradecer su participación en el proyecto de validación del Black Belt Database Track 2022.</p><p>El resultado de la validación ha sido: aprobado.</p><p>Retroalimentación:</p><ul role="list"><li>Es importante demostrar de una forma más estructurada e intencional los beneficios desde el punto de vista de costos (ej: on-premise o managed database vs serverless database)</li><li>Buena presentación de los conceptos de base de datos (p. ej: estructuras, como usar cada uno de los servicios)</li><li>Buena claridad en los patrones de acceso</li><li>Muy bueno el movimiento de datos de DynamoDB a S3, a través de DynamoDB Streams, para contemplar necesidades de analítica.</li><li>Te recomendamos manejar mejor el tiempo para futuras presentaciones</li></ul></div></div></div><div class="w-condition-invisible"><div class="w-layout-vflex uui-blogspot02_content-diagram"><div class="lucid-chart-wrapper-2"><div class="lucid-chart-wrapper"><div class="lucid-chart-wrapper w-embed" iframe_url=""><iframe allowfullscreen="" frameborder="0" src="/404" style="left: 0; top: 0; width: 100%; height: 100%; border-radius: 1px; pointer-events: auto; background-color: white; position: relative;">
 </iframe>
 
 <script>
-    function setIframeSrcUrl(srcAttribute) {
-        function obtainDomObjects() {
-            const scriptTag = document.getElementsByTagName('script');
-            const thisScript = scriptTag[scriptTag.length - 1];
-            const codeEmbedObject = thisScript.parentNode;
-            const IFrameObject = codeEmbedObject.querySelector('.responsive-iframe');
-            return {
-                codeEmbedObject,
-                IFrameObject
-            };
-        }
-
-        const {
-            codeEmbedObject,
-            IFrameObject
-        } = obtainDomObjects();
-
-        // Get webflow custom attribute from this "Code Embed" object
-        const iframeSrc = codeEmbedObject.getAttribute(srcAttribute);
-        IFrameObject.setAttribute("src", iframeSrc);
-    }
-    setIframeSrcUrl(srcAttribute="iframe_url")
+document.addEventListener('DOMContentLoaded', () => {
+    // Get the iframe wrapper with the lucidchart url
+    document.querySelectorAll('div[by-lucidchart="iframe"]').forEach(div => {
+    const iframeUrl = div.getAttribute('iframe_url');
+    if (iframeUrl) {
+          // Get the inner iframe and refresh its src
+          document.querySelectorAll('iframe[iframe_url]').forEach(iframe => {
+            iframe.src = iframe.getAttribute('iframe_url');
+            console.log('Iframe src updated to :', iframe.src);
+          })
+      }
+    })
+});
 </script></div></div></div><div class="uui-button-row"><div class="uui-career10_label-wrapper"><a class="button-secondary w-inline-block" data-w-id="eced377f-e42b-f3fa-b2ed-60f75bfff0f9" href="#"><div>Fullscreen Diagram</div></a><a class="button-secondary w-inline-block" data-w-id="fb674329-b18b-063a-3f18-57272184fd2c" href="#" id="lucid-diagram-link-button"><div>Diagram image</div><div class="lucid-chart-code-embed w-embed" id-to-replace-href="lucid-diagram-link-button" lucidchart_url=""><script>
     function generateLinkToFullLucidChartDiagram() {
         function getWebflowCodeEmbedContainer() {
