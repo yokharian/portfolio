@@ -141,8 +141,8 @@ if (iframeUrl) {
   }
 })
 </script>
-</div></div><div class="uui-button-row"><div class="uui-career10_label-wrapper"><a class="button-secondary w-inline-block" data-w-id="eced377f-e42b-f3fa-b2ed-60f75bfff0f9" href="https://lucid.app/documents/embedded/94970f86-7e06-49f3-a315-5112b722191f" target="_blank"><div>Fullscreen Diagram</div></a><a class="button-secondary w-inline-block" data-w-id="3d312f0b-1a81-40e6-543b-02e5f6a95d21" href="https://lucid.app/documents/embedded/94970f86-7e06-49f3-a315-5112b722191f" id="lucid-diagram-link-button" lucidchart_button_url="https://lucid.app/documents/embedded/94970f86-7e06-49f3-a315-5112b722191f"><div>Diagram image</div><div class="lucid-chart-code-embed w-embed"><script>
-const URL_TEMPLATE = "https://lucid.app/documents/thumb/{uuid}/0/Some(14300)/NULL/2000"
+</div></div><div class="uui-button-row"><div class="uui-career10_label-wrapper"><a class="button-secondary w-inline-block" data-w-id="eced377f-e42b-f3fa-b2ed-60f75bfff0f9" href="https://lucid.app/documents/embedded/94970f86-7e06-49f3-a315-5112b722191f" target="_blank"><div>Fullscreen Diagram</div></a><a class="button-secondary w-inline-block" data-w-id="3d312f0b-1a81-40e6-543b-02e5f6a95d21" href="https://lucid.app/documents/thumb/94970f86-7e06-49f3-a315-5112b722191f/0/Some(14300)/NULL/2000" id="lucid-diagram-link-button" lucidchart_button_url="https://lucid.app/documents/embedded/94970f86-7e06-49f3-a315-5112b722191f"><div>Diagram image</div><div class="lucid-chart-code-embed w-embed"><script>
+const LUCID_DIAGRAM_URL = "https://lucid.app/documents/thumb/{uuid}/0/Some(14300)/NULL/2000"
 
 // get the button object and the lucidchart url
 document.querySelectorAll('a[lucidchart_button_url]').forEach(objectRef => {
@@ -153,12 +153,12 @@ const lucidChartUrl = objectRef.getAttribute('lucidchart_button_url');
     if (match) {
         const uuid = match[1];
         console.log("The Lucidchart diagram UUID is:", uuid);
-        objectRef.href = URL_TEMPLATE.replace("{uuid}", uuid);
+        const hrefUrl = LUCID_DIAGRAM_URL.replace("{uuid}", uuid)
+        objectRef.href = hrefUrl;
+        console.log('button href updated to :', hrefUrl);
     } else {
         console.error("Lucidchart UUID not found in", lucidChartUrl);
     }
-    objectRef.href = lucidChartUrl;
-    console.log('Iframe src updated to :', lucidChartUrl);
 })
 </script></div></a></div></div></div></div><div class="uui-blogpost02_content-bottom"><div class="uui-blogpost02_tag-list-wrapper"><div class="uui-blogpost02_tag-list"><div class="uui-text-size-medium-2">Technologies</div></div><div class="uui-blogpost02_tag-list"><div class="w-layout-hflex uui-blog04_badge" style="background-color:hsla(331, 83%, 49%, 0.3);border-color:hsla(331, 83%, 49%, 0.3)"><div bind="1dbf0df5-2312-a326-1581-bd9cd3e69894" class="badge-dot-2 w-embed" style="color:hsla(331, 83%, 49%, 0.3)"><svg fill="none" height="8" viewBox="0 0 8 8" width="8" xmlns="http://www.w3.org/2000/svg">
 <circle cx="4.00002" cy="4" fill="currentColor" r="3"></circle>
