@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  deploy-to-github-pages:
+  webflow-deployment:
     runs-on: ubuntu-latest
     steps:
 
