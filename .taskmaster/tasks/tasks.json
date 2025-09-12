@@ -22,8 +22,59 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create base.njk layout template",
+            "description": "Implement the main layout template that will serve as the foundation for all pages, including proper HTML5 structure and metadata.",
+            "dependencies": [],
+            "details": "Create src/_includes/layouts/base.njk with: 1) HTML5 doctype and structure, 2) <head> section with meta charset, viewport settings, title tag using {{ title }} variable with fallback, 3) link to /assets/styles.css for Tailwind, 4) lang attribute on <html> tag using {{ page.lang }} or site.defaultLanguage, 5) <body> with {% block content %}{% endblock %} for page-specific content.",
+            "status": "done",
+            "testStrategy": "Validate HTML structure using W3C validator. Test with different viewport sizes to verify responsive meta tag. Verify CSS is properly linked by checking styles are applied."
+          },
+          {
+            "id": 2,
+            "title": "Implement header partial with navigation",
+            "description": "Create a responsive header component with site title, primary CTA button, and language switcher UI.",
+            "dependencies": [],
+            "details": "Create src/_includes/partials/header.njk containing: 1) Site title 'Sofia Escobedo' as main heading, 2) Primary CTA button with text 'Agendar llamada de 30 min' linking to a Calendly URL (use {{ site.calendlyUrl }} from data file), 3) Basic navigation menu with responsive design, 4) Language switcher with EN/ES options (stub links for now, full functionality in Task 10).",
+            "status": "done",
+            "testStrategy": "Test header display at multiple viewport sizes. Verify CTA button links to correct Calendly URL. Check that language switcher options are visible."
+          },
+          {
+            "id": 3,
+            "title": "Implement footer partial with social links",
+            "description": "Create a footer component with social media links, contact information, and copyright notice.",
+            "dependencies": [],
+            "details": "Create src/_includes/partials/footer.njk containing: 1) Social media links to GitHub and LinkedIn using {{ site.githubUrl }} and {{ site.linkedinUrl }} from data files, 2) Calendly link using {{ site.calendlyUrl }}, 3) Email contact using mailto: with {{ site.email }}, 4) Copyright information with dynamic year using {% year = new Date().getFullYear() %} and site owner name.",
+            "status": "done",
+            "testStrategy": "Verify all links in footer point to correct URLs. Test mailto link functionality. Check that current year is displayed correctly in copyright notice."
+          },
+          {
+            "id": 4,
+            "title": "Create site data configuration files",
+            "description": "Set up data files to store site-wide configuration and variables used in layout components.",
+            "dependencies": [],
+            "details": "Create src/_data/site.json with the following properties: 1) title: 'Sofia Escobedo', 2) description: 'Python AWS Developer', 3) defaultLanguage: 'en', 4) githubUrl: 'https://github.com/yourusername' (placeholder), 5) linkedinUrl: 'https://linkedin.com/in/yourusername' (placeholder), 6) calendlyUrl: 'https://calendly.com/yourusername' (placeholder), 7) email: 'your.email@example.com' (placeholder).",
+            "status": "done",
+            "testStrategy": "Verify data file is valid JSON. Test that values are correctly accessed in templates."
+          },
+          {
+            "id": 5,
+            "title": "Wire layouts and verify build process",
+            "description": "Connect all layout components together, implement index page, and verify the build process works correctly.",
+            "dependencies": [
+              "2.1",
+              "2.2",
+              "2.3",
+              "2.4"
+            ],
+            "details": "1) Include header/footer in base.njk using {% include \"partials/header.njk\" %} and {% include \"partials/footer.njk\" %}, 2) Create src/index.njk that extends base.njk with {% extends \"layouts/base.njk\" %} and minimal content in {% block content %}, 3) Update package.json with build scripts if needed, 4) Run build process to generate _site directory, 5) Verify generated HTML contains all expected elements and correct structure.",
+            "status": "done",
+            "testStrategy": "Run build process and verify no errors. Check generated _site/index.html contains header, footer, and all links. Test page in browser to ensure layout displays correctly."
+          }
+        ]
       },
       {
         "id": 3,
@@ -225,7 +276,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-12T19:07:56.149Z",
+      "updated": "2025-09-12T19:52:03.782Z",
       "description": "Tasks for default context"
     }
   }
