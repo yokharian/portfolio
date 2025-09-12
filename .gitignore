@@ -267,3 +267,5 @@ dev-debug.log
 !tasks.json
 !.taskmaster/tasks/
 
+# 11ty build output
+_site/
