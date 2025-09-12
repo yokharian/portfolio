@@ -3,7 +3,30 @@ layout: base.njk
 title: Home
 ---
 
-<h1 class="text-2xl font-semibold mb-6">Latest Posts</h1>
+<section id="hero" class="mb-12" aria-labelledby="hero-title">
+  <div class="mx-auto max-w-6xl py-10 sm:py-16">
+    <div class="flex flex-col lg:flex-row items-center gap-8">
+      <div class="flex-1">
+        <h1 id="hero-title" class="text-4xl sm:text-5xl font-bold tracking-tight" data-anim="heading">
+          Python & AWS Solutions Architect
+        </h1>
+        <p class="mt-4 text-lg text-slate-600" data-anim="subheading">
+          I design, build, and scale data-intensive systems in the cloud.
+        </p>
+        <div class="mt-6" data-anim="cta">
+          <a href="/#projects" class="inline-block rounded-md bg-sky-600 px-5 py-3 text-white font-medium hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">View Projects</a>
+        </div>
+      </div>
+      <div class="flex-1 w-full max-w-sm lg:max-w-md">
+        <figure class="relative mx-auto">
+          <img src="/assets/images/profile.jpg" alt="Professional profile photo of Sofia" width="640" height="640" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square" data-anim="image">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h2 class="text-2xl font-semibold mb-6">Latest Posts</h2>
 
 <ul class="space-y-3">
   {% for post in collections.posts | reverse %}
