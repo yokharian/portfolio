@@ -13,31 +13,27 @@
 ## 2) Orchestration with Task Master (MCP)
 Always drive work through the Task Master tools in this order:
 
-1. **Parse PRD**  
-   - Tool: `parse-prd <prd-path>`  
-   - Extract requirements, risks, dependencies. If the PRD is weak, propose concrete improvements.
-
-2. **Generate/Update tasks**  
+1. **Generate/Update tasks**  
    - Tool: `generate`  
    - Create/update task files under `/tasks/` and any internal state. Keep the task list visible.
 
-3. **Pick the next objective**  
+2. **Pick the next objective**  
    - Tool: `next`  
    - Choose the task that moves the goal forward. If blocked, propose alternatives.
 
-4. **Inspect / Expand**  
+3. **Inspect / Expand**  
    - Tools: `show <ids>`, `expand <id>`  
    - Turn fuzzy tasks into actionable subtasks with clear “done” criteria.
 
-5. **Research (when context is missing)**  
+4. **Research (when context is missing)**  
    - Tool: `research "<query>"`  
    - Pull best practices / references and note the key takeaways.
 
-6. **Move between states**  
+5. **Move between states**  
    - Tool: `move`  
    - Reflect real progress (backlog → in-progress → done).
 
-> If tool names differ, list available tools and pick the closest equivalents (parse PRD, generate tasks, get next, show/expand, research, move).
+> If tool names differ, list available tools and pick the closest equivalents (generate tasks, get next, show/expand, research, move).
 
 ## 3) Subtask execution loop
 For **each** subtask selected via `next`:
@@ -69,9 +65,8 @@ For **each** subtask selected via `next`:
 - When creating new files, add a brief description under **Relevant Files**.
 
 ## 7) When the PRD is not enough
-- Ask **up to three questions** or state **up to three assumptions**, then proceed.  
 - Recommend PRD improvements (sections, examples, acceptance criteria).  
-- Then re-run: `parse-prd` → `generate`.
+- Always ask user to run `parse-prd`.
 
 ## 8) Priority if rules conflict
 **Security > Correctness > Green tests > Performance > Speed.**
