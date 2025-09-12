@@ -1,0 +1,19 @@
+---
+layout: base.njk
+title: Home
+---
+
+<h1 class="text-2xl font-semibold mb-6">Latest Posts</h1>
+
+<ul class="space-y-3">
+  {% for post in collections.posts | reverse %}
+    <li class="p-4 bg-white rounded-lg shadow-sm border">
+      <a href="{{ post.url }}" class="text-sky-700 hover:underline font-medium">
+        {{ post.data.title or post.fileSlug | capitalize }}
+      </a>
+      {% if post.date %}
+        <span class="ml-2 text-xs text-slate-500">({{ post.date | date("yyyy-LL-dd") }})</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

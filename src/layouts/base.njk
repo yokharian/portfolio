@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if title %}{{ title }} · {% endif %}{{ site.siteTitle }}</title>
+    <meta name="description" content="{{ description or site.defaultDescription }}" />
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body class="min-h-full bg-slate-50 text-slate-800">
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-10">
+      <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="font-semibold text-slate-900">
+          <span class="sr-only">Home</span>
+          {{ site.name }} <span class="text-slate-400">· {{ site.tagline }}</span>
+        </a>
+        <nav class="flex items-center gap-4 text-sm">
+          <a href="/" class="hover:underline">Home</a>
+          <a href="{{ site.github }}" target="_blank" rel="noopener" class="hover:underline">GitHub</a>
+          <a href="{{ site.linkedin }}" target="_blank" rel="noopener" class="hover:underline">LinkedIn</a>
+          <a href="{{ site.email }}" class="hover:underline">Email</a>
+          <a href="{{ site.calendly }}" target="_blank" rel="noopener" class="inline-flex items-center rounded-md bg-sky-600 px-3 py-1.5 text-white font-medium hover:bg-sky-700 transition">
+            Agendar llamada de 30 min
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8">
+      {{ content | safe }}
+    </main>
+
+    <footer class="border-t text-sm text-slate-500">
+      <div class="max-w-5xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <p>&copy; {{ "now" | date("yyyy") }} {{ site.name }}</p>
+        <p>
+          <a href="{{ site.github }}" class="hover:underline">GitHub</a> ·
+          <a href="{{ site.linkedin }}" class="hover:underline">LinkedIn</a> ·
+          <a href="{{ site.calendly }}" class="hover:underline">Calendly</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
