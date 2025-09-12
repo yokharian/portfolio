@@ -1,0 +1,26 @@
+# Task ID: 1
+# Title: Project Setup and Repository Configuration
+# Status: in-progress
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project repository with the basic structure and configuration files needed for development.
+# Details:
+1. Create a new repository at github.com/yokharian/portfolio
+2. Initialize the project with package.json
+3. Set up Tailwind CSS configuration
+4. Configure a static site generator (Astro or 11ty recommended based on Markdown requirements)
+5. Create the basic folder structure:
+   - src/
+     - pages/
+     - layouts/
+     - components/
+     - styles/
+   - public/
+     - images/
+   - content/
+     - projects/
+6. Set up Git hooks for code quality
+7. Create a README.md with project documentation
+
+# Test Strategy:
+Verify that the repository is properly initialized with all configuration files. Test the build process to ensure it correctly processes Markdown files and generates static HTML. Confirm that Tailwind CSS is properly configured by testing a simple component with Tailwind classes.

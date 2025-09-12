@@ -1,0 +1,28 @@
+# Task ID: 3
+# Title: Develop Markdown Processing System
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create a system to process Markdown files with frontmatter for project content, extracting metadata and generating HTML pages.
+# Details:
+1. Set up a Markdown parser with frontmatter support
+2. Create a schema for project frontmatter that includes:
+   - title
+   - description
+   - employer
+   - startDate
+   - endDate
+   - tags (technologies)
+   - heroImage
+   - language
+3. Implement a function to extract and validate frontmatter data
+4. Create a template for rendering project pages that includes:
+   - Hero banner with project image
+   - Metadata display section
+   - Main content area with proper typography
+   - 'Technologies Used' section generated from tags
+5. Implement the Markdown to HTML conversion process
+6. Set up the build process to generate a static HTML page for each Markdown file
+
+# Test Strategy:
+Create test Markdown files with various frontmatter configurations to verify the extraction process. Test the rendering of Markdown content with different elements (headings, lists, code blocks, etc.). Verify that the generated HTML pages maintain the correct structure and styling. Test with both English and Spanish content to ensure proper language handling.

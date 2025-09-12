@@ -1,0 +1,232 @@
+{
+  "default": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Project Setup and Repository Configuration",
+        "description": "Initialize the project repository with the basic structure and configuration files needed for development.",
+        "details": "1. Create a new repository at github.com/yokharian/portfolio\n2. Initialize the project with package.json\n3. Set up Tailwind CSS configuration\n4. Configure a static site generator (Astro or 11ty recommended based on Markdown requirements)\n5. Create the basic folder structure:\n   - src/\n     - pages/\n     - layouts/\n     - components/\n     - styles/\n   - public/\n     - images/\n   - content/\n     - projects/\n6. Set up Git hooks for code quality\n7. Create a README.md with project documentation",
+        "testStrategy": "Verify that the repository is properly initialized with all configuration files. Test the build process to ensure it correctly processes Markdown files and generates static HTML. Confirm that Tailwind CSS is properly configured by testing a simple component with Tailwind classes.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement Base Layout Components",
+        "description": "Create the base layout components that will be used across all pages, including header and footer with required links.",
+        "details": "1. Create a main layout component that includes:\n   - HTML5 boilerplate with proper meta tags\n   - Responsive viewport settings\n   - Tailwind CSS imports\n2. Implement the header component with:\n   - Sofia Escobedo's name as per FR2\n   - Primary CTA button 'Agendar llamada de 30 min' linking to Calendly (FR3)\n   - Language switcher (FR5)\n3. Implement the footer component with:\n   - Links to GitHub, LinkedIn profiles\n   - Calendly link\n   - Email contact (mailto: link)\n   - Copyright information\n4. Create a responsive navigation system\n5. Implement language switching functionality (English/Spanish toggle)",
+        "testStrategy": "Test the layout components in different viewport sizes to ensure responsiveness. Verify that all links in the header and footer are working correctly. Test the language switcher to ensure it properly changes the displayed language. Validate HTML structure for accessibility and SEO best practices.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Develop Markdown Processing System",
+        "description": "Create a system to process Markdown files with frontmatter for project content, extracting metadata and generating HTML pages.",
+        "details": "1. Set up a Markdown parser with frontmatter support\n2. Create a schema for project frontmatter that includes:\n   - title\n   - description\n   - employer\n   - startDate\n   - endDate\n   - tags (technologies)\n   - heroImage\n   - language\n3. Implement a function to extract and validate frontmatter data\n4. Create a template for rendering project pages that includes:\n   - Hero banner with project image\n   - Metadata display section\n   - Main content area with proper typography\n   - 'Technologies Used' section generated from tags\n5. Implement the Markdown to HTML conversion process\n6. Set up the build process to generate a static HTML page for each Markdown file",
+        "testStrategy": "Create test Markdown files with various frontmatter configurations to verify the extraction process. Test the rendering of Markdown content with different elements (headings, lists, code blocks, etc.). Verify that the generated HTML pages maintain the correct structure and styling. Test with both English and Spanish content to ensure proper language handling.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Design and Implement Homepage Hero Section",
+        "description": "Create the hero section for the homepage that highlights Sofia's specialization in Python and AWS, with a professional profile image.",
+        "details": "1. Design a visually appealing hero section with:\n   - Professional headline emphasizing Python and AWS expertise\n   - Professional profile image\n   - Brief introduction text\n   - Primary CTA button\n2. Implement responsive layout for the hero section\n3. Add subtle text animations as specified in the design considerations\n4. Optimize the profile image for web display\n5. Ensure the section is visually prominent and captures attention\n6. Implement proper heading hierarchy for SEO\n7. Create both English and Spanish versions of the content",
+        "testStrategy": "Test the hero section across different screen sizes to ensure responsive behavior. Verify that text animations work correctly and don't affect usability. Check image loading performance and ensure proper alt text for accessibility. Test with both language settings to verify content switching works correctly.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement Featured Work Section",
+        "description": "Create the 'Featured Work' section on the homepage that displays the most important projects in a card-based layout.",
+        "details": "1. Design project cards that include:\n   - Project thumbnail image\n   - Project title\n   - Brief description\n   - Technologies used (tags)\n   - Visual hover effect (FR9)\n2. Implement a responsive grid layout that shows:\n   - 3 columns on desktop\n   - 2 columns on tablet\n   - 1 column on mobile\n3. Create a system to mark certain projects as 'featured' in the frontmatter\n4. Implement lazy loading for project images (FR19)\n5. Add smooth transitions for hover effects\n6. Ensure proper linking to individual project pages",
+        "testStrategy": "Test the grid layout at various screen sizes to verify the correct number of columns. Verify that hover effects work properly and are accessible. Test image lazy loading by simulating slow network conditions. Check that all links to project pages work correctly. Verify the section renders correctly with different numbers of featured projects.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement Certifications Section",
+        "description": "Create the 'Certifications' section on the homepage that displays AWS certification badges.",
+        "details": "1. Design a visually appealing certifications section\n2. Obtain official AWS certification badge images\n3. Implement a responsive layout for displaying certification badges\n4. Add metadata for each certification including:\n   - Certification name\n   - Date obtained\n   - Verification link (if applicable)\n5. Optimize badge images for web display\n6. Implement hover effects for additional information\n7. Create both English and Spanish versions of certification descriptions",
+        "testStrategy": "Verify that certification badges display correctly at different screen sizes. Test hover effects to ensure additional information is accessible. Check image loading performance. Verify that verification links work correctly if implemented. Test with both language settings to ensure proper content switching.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Develop Individual Project Page Template",
+        "description": "Create the template for individual project pages that will display the full content of each project with proper formatting.",
+        "details": "1. Design a project page template with:\n   - Hero banner with project image (FR13)\n   - Project metadata section (title, dates, employer, etc.)\n   - Main content area with proper typography\n   - 'Technologies Used' section generated from tags (FR15)\n   - Navigation to other projects\n2. Implement the Tailwind 'prose' class for content formatting\n3. Create a responsive layout that prioritizes readability\n4. Add proper semantic HTML structure for SEO\n5. Implement metadata extraction from frontmatter\n6. Set up language-specific content display based on the language setting",
+        "testStrategy": "Test the project page with various types of Markdown content to ensure proper rendering. Verify that all metadata from frontmatter is correctly displayed. Test responsiveness across different screen sizes. Check that the 'Technologies Used' section correctly displays all tags. Test with both English and Spanish content to verify language switching works correctly.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement SEO Optimization",
+        "description": "Implement SEO features to optimize the site for search engines, particularly for terms related to 'Python AWS developer'.",
+        "details": "1. Create a system to automatically generate meta tags for each page (FR20):\n   - Title tags\n   - Meta descriptions\n   - Open Graph tags for social sharing\n   - Twitter card tags\n2. Implement canonical URLs\n3. Create a sitemap.xml generator\n4. Implement structured data (JSON-LD) for:\n   - Person information\n   - Professional experience\n   - Skills\n5. Optimize heading hierarchy across the site\n6. Implement alt text for all images\n7. Create a robots.txt file\n8. Ensure proper semantic HTML throughout the site",
+        "testStrategy": "Use tools like Google's Structured Data Testing Tool to verify JSON-LD implementation. Test meta tags generation for various page types. Validate the sitemap.xml format. Use Lighthouse to test SEO score (target >90 as per SM6). Verify that all images have appropriate alt text. Check that canonical URLs are correctly implemented.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3,
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement Performance Optimizations",
+        "description": "Implement performance optimizations to ensure fast loading times and a high Lighthouse performance score.",
+        "details": "1. Implement image optimization pipeline:\n   - Resize images to appropriate dimensions\n   - Convert to modern formats (WebP with fallbacks)\n   - Implement lazy loading for all images (FR19)\n2. Set up CSS optimization:\n   - Purge unused Tailwind CSS classes\n   - Minify CSS output\n3. Implement JavaScript optimization:\n   - Minify and bundle JS files\n   - Use defer for non-critical scripts\n4. Implement font optimization:\n   - Use font-display: swap\n   - Preload critical fonts\n5. Add appropriate caching headers\n6. Implement critical CSS extraction\n7. Set up code splitting where appropriate",
+        "testStrategy": "Use Lighthouse to measure performance score (target >90 as per SM5). Test site loading on slow network connections. Verify that lazy loading works correctly for images. Measure Time to First Byte (TTFB) and First Contentful Paint (FCP). Check total page weight and number of requests. Test on both desktop and mobile devices.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Implement Language Switching Functionality",
+        "description": "Implement a complete language switching system that allows users to toggle between English and Spanish content throughout the site.",
+        "details": "1. Design a language switcher UI component\n2. Implement a language state management system\n3. Create a translation system that supports:\n   - UI elements (navigation, buttons, etc.)\n   - Static content on the homepage\n   - Dynamic content from Markdown files\n4. Store language preference in localStorage\n5. Update URL with language parameter\n6. Implement proper lang attribute on HTML elements\n7. Ensure all date formats adapt to the selected language\n8. Add language metadata to the page head",
+        "testStrategy": "Test language switching on all pages to verify content changes correctly. Verify that language preference is saved between sessions. Test URL-based language switching. Check that dates and other formatted content adapt to the selected language. Verify that the lang attribute is correctly updated in the HTML. Test with screen readers to ensure accessibility.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3,
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Implement Animation and Interactive Elements",
+        "description": "Implement subtle animations and interactive elements to enhance the user experience and create a premium feel.",
+        "details": "1. Implement subtle text animations as specified in the design considerations\n2. Create hover effects for project cards (FR9)\n3. Add transition animations for page navigation\n4. Implement scroll-triggered animations for content sections\n5. Create interactive elements for the Technologies Used tags\n6. Implement smooth scrolling\n7. Add focus states for accessibility\n8. Ensure all animations respect user preferences (prefers-reduced-motion)",
+        "testStrategy": "Test all animations for smoothness and performance impact. Verify that animations don't trigger layout shifts. Test with prefers-reduced-motion enabled to ensure animations are disabled appropriately. Check accessibility of all interactive elements with keyboard navigation. Test on lower-end devices to ensure performance isn't compromised.",
+        "priority": "low",
+        "dependencies": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Implement AWS CloudWatch RUM Integration",
+        "description": "Integrate AWS CloudWatch Real User Monitoring (RUM) to track performance metrics and user behavior.",
+        "details": "1. Set up an AWS CloudWatch RUM app monitor\n2. Configure the RUM web client:\n   - Install the required JavaScript\n   - Configure session sampling\n   - Set up custom events for important user interactions\n3. Implement tracking for key metrics:\n   - Page load times\n   - CTA button clicks\n   - Time spent on project pages\n   - Language switching\n4. Set up custom dashboards in CloudWatch\n5. Configure alerts for performance degradation\n6. Implement privacy-conscious data collection\n7. Add a privacy notice regarding analytics",
+        "testStrategy": "Verify that the RUM client is correctly sending data to CloudWatch. Test custom event tracking by performing the tracked actions. Check that dashboards display the expected metrics. Verify that no personally identifiable information is being collected without consent. Test with various browsers to ensure compatibility.",
+        "priority": "low",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Create Sample Project Content",
+        "description": "Create sample project Markdown files to demonstrate the content structure and test the rendering system.",
+        "details": "1. Create at least 3 sample project Markdown files with:\n   - Complete frontmatter (title, description, dates, etc.)\n   - Rich content including headings, lists, code blocks, images\n   - Technologies tags\n   - Both English and Spanish versions\n2. Include realistic project descriptions based on Python and AWS expertise\n3. Add appropriate images for each project\n4. Implement proper formatting for technical content\n5. Include examples of different content types (case studies, technical projects, etc.)\n6. Ensure content demonstrates all supported Markdown features",
+        "testStrategy": "Verify that all sample projects render correctly on both individual pages and in the Featured Work section. Check that frontmatter data is correctly extracted and displayed. Test language switching to ensure both versions are available. Verify that images are displayed correctly and responsively. Check that code blocks and technical content are properly formatted.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Configure AWS Amplify Hosting",
+        "description": "Set up AWS Amplify (or S3 + CloudFront) for hosting the static site under the domain sofia.escobedo.mx.",
+        "details": "1. Create an AWS Amplify app connected to the GitHub repository\n2. Configure build settings:\n   - Specify build commands\n   - Set up environment variables if needed\n   - Configure output directory\n3. Set up continuous deployment from the main branch\n4. Configure custom domain (sofia.escobedo.mx):\n   - Verify domain ownership\n   - Set up SSL certificate\n   - Configure DNS settings\n5. Set up branch previews for development\n6. Configure caching and CDN settings\n7. Implement redirect rules if needed",
+        "testStrategy": "Verify that the build process completes successfully in the Amplify console. Test the deployed site on the custom domain. Check that SSL is properly configured. Test the continuous deployment by pushing changes to the repository. Verify that caching is working correctly. Test site performance from different geographic locations.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Final Testing and Launch",
+        "description": "Conduct comprehensive testing across devices and browsers, fix any issues, and prepare for the official launch.",
+        "details": "1. Perform cross-browser testing on:\n   - Chrome, Firefox, Safari, Edge\n   - Mobile browsers (iOS Safari, Android Chrome)\n2. Test responsive behavior across device sizes\n3. Conduct accessibility testing (WCAG compliance)\n4. Run performance tests using Lighthouse\n5. Verify all links and navigation\n6. Test language switching thoroughly\n7. Check all animations and interactive elements\n8. Verify analytics implementation\n9. Create a launch checklist\n10. Prepare social media announcements if applicable",
+        "testStrategy": "Use browser testing tools (BrowserStack or similar) to verify compatibility across platforms. Run Lighthouse audits for performance, accessibility, best practices, and SEO (targets >90 for both performance and SEO as per SM5 and SM6). Test with screen readers and keyboard navigation. Verify that all success metrics defined in the PRD can be tracked. Create a detailed report of any issues found and their resolutions.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-12T17:38:29.434Z",
+      "updated": "2025-09-12T17:52:42.394Z",
+      "description": "Tasks for default context"
+    }
+  }
+}

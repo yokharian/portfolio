@@ -1,0 +1,21 @@
+# Task ID: 7
+# Title: Develop Individual Project Page Template
+# Status: pending
+# Dependencies: 3
+# Priority: high
+# Description: Create the template for individual project pages that will display the full content of each project with proper formatting.
+# Details:
+1. Design a project page template with:
+   - Hero banner with project image (FR13)
+   - Project metadata section (title, dates, employer, etc.)
+   - Main content area with proper typography
+   - 'Technologies Used' section generated from tags (FR15)
+   - Navigation to other projects
+2. Implement the Tailwind 'prose' class for content formatting
+3. Create a responsive layout that prioritizes readability
+4. Add proper semantic HTML structure for SEO
+5. Implement metadata extraction from frontmatter
+6. Set up language-specific content display based on the language setting
+
+# Test Strategy:
+Test the project page with various types of Markdown content to ensure proper rendering. Verify that all metadata from frontmatter is correctly displayed. Test responsiveness across different screen sizes. Check that the 'Technologies Used' section correctly displays all tags. Test with both English and Spanish content to verify language switching works correctly.

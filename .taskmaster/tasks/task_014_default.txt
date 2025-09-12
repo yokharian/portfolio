@@ -1,0 +1,23 @@
+# Task ID: 14
+# Title: Configure AWS Amplify Hosting
+# Status: pending
+# Dependencies: 1, 9
+# Priority: medium
+# Description: Set up AWS Amplify (or S3 + CloudFront) for hosting the static site under the domain sofia.escobedo.mx.
+# Details:
+1. Create an AWS Amplify app connected to the GitHub repository
+2. Configure build settings:
+   - Specify build commands
+   - Set up environment variables if needed
+   - Configure output directory
+3. Set up continuous deployment from the main branch
+4. Configure custom domain (sofia.escobedo.mx):
+   - Verify domain ownership
+   - Set up SSL certificate
+   - Configure DNS settings
+5. Set up branch previews for development
+6. Configure caching and CDN settings
+7. Implement redirect rules if needed
+
+# Test Strategy:
+Verify that the build process completes successfully in the Amplify console. Test the deployed site on the custom domain. Check that SSL is properly configured. Test the continuous deployment by pushing changes to the repository. Verify that caching is working correctly. Test site performance from different geographic locations.

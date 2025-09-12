@@ -1,0 +1,25 @@
+# Task ID: 8
+# Title: Implement SEO Optimization
+# Status: pending
+# Dependencies: 2, 3, 7
+# Priority: medium
+# Description: Implement SEO features to optimize the site for search engines, particularly for terms related to 'Python AWS developer'.
+# Details:
+1. Create a system to automatically generate meta tags for each page (FR20):
+   - Title tags
+   - Meta descriptions
+   - Open Graph tags for social sharing
+   - Twitter card tags
+2. Implement canonical URLs
+3. Create a sitemap.xml generator
+4. Implement structured data (JSON-LD) for:
+   - Person information
+   - Professional experience
+   - Skills
+5. Optimize heading hierarchy across the site
+6. Implement alt text for all images
+7. Create a robots.txt file
+8. Ensure proper semantic HTML throughout the site
+
+# Test Strategy:
+Use tools like Google's Structured Data Testing Tool to verify JSON-LD implementation. Test meta tags generation for various page types. Validate the sitemap.xml format. Use Lighthouse to test SEO score (target >90 as per SM6). Verify that all images have appropriate alt text. Check that canonical URLs are correctly implemented.
