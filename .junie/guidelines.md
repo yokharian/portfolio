@@ -3,7 +3,7 @@
 ## 0) Scope (read me first)
 - Goal: use **Task Master** as the “objective brain” (RAG and planning) and Junie as the “hands” (code, tests, commits).
 - If the MCP server isn’t configured: ask to configure it, then retry.
-- Default PRD path: **`docs/prd.md`** (change as needed). If missing, create a minimal skeleton and confirm.
+- Default PRD path: **`.taskmaster/docs/prd.md`** (change as needed). If missing, create a minimal skeleton and confirm.
 
 ## 1) Work mantra
 - **Plan → Validate → Act → Verify → Record.**
@@ -15,7 +15,7 @@ Always drive work through the Task Master tools in this order:
 
 1. **Generate/Update tasks**  
    - Tool: `generate`  
-   - Create/update task files under `/tasks/` and any internal state. Keep the task list visible.
+   - Create/update task files under `.taskmaster/tasks/` and any internal state. Keep the task list visible.
 
 2. **Pick the next objective**  
    - Tool: `next`  
@@ -41,7 +41,7 @@ For **each** subtask selected via `next`:
 1) **Brief plan** (max six bullets): affected files, risks, tests.  
 2) **Implementation**: minimal viable change; add/update **tests**; don’t mix big refactors with features.  
 3) **Verification**: run the test suite; if it fails, stop, summarize, fix.  
-4) **Record state**: update checkboxes in `/tasks/*.md`; use the MCP tool to update task state.  
+4) **Record state**: use the MCP tool to update the subtask state.  
 5) **Commit** (only if tests pass): `git commit -m “feat:” -m “- key changes” -m “- tests added” -m “relates to”`
 6) **Next**: call `next` again.
 
@@ -60,7 +60,7 @@ For **each** subtask selected via `next`:
 - Security: no hardcoded secrets; sanitize inputs; no PII in logs.
 
 ## 6) Tasks & files
-- Keep `/tasks/` as the operational source of truth.  
+- Keep `.taskmaster/tasks/` as the operational source of truth.  
 - Don’t manually edit internal task state files; use the MCP tools/CLI (`generate`, `move`, etc.).  
 - When creating new files, add a brief description under **Relevant Files**.
 
