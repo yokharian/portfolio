@@ -66,7 +66,7 @@ For **each** subtask selected via `next`:
 
 ## 7) When the PRD is not enough
 - Recommend PRD improvements (sections, examples, acceptance criteria).  
-- Always ask user to run `parse-prd`.
+- You are not allowed to run `parse-prd` or `initialize_project` at this point in the execution flow.
 
 ## 8) Priority if rules conflict
 **Security > Correctness > Green tests > Performance > Speed.**
