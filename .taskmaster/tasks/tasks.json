@@ -22,7 +22,7 @@
         "dependencies": [
           1
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -276,7 +276,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-12T19:52:03.782Z",
+      "updated": "2025-09-12T20:16:38.273Z",
       "description": "Tasks for default context"
     }
   }
