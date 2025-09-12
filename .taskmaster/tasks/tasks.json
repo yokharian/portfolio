@@ -87,7 +87,142 @@
           1
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up Markdown Parser with Frontmatter Support",
+            "description": "Select and integrate a Markdown parser library that supports frontmatter extraction. Configure it with safe defaults for the project.",
+            "dependencies": [],
+            "details": "Research and select a suitable Markdown parser (recommend remark.js or gray-matter). Install the chosen library and create a utility module that exposes a function to parse Markdown content. Configure the parser with safe defaults for HTML sanitization and frontmatter extraction. Include error handling for malformed Markdown files.",
+            "status": "done",
+            "testStrategy": "Create test cases with valid and invalid Markdown files. Verify the parser correctly extracts frontmatter and converts Markdown to HTML. Test error handling with malformed inputs."
+          },
+          {
+            "id": 2,
+            "title": "Define Frontmatter Schema with Type Definitions",
+            "description": "Create a schema for project frontmatter with proper type definitions, required/optional rules, and default values.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Define a TypeScript interface or schema object for frontmatter that includes: title (string, required), description (string, required), employer (string, optional), startDate (ISO date string, required), endDate (ISO date string, optional), tags (array of strings, required), heroImage (string path, required), language (string enum, required), slug (string, optional), featured (boolean, optional). Include documentation for each field and specify default values where appropriate.",
+            "status": "done",
+            "testStrategy": "Create test cases to validate the schema against various frontmatter examples. Verify required fields are enforced and optional fields have proper defaults."
+          },
+          {
+            "id": 3,
+            "title": "Implement Frontmatter Validation Function",
+            "description": "Create a validation function that checks frontmatter data against the schema and provides helpful error messages.",
+            "dependencies": [
+              "3.2"
+            ],
+            "details": "Implement a validation function that takes extracted frontmatter data and validates it against the defined schema. Include checks for required fields, data types, and format validation (e.g., ISO dates). Generate helpful error messages that indicate which fields are missing or invalid. Provide sensible defaults for optional fields when not provided.",
+            "status": "done",
+            "testStrategy": "Test with valid frontmatter, missing required fields, invalid data types, and malformed dates. Verify error messages are clear and helpful."
+          },
+          {
+            "id": 4,
+            "title": "Implement Content Discovery System",
+            "description": "Create a system to scan the content directory for Markdown files and build a collection of project data.",
+            "dependencies": [
+              "3.1",
+              "3.3"
+            ],
+            "details": "Implement a function that recursively scans the content/projects/ directory (or similar) for Markdown files. For each file, extract and validate the frontmatter, storing the results in a collection. Include file path information and generate slugs based on filename or frontmatter. Handle errors gracefully, logging issues but continuing to process valid files.",
+            "status": "done",
+            "testStrategy": "Test with a directory containing multiple Markdown files, including some with invalid frontmatter. Verify all valid files are discovered and processed correctly."
+          },
+          {
+            "id": 5,
+            "title": "Enhance Markdown to HTML Conversion",
+            "description": "Implement advanced Markdown to HTML conversion with support for code blocks, tables, images, and properly configured external links.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Extend the basic Markdown parser to support syntax highlighting for code blocks, properly formatted tables, responsive images, and external links that open in new tabs with appropriate rel attributes (noopener, noreferrer). Configure the parser to maintain heading hierarchy and generate anchor IDs for headings. Implement custom renderers for specific Markdown elements if needed.",
+            "status": "pending",
+            "testStrategy": "Create test Markdown files with various elements (code blocks, tables, images, links). Verify the generated HTML includes proper syntax highlighting, responsive image attributes, and correctly configured external links."
+          },
+          {
+            "id": 6,
+            "title": "Create Project Page Template with Component Sections",
+            "description": "Develop a template for project pages that includes hero image, metadata section, content area, and technology tags.",
+            "dependencies": [
+              "3.5"
+            ],
+            "details": "Create a template/layout for project pages that integrates with Task 7 (Project Page Template). Include sections for: hero image banner, project metadata display (title, dates, employer), main content area with proper typography (using Tailwind prose), and a 'Technologies Used' section generated from tags. Ensure the template is responsive and follows accessibility best practices.",
+            "status": "pending",
+            "testStrategy": "Test the template with various project data to ensure all sections render correctly. Verify responsive behavior across different screen sizes. Check accessibility with automated tools."
+          },
+          {
+            "id": 7,
+            "title": "Implement Language Handling for Project Content",
+            "description": "Add support for multilingual project content with language detection, fallbacks, and filtering.",
+            "dependencies": [
+              "3.4"
+            ],
+            "details": "Implement functionality to load the language field from frontmatter and support filtering collections by language. Create a system for language fallbacks when content isn't available in the requested language. Integrate with the site's language switching mechanism (if already implemented) to ensure project content changes appropriately when language is switched.",
+            "status": "pending",
+            "testStrategy": "Test with projects in different languages. Verify language filtering works correctly. Test language switching to ensure content updates appropriately. Verify fallback behavior when content isn't available in the requested language."
+          },
+          {
+            "id": 8,
+            "title": "Develop Date Formatting and Handling System",
+            "description": "Create utilities for parsing ISO dates, formatting them according to language preferences, and handling ongoing projects.",
+            "dependencies": [
+              "3.3"
+            ],
+            "details": "Implement utilities to parse ISO date strings from frontmatter. Create formatting functions that display dates according to language preferences (e.g., 'January 2022' vs 'Enero 2022'). Add special handling for ongoing projects (missing endDate) to display appropriate text (e.g., 'Present' or 'Actual'). Include relative time formatting options (e.g., '2 years ago').",
+            "status": "pending",
+            "testStrategy": "Test date parsing with various formats. Verify formatting in different languages. Test handling of ongoing projects and edge cases like projects with same start/end dates."
+          },
+          {
+            "id": 9,
+            "title": "Implement Image Validation and Processing",
+            "description": "Add validation for hero images, generate alt text, and support responsive image attributes.",
+            "dependencies": [
+              "3.3"
+            ],
+            "details": "Implement validation to ensure heroImage paths reference existing files. Generate default alt text from project titles if not explicitly provided. Add support for responsive image attributes (srcset, sizes) to optimize loading. Include image optimization as part of the build process to reduce file sizes while maintaining quality.",
+            "status": "pending",
+            "testStrategy": "Test with valid and invalid image paths. Verify alt text generation. Test responsive image attributes on different devices. Measure image loading performance before and after optimization."
+          },
+          {
+            "id": 10,
+            "title": "Integrate with Build Process for Static HTML Generation",
+            "description": "Set up the build process to generate a static HTML page for each Markdown file using the project template.",
+            "dependencies": [
+              "3.6",
+              "3.7",
+              "3.8",
+              "3.9"
+            ],
+            "details": "Integrate the Markdown processing system with the static site generator's build process. For each processed Markdown file, generate a static HTML page using the project template. Create predictable permalinks/URLs based on slugs or file paths. Ensure all metadata and content are correctly passed to the template. Add build-time validation to catch any issues with content or frontmatter.",
+            "status": "pending",
+            "testStrategy": "Run the build process with various Markdown files. Verify each generates a correctly formatted HTML page with proper URLs. Test the build process with invalid content to ensure appropriate error handling."
+          },
+          {
+            "id": 11,
+            "title": "Create Comprehensive Test Suite with Fixtures",
+            "description": "Develop a test suite with fixtures for various frontmatter configurations, invalid inputs, and snapshot tests of rendered HTML.",
+            "dependencies": [
+              "3.10"
+            ],
+            "details": "Create a comprehensive test suite with fixtures representing different frontmatter variants (all required fields, optional fields, edge cases). Include tests for invalid inputs (missing required fields, wrong data types). Implement snapshot tests of rendered HTML to detect unintended changes in output. Add tests for the entire build pipeline from Markdown file to generated HTML.",
+            "status": "pending",
+            "testStrategy": "Run the test suite automatically as part of CI/CD. Compare snapshot tests against previous versions to detect regressions. Ensure test coverage for all edge cases and error conditions."
+          },
+          {
+            "id": 12,
+            "title": "Write Documentation and Authoring Guide",
+            "description": "Create documentation for the Markdown processing system and an authoring guide for content creators.",
+            "dependencies": [
+              "3.11"
+            ],
+            "details": "Write technical documentation for the Markdown processing system, including architecture overview, API references, and integration points. Create an authoring guide for content creators that explains required fields, naming conventions, Markdown features supported, and how to preview content. Include examples of valid frontmatter and common Markdown patterns used in projects. Document the build and deployment process for content updates.",
+            "status": "pending",
+            "testStrategy": "Review documentation with potential users to ensure clarity. Verify examples are accurate and up-to-date. Test the authoring workflow by following the guide to create new content."
+          }
+        ]
       },
       {
         "id": 4,
@@ -276,7 +411,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-12T20:16:38.273Z",
+      "updated": "2025-09-12T22:46:29.797Z",
       "description": "Tasks for default context"
     }
   }

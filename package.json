@@ -10,7 +10,15 @@
     "build": "npm run build:css && eleventy",
     "build:css": "tailwindcss -i src/styles/tailwind.css -o public/assets/styles.css --minify",
     "clean": "rimraf _site",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "npm-run-all -s test:md test:fm test:content",
+    "test:md": "node scripts/test-markdown.js",
+    "test:fm": "node scripts/test-frontmatter.js",
+    "test:content": "node scripts/test-content.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
