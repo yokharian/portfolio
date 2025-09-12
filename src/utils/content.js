@@ -49,7 +49,7 @@ function collectMarkdownFiles(dir) {
  * Discover and process project markdown files.
  * @param {string} [rootDir] Absolute or relative path to the projects directory.
  * @param {{ allowHtml?: boolean }} [options]
- * @returns {Array<{ slug: string, filePath: string, frontmatter: object, content: string, html: string, language?: string }>}
+ * @returns {Array<{ slug: string, filePath: string, frontmatter: object, content: string, html: string, language?: string, imageValid?: boolean, heroAlt?: string }>}
  */
 function discoverProjects(rootDir = path.join(process.cwd(), 'content', 'projects'), options = {}) {
   const base = path.isAbsolute(rootDir) ? rootDir : path.join(process.cwd(), rootDir);
@@ -73,13 +73,32 @@ function discoverProjects(rootDir = path.join(process.cwd(), 'content', 'project
       const fmSlug = fm.slug && typeof fm.slug === 'string' ? fm.slug : '';
       const slug = fmSlug ? slugify(fmSlug) : slugify(baseName);
 
+      // Validate hero image existence (path relative to public/ when starting with '/')
+      let imageValid = false;
+      try {
+        if (fm.heroImage && typeof fm.heroImage === 'string') {
+          const rel = fm.heroImage.replace(/^\//, '');
+          const abs = path.join(process.cwd(), 'public', rel);
+          imageValid = fs.existsSync(abs);
+          if (!imageValid) {
+            logger.warn(`discoverProjects: heroImage not found for ${slug}: ${abs}`);
+          }
+        }
+      } catch (e) {
+        logger.warn(`discoverProjects: error checking heroImage for ${slug}: ${e.message}`);
+      }
+
+      const heroAlt = (fm.alt && typeof fm.alt === 'string' && fm.alt.trim()) ? fm.alt : fm.title;
+
       projects.push({
         slug,
         filePath: file,
         frontmatter: fm,
         content,
         html,
-        language: fm.language
+        language: fm.language,
+        imageValid,
+        heroAlt,
       });
     } catch (err) {
       logger.error(`discoverProjects: failed to process ${file}: ${err.message}`);

@@ -15,6 +15,8 @@ const { discoverProjects, slugify } = require('../src/utils/content');
   assert.ok(first.slug && typeof first.slug === 'string', 'Project should have a slug');
   assert.ok(first.filePath && typeof first.filePath === 'string', 'Project should include filePath');
   assert.ok(first.frontmatter && typeof first.frontmatter === 'object', 'Project should include validated frontmatter');
+  assert.ok(typeof first.imageValid === 'boolean', 'Project should include imageValid flag');
+  assert.ok(typeof first.heroAlt === 'string' && first.heroAlt.length > 0, 'Project should include heroAlt text');
   assert.ok(first.content !== undefined, 'Project should include raw content');
   assert.ok(first.html && typeof first.html === 'string', 'Project should include rendered HTML');
 
@@ -24,6 +26,7 @@ const { discoverProjects, slugify } = require('../src/utils/content');
     assert.equal(sample.slug, slugify('sample-en'), 'Slug should be derived from filename when not provided');
     assert.equal(sample.frontmatter.language, 'en', 'Language should be en');
     assert.equal(sample.frontmatter.title, 'Sample Project', 'Title should match sample');
+    assert.equal(sample.heroAlt, 'Sample Project', 'heroAlt should default to title');
   }
 
   // Output a brief success line
