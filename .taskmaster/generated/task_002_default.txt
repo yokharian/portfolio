@@ -1,0 +1,25 @@
+# Task ID: 2
+# Title: Implement Base Layout Components
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create the base layout components that will be used across all pages, including header and footer with required links.
+# Details:
+1. Create a main layout component that includes:
+   - HTML5 boilerplate with proper meta tags
+   - Responsive viewport settings
+   - Tailwind CSS imports
+2. Implement the header component with:
+   - Sofia Escobedo's name as per FR2
+   - Primary CTA button 'Agendar llamada de 30 min' linking to Calendly (FR3)
+   - Language switcher (FR5)
+3. Implement the footer component with:
+   - Links to GitHub, LinkedIn profiles
+   - Calendly link
+   - Email contact (mailto: link)
+   - Copyright information
+4. Create a responsive navigation system
+5. Implement language switching functionality (English/Spanish toggle)
+
+# Test Strategy:
+Test the layout components in different viewport sizes to ensure responsiveness. Verify that all links in the header and footer are working correctly. Test the language switcher to ensure it properly changes the displayed language. Validate HTML structure for accessibility and SEO best practices.
