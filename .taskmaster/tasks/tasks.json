@@ -86,7 +86,7 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -139,7 +139,7 @@
               "3.1"
             ],
             "details": "Extend the basic Markdown parser to support syntax highlighting for code blocks, properly formatted tables, responsive images, and external links that open in new tabs with appropriate rel attributes (noopener, noreferrer). Configure the parser to maintain heading hierarchy and generate anchor IDs for headings. Implement custom renderers for specific Markdown elements if needed.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create test Markdown files with various elements (code blocks, tables, images, links). Verify the generated HTML includes proper syntax highlighting, responsive image attributes, and correctly configured external links."
           },
           {
@@ -150,7 +150,7 @@
               "3.5"
             ],
             "details": "Create a template/layout for project pages that integrates with Task 7 (Project Page Template). Include sections for: hero image banner, project metadata display (title, dates, employer), main content area with proper typography (using Tailwind prose), and a 'Technologies Used' section generated from tags. Ensure the template is responsive and follows accessibility best practices.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test the template with various project data to ensure all sections render correctly. Verify responsive behavior across different screen sizes. Check accessibility with automated tools."
           },
           {
@@ -161,7 +161,7 @@
               "3.4"
             ],
             "details": "Implement functionality to load the language field from frontmatter and support filtering collections by language. Create a system for language fallbacks when content isn't available in the requested language. Integrate with the site's language switching mechanism (if already implemented) to ensure project content changes appropriately when language is switched.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test with projects in different languages. Verify language filtering works correctly. Test language switching to ensure content updates appropriately. Verify fallback behavior when content isn't available in the requested language."
           },
           {
@@ -172,7 +172,7 @@
               "3.3"
             ],
             "details": "Implement utilities to parse ISO date strings from frontmatter. Create formatting functions that display dates according to language preferences (e.g., 'January 2022' vs 'Enero 2022'). Add special handling for ongoing projects (missing endDate) to display appropriate text (e.g., 'Present' or 'Actual'). Include relative time formatting options (e.g., '2 years ago').",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test date parsing with various formats. Verify formatting in different languages. Test handling of ongoing projects and edge cases like projects with same start/end dates."
           },
           {
@@ -183,7 +183,7 @@
               "3.3"
             ],
             "details": "Implement validation to ensure heroImage paths reference existing files. Generate default alt text from project titles if not explicitly provided. Add support for responsive image attributes (srcset, sizes) to optimize loading. Include image optimization as part of the build process to reduce file sizes while maintaining quality.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test with valid and invalid image paths. Verify alt text generation. Test responsive image attributes on different devices. Measure image loading performance before and after optimization."
           },
           {
@@ -197,7 +197,7 @@
               "3.9"
             ],
             "details": "Integrate the Markdown processing system with the static site generator's build process. For each processed Markdown file, generate a static HTML page using the project template. Create predictable permalinks/URLs based on slugs or file paths. Ensure all metadata and content are correctly passed to the template. Add build-time validation to catch any issues with content or frontmatter.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the build process with various Markdown files. Verify each generates a correctly formatted HTML page with proper URLs. Test the build process with invalid content to ensure appropriate error handling."
           },
           {
@@ -208,7 +208,7 @@
               "3.10"
             ],
             "details": "Create a comprehensive test suite with fixtures representing different frontmatter variants (all required fields, optional fields, edge cases). Include tests for invalid inputs (missing required fields, wrong data types). Implement snapshot tests of rendered HTML to detect unintended changes in output. Add tests for the entire build pipeline from Markdown file to generated HTML.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the test suite automatically as part of CI/CD. Compare snapshot tests against previous versions to detect regressions. Ensure test coverage for all edge cases and error conditions."
           },
           {
@@ -219,7 +219,7 @@
               "3.11"
             ],
             "details": "Write technical documentation for the Markdown processing system, including architecture overview, API references, and integration points. Create an authoring guide for content creators that explains required fields, naming conventions, Markdown features supported, and how to preview content. Include examples of valid frontmatter and common Markdown patterns used in projects. Document the build and deployment process for content updates.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Review documentation with potential users to ensure clarity. Verify examples are accurate and up-to-date. Test the authoring workflow by following the guide to create new content."
           }
         ]
@@ -234,8 +234,93 @@
         "dependencies": [
           2
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Scaffold Hero Section Markup",
+            "description": "Create the basic HTML structure for the hero section in the homepage template using Nunjucks templating.",
+            "dependencies": [],
+            "details": "Add the hero section markup to src/pages/index.njk, extending from base.njk. Include the following elements: a container div with appropriate Tailwind classes, heading (h1) for the professional title, subheading paragraph for the brief introduction, a placeholder for the profile image, and a primary CTA button. Use semantic HTML elements and ensure proper nesting structure. Add data attributes for future animation targets.",
+            "status": "done",
+            "testStrategy": "Verify the markup renders correctly in the browser without styling. Check that the HTML structure is valid and follows semantic principles. Ensure the template extends properly from base.njk."
+          },
+          {
+            "id": 2,
+            "title": "Implement Responsive Hero Layout with Tailwind",
+            "description": "Style the hero section using Tailwind CSS to create a responsive layout that works well on all device sizes.",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Apply Tailwind classes to create a mobile-first responsive layout: stack elements vertically on mobile, switch to side-by-side layout on lg+ screens. Use flex or grid for layout. Apply appropriate spacing, padding, and max-width constraints. Implement a container with mx-auto for centering. Style the CTA button with appropriate colors, padding, and hover states. Ensure the hero section has sufficient visual prominence through background styling, padding, and possibly a subtle gradient or accent color.",
+            "status": "done",
+            "testStrategy": "Test the responsive behavior across multiple screen sizes (mobile, tablet, desktop). Verify layout shifts appropriately at breakpoints. Check that spacing and sizing are visually balanced. Ensure the CTA button is properly styled and has appropriate hover states."
+          },
+          {
+            "id": 3,
+            "title": "Add and Optimize Profile Image",
+            "description": "Add the professional profile image to the hero section with proper optimization for web performance.",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Place the profile image file in public/assets/images/profile.jpg. Optimize the image for web (compress, proper dimensions). Create multiple sizes for responsive images if needed. In the markup, add the image with proper alt text, explicit width/height attributes to prevent layout shift, and appropriate Tailwind classes for sizing and styling. Consider adding a subtle border or shadow effect. Do not add lazy-loading to this image since it's likely an LCP (Largest Contentful Paint) element.",
+            "status": "pending",
+            "testStrategy": "Verify the image loads correctly and is properly sized across devices. Check that the image file size is optimized (<200KB recommended). Ensure proper alt text is present. Confirm no layout shift occurs during image load."
+          },
+          {
+            "id": 4,
+            "title": "Implement Text Animation with Accessibility Support",
+            "description": "Add subtle text animations to the hero section while ensuring accessibility compliance.",
+            "dependencies": [
+              "4.1",
+              "4.2"
+            ],
+            "details": "Implement subtle fade-in and/or slide-in animations for the heading, subheading, and CTA using CSS transitions or animations. Add a small stagger effect between elements. Ensure animations are short (300-500ms) and don't interfere with readability. Implement prefers-reduced-motion media query support to disable animations for users who prefer reduced motion. Use data attributes from the markup as animation hooks. Ensure no layout shifts occur during animations.",
+            "status": "pending",
+            "testStrategy": "Test animations for smoothness and timing. Verify animations work correctly across browsers. Test with prefers-reduced-motion enabled to ensure animations are properly disabled. Check that animations don't cause performance issues or layout shifts."
+          },
+          {
+            "id": 5,
+            "title": "Implement Internationalization for Hero Content",
+            "description": "Create both English and Spanish versions of the hero section content and implement language switching.",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Create a JSON data file with English and Spanish translations for all hero section text content (heading, subheading, CTA button text). Use the existing normalizeLang utility and language filters to implement content switching. Update the hero section markup to use translation keys instead of hardcoded text. Ensure the language switch mechanism works correctly for the hero section. Verify that text length differences between languages don't break the layout.",
+            "status": "pending",
+            "testStrategy": "Test language switching between English and Spanish. Verify all text elements correctly display the translated content. Check that longer Spanish text doesn't cause layout issues. Ensure the language state is preserved when navigating between pages."
+          },
+          {
+            "id": 6,
+            "title": "Optimize Hero Section for SEO and Accessibility",
+            "description": "Ensure the hero section follows SEO best practices and meets WCAG AA accessibility standards.",
+            "dependencies": [
+              "4.1",
+              "4.2",
+              "4.3",
+              "4.5"
+            ],
+            "details": "Verify proper heading hierarchy with h1 for the main headline. Add appropriate ARIA attributes where needed. Ensure sufficient color contrast (minimum 4.5:1 for normal text, 3:1 for large text) according to WCAG AA standards. Check that all interactive elements are keyboard accessible with visible focus states. Add structured data (JSON-LD) for the person information if appropriate. Ensure the CTA button has descriptive text and proper focus styling.",
+            "status": "pending",
+            "testStrategy": "Use accessibility tools (like axe or Lighthouse) to verify WCAG AA compliance. Check keyboard navigation through the hero section. Verify color contrast meets requirements. Test with screen readers to ensure content is properly announced."
+          },
+          {
+            "id": 7,
+            "title": "Create Build Verification and Documentation",
+            "description": "Implement verification checks for the hero section and update documentation.",
+            "dependencies": [
+              "4.1",
+              "4.2",
+              "4.3",
+              "4.4",
+              "4.5",
+              "4.6"
+            ],
+            "details": "Create a simple smoke test that verifies the hero section renders correctly in the built output (_site directory). Add comments in the code explaining the structure and animation approach. Update any project documentation to include information about the hero section implementation. Document the translation keys used for i18n. Create a simple checklist for content updates to the hero section. Verify that the Eleventy build process completes successfully with the new hero section.",
+            "status": "pending",
+            "testStrategy": "Run the Eleventy build and verify the hero section appears correctly in the output HTML. Check that all assets are properly referenced and load correctly. Verify documentation is clear and helpful for future developers or content editors."
+          }
+        ]
       },
       {
         "id": 5,
@@ -411,7 +496,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-12T22:46:29.797Z",
+      "updated": "2025-09-12T23:35:39.121Z",
       "description": "Tasks for default context"
     }
   }
