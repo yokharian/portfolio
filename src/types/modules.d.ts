@@ -35,17 +35,12 @@ interface DiscoverProjectsOptions {
 }
 
 // Support common import specifiers used in this repo for the same module.
-declare module '../src/utils/content' {
+declare module './utils/content' {
   export function slugify(s: string): string;
   export function discoverProjects(rootDir?: string, options?: DiscoverProjectsOptions): DiscoveredProject[];
 }
 
-declare module './src/utils/content' {
-  export function slugify(s: string): string;
-  export function discoverProjects(rootDir?: string, options?: DiscoverProjectsOptions): DiscoveredProject[];
-}
-
-declare module 'src/utils/content' {
+declare module '../utils/content' {
   export function slugify(s: string): string;
   export function discoverProjects(rootDir?: string, options?: DiscoverProjectsOptions): DiscoveredProject[];
 }

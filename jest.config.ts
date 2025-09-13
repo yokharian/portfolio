@@ -3,7 +3,7 @@ import type { Config } from '@jest/types';
 const config: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  roots: ['<rootDir>/src', '<rootDir>/scripts'],
+  roots: ['<rootDir>/src', '<rootDir>/src/scripts'],
   testMatch: [
     '**/__tests__/**/*.ts',
     '**/?(*.)+(spec|test).ts'
@@ -20,13 +20,13 @@ const config: Config.InitialOptions = {
     '/_site/',
     '/.cache/',
     '/coverage/',
-    '/public/assets/js/'
+    '/src/public/assets/js/'
   ],
   testPathIgnorePatterns: [
     '/node_modules/',
     '/_site/',
     '/.cache/',
-    '/public/assets/js/'
+    '/src/public/assets/js/'
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   verbose: true

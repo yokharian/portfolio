@@ -20,8 +20,8 @@ import {
   I18nError,
   TranslationNotFoundError,
   InvalidLanguageError
-} from '../../types/i18n';
-import { InvalidFormatInputError } from '../../types/format';
+} from '../types/i18n';
+import { InvalidFormatInputError } from '../types/format';
 import { logger } from './logger';
 
 // Type guards with proper narrowing
@@ -264,10 +264,10 @@ export type {
   InterpolationVars, 
   I18nOptions, 
   LanguageCode 
-} from '../../types/i18n';
+} from '../types/i18n';
 
 export { 
   I18nError, 
   TranslationNotFoundError, 
   InvalidLanguageError 
-} from '../../types/i18n';
+} from '../types/i18n';

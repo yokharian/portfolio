@@ -5,7 +5,7 @@
     "issuerKey": "certifications.names.awsSAA.issuer",
     "issueDate": "2023-06-15",
     "credentialUrl": "https://www.credly.com/badges/example-aws-saa",
-    "badgeImage": "/assets/certs/aws-solutions-architect.svg",
+    "badgeImage": "/assets/images/aws-solutions-architect.svg",
     "altKey": "certifications.names.awsSAA.alt"
   }
 ]
