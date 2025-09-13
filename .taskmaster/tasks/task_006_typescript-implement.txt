@@ -1,6 +1,6 @@
 # Task ID: 6
 # Title: Convert Client-Side JavaScript to TypeScript
-# Status: pending
+# Status: done
 # Dependencies: 1, 2
 # Priority: medium
 # Description: Migrate browser-side JavaScript files to TypeScript with proper DOM type definitions and event handling types.
@@ -94,3 +94,116 @@ document.addEventListener('DOMContentLoaded', () => {
 
 # Test Strategy:
 Test client-side TypeScript by running the build process and checking that the JavaScript files are correctly generated. Manually test the website in different browsers to ensure all interactive features work as expected. Use browser developer tools to check for any JavaScript errors. Consider adding automated browser tests with tools like Cypress or Playwright to verify client-side functionality.
+
+# Subtasks:
+## 1. Set Up Client-Side TypeScript Configuration and Build Scripts [done]
+### Dependencies: None
+### Description: Create a dedicated tsconfig file for client-side code, establish a source directory for TypeScript files, and add the necessary build and watch scripts to package.json.
+### Details:
+1. Create a new directory `src/client` to house the client-side TypeScript source files.
+2. Create a `tsconfig.client.json` file in the project root with a configuration optimized for browsers. This file should extend the base `tsconfig.json` but override `target`, `module`, and `outDir`.
+```json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "outDir": "public/assets/js",
+    "rootDir": "src/client"
+  },
+  "include": ["src/client/**/*.ts"]
+}
+```
+3. Update `package.json` to add scripts for compiling the client-side TypeScript.
+```json
+"scripts": {
+  // ... existing scripts
+  "build:client": "tsc -p tsconfig.client.json",
+  "watch:client": "tsc -p tsconfig.client.json --watch"
+}
+```
+
+## 2. Migrate `main.js` to `src/client/main.ts` [done]
+### Dependencies: 6.1
+### Description: Move the existing `main.js` logic to a new TypeScript file, `src/client/main.ts`, and apply strong types for DOM elements and events related to navigation.
+### Details:
+1. Create the file `src/client/main.ts`.
+2. Copy the content from `public/assets/js/main.js` into the new file.
+3. Convert the JavaScript code to TypeScript. Use type assertions or guards to ensure DOM elements are not null.
+```typescript
+// src/client/main.ts
+document.addEventListener('DOMContentLoaded', () => {
+  const navToggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const navMenu = document.querySelector<HTMLElement>('.nav-menu');
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', (e: MouseEvent) => {
+      e.preventDefault();
+      navMenu.classList.toggle('is-active');
+      navToggle.classList.toggle('is-active');
+    });
+  }
+});
+```
+4. The original `public/assets/js/main.js` should be removed after migration is complete in a later subtask, but can be kept for reference for now.
+
+## 3. Migrate `theme-switcher.js` to `src/client/theme-switcher.ts` [done]
+### Dependencies: 6.1
+### Description: Move the theme switching logic to a new TypeScript file, `src/client/theme-switcher.ts`, and add types for the theme switcher input element, its event, and interactions with localStorage.
+### Details:
+1. Create the file `src/client/theme-switcher.ts`.
+2. Copy the content from `public/assets/js/theme-switcher.js` into the new file.
+3. Convert the IIFE to a modern TypeScript module or a simple script scope. Add appropriate types.
+```typescript
+// src/client/theme-switcher.ts
+const themeSwitcher = document.querySelector<HTMLInputElement>('[data-theme-switcher]');
+
+if (themeSwitcher) {
+  const currentTheme = localStorage.getItem('theme') ?? 'light';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  themeSwitcher.checked = currentTheme === 'dark';
+
+  themeSwitcher.addEventListener('change', (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    const theme = target.checked ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  });
+}
+```
+
+## 4. Integrate Client-Side Build into Eleventy Workflow [done]
+### Dependencies: 6.1
+### Description: Update the main `build` and `start` scripts in `package.json` to automatically compile client-side TypeScript as part of the Eleventy development and production build processes.
+### Details:
+1. Install `npm-run-all` to run scripts concurrently and sequentially.
+`npm install npm-run-all --save-dev`
+2. Modify the `start` and `build` scripts in `package.json` to incorporate the client-side TypeScript compilation.
+```json
+"scripts": {
+  "start": "npm-run-all --parallel watch:*",
+  "watch:eleventy": "eleventy --serve",
+  "watch:client": "tsc -p tsconfig.client.json --watch",
+  "build": "npm-run-all build:client build:eleventy",
+  "build:eleventy": "eleventy",
+  "build:client": "tsc -p tsconfig.client.json",
+  "type-check": "tsc --noEmit"
+}
+```
+This ensures that client-side TypeScript is watched for changes during development and built before the production Eleventy build.
+
+## 5. Finalize Integration and Clean Up Project [done]
+### Dependencies: 6.2, 6.3, 6.4
+### Description: Ensure HTML templates reference the compiled JavaScript files, remove the original source JavaScript files from the `public` directory, and update `.gitignore`.
+### Details:
+1. Verify that the `<script>` tags in `src/_includes/layouts/base.njk` (or other relevant templates) correctly point to the compiled files in `/assets/js/` (e.g., `<script src="/assets/js/main.js" defer></script>`). No changes should be needed if the output filenames are the same.
+2. Delete the original JavaScript source files from `public/assets/js/` that have now been migrated to `src/client/` (e.g., `public/assets/js/main.js`, `public/assets/js/theme-switcher.js`). The directory `public/assets/js` should now be considered a build target.
+3. Add the client-side build output directory to `.gitignore` to prevent compiled files from being committed to version control.
+```
+# .gitignore
+
+# Build output
+/public/assets/js/
+```
+

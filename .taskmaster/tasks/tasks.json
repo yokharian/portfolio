@@ -1120,8 +1120,64 @@
           1,
           2
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up Client-Side TypeScript Configuration and Build Scripts",
+            "description": "Create a dedicated tsconfig file for client-side code, establish a source directory for TypeScript files, and add the necessary build and watch scripts to package.json.",
+            "dependencies": [],
+            "details": "1. Create a new directory `src/client` to house the client-side TypeScript source files.\n2. Create a `tsconfig.client.json` file in the project root with a configuration optimized for browsers. This file should extend the base `tsconfig.json` but override `target`, `module`, and `outDir`.\n```json\n{\n  \"extends\": \"./tsconfig.json\",\n  \"compilerOptions\": {\n    \"target\": \"ES2015\",\n    \"module\": \"ESNext\",\n    \"lib\": [\"DOM\", \"DOM.Iterable\", \"ESNext\"],\n    \"outDir\": \"public/assets/js\",\n    \"rootDir\": \"src/client\"\n  },\n  \"include\": [\"src/client/**/*.ts\"]\n}\n```\n3. Update `package.json` to add scripts for compiling the client-side TypeScript.\n```json\n\"scripts\": {\n  // ... existing scripts\n  \"build:client\": \"tsc -p tsconfig.client.json\",\n  \"watch:client\": \"tsc -p tsconfig.client.json --watch\"\n}\n```",
+            "status": "done",
+            "testStrategy": "Run `npm run build:client` and verify that the `public/assets/js` directory is created (if it doesn't exist) and that no errors are reported. Since there are no TS files yet, this will just validate the configuration."
+          },
+          {
+            "id": 2,
+            "title": "Migrate `main.js` to `src/client/main.ts`",
+            "description": "Move the existing `main.js` logic to a new TypeScript file, `src/client/main.ts`, and apply strong types for DOM elements and events related to navigation.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "1. Create the file `src/client/main.ts`.\n2. Copy the content from `public/assets/js/main.js` into the new file.\n3. Convert the JavaScript code to TypeScript. Use type assertions or guards to ensure DOM elements are not null.\n```typescript\n// src/client/main.ts\ndocument.addEventListener('DOMContentLoaded', () => {\n  const navToggle = document.querySelector<HTMLButtonElement>('.nav-toggle');\n  const navMenu = document.querySelector<HTMLElement>('.nav-menu');\n\n  if (navToggle && navMenu) {\n    navToggle.addEventListener('click', (e: MouseEvent) => {\n      e.preventDefault();\n      navMenu.classList.toggle('is-active');\n      navToggle.classList.toggle('is-active');\n    });\n  }\n});\n```\n4. The original `public/assets/js/main.js` should be removed after migration is complete in a later subtask, but can be kept for reference for now.",
+            "status": "done",
+            "testStrategy": "Run `npm run build:client`. Verify that `public/assets/js/main.js` is generated without any TypeScript errors. Open the website and confirm that the mobile navigation toggle works as expected."
+          },
+          {
+            "id": 3,
+            "title": "Migrate `theme-switcher.js` to `src/client/theme-switcher.ts`",
+            "description": "Move the theme switching logic to a new TypeScript file, `src/client/theme-switcher.ts`, and add types for the theme switcher input element, its event, and interactions with localStorage.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "1. Create the file `src/client/theme-switcher.ts`.\n2. Copy the content from `public/assets/js/theme-switcher.js` into the new file.\n3. Convert the IIFE to a modern TypeScript module or a simple script scope. Add appropriate types.\n```typescript\n// src/client/theme-switcher.ts\nconst themeSwitcher = document.querySelector<HTMLInputElement>('[data-theme-switcher]');\n\nif (themeSwitcher) {\n  const currentTheme = localStorage.getItem('theme') ?? 'light';\n  document.documentElement.setAttribute('data-theme', currentTheme);\n  themeSwitcher.checked = currentTheme === 'dark';\n\n  themeSwitcher.addEventListener('change', (e: Event) => {\n    const target = e.target as HTMLInputElement;\n    const theme = target.checked ? 'dark' : 'light';\n    document.documentElement.setAttribute('data-theme', theme);\n    localStorage.setItem('theme', theme);\n  });\n}\n```",
+            "status": "done",
+            "testStrategy": "Run `npm run build:client`. Check that `public/assets/js/theme-switcher.js` is generated. Open the website, test the theme switcher toggle, and verify that the theme persists across page reloads by checking `localStorage` in the browser's developer tools."
+          },
+          {
+            "id": 4,
+            "title": "Integrate Client-Side Build into Eleventy Workflow",
+            "description": "Update the main `build` and `start` scripts in `package.json` to automatically compile client-side TypeScript as part of the Eleventy development and production build processes.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "1. Install `npm-run-all` to run scripts concurrently and sequentially.\n`npm install npm-run-all --save-dev`\n2. Modify the `start` and `build` scripts in `package.json` to incorporate the client-side TypeScript compilation.\n```json\n\"scripts\": {\n  \"start\": \"npm-run-all --parallel watch:*\",\n  \"watch:eleventy\": \"eleventy --serve\",\n  \"watch:client\": \"tsc -p tsconfig.client.json --watch\",\n  \"build\": \"npm-run-all build:client build:eleventy\",\n  \"build:eleventy\": \"eleventy\",\n  \"build:client\": \"tsc -p tsconfig.client.json\",\n  \"type-check\": \"tsc --noEmit\"\n}\n```\nThis ensures that client-side TypeScript is watched for changes during development and built before the production Eleventy build.",
+            "status": "done",
+            "testStrategy": "Run `npm start`. Make a change to a `.ts` file in `src/client/` and verify that the `tsc` watcher recompiles it. Run `npm run build` and verify that both the client-side assets and the Eleventy site are built correctly."
+          },
+          {
+            "id": 5,
+            "title": "Finalize Integration and Clean Up Project",
+            "description": "Ensure HTML templates reference the compiled JavaScript files, remove the original source JavaScript files from the `public` directory, and update `.gitignore`.",
+            "dependencies": [
+              "6.2",
+              "6.3",
+              "6.4"
+            ],
+            "details": "1. Verify that the `<script>` tags in `src/_includes/layouts/base.njk` (or other relevant templates) correctly point to the compiled files in `/assets/js/` (e.g., `<script src=\"/assets/js/main.js\" defer></script>`). No changes should be needed if the output filenames are the same.\n2. Delete the original JavaScript source files from `public/assets/js/` that have now been migrated to `src/client/` (e.g., `public/assets/js/main.js`, `public/assets/js/theme-switcher.js`). The directory `public/assets/js` should now be considered a build target.\n3. Add the client-side build output directory to `.gitignore` to prevent compiled files from being committed to version control.\n```\n# .gitignore\n\n# Build output\n/public/assets/js/\n```",
+            "status": "done",
+            "testStrategy": "After running `npm run build`, delete the `public/assets/js` directory and run `npm run build` again to ensure it's fully regenerated. Check the git status to confirm that the generated `public/assets/js` files are ignored. Perform a final manual test of the deployed site to ensure all functionality is intact."
+          }
+        ]
       },
       {
         "id": 7,
@@ -1189,7 +1245,7 @@
     ],
     "metadata": {
       "created": "2025-09-13T04:08:00.503Z",
-      "updated": "2025-09-13T19:52:46.885Z",
+      "updated": "2025-09-13T20:30:35.600Z",
       "description": "Tasks for typescript-implement context"
     }
   }

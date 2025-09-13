@@ -53,6 +53,7 @@
   "exclude": [
     "node_modules",
     "_site",
-    ".cache/tsbuild"
+    ".cache/tsbuild",
+    "public/assets/js"
   ]
 }
