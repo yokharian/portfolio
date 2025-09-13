@@ -42,11 +42,13 @@
   },
   "include": [
     "src/**/*",
+    "src/data/**/*.ts",
     "scripts/**/*",
     "public/**/*",
     ".eleventy.*",
     "*.config.*",
-    "tailwind.config.*"
+    "tailwind.config.*",
+    "types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules",

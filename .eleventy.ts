@@ -1,4 +1,33 @@
 // TypeScript definitions for Eleventy configuration
+// Inline type definitions to avoid module resolution issues
+
+// Frontmatter type definitions
+interface PostFrontmatter {
+  title: string;
+  date: string;
+  tags: string[];
+  description?: string;
+  featured?: boolean;
+  image?: string;
+  lang: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+interface ProjectFrontmatter {
+  title: string;
+  description: string;
+  startDate: string;
+  endDate?: string;
+  featured?: boolean;
+  order?: number;
+  lang: string;
+  image?: string;
+  technologies?: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+}
+
 interface EleventyConfig {
   addPassthroughCopy(input: string | Record<string, string>): void;
   setLibrary(name: string, library: any): void;
@@ -14,12 +43,12 @@ interface CollectionApi {
 
 interface EleventyItem {
   data: {
-    [key: string]: any;
     tags?: string[];
     startDate?: string | Date;
     date?: string | Date;
     featured?: boolean;
     order?: number;
+    [key: string]: any;
   };
   date: string | Date;
   url?: string;
@@ -123,8 +152,10 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
     const items = collectionApi.getFilteredByGlob("blog_posts/**/*.md");
     // Sort by startDate (desc) if present, otherwise by date
     return items.sort((a, b) => {
-      const aDate = new Date(a.data.startDate || a.date);
-      const bDate = new Date(b.data.startDate || b.date);
+      const aData = a.data as PostFrontmatter;
+      const bData = b.data as PostFrontmatter;
+      const aDate = new Date(aData.startDate || a.date);
+      const bDate = new Date(bData.startDate || b.date);
       return bDate.getTime() - aDate.getTime();
     });
   });
@@ -148,14 +179,21 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
   eleventyConfig.addCollection("featured_projects", (collectionApi) => {
     const items = collectionApi
       .getFilteredByGlob("content/projects/**/*.md")
-      .filter((item) => !!(item?.data?.featured));
+      .filter((item) => {
+        const data = item.data as ProjectFrontmatter;
+        return !!(data?.featured);
+      });
 
     const getOrder = (item: any): number | null => {
-      const val = item?.data?.order;
+      const data = item.data as ProjectFrontmatter;
+      const val = data?.order;
       const num = val === undefined ? null : Number(val);
       return Number.isFinite(num) ? num : null;
     };
-    const getDate = (item: any): Date => new Date(item?.data?.startDate || item.date);
+    const getDate = (item: any): Date => {
+      const data = item.data as ProjectFrontmatter;
+      return new Date(data?.startDate || item.date);
+    };
 
     items.sort((a, b) => {
       const ao = getOrder(a);

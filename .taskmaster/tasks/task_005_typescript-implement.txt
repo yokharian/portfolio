@@ -1,6 +1,6 @@
 # Task ID: 5
 # Title: Migrate Data Configuration Files to TypeScript
-# Status: pending
+# Status: done
 # Dependencies: 2, 4
 # Priority: medium
 # Description: Convert site.js data file to TypeScript and create type definitions for JSON data files (i18n.json, certifications.json).
@@ -95,3 +95,35 @@ eleventyConfig.addPlugin(eleventyPluginTypescript);
 
 # Test Strategy:
 Validate data files by running a build and checking that the data is correctly loaded into Eleventy. Create test templates that use the data to ensure it's properly typed and accessible. Verify that JSON data files are correctly typed by importing them in TypeScript files and checking for type errors.
+
+# Subtasks:
+## 1. Install and Configure Eleventy TypeScript Plugin [in-progress]
+### Dependencies: None
+### Description: Install the necessary Eleventy plugin to process TypeScript data files and add it to the Eleventy configuration.
+### Details:
+Run `npm install --save-dev @11ty/eleventy-plugin-typescript`. Then, edit the existing `.eleventy.ts` configuration file. Import the plugin using `import eleventyPluginTypescript from '@11ty/eleventy-plugin-typescript';` and register it within the main configuration function by adding `eleventyConfig.addPlugin(eleventyPluginTypescript);`. This will enable Eleventy to recognize and compile `.ts` files in the `_data` directory.
+
+## 2. Convert site.js Data File to site.ts [done]
+### Dependencies: 5.1
+### Description: Migrate the existing `src/_data/site.js` file to a new TypeScript file `src/_data/site.ts`, including a corresponding interface for type safety.
+### Details:
+Create a new file `src/_data/site.ts`. Inside this file, define a `SiteConfig` interface based on the structure of the existing `site.js`. Create a `siteConfig` constant typed with this interface, populating it with the data from `site.js`. Export the constant using `module.exports = siteConfig;`. Finally, delete the original `src/_data/site.js` file.
+
+## 3. Create Type Definitions for JSON Data Files [done]
+### Dependencies: None
+### Description: Create a new declaration file to define TypeScript interfaces for the `certifications.json` and `i18n.json` data files.
+### Details:
+Create a new directory `types`. Inside it, create a file named `data.d.ts`. In this file, define and export an `I18nData` interface matching the structure of `src/_data/i18n.json`. Also, define and export a `Certification` interface for the objects within the `src/_data/certifications.json` array. The full type for the certifications data will be `Certification[]`.
+
+## 4. Create Type Definitions for Frontmatter Schemas [done]
+### Dependencies: None
+### Description: Create a new declaration file to define TypeScript interfaces for common frontmatter schemas used in posts and pages.
+### Details:
+Create a new file `types/frontmatter.d.ts`. In this file, define and export a `PostFrontmatter` interface for blog posts and a `PageFrontmatter` interface for general content pages. These interfaces should include common fields like `title`, `date`, `tags`, `layout`, and `lang` as specified in the task description.
+
+## 5. Update tsconfig.json and Verify Type Integration [in-progress]
+### Dependencies: 5.2, 5.3, 5.4
+### Description: Update the `tsconfig.json` to include the new TypeScript files and types, then verify that the new types are correctly applied and recognized by the toolchain.
+### Details:
+Modify the `include` array in `tsconfig.json` to add `'src/_data/**/*.ts'` and `'types/**/*.d.ts'`. To verify, open `.eleventy.ts` and import one of the newly created types, for example, `import { PostFrontmatter } from './types/frontmatter';`. Use this type within a collection definition, such as `eleventyConfig.addCollection('posts', collectionApi => { const posts = collectionApi.getFilteredByTag('post'); return posts.map(post => { const typedData = post.data as PostFrontmatter; /* ... */ }); });`. Running `tsc --noEmit` should pass without errors.
+
