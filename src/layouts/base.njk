@@ -6,6 +6,7 @@
     <title>{{ title or site.title }}</title>
     <meta name="description" content="{{ description or site.description }}">
     <link rel="stylesheet" href="/assets/styles.css">
+    {% block headExtra %}{% endblock %}
   </head>
   <body class="min-h-screen bg-slate-50 text-slate-800 antialiased">
     {% include "partials/header.njk" %}

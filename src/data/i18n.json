@@ -1,0 +1,16 @@
+{
+  "en": {
+    "hero": {
+      "title": "Python & AWS Solutions Architect",
+      "subtitle": "I design, build, and scale data-intensive systems in the cloud.",
+      "cta": "View Projects"
+    }
+  },
+  "es": {
+    "hero": {
+      "title": "Arquitecta de Soluciones Python y AWS",
+      "subtitle": "Diseño, construyo y escalo sistemas intensivos en datos en la nube.",
+      "cta": "Ver Proyectos"
+    }
+  }
+}

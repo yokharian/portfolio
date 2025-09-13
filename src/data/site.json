@@ -1,10 +1,5 @@
 {
-  "name": "Sofia Escobedo",
-  "tagline": "Python · AWS",
-  "calendly": "https://calendly.com/your-calendly/30min",
-  "github": "https://github.com/yokharian",
-  "linkedin": "https://www.linkedin.com/in/sofia-escobedo/",
-  "email": "mailto:hello@sofia.escobedo.mx",
-  "siteTitle": "Sofia Escobedo · Python · AWS",
-  "defaultDescription": "Portfolio showcasing real-world Python and AWS projects, certifications, and experience."
+  "title": "Sofia Ramirez — Portfolio",
+  "description": "Portfolio of Sofia Ramirez: Python and AWS solutions architect.",
+  "defaultLanguage": "en"
 }

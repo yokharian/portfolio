@@ -1,6 +1,7 @@
 const { filterByLanguage, normalizeLang } = require('./src/utils/language');
 const { formatMonthYear, formatRange, relativeFrom, presentLabel } = require('./src/utils/dates');
 const { createMd } = require('./src/utils/markdown');
+const { t: translate } = require('./src/utils/i18n');
 
 module.exports = function (eleventyConfig) {
   // Copy everything in public/ to the site root
@@ -33,6 +34,15 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.addNunjucksFilter('presentLabel', function (lang = 'en') {
     return presentLabel(lang);
+  });
+
+  // i18n translation filter
+  eleventyConfig.addNunjucksFilter('t', function (key, lang = 'en', vars = {}) {
+    try {
+      return translate(key, lang, vars);
+    } catch (e) {
+      return '';
+    }
   });
 
   // Helper filter to pick items by language in templates
