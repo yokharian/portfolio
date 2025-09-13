@@ -33,6 +33,7 @@
     ],
     "incremental": true,
     "tsBuildInfoFile": ".cache/tsbuild/tsconfig.tsbuildinfo",
+    "composite": true,
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
