@@ -263,9 +263,12 @@ dev-debug.log
 *.sw?
 # OS specific
 
-# Task files
 !tasks.json
 !.taskmaster/tasks/
 
 # 11ty build output
 _site/
+
+# Task files
+tasks.json
+tasks/ 
