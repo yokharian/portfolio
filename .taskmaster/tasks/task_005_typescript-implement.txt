@@ -1,0 +1,97 @@
+# Task ID: 5
+# Title: Migrate Data Configuration Files to TypeScript
+# Status: pending
+# Dependencies: 2, 4
+# Priority: medium
+# Description: Convert site.js data file to TypeScript and create type definitions for JSON data files (i18n.json, certifications.json).
+# Details:
+1. Convert site.js to site.ts:
+
+```typescript
+// src/_data/site.ts
+interface SiteConfig {
+  title: string;
+  description: string;
+  url: string;
+  author: {
+    name: string;
+    email: string;
+  };
+  buildTime: Date;
+  [key: string]: any;
+}
+
+const siteConfig: SiteConfig = {
+  title: 'Portfolio Website',
+  description: 'Personal portfolio and blog',
+  url: 'https://example.com',
+  author: {
+    name: 'Developer Name',
+    email: 'dev@example.com'
+  },
+  buildTime: new Date()
+};
+
+module.exports = siteConfig;
+```
+
+2. Create type definitions for JSON data files:
+
+```typescript
+// types/data.d.ts
+export interface Certification {
+  title: string;
+  issuer: string;
+  date: string;
+  url?: string;
+  skills: string[];
+}
+
+export interface I18nData {
+  languages: {
+    [code: string]: {
+      name: string;
+      nativeName: string;
+    };
+  };
+  defaultLanguage: string;
+}
+```
+
+3. Create TypeScript interfaces for frontmatter schemas:
+
+```typescript
+// types/frontmatter.d.ts
+export interface PostFrontmatter {
+  title: string;
+  date: string;
+  tags: string[];
+  description?: string;
+  featured?: boolean;
+  image?: string;
+  lang: string;
+}
+
+export interface PageFrontmatter {
+  title: string;
+  layout: string;
+  permalink: string;
+  lang: string;
+  [key: string]: any;
+}
+```
+
+4. Update the build process to handle TypeScript data files:
+
+```bash
+npm install --save-dev @11ty/eleventy-plugin-typescript
+```
+
+Add to .eleventy.ts:
+```typescript
+const eleventyPluginTypescript = require('@11ty/eleventy-plugin-typescript');
+eleventyConfig.addPlugin(eleventyPluginTypescript);
+```
+
+# Test Strategy:
+Validate data files by running a build and checking that the data is correctly loaded into Eleventy. Create test templates that use the data to ensure it's properly typed and accessible. Verify that JSON data files are correctly typed by importing them in TypeScript files and checking for type errors.

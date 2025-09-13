@@ -1,0 +1,61 @@
+# Task ID: 1
+# Title: Set up TypeScript and Initial Configuration
+# Status: in-progress
+# Dependencies: None
+# Priority: high
+# Description: Install TypeScript and related dependencies, create tsconfig.json with appropriate compiler options, and set up the initial build process integration.
+# Details:
+1. Install required dependencies:
+```bash
+npm install --save-dev typescript @types/node ts-node
+```
+2. Create a tsconfig.json file with the following configuration:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    },
+    "sourceMap": true
+  },
+  "include": ["src/**/*", ".eleventy.ts", "public/assets/js/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+3. Update package.json to include TypeScript compilation scripts:
+```json
+"scripts": {
+  "build:ts": "tsc",
+  "dev:ts": "tsc --watch",
+  "type-check": "tsc --noEmit"
+}
+```
+4. Create a types directory with an initial index.d.ts file for shared type definitions.
+<info added on 2025-09-13T04:36:13.332Z>
+5. Verified all required devDependencies are installed:
+   - typescript
+   - ts-node
+   - @types/node
+
+6. Confirmed tsconfig.json has appropriate strict settings and incremental build configuration.
+
+7. Noted that scripts are already configured to preload ts-node/register for Eleventy in development and build processes.
+
+8. Next steps:
+   - Run `npm run type-check` to verify TypeScript configuration
+   - Create a simple .ts file and test the build process
+   - Create the types/ directory with an initial index.d.ts file for shared type definitions if not already present
+</info added on 2025-09-13T04:36:13.332Z>
+
+# Test Strategy:
+Verify TypeScript installation by running 'npx tsc --version'. Validate tsconfig.json by running 'npm run type-check' and ensuring it completes without errors. Test the build process by creating a simple .ts file and confirming it compiles correctly.

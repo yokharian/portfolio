@@ -1,0 +1,89 @@
+# Task ID: 2
+# Title: Create Core Type Definitions
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Define shared TypeScript interfaces and types for project metadata, frontmatter, internationalization, date formatting, and content processing.
+# Details:
+Create the following type definition files in the types/ directory:
+
+1. `types/eleventy.d.ts` - Eleventy-specific types:
+```typescript
+export interface EleventyConfig {
+  addPassthroughCopy: (path: string) => void;
+  addFilter: (name: string, fn: Function) => void;
+  addCollection: (name: string, fn: Function) => EleventyCollection;
+  // Add other Eleventy methods as needed
+}
+
+export interface EleventyCollection {
+  getAll: () => CollectionItem[];
+  getAllSorted: () => CollectionItem[];
+  // Add other collection methods as needed
+}
+
+export interface CollectionItem {
+  data: {
+    title: string;
+    date: Date;
+    tags?: string[];
+    [key: string]: any;
+  };
+  url: string;
+  inputPath: string;
+  outputPath: string;
+  // Add other properties as needed
+}
+```
+
+2. `types/content.d.ts` - Content and frontmatter types:
+```typescript
+export interface Frontmatter {
+  title: string;
+  date: string | Date;
+  tags?: string[];
+  lang?: string;
+  description?: string;
+  [key: string]: any;
+}
+
+export interface ContentItem {
+  data: Frontmatter;
+  content: string;
+  [key: string]: any;
+}
+```
+
+3. `types/i18n.d.ts` - Internationalization types:
+```typescript
+export interface TranslationDictionary {
+  [key: string]: string | TranslationDictionary;
+}
+
+export interface I18nConfig {
+  defaultLanguage: string;
+  languages: string[];
+  translations: {
+    [language: string]: TranslationDictionary;
+  };
+}
+```
+
+4. `types/utils.d.ts` - Utility function types:
+```typescript
+export interface DateFormatOptions {
+  format?: string;
+  locale?: string;
+}
+
+export interface ContentFilterOptions {
+  tag?: string | string[];
+  language?: string;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+```
+
+# Test Strategy:
+Validate type definitions by creating test files that import and use these types. Run TypeScript compiler with 'npm run type-check' to ensure there are no type errors. Create sample objects that implement these interfaces and verify they match the expected structure.

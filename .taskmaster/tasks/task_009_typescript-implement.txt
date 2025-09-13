@@ -1,0 +1,114 @@
+# Task ID: 9
+# Title: Implement TypeScript Integration with Test Suite
+# Status: pending
+# Dependencies: 3, 4, 6
+# Priority: medium
+# Description: Update test scripts to work with TypeScript and integrate type checking into the test suite.
+# Details:
+1. Install testing dependencies:
+
+```bash
+npm install --save-dev jest ts-jest @types/jest
+```
+
+2. Create Jest configuration for TypeScript:
+
+```typescript
+// jest.config.ts
+import type { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  roots: ['<rootDir>/src'],
+  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
+  transform: {
+    '^.+\\.ts$': 'ts-jest'
+  },
+  moduleFileExtensions: ['ts', 'js', 'json'],
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov']
+};
+
+export default config;
+```
+
+3. Update existing test files to use TypeScript:
+
+```typescript
+// src/utils/__tests__/dates.test.ts
+import { formatDate, isValidDate } from '../dates';
+
+describe('Date utilities', () => {
+  test('formatDate formats dates correctly', () => {
+    const date = new Date('2023-01-15');
+    expect(formatDate(date, { format: 'yyyy-MM-dd' })).toBe('2023-01-15');
+    expect(formatDate('2023-01-15', { format: 'MM/dd/yyyy' })).toBe('01/15/2023');
+  });
+
+  test('isValidDate validates dates correctly', () => {
+    expect(isValidDate(new Date('2023-01-15'))).toBe(true);
+    expect(isValidDate(new Date('invalid'))).toBe(false);
+    expect(isValidDate('not a date')).toBe(false);
+  });
+});
+```
+
+4. Create a script to run type checking as part of the test process:
+
+```typescript
+// scripts/test-with-types.ts
+import { execSync } from 'child_process';
+
+try {
+  // Run type checking
+  console.log('Running type checking...');
+  execSync('npx tsc --noEmit', { stdio: 'inherit' });
+  
+  // Run tests if type checking passes
+  console.log('\nRunning tests...');
+  execSync('npx jest', { stdio: 'inherit' });
+} catch (error) {
+  process.exit(1);
+}
+```
+
+5. Update package.json scripts:
+
+```json
+"scripts": {
+  "test": "ts-node scripts/test-with-types.ts",
+  "test:unit": "jest",
+  "test:types": "tsc --noEmit"
+}
+```
+
+6. Set up CI integration in a .github/workflows/ci.yml file (if using GitHub Actions):
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+    - run: npm ci
+    - run: npm run test:types
+    - run: npm run test:unit
+    - run: npm run build
+```
+
+# Test Strategy:
+Run the test suite with 'npm test' and verify that both type checking and unit tests are executed. Introduce intentional type errors and test failures to confirm that the process correctly identifies and reports issues. Check that test coverage reports are generated correctly. Verify that the CI configuration works by pushing to a test branch or creating a pull request.

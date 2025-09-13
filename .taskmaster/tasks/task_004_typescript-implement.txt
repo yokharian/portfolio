@@ -1,0 +1,74 @@
+# Task ID: 4
+# Title: Convert Eleventy Configuration to TypeScript
+# Status: pending
+# Dependencies: 2, 3
+# Priority: high
+# Description: Migrate the .eleventy.js configuration file to TypeScript with proper type definitions and ensure compatibility with the Eleventy build process.
+# Details:
+1. Create a new .eleventy.ts file with the following structure:
+
+```typescript
+import { EleventyConfig } from './types/eleventy';
+
+// Import utility functions
+import { formatDate } from './src/utils/dates';
+import { translate } from './src/utils/i18n';
+// Import other utilities as needed
+
+module.exports = function(eleventyConfig: EleventyConfig) {
+  // Add passthrough copy
+  eleventyConfig.addPassthroughCopy('src/assets');
+  
+  // Add filters
+  eleventyConfig.addFilter('formatDate', formatDate);
+  eleventyConfig.addFilter('translate', translate);
+  
+  // Add collections
+  eleventyConfig.addCollection('posts', (collection) => {
+    return collection.getAll().filter(item => {
+      return item.data.tags && item.data.tags.includes('post');
+    });
+  });
+  
+  // Return configuration object
+  return {
+    dir: {
+      input: 'src',
+      output: 'dist',
+      includes: '_includes',
+      layouts: '_layouts',
+      data: '_data'
+    },
+    templateFormats: ['njk', 'md', 'html'],
+    markdownTemplateEngine: 'njk',
+    htmlTemplateEngine: 'njk',
+    dataTemplateEngine: 'njk'
+  };
+};
+```
+
+2. Update package.json scripts to use the TypeScript configuration:
+
+```json
+"scripts": {
+  "build": "npm run build:ts && eleventy --config=.eleventy.ts",
+  "dev": "concurrently \"npm run dev:ts\" \"eleventy --config=.eleventy.ts --serve --watch\""
+}
+```
+
+3. Install required dependencies for Eleventy to work with TypeScript:
+
+```bash
+npm install --save-dev ts-node @types/eleventy
+```
+
+4. Create a .eleventy.js wrapper file if needed for compatibility:
+
+```javascript
+// This file is just a wrapper to load the TypeScript configuration
+require('ts-node').register();
+module.exports = require('./.eleventy.ts');
+```
+
+# Test Strategy:
+Test the Eleventy configuration by running a build with 'npx eleventy --config=.eleventy.ts'. Verify that all collections, filters, and other configuration options work as expected. Compare the output with the previous JavaScript-based build to ensure consistency. Check that all TypeScript types are properly resolved without any 'any' types.

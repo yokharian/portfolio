@@ -1,0 +1,97 @@
+# Task ID: 7
+# Title: Integrate TypeScript with Tailwind CSS Configuration
+# Status: pending
+# Dependencies: 1, 4
+# Priority: medium
+# Description: Configure Tailwind CSS to work with TypeScript files and update the build process for integrated compilation.
+# Details:
+1. Convert tailwind.config.js to tailwind.config.ts:
+
+```typescript
+// tailwind.config.ts
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './src/**/*.{html,njk,md,ts,js}',
+    './public/assets/js/**/*.ts'
+  ],
+  theme: {
+    extend: {
+      // Your theme extensions
+    },
+  },
+  plugins: [
+    // Your plugins
+  ],
+};
+
+export default config;
+```
+
+2. Install required dependencies:
+
+```bash
+npm install --save-dev @types/tailwindcss
+```
+
+3. Update PostCSS configuration if needed:
+
+```typescript
+// postcss.config.ts
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
+
+4. Create a CSS processing script that works with TypeScript:
+
+```typescript
+// scripts/build-css.ts
+import * as fs from 'fs';
+import * as path from 'path';
+import postcss from 'postcss';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
+async function buildCss() {
+  const inputFile = path.resolve(__dirname, '../src/assets/css/main.css');
+  const outputFile = path.resolve(__dirname, '../dist/assets/css/main.css');
+  
+  const css = fs.readFileSync(inputFile, 'utf-8');
+  
+  const result = await postcss([
+    tailwindcss,
+    autoprefixer
+  ]).process(css, {
+    from: inputFile,
+    to: outputFile
+  });
+  
+  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+  fs.writeFileSync(outputFile, result.css);
+  
+  console.log('CSS built successfully');
+}
+
+buildCss().catch(error => {
+  console.error('Error building CSS:', error);
+  process.exit(1);
+});
+```
+
+5. Update package.json scripts to include CSS processing:
+
+```json
+"scripts": {
+  "build:css": "ts-node scripts/build-css.ts",
+  "dev:css": "npm run build:css -- --watch",
+  "build": "npm run build:ts && npm run build:css && npm run build:eleventy"
+}
+```
+
+# Test Strategy:
+Test the Tailwind CSS integration by running the build process and verifying that CSS is correctly generated with all the expected Tailwind utilities. Check that the CSS correctly processes classes used in TypeScript files. Verify that the watch mode works correctly during development. Test the final output in different browsers to ensure CSS is applied correctly.
