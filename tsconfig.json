@@ -46,6 +46,7 @@
     "src/**/*",
     "src/data/**/*.ts",
     "src/scripts/**/*",
+    "src/tests/**/*",
     "src/public/**/*",
     ".eleventy.*",
     "*.config.*",
@@ -57,6 +58,6 @@
     "node_modules",
     "_site",
     ".cache/tsbuild",
-    "src/public/assets/js"
+    "src/assets/js"
   ]
 }

@@ -270,8 +270,8 @@ dev-debug.log
 _site/
 
 # Compiled client-side JavaScript
-src/public/assets/js/*.js
-src/public/assets/js/*.map
+src/assets/js/*.js
+src/assets/js/*.map
 
 # Compiled client-side CSS
-src/public/assets/css/*.css
+src/assets/css/*.css

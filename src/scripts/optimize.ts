@@ -19,7 +19,7 @@ function checkImplicitAnyTypes(): void {
 function checkBundleSizes(): void {
   console.log('\n📦 Checking JavaScript bundle sizes...\n');
 
-  const jsDir = path.resolve(process.cwd(), 'src/public/assets/js');
+  const jsDir = path.resolve(process.cwd(), 'src/assets/js');
   
   if (!fs.existsSync(jsDir)) {
     console.log('⚠️  JavaScript output directory not found. Run build first.');

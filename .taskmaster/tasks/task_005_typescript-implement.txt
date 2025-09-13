@@ -97,7 +97,7 @@ eleventyConfig.addPlugin(eleventyPluginTypescript);
 Validate data files by running a build and checking that the data is correctly loaded into Eleventy. Create test templates that use the data to ensure it's properly typed and accessible. Verify that JSON data files are correctly typed by importing them in TypeScript files and checking for type errors.
 
 # Subtasks:
-## 1. Install and Configure Eleventy TypeScript Plugin [in-progress]
+## 1. Install and Configure Eleventy TypeScript Plugin [done]
 ### Dependencies: None
 ### Description: Install the necessary Eleventy plugin to process TypeScript data files and add it to the Eleventy configuration.
 ### Details:
@@ -121,7 +121,7 @@ Create a new directory `types`. Inside it, create a file named `data.d.ts`. In t
 ### Details:
 Create a new file `types/frontmatter.d.ts`. In this file, define and export a `PostFrontmatter` interface for blog posts and a `PageFrontmatter` interface for general content pages. These interfaces should include common fields like `title`, `date`, `tags`, `layout`, and `lang` as specified in the task description.
 
-## 5. Update tsconfig.json and Verify Type Integration [in-progress]
+## 5. Update tsconfig.json and Verify Type Integration [done]
 ### Dependencies: 5.2, 5.3, 5.4
 ### Description: Update the `tsconfig.json` to include the new TypeScript files and types, then verify that the new types are correctly applied and recognized by the toolchain.
 ### Details:
