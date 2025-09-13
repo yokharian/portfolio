@@ -268,7 +268,3 @@ dev-debug.log
 
 # 11ty build output
 _site/
-
-# Task files
-tasks.json
-tasks/ 
