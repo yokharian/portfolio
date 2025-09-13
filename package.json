@@ -5,10 +5,10 @@
   "description": "Personal portfolio site built with Eleventy (11ty) and Tailwind CSS.",
   "scripts": {
     "dev": "npm-run-all -p dev:css dev:serve",
-    "dev:serve": "node scripts/run-eleventy.js --serve",
+    "dev:serve": "npx eleventy --config=.eleventy.ts --serve --watch",
     "dev:css": "tailwindcss -i src/styles/tailwind.css -o public/assets/styles.css --watch",
     "typecheck": "node scripts/run-typecheck.js",
-    "build": "npm run typecheck && npm run build:css && node scripts/run-eleventy.js",
+    "build": "npm run typecheck && npm run build:css && npx eleventy --config=.eleventy.ts",
     "build:css": "tailwindcss -i src/styles/tailwind.css -o public/assets/styles.css --minify",
     "clean": "rimraf _site",
     "prepare": "husky",
