@@ -5,13 +5,14 @@
   "description": "Personal portfolio site built with Eleventy (11ty) and Tailwind CSS.",
   "scripts": {
     "dev": "npm-run-all -p dev:css dev:serve",
-    "dev:serve": "eleventy --serve",
+    "dev:serve": "NODE_OPTIONS=\"-r ts-node/register\" eleventy --serve",
     "dev:css": "tailwindcss -i src/styles/tailwind.css -o public/assets/styles.css --watch",
-    "build": "npm run build:css && eleventy",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "npm run typecheck && npm run build:css && NODE_OPTIONS=\"-r ts-node/register\" eleventy",
     "build:css": "tailwindcss -i src/styles/tailwind.css -o public/assets/styles.css --minify",
     "clean": "rimraf _site",
     "prepare": "husky",
-    "test": "npm-run-all -s test:md test:fm test:dates test:content test:i18n test:build",
+    "test": "npm-run-all -s typecheck test:md test:fm test:dates test:content test:i18n test:build",
     "test:md": "node scripts/test-markdown.js",
     "test:fm": "node scripts/test-frontmatter.js",
     "test:dates": "node scripts/test-dates.js",
@@ -36,6 +37,9 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "husky": "^9.1.6",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "typescript": "^5.6.3",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.16.10"
   }
 }

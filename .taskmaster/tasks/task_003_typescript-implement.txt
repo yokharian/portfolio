@@ -1,0 +1,66 @@
+# Task ID: 3
+# Title: Migrate Utility Functions to TypeScript
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Convert all utility files in src/utils/ to TypeScript with proper type definitions for i18n, dates, format, and content processing.
+# Details:
+For each utility file in src/utils/:
+
+1. Rename the file from .js to .ts
+2. Add appropriate type annotations using the types defined in task #2
+3. Implement proper error handling with type guards
+4. Update import/export statements to use ES6 module syntax
+
+Example for date utility conversion:
+```typescript
+// src/utils/dates.ts
+import { DateFormatOptions } from '../../types/utils';
+
+export function formatDate(date: Date | string, options: DateFormatOptions = {}): string {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const { format = 'yyyy-MM-dd', locale = 'en-US' } = options;
+  
+  // Implementation details...
+  
+  return formattedDate;
+}
+
+export function isValidDate(date: unknown): date is Date {
+  return date instanceof Date && !isNaN(date.getTime());
+}
+```
+
+Example for i18n utility conversion:
+```typescript
+// src/utils/i18n.ts
+import { TranslationDictionary, I18nConfig } from '../../types/i18n';
+
+export function translate(key: string, language: string, translations: I18nConfig['translations']): string {
+  if (!translations[language]) {
+    return key; // Fallback to key if language not found
+  }
+  
+  // Navigate nested translation objects
+  const keyParts = key.split('.');
+  let result: string | TranslationDictionary = translations[language];
+  
+  for (const part of keyParts) {
+    if (typeof result === 'string') {
+      return result;
+    }
+    
+    result = result[part] as string | TranslationDictionary;
+    if (result === undefined) {
+      return key; // Key not found
+    }
+  }
+  
+  return typeof result === 'string' ? result : key;
+}
+```
+
+Repeat this process for all 9 utility files, ensuring type safety throughout.
+
+# Test Strategy:
+Create unit tests for each utility function using a testing framework like Jest. Test with various input types to ensure type safety is working correctly. Verify that existing functionality is preserved by comparing outputs with the original JavaScript implementations. Run the full test suite to ensure all utilities work together correctly.
