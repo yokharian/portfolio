@@ -1,7 +1,12 @@
 ---
 layout: base.njk
 title: Home
+permalink: "/"
 ---
+
+{% block headExtra %}
+<link rel="preload" as="image" href="/assets/images/profile.svg">
+{% endblock %}
 
 <section id="hero" class="mb-12" aria-labelledby="hero-title">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -10,20 +15,20 @@ title: Home
         <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12">
           <div class="order-2 lg:order-1 text-center lg:text-left">
             <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900" data-anim="heading">
-              Python & AWS Solutions Architect
+              {{ 'hero.title' | t(site.defaultLanguage) }}
             </h1>
             <p class="mt-4 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0" data-anim="subheading">
-              I design, build, and scale data-intensive systems in the cloud.
+              {{ 'hero.subtitle' | t(site.defaultLanguage) }}
             </p>
             <div class="mt-6" data-anim="cta">
               <a href="/#projects" class="inline-block rounded-md bg-sky-600 px-5 py-3 text-white font-medium shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white">
-                View Projects
+                {{ 'hero.cta' | t(site.defaultLanguage) }}
               </a>
             </div>
           </div>
           <div class="order-1 lg:order-2 w-full max-w-xs sm:max-w-sm lg:max-w-md mx-auto">
             <figure class="relative">
-              <img src="/assets/images/profile.jpg" alt="Professional profile photo of Sofia" width="640" height="640" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square" data-anim="image">
+              <img src="/assets/images/profile.svg" alt="Professional profile photo of Sofia" width="640" height="640" decoding="async" fetchpriority="high" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square" data-anim="image">
             </figure>
           </div>
         </div>

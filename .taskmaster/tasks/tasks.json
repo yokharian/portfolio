@@ -9,8 +9,18 @@
         "testStrategy": "Verify that the repository is properly initialized with all configuration files. Test the build process to ensure it correctly processes Markdown files and generates static HTML. Confirm that Tailwind CSS is properly configured by testing a simple component with Tailwind classes.",
         "priority": "high",
         "dependencies": [],
-        "status": "done",
-        "subtasks": []
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configure homepage site at root",
+            "description": "Visitors shouldn't follow a complex directory structure. There are only two allowed levels: /<homepage> and /blog/<post>",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          }
+        ]
       },
       {
         "id": 2,
@@ -234,7 +244,7 @@
         "dependencies": [
           2
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -264,7 +274,7 @@
               "4.1"
             ],
             "details": "Place the profile image file in public/assets/images/profile.jpg. Optimize the image for web (compress, proper dimensions). Create multiple sizes for responsive images if needed. In the markup, add the image with proper alt text, explicit width/height attributes to prevent layout shift, and appropriate Tailwind classes for sizing and styling. Consider adding a subtle border or shadow effect. Do not add lazy-loading to this image since it's likely an LCP (Largest Contentful Paint) element.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify the image loads correctly and is properly sized across devices. Check that the image file size is optimized (<200KB recommended). Ensure proper alt text is present. Confirm no layout shift occurs during image load."
           },
           {
@@ -276,7 +286,7 @@
               "4.2"
             ],
             "details": "Implement subtle fade-in and/or slide-in animations for the heading, subheading, and CTA using CSS transitions or animations. Add a small stagger effect between elements. Ensure animations are short (300-500ms) and don't interfere with readability. Implement prefers-reduced-motion media query support to disable animations for users who prefer reduced motion. Use data attributes from the markup as animation hooks. Ensure no layout shifts occur during animations.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test animations for smoothness and timing. Verify animations work correctly across browsers. Test with prefers-reduced-motion enabled to ensure animations are properly disabled. Check that animations don't cause performance issues or layout shifts."
           },
           {
@@ -287,7 +297,7 @@
               "4.1"
             ],
             "details": "Create a JSON data file with English and Spanish translations for all hero section text content (heading, subheading, CTA button text). Use the existing normalizeLang utility and language filters to implement content switching. Update the hero section markup to use translation keys instead of hardcoded text. Ensure the language switch mechanism works correctly for the hero section. Verify that text length differences between languages don't break the layout.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test language switching between English and Spanish. Verify all text elements correctly display the translated content. Check that longer Spanish text doesn't cause layout issues. Ensure the language state is preserved when navigating between pages."
           },
           {
@@ -301,7 +311,7 @@
               "4.5"
             ],
             "details": "Verify proper heading hierarchy with h1 for the main headline. Add appropriate ARIA attributes where needed. Ensure sufficient color contrast (minimum 4.5:1 for normal text, 3:1 for large text) according to WCAG AA standards. Check that all interactive elements are keyboard accessible with visible focus states. Add structured data (JSON-LD) for the person information if appropriate. Ensure the CTA button has descriptive text and proper focus styling.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Use accessibility tools (like axe or Lighthouse) to verify WCAG AA compliance. Check keyboard navigation through the hero section. Verify color contrast meets requirements. Test with screen readers to ensure content is properly announced."
           },
           {
@@ -317,7 +327,7 @@
               "4.6"
             ],
             "details": "Create a simple smoke test that verifies the hero section renders correctly in the built output (_site directory). Add comments in the code explaining the structure and animation approach. Update any project documentation to include information about the hero section implementation. Document the translation keys used for i18n. Create a simple checklist for content updates to the hero section. Verify that the Eleventy build process completes successfully with the new hero section.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the Eleventy build and verify the hero section appears correctly in the output HTML. Check that all assets are properly referenced and load correctly. Verify documentation is clear and helpful for future developers or content editors."
           }
         ]
@@ -331,10 +341,90 @@
         "priority": "medium",
         "dependencies": [
           3,
-          4
+          4,
+          "1"
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Eleventy Collection for Featured Projects",
+            "description": "Set up an Eleventy collection that filters projects with 'featured: true' in their frontmatter to be displayed in the Featured Work section.",
+            "dependencies": [],
+            "details": "Create a custom Eleventy collection named 'featured_projects' in the .eleventy.js file that filters projects where data.featured === true. Include language filtering based on the current page locale. Sort the collection by date (newest first) or by a custom 'order' field if present in the frontmatter. Limit to a maximum of 6 featured projects.",
+            "status": "pending",
+            "testStrategy": "Verify the collection returns only projects with featured: true. Test with multiple languages to ensure proper filtering. Check sorting order is correct."
+          },
+          {
+            "id": 2,
+            "title": "Design Project Card Component",
+            "description": "Create a reusable project card component that displays project information in an attractive and accessible format.",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Create a partial/include for project cards with the following elements: hero image (with width/height attributes, loading='lazy', decoding='async'), project title as a link to the project page, short description/excerpt (limited to ~120 characters), up to 5 technology tags displayed as chips, and proper alt text from 'alt' or 'title' field. Add hover effects with smooth transitions that slightly elevate the card and change background color. Ensure the entire card is clickable but maintains proper accessibility.",
+            "status": "pending",
+            "testStrategy": "Test keyboard navigation and focus states. Verify hover effects work across browsers. Check that truncation of long descriptions works properly. Ensure image aspect ratios are maintained."
+          },
+          {
+            "id": 3,
+            "title": "Implement Responsive Grid Layout",
+            "description": "Create a responsive grid layout for the Featured Work section that adapts to different screen sizes.",
+            "dependencies": [
+              "5.2"
+            ],
+            "details": "Using Tailwind CSS, implement a responsive grid container that displays: 1 column on mobile (xs), 2 columns on tablet (md), and 3 columns on desktop (lg). Add appropriate gap spacing between cards. Ensure the grid maintains proper alignment and spacing at all breakpoints. Use CSS Grid or Flexbox through Tailwind utilities. Add proper container padding that adjusts at different breakpoints.",
+            "status": "pending",
+            "testStrategy": "Test at various viewport sizes to verify correct number of columns. Check that spacing and alignment remain consistent across breakpoints. Verify no horizontal overflow occurs on mobile devices."
+          },
+          {
+            "id": 4,
+            "title": "Create Featured Work Section Structure",
+            "description": "Build the overall structure for the Featured Work section including heading, introduction, and navigation elements.",
+            "dependencies": [
+              "5.3"
+            ],
+            "details": "Create the section with an id='projects' for direct linking. Add a visually prominent heading ('Featured Work' or equivalent in the current language). Include an optional short introductory paragraph. Add a 'View all projects' link at the bottom of the section that points to a projects listing page. Ensure proper semantic HTML structure with appropriate heading levels. Add section padding and background styling consistent with the site design.",
+            "status": "pending",
+            "testStrategy": "Verify the anchor ID works for direct navigation. Check that heading hierarchy is correct. Test the 'View all projects' link functionality. Ensure responsive behavior of the section container."
+          },
+          {
+            "id": 5,
+            "title": "Implement Image Optimization and Lazy Loading",
+            "description": "Set up image optimization and lazy loading for project thumbnails to improve performance.",
+            "dependencies": [
+              "5.2"
+            ],
+            "details": "Implement responsive images with srcset and sizes attributes for project thumbnails. Set up a build process to generate optimized image versions at different widths (e.g., 300w, 600w, 900w). Add loading='lazy' attribute to all images. Implement a lightweight placeholder or blur-up technique for images. Add decoding='async' attribute. Ensure images have explicit width and height attributes to prevent layout shifts.",
+            "status": "pending",
+            "testStrategy": "Test image loading performance with throttled network conditions. Verify lazy loading works correctly for below-the-fold images. Check that no layout shifts occur as images load. Validate image optimization with Lighthouse."
+          },
+          {
+            "id": 6,
+            "title": "Enhance Accessibility of Featured Work Section",
+            "description": "Ensure the Featured Work section meets accessibility standards and provides a good experience for all users.",
+            "dependencies": [
+              "5.4"
+            ],
+            "details": "Add appropriate ARIA attributes where needed (e.g., aria-label for links that need additional context). Ensure sufficient color contrast for all text elements including technology tags. Implement visible focus states for interactive elements. Make cards fully keyboard navigable. Add screen reader-friendly descriptions where needed. Ensure hover effects don't rely solely on color changes. Test with keyboard navigation to ensure all elements are accessible.",
+            "status": "pending",
+            "testStrategy": "Test with keyboard navigation to verify all interactive elements are accessible. Use accessibility tools (like axe or Lighthouse) to check for issues. Verify color contrast meets WCAG AA standards. Test with a screen reader to ensure proper information hierarchy."
+          },
+          {
+            "id": 7,
+            "title": "Add Documentation and Testing for Featured Projects",
+            "description": "Create documentation for content authors and implement tests to verify the Featured Work section functions correctly.",
+            "dependencies": [
+              "5.1",
+              "5.4",
+              "5.5",
+              "5.6"
+            ],
+            "details": "Add documentation in the project README explaining how to mark projects as featured using 'featured: true' in frontmatter. Document image requirements for optimal display in project cards. Create build-time tests that verify the section renders and contains at least one featured card. Add tests to verify external links have proper attributes (target, rel). Create snapshot tests for the section's HTML structure. Document the expected behavior of the responsive layout.",
+            "status": "pending",
+            "testStrategy": "Run automated tests during the build process to verify section rendering. Check that documentation is clear and comprehensive. Verify that example frontmatter is provided for content authors. Test that build fails appropriately if critical elements are missing."
+          }
+        ]
       },
       {
         "id": 6,
@@ -348,7 +438,102 @@
           4
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Certifications Data Model",
+            "description": "Design and implement the data structure for storing certification information in a JSON file.",
+            "dependencies": [],
+            "details": "Create src/data/certifications.json with a schema that includes id, name, issuer, issueDate, credentialUrl, badgeImage, alt, and optional expiresDate fields. Include at least one real AWS certification example. Ensure the structure supports both English and Spanish localization by referencing keys in i18n.json for text content.",
+            "status": "pending",
+            "testStrategy": "Validate JSON structure with a schema validator. Ensure required fields are present and formatted correctly."
+          },
+          {
+            "id": 2,
+            "title": "Add Certification Badge Assets",
+            "description": "Obtain and optimize AWS certification badge images for web display.",
+            "dependencies": [],
+            "details": "Source official AWS certification badge images. Create public/assets/certs/ directory. Optimize badges as SVG (preferred) or PNG with appropriate dimensions. Ensure each image has explicit width and height attributes. Name files consistently (e.g., aws-solutions-architect.svg).",
+            "status": "pending",
+            "testStrategy": "Verify image optimization with tools like ImageOptim. Check file sizes are under 30KB each. Confirm width and height attributes are set."
+          },
+          {
+            "id": 3,
+            "title": "Implement Certifications Section HTML Structure",
+            "description": "Create the base HTML structure for the certifications section on the homepage.",
+            "dependencies": [
+              "6.1",
+              "6.2"
+            ],
+            "details": "Add a section with id=\"certifications\" to the homepage template. Include a localized H2 heading. Create a responsive grid container for certification cards. Implement the card template in Nunjucks that displays the badge image, certification name, issuer, issue date, and credential verification link.",
+            "status": "pending",
+            "testStrategy": "Validate HTML structure. Ensure proper semantic markup and heading hierarchy."
+          },
+          {
+            "id": 4,
+            "title": "Style Certifications Section with Tailwind",
+            "description": "Apply Tailwind CSS styling to the certifications section for responsive layout and visual appeal.",
+            "dependencies": [
+              "6.3"
+            ],
+            "details": "Implement a responsive grid layout (2 columns on small screens, 3 on medium, 4 on large). Add appropriate padding, margins, and gaps. Style certification cards with consistent spacing. Create hover/focus effects that are reduced-motion friendly. Ensure keyboard focus is visibly indicated.",
+            "status": "pending",
+            "testStrategy": "Test responsive behavior across different viewport sizes. Verify hover/focus states work correctly. Check for any layout issues or overflow."
+          },
+          {
+            "id": 5,
+            "title": "Implement i18n for Certification Content",
+            "description": "Add localization support for all certification text content.",
+            "dependencies": [
+              "6.1",
+              "6.3"
+            ],
+            "details": "Update src/data/i18n.json with keys for certifications.heading, certifications.issuer, certifications.viewCredential, certifications.issuedOn, etc. Provide both English and Spanish translations. Connect these keys to the Nunjucks templates. Format dates according to locale preferences.",
+            "status": "pending",
+            "testStrategy": "Switch between languages to verify all text content changes appropriately. Check date formatting is locale-appropriate."
+          },
+          {
+            "id": 6,
+            "title": "Add JSON-LD Structured Data",
+            "description": "Implement structured data for certifications to improve SEO.",
+            "dependencies": [
+              "6.1",
+              "6.3"
+            ],
+            "details": "Create a script[type=\"application/ld+json\"] element in the certifications section or page head. Generate JSON-LD for each certification using the EducationalOccupationalCredential schema. Include name, issuer (as Organization), datePublished, and url properties. Dynamically generate this from the certifications data.",
+            "status": "pending",
+            "testStrategy": "Validate JSON-LD using Google's Structured Data Testing Tool or Schema.org Validator. Ensure all required properties are present and correctly formatted."
+          },
+          {
+            "id": 7,
+            "title": "Implement Accessibility Enhancements",
+            "description": "Ensure the certifications section meets accessibility standards.",
+            "dependencies": [
+              "6.3",
+              "6.4"
+            ],
+            "details": "Add appropriate aria-labels to links where text is not fully descriptive (e.g., aria-label=\"View credential: {name}\"). Ensure all images have descriptive alt text. Verify proper keyboard navigation through the certification cards. Add appropriate external link indicators with target=\"_blank\" rel=\"noopener noreferrer\" for credential URLs.",
+            "status": "pending",
+            "testStrategy": "Test keyboard navigation. Run accessibility checks with tools like axe or Lighthouse. Verify screen reader compatibility."
+          },
+          {
+            "id": 8,
+            "title": "Add Documentation and Tests",
+            "description": "Create documentation for the certifications feature and implement tests.",
+            "dependencies": [
+              "6.1",
+              "6.2",
+              "6.3",
+              "6.4",
+              "6.5",
+              "6.6",
+              "6.7"
+            ],
+            "details": "Update README.md or create a specific doc explaining how to add new certifications, required fields, asset placement, and i18n considerations. Extend or create build-time tests in scripts/test-build.js to verify: section#certifications exists, at least one card renders, external links include rel attributes, images have width/height attributes, and JSON-LD is present.",
+            "status": "pending",
+            "testStrategy": "Run the build-time tests to ensure all components render correctly. Manually verify documentation accuracy by adding a test certification following the instructions."
+          }
+        ]
       },
       {
         "id": 7,
@@ -361,7 +546,98 @@
           3
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Project Page Data Schema and Validation",
+            "description": "Create a schema for project page data that defines required and optional fields in the frontmatter, and implement validation functions to ensure data integrity.",
+            "dependencies": [],
+            "details": "1. Extend the existing frontmatter schema in src/utils/ to include project-specific fields: title, description, employer, startDate, endDate, tags, heroImage, language, and any additional metadata.\n2. Create validation functions that check for required fields and proper data types.\n3. Implement error handling for missing or invalid data.\n4. Document the schema requirements in the project documentation.",
+            "status": "pending",
+            "testStrategy": "Create test scripts in scripts/ that validate sample project markdown files against the schema. Include both valid and invalid examples to test error handling."
+          },
+          {
+            "id": 2,
+            "title": "Create Project Page Layout Template",
+            "description": "Develop the base Eleventy layout template for individual project pages with proper semantic HTML structure.",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "1. Create a new layout file in src/layouts/project.njk.\n2. Implement semantic HTML structure with appropriate heading hierarchy.\n3. Include slots for all required content sections: hero banner, metadata section, main content area, technologies section, and navigation.\n4. Set up SEO-friendly document structure with proper meta tags.\n5. Add schema.org structured data for projects using JSON-LD.",
+            "status": "pending",
+            "testStrategy": "Manually test the template with sample content to verify structure. Use HTML validators to ensure semantic correctness. Test with screen readers to verify accessibility."
+          },
+          {
+            "id": 3,
+            "title": "Implement Hero Banner Component",
+            "description": "Create a responsive hero banner component that displays the project's featured image with proper sizing and accessibility.",
+            "dependencies": [
+              "7.2"
+            ],
+            "details": "1. Create a hero banner component that accepts an image path from frontmatter.\n2. Implement responsive image handling with appropriate srcset attributes.\n3. Add proper alt text support from frontmatter.\n4. Style the banner using Tailwind CSS with mobile-first approach.\n5. Implement fallback handling for missing images.",
+            "status": "pending",
+            "testStrategy": "Test the component with various image sizes and aspect ratios. Verify responsive behavior across different viewport sizes. Check accessibility with automated tools."
+          },
+          {
+            "id": 4,
+            "title": "Develop Project Metadata Display Section",
+            "description": "Create a component to display project metadata (title, dates, employer, etc.) with proper formatting and i18n support.",
+            "dependencies": [
+              "7.2"
+            ],
+            "details": "1. Create a metadata display component that presents project information in a structured format.\n2. Implement date formatting with localization support.\n3. Add i18n support for labels using src/data/i18n.json.\n4. Style the section using Tailwind CSS for both mobile and desktop layouts.\n5. Ensure proper semantic markup for the metadata section.",
+            "status": "pending",
+            "testStrategy": "Test with different metadata combinations. Verify i18n functionality by switching languages. Check accessibility of the component."
+          },
+          {
+            "id": 5,
+            "title": "Implement Main Content Area with Typography",
+            "description": "Set up the main content area with Tailwind's prose class and ensure proper typography for different content elements.",
+            "dependencies": [
+              "7.2"
+            ],
+            "details": "1. Configure the main content area to use Tailwind's prose class for consistent typography.\n2. Customize the prose styles as needed to match the site's design system.\n3. Ensure proper spacing and hierarchy for headings, paragraphs, lists, and code blocks.\n4. Implement responsive adjustments for typography at different breakpoints.\n5. Add support for custom content components within the markdown.",
+            "status": "pending",
+            "testStrategy": "Test rendering of various markdown elements (headings, lists, code blocks, tables, etc.). Verify responsive behavior of typography. Check reading experience on different devices."
+          },
+          {
+            "id": 6,
+            "title": "Create Technologies Used Section",
+            "description": "Develop a component to display and style the technologies/tags used in the project.",
+            "dependencies": [
+              "7.2",
+              "7.4"
+            ],
+            "details": "1. Create a component that generates a list of technology tags from the frontmatter.\n2. Style the tags using Tailwind CSS with appropriate visual treatment.\n3. Implement hover states for tags.\n4. Add i18n support for any static text in this section.\n5. Ensure the section is responsive and maintains proper layout at all screen sizes.",
+            "status": "pending",
+            "testStrategy": "Test with various numbers of tags to ensure proper wrapping behavior. Verify accessibility of the tag elements. Test i18n functionality."
+          },
+          {
+            "id": 7,
+            "title": "Implement Project Navigation Component",
+            "description": "Create a navigation component that allows users to browse to other projects from the current project page.",
+            "dependencies": [
+              "7.2"
+            ],
+            "details": "1. Create a navigation component that displays links to previous/next projects.\n2. Implement a collection in Eleventy to gather all projects for navigation.\n3. Add visual indicators for navigation direction.\n4. Style the navigation with Tailwind CSS for both mobile and desktop layouts.\n5. Ensure proper keyboard navigation and focus states.",
+            "status": "pending",
+            "testStrategy": "Test navigation between projects in different positions in the collection. Verify keyboard accessibility. Test responsive behavior on different screen sizes."
+          },
+          {
+            "id": 8,
+            "title": "Add Language-Specific Content Display",
+            "description": "Implement functionality to display project content in the appropriate language based on the user's language setting.",
+            "dependencies": [
+              "7.1",
+              "7.2",
+              "7.4",
+              "7.5"
+            ],
+            "details": "1. Extend the existing i18n system to support language-specific project content.\n2. Implement logic to select the appropriate language version of project content.\n3. Create fallback mechanisms for missing translations.\n4. Add language switcher functionality on project pages.\n5. Ensure all UI elements and content areas respond to language changes.\n6. Document the approach for content authors.",
+            "status": "pending",
+            "testStrategy": "Test with content in multiple languages. Verify fallback behavior when translations are missing. Check that all UI elements update correctly when language is changed."
+          }
+        ]
       },
       {
         "id": 8,
@@ -496,7 +772,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-12T23:35:39.121Z",
+      "updated": "2025-09-13T00:29:56.845Z",
       "description": "Tasks for default context"
     }
   }
