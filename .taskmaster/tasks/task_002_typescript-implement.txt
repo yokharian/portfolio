@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Create Core Type Definitions
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Define shared TypeScript interfaces and types for project metadata, frontmatter, internationalization, date formatting, and content processing.
