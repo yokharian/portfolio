@@ -1,0 +1,71 @@
+# Task ID: 7
+# Title: Develop Individual Project Page Template
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Create the template for individual project pages that will display the full content of each project with proper formatting.
+# Details:
+1. Design a project page template with:
+   - Hero banner with project image (FR13)
+   - Project metadata section (title, dates, employer, etc.)
+   - Main content area with proper typography
+   - 'Technologies Used' section generated from tags (FR15)
+   - Navigation to other projects
+2. Implement the Tailwind 'prose' class for content formatting
+3. Create a responsive layout that prioritizes readability
+4. Add proper semantic HTML structure for SEO
+5. Implement metadata extraction from frontmatter
+6. Set up language-specific content display based on the language setting
+
+# Test Strategy:
+Test the project page with various types of Markdown content to ensure proper rendering. Verify that all metadata from frontmatter is correctly displayed. Test responsiveness across different screen sizes. Check that the 'Technologies Used' section correctly displays all tags. Test with both English and Spanish content to verify language switching works correctly.
+
+# Subtasks:
+## 1. Create Basic Project Template Structure with Semantic HTML [done]
+### Dependencies: None
+### Description: Set up the initial Nunjucks template file with proper semantic HTML structure for the project page layout.
+### Details:
+Create src/layouts/project.njk with semantic HTML structure including <header>, <article>, and <section> tags. Implement the basic page structure with proper heading hierarchy. Include placeholders for all required sections: hero banner, metadata section, main content area, technologies section, and project navigation.
+
+## 2. Implement Hero Banner with Project Image [done]
+### Dependencies: 7.1
+### Description: Create the hero banner section that displays the project's featured image with proper performance attributes and fallback handling.
+### Details:
+In the hero banner section, implement an image element that sources from project.heroImage. Add performance attributes (loading="lazy", decoding="async"). Implement proper alt text fallback using alt || title. Style the hero banner with appropriate sizing and responsive behavior using Tailwind classes.
+
+## 3. Develop Project Metadata Section [done]
+### Dependencies: 7.1
+### Description: Create the metadata section displaying project title, date range, employer, and other relevant information from frontmatter.
+### Details:
+Extract and display project metadata from frontmatter including title, employer, and date range. Use the dateRange(startDate, endDate, language) filter for formatting dates according to the current language. Style the metadata section with appropriate typography and spacing using Tailwind classes.
+
+## 4. Implement Main Content Area with Tailwind Prose [done]
+### Dependencies: 7.1
+### Description: Set up the main content area that renders the Markdown content with proper typography and formatting.
+### Details:
+Implement the main content area using {{ content | safe }} to render the Markdown content. Apply Tailwind's prose classes for proper typography and content formatting. Ensure the content area is responsive and maintains readability across different screen sizes.
+
+## 5. Create Technologies Used Section from Tags [done]
+### Dependencies: 7.1
+### Description: Implement the section that displays the technologies used in the project based on frontmatter tags.
+### Details:
+Create a 'Technologies Used' section that iterates through project tags and displays them. Filter out the 'project' tag which is used for collection purposes. Style the tags consistently with the design system. Implement proper heading and semantic structure for this section.
+
+## 6. Implement Project Navigation [done]
+### Dependencies: 7.1
+### Description: Create navigation links to previous and next projects with proper accessibility and internationalization.
+### Details:
+Implement previous/next project navigation at the bottom of the template. Use the collections.projects.byLanguage filter to ensure navigation only includes projects in the current language. Add proper accessible labels using the t(language) filter for internationalization. Style the navigation with appropriate visual cues and spacing.
+
+## 7. Implement Language-Specific Content Display [done]
+### Dependencies: 7.3, 7.5, 7.6
+### Description: Ensure all content and UI elements adapt to the selected language setting.
+### Details:
+Implement language-specific display for all text elements using the t(language) filter. Ensure date formatting respects the current language setting. Test and verify that navigation only shows projects in the current language using the byLanguage filter.
+
+## 8. Add Tests and Update Test Scripts [done]
+### Dependencies: 7.2, 7.3, 7.4, 7.5, 7.6, 7.7
+### Description: Update existing test scripts to verify the project template implementation and create new tests as needed.
+### Details:
+Update scripts/test-build.js to include tests for the project template. Add snapshot expectations for project pages. Create tests to verify all required sections are present and correctly formatted. Document which tests are satisfied by the current implementation and what needs additional verification.
+

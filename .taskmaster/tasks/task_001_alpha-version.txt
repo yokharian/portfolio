@@ -1,0 +1,126 @@
+# Task ID: 1
+# Title: Project Setup and Repository Configuration
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project repository with the basic structure and configuration files needed for development.
+# Details:
+1. Create a new repository at github.com/yokharian/portfolio
+2. Initialize the project with package.json
+3. Set up Tailwind CSS configuration
+4. Configure a static site generator (Astro or 11ty recommended based on Markdown requirements)
+5. Create the basic folder structure:
+   - src/
+     - pages/
+     - layouts/
+     - components/
+     - styles/
+   - public/
+     - images/
+   - content/
+     - projects/
+6. Set up Git hooks for code quality
+7. Create a README.md with project documentation
+<info added on 2025-09-12T17:53:07.892Z>
+## Implementation Details
+
+Eleventy (11ty) has been implemented as the static site generator with the following configuration:
+
+### Project Structure
+- `.eleventy.js`: Configured with passthrough copy for /public, directory structure (input: ".", includes/layouts in src/layouts, data in src/data, output to _site), and a "posts" collection from blog_posts/**/*.md
+- `.eleventyignore`: Excludes node_modules, _site, .taskmaster, UI_UX_GUIDE
+- `tailwind.config.js`: Scans **/*.{html,njk,md} files with appropriate exclusions
+- `src/layouts/base.njk`: Base HTML template with CSS link
+- `src/pages/index.njk`: Homepage that lists posts from the "posts" collection
+- `src/styles/tailwind.css`: Tailwind entry point with base/components/utilities
+- `public/assets/.gitkeep` and `public/images/.gitkeep`: Placeholder files for static assets
+
+### Package Configuration
+- `package.json`: Includes development scripts:
+  - `dev`: Runs 11ty in serve mode with Tailwind watch
+  - `build`: Full production build
+  - `build:css`: Tailwind CSS compilation
+  - `clean`: Removes build artifacts
+- Dependencies: @11ty/eleventy, tailwindcss, postcss, autoprefixer, npm-run-all, rimraf
+
+### Documentation
+- `README.md`: Contains quick start guide, project structure explanation, and next steps
+
+### Pending Items
+- Git hooks setup (awaiting preference on husky/lint-staged)
+- Additional structure components (src/components, content/projects)
+- Confirmation needed on 11ty as the chosen SSG (vs Astro)
+</info added on 2025-09-12T17:53:07.892Z>
+<info added on 2025-09-12T17:55:49.670Z>
+## Implementation Update: 11ty Core Features
+
+### New Components Added
+- `src/data/site.json`: Central configuration for site constants including:
+  - Contact information (Calendly URL, GitHub, LinkedIn, email)
+  - Site titles and default meta description
+  - Other global variables for templates
+
+- `src/layouts/base.njk`: Enhanced with:
+  - Header featuring Sofia Escobedo's name
+  - Primary CTA button linking to Calendly
+  - Social media links (GitHub, LinkedIn)
+  - SEO meta tags for title and description
+  - Improved footer with contact information
+
+- `src/layouts/post.njk`: Project template with:
+  - Banner image display
+  - Employer and date information
+  - Technology tags display
+  - Lazy-loaded images for performance
+  - Tailwind prose styling for Markdown content
+
+- `blog_posts/posts.json`: Directory data file that:
+  - Applies post.njk as default layout for all Markdown files in blog_posts/
+
+### Progress Notes
+- Homepage now lists posts from the 11ty collection
+- Pending implementation:
+  - Featured Work section with hover effects (FR7-FR9)
+  - SEO enhancements
+  - Language switching functionality (FR5)
+  - Need specification on pairing English/Spanish content
+
+### Verification Steps
+1. npm install
+2. npm run dev (http://localhost:8080) or npm run build (check _site/)
+3. Verify blog_posts/*.md render with new layout and header/footer display CTA and links
+</info added on 2025-09-12T17:55:49.670Z>
+<info added on 2025-09-12T19:07:52.244Z>
+## Implementation Completion Update
+
+### Git Hooks Configuration
+- Implemented Husky for Git hooks management
+- Added pre-commit hook that runs `npm run build` to ensure code quality
+- Updated package.json with `prepare` script for automatic hooks installation
+
+### Directory Structure Completion
+- Created placeholder directories:
+  - `src/components/` for reusable UI components
+  - `content/projects/` for project content files
+
+### Documentation & Verification
+- README.md updated with quick start guide and project structure
+- Git hooks automatically activate upon `npm install`
+- Build scripts verified and working correctly
+
+### Status Update
+- All initial setup requirements completed
+- 11ty confirmed as the chosen static site generator
+- Project ready for downstream tasks (content creation and template development)
+</info added on 2025-09-12T19:07:52.244Z>
+
+# Test Strategy:
+Verify that the repository is properly initialized with all configuration files. Test the build process to ensure it correctly processes Markdown files and generates static HTML. Confirm that Tailwind CSS is properly configured by testing a simple component with Tailwind classes.
+
+# Subtasks:
+## 1. Configure homepage site at root [done]
+### Dependencies: None
+### Description: Visitors shouldn't follow a complex directory structure. There are only two allowed levels: /<homepage> and /blog/<post>
+### Details:
+
+

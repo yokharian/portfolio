@@ -1,0 +1,20 @@
+# Task ID: 13
+# Title: Create Sample Project Content
+# Status: pending
+# Dependencies: 3, 7
+# Priority: medium
+# Description: Create sample project Markdown files to demonstrate the content structure and test the rendering system.
+# Details:
+1. Create at least 3 sample project Markdown files with:
+   - Complete frontmatter (title, description, dates, etc.)
+   - Rich content including headings, lists, code blocks, images
+   - Technologies tags
+   - Both English and Spanish versions
+2. Include realistic project descriptions based on Python and AWS expertise
+3. Add appropriate images for each project
+4. Implement proper formatting for technical content
+5. Include examples of different content types (case studies, technical projects, etc.)
+6. Ensure content demonstrates all supported Markdown features
+
+# Test Strategy:
+Verify that all sample projects render correctly on both individual pages and in the Featured Work section. Check that frontmatter data is correctly extracted and displayed. Test language switching to ensure both versions are available. Verify that images are displayed correctly and responsively. Check that code blocks and technical content are properly formatted.

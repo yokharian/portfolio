@@ -1,5 +1,409 @@
 {
-  "default": {
+  "typescript-implement": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Set up TypeScript and Initial Configuration",
+        "description": "Install TypeScript and related dependencies, create tsconfig.json with appropriate compiler options, and set up the initial build process integration.",
+        "details": "1. Install required dependencies:\n```bash\nnpm install --save-dev typescript @types/node ts-node\n```\n2. Create a tsconfig.json file with the following configuration:\n```json\n{\n  \"compilerOptions\": {\n    \"target\": \"ES2020\",\n    \"module\": \"ESNext\",\n    \"moduleResolution\": \"node\",\n    \"esModuleInterop\": true,\n    \"strict\": true,\n    \"skipLibCheck\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"resolveJsonModule\": true,\n    \"outDir\": \"dist\",\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"*\": [\"node_modules/*\"]\n    },\n    \"sourceMap\": true\n  },\n  \"include\": [\"src/**/*\", \".eleventy.ts\", \"public/assets/js/**/*\"],\n  \"exclude\": [\"node_modules\", \"dist\"]\n}\n```\n3. Update package.json to include TypeScript compilation scripts:\n```json\n\"scripts\": {\n  \"build:ts\": \"tsc\",\n  \"dev:ts\": \"tsc --watch\",\n  \"type-check\": \"tsc --noEmit\"\n}\n```\n4. Create a types directory with an initial index.d.ts file for shared type definitions.\n<info added on 2025-09-13T04:36:13.332Z>\n5. Verified all required devDependencies are installed:\n   - typescript\n   - ts-node\n   - @types/node\n\n6. Confirmed tsconfig.json has appropriate strict settings and incremental build configuration.\n\n7. Noted that scripts are already configured to preload ts-node/register for Eleventy in development and build processes.\n\n8. Next steps:\n   - Run `npm run type-check` to verify TypeScript configuration\n   - Create a simple .ts file and test the build process\n   - Create the types/ directory with an initial index.d.ts file for shared type definitions if not already present\n</info added on 2025-09-13T04:36:13.332Z>",
+        "testStrategy": "Verify TypeScript installation by running 'npx tsc --version'. Validate tsconfig.json by running 'npm run type-check' and ensuring it completes without errors. Test the build process by creating a simple .ts file and confirming it compiles correctly.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Create Core Type Definitions",
+        "description": "Define shared TypeScript interfaces and types for project metadata, frontmatter, internationalization, date formatting, and content processing.",
+        "details": "Create the following type definition files in the types/ directory:\n\n1. `types/eleventy.d.ts` - Eleventy-specific types:\n```typescript\nexport interface EleventyConfig {\n  addPassthroughCopy: (path: string) => void;\n  addFilter: (name: string, fn: Function) => void;\n  addCollection: (name: string, fn: Function) => EleventyCollection;\n  // Add other Eleventy methods as needed\n}\n\nexport interface EleventyCollection {\n  getAll: () => CollectionItem[];\n  getAllSorted: () => CollectionItem[];\n  // Add other collection methods as needed\n}\n\nexport interface CollectionItem {\n  data: {\n    title: string;\n    date: Date;\n    tags?: string[];\n    [key: string]: any;\n  };\n  url: string;\n  inputPath: string;\n  outputPath: string;\n  // Add other properties as needed\n}\n```\n\n2. `types/content.d.ts` - Content and frontmatter types:\n```typescript\nexport interface Frontmatter {\n  title: string;\n  date: string | Date;\n  tags?: string[];\n  lang?: string;\n  description?: string;\n  [key: string]: any;\n}\n\nexport interface ContentItem {\n  data: Frontmatter;\n  content: string;\n  [key: string]: any;\n}\n```\n\n3. `types/i18n.d.ts` - Internationalization types:\n```typescript\nexport interface TranslationDictionary {\n  [key: string]: string | TranslationDictionary;\n}\n\nexport interface I18nConfig {\n  defaultLanguage: string;\n  languages: string[];\n  translations: {\n    [language: string]: TranslationDictionary;\n  };\n}\n```\n\n4. `types/utils.d.ts` - Utility function types:\n```typescript\nexport interface DateFormatOptions {\n  format?: string;\n  locale?: string;\n}\n\nexport interface ContentFilterOptions {\n  tag?: string | string[];\n  language?: string;\n  limit?: number;\n  sortBy?: string;\n  sortOrder?: 'asc' | 'desc';\n}\n```",
+        "testStrategy": "Validate type definitions by creating test files that import and use these types. Run TypeScript compiler with 'npm run type-check' to ensure there are no type errors. Create sample objects that implement these interfaces and verify they match the expected structure.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Complete TypeScript Migration with Code Consolidation and Transpilation Validation",
+        "description": "Convert all utility files in src/utils/ to TypeScript with comprehensive type definitions, consolidate JavaScript implementations into TypeScript files, and validate transpilation output for production compatibility. This includes migrating i18n, dates, format, and content processing utilities with advanced error handling, performance optimization, and cross-browser compatibility validation.",
+        "details": "For each utility file in src/utils/, perform a complete migration with code consolidation:\n\n1. **Code Consolidation Phase:**\n   - Move all JavaScript implementation code from .js files directly into corresponding .ts files\n   - Remove wrapper pattern and integrate original logic with TypeScript annotations\n   - Ensure no runtime dependencies on original .js files remain\n\n2. **Advanced TypeScript Implementation:**\n   - Add comprehensive type annotations using union types, generics, and conditional types\n   - Implement strict null checks and undefined handling\n   - Create custom type guards with proper narrowing\n   - Add JSDoc comments with @param and @return type documentation\n\n3. **Enhanced Error Handling:**\n   - Implement custom error classes with proper inheritance\n   - Add input validation with detailed error messages\n   - Create fallback mechanisms for edge cases\n   - Add logging integration for debugging purposes\n\n4. **Performance and Compatibility:**\n   - Optimize for tree-shaking with proper ES6 module exports\n   - Add polyfill detection and conditional loading\n   - Implement lazy loading for heavy utility functions\n   - Add memory leak prevention for event listeners and timers\n\n5. **Transpilation Validation:**\n   - Configure TypeScript compiler with strict mode enabled\n   - Validate output JavaScript matches expected ES5/ES2015 targets\n   - Test transpiled code in multiple browser environments\n   - Verify source map generation for debugging\n   - Check bundle size impact and optimization opportunities\n\nExample enhanced implementation:\n```typescript\n// src/utils/dates.ts (consolidated from dates.js)\nimport { DateFormatOptions, DateValidationResult, CustomDateError } from '../../types/utils';\n\nexport class DateUtilityError extends Error {\n  constructor(message: string, public readonly input: unknown) {\n    super(message);\n    this.name = 'DateUtilityError';\n  }\n}\n\nexport function formatDate<T extends Date | string | number>(\n  date: T, \n  options: DateFormatOptions = {}\n): string {\n  const { format = 'yyyy-MM-dd', locale = 'en-US', timezone, fallback } = options;\n  \n  try {\n    const dateObj = normalizeDate(date);\n    if (!isValidDate(dateObj)) {\n      if (fallback) return fallback;\n      throw new DateUtilityError(`Invalid date provided: ${date}`, date);\n    }\n    \n    // Enhanced formatting with timezone support\n    const formatter = new Intl.DateTimeFormat(locale, {\n      timeZone: timezone,\n      ...parseFormatString(format)\n    });\n    \n    return formatter.format(dateObj);\n  } catch (error) {\n    if (error instanceof DateUtilityError) throw error;\n    throw new DateUtilityError(`Date formatting failed: ${error.message}`, date);\n  }\n}\n\nexport function validateDateRange(\n  startDate: Date | string, \n  endDate: Date | string,\n  options: { allowSameDay?: boolean; maxRange?: number } = {}\n): DateValidationResult {\n  // Comprehensive validation logic with detailed results\n}\n\n// Advanced type guards with proper narrowing\nexport function isValidDate(date: unknown): date is Date {\n  return date instanceof Date && !isNaN(date.getTime()) && isFinite(date.getTime());\n}\n\nfunction normalizeDate(input: Date | string | number): Date {\n  if (input instanceof Date) return input;\n  if (typeof input === 'string' || typeof input === 'number') {\n    return new Date(input);\n  }\n  throw new DateUtilityError('Unsupported date input type', input);\n}\n```\n\n6. **Build Configuration:**\n   - Update tsconfig.json with strict compilation settings\n   - Configure webpack/rollup for proper TypeScript handling\n   - Set up pre-commit hooks for type checking\n   - Add TypeScript declaration file generation\n\n7. **Migration Verification:**\n   - Compare runtime behavior between original JS and new TS implementations\n   - Validate all existing API contracts remain unchanged\n   - Test with real-world data sets and edge cases\n   - Performance benchmark against original implementations",
+        "testStrategy": "Implement comprehensive testing strategy with multiple validation layers:\n\n1. **Unit Testing with Type Validation:**\n   - Create Jest tests with TypeScript support and @types/jest\n   - Test all function signatures with correct and incorrect types\n   - Validate error handling with custom error classes\n   - Test edge cases including null, undefined, and malformed inputs\n   - Use property-based testing with fast-check for random input validation\n\n2. **Integration Testing:**\n   - Test utility functions working together in realistic scenarios\n   - Validate i18n utilities with actual translation files\n   - Test date utilities with different locales and timezones\n   - Verify format utilities with various data structures\n\n3. **Transpilation and Build Testing:**\n   - Automated testing of TypeScript compilation process\n   - Validate generated JavaScript output in multiple environments (Node.js, browsers)\n   - Test source map accuracy for debugging\n   - Bundle size regression testing\n   - Cross-browser compatibility testing (Chrome, Firefox, Safari, Edge)\n\n4. **Performance and Memory Testing:**\n   - Benchmark performance against original JavaScript implementations\n   - Memory leak detection for long-running processes\n   - Load testing with large datasets\n   - Profiling of transpiled code execution\n\n5. **Type Safety Validation:**\n   - Use tsc --noEmit for compile-time type checking\n   - Test with strict TypeScript compiler settings\n   - Validate IntelliSense and IDE support\n   - Test type inference and auto-completion\n\n6. **Regression Testing:**\n   - Maintain existing test suite compatibility\n   - Compare outputs between old JS and new TS implementations\n   - Test with production data samples\n   - Validate backward compatibility for existing consumers",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create TypeScript Type Definitions for Utility Functions",
+            "description": "Create TypeScript interface and type definitions for all utility functions before modifying the actual implementation files. This includes types for i18n, dates, formatting, and content processing utilities.",
+            "dependencies": [],
+            "details": "Create a new directory structure in src/types/ with separate files for each utility category:\n\n1. src/types/utils/dates.ts:\n```typescript\nexport interface DateFormatOptions {\n  format?: string;\n  locale?: string;\n  timezone?: string;\n}\n```\n\n2. src/types/utils/i18n.ts:\n```typescript\nexport interface TranslationDictionary {\n  [key: string]: string | TranslationDictionary;\n}\n\nexport interface I18nConfig {\n  defaultLanguage: string;\n  supportedLanguages: string[];\n  translations: {\n    [language: string]: TranslationDictionary;\n  };\n}\n```\n\n3. src/types/utils/format.ts:\n```typescript\nexport interface FormatOptions {\n  truncate?: number;\n  capitalize?: boolean;\n  lowercase?: boolean;\n  uppercase?: boolean;\n}\n```\n\n4. src/types/utils/content.ts:\n```typescript\nexport interface ContentProcessingOptions {\n  stripHtml?: boolean;\n  excerpt?: number;\n  markdown?: boolean;\n}\n\nexport interface ContentItem {\n  content: string;\n  data?: Record<string, unknown>;\n  [key: string]: unknown;\n}\n```",
+            "status": "done",
+            "testStrategy": "Validate type definitions by creating a simple test file that imports and uses these types. Ensure the TypeScript compiler accepts the types without errors."
+          },
+          {
+            "id": 2,
+            "title": "Create TypeScript Wrapper Functions for Date Utilities",
+            "description": "Create TypeScript wrapper functions for date utilities that use the type definitions while maintaining the original JavaScript files. This allows for incremental migration without breaking existing functionality.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "1. Create a new file src/utils/dates.ts that imports the original JavaScript functions and wraps them with typed versions:\n\n```typescript\nimport { DateFormatOptions } from '../../types/utils/dates';\n// Import the original functions\nimport * as originalDates from './dates.js';\n\nexport function formatDate(date: Date | string, options: DateFormatOptions = {}): string {\n  return originalDates.formatDate(date, options);\n}\n\nexport function isValidDate(date: unknown): date is Date {\n  return date instanceof Date && !isNaN(date.getTime());\n}\n\nexport function parseDate(dateString: string): Date {\n  const result = originalDates.parseDate(dateString);\n  if (!isValidDate(result)) {\n    throw new Error(`Invalid date string: ${dateString}`);\n  }\n  return result;\n}\n\nexport function dateDifference(date1: Date | string, date2: Date | string): number {\n  const d1 = typeof date1 === 'string' ? parseDate(date1) : date1;\n  const d2 = typeof date2 === 'string' ? parseDate(date2) : date2;\n  return originalDates.dateDifference(d1, d2);\n}\n```\n\n2. Update the build process to compile TypeScript files alongside JavaScript files without replacing them yet.",
+            "status": "done",
+            "testStrategy": "Write unit tests for each wrapper function to verify they correctly call the original functions with the same parameters and return the expected results. Test edge cases like invalid dates and different format options."
+          },
+          {
+            "id": 3,
+            "title": "Migrate I18n and Formatting Utility Functions to TypeScript",
+            "description": "Convert the i18n and formatting utility functions to TypeScript using the previously defined type definitions, implementing proper error handling and type guards.",
+            "dependencies": [
+              "3.1",
+              "3.2"
+            ],
+            "details": "1. Create src/utils/i18n.ts:\n```typescript\nimport { TranslationDictionary, I18nConfig } from '../../types/utils/i18n';\n\nexport function translate(key: string, language: string, translations: I18nConfig['translations']): string {\n  if (!translations[language]) {\n    console.warn(`Language \"${language}\" not found in translations`);\n    return key; // Fallback to key if language not found\n  }\n  \n  // Navigate nested translation objects\n  const keyParts = key.split('.');\n  let result: string | TranslationDictionary = translations[language];\n  \n  for (const part of keyParts) {\n    if (typeof result === 'string') {\n      return result;\n    }\n    \n    result = (result as TranslationDictionary)[part] as string | TranslationDictionary;\n    if (result === undefined) {\n      console.warn(`Translation key \"${key}\" not found for language \"${language}\"`);\n      return key; // Key not found\n    }\n  }\n  \n  return typeof result === 'string' ? result : key;\n}\n\nexport function getLanguageFromUrl(url: string, supportedLanguages: string[]): string {\n  const pathSegments = url.split('/').filter(Boolean);\n  const potentialLang = pathSegments[0];\n  \n  return supportedLanguages.includes(potentialLang) ? potentialLang : 'en';\n}\n```\n\n2. Create src/utils/format.ts:\n```typescript\nimport { FormatOptions } from '../../types/utils/format';\n\nexport function formatText(text: string, options: FormatOptions = {}): string {\n  let result = text;\n  \n  if (options.truncate && result.length > options.truncate) {\n    result = result.substring(0, options.truncate) + '...';\n  }\n  \n  if (options.capitalize) {\n    result = result.charAt(0).toUpperCase() + result.slice(1);\n  }\n  \n  if (options.lowercase) {\n    result = result.toLowerCase();\n  }\n  \n  if (options.uppercase) {\n    result = result.toUpperCase();\n  }\n  \n  return result;\n}\n\nexport function slugify(text: string): string {\n  return text\n    .toLowerCase()\n    .replace(/[^\\w\\s-]/g, '') // Remove non-word chars\n    .replace(/[\\s_-]+/g, '-') // Replace spaces and underscores with hyphens\n    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens\n}\n```",
+            "status": "done",
+            "testStrategy": "Create comprehensive unit tests for the i18n and formatting functions. Test nested translation keys, missing languages, and various formatting options. Verify that error handling works correctly by testing edge cases."
+          },
+          {
+            "id": 4,
+            "title": "Migrate Content Processing Utility Functions to TypeScript",
+            "description": "Convert content processing utility functions to TypeScript with proper type definitions, error handling, and type guards for processing markdown, HTML, and other content types.",
+            "dependencies": [
+              "3.1",
+              "3.3"
+            ],
+            "details": "1. Create src/utils/content.ts:\n```typescript\nimport { ContentProcessingOptions, ContentItem } from '../../types/utils/content';\n\nexport function processContent(content: string, options: ContentProcessingOptions = {}): string {\n  let result = content;\n  \n  if (options.stripHtml) {\n    result = result.replace(/<[^>]*>/g, '');\n  }\n  \n  if (options.excerpt && result.length > options.excerpt) {\n    result = result.substring(0, options.excerpt) + '...';\n  }\n  \n  return result;\n}\n\nexport function extractExcerpt(content: string, length: number = 150): string {\n  // First strip HTML\n  const strippedContent = content.replace(/<[^>]*>/g, '');\n  \n  // Then create excerpt\n  if (strippedContent.length <= length) {\n    return strippedContent;\n  }\n  \n  return strippedContent.substring(0, length) + '...';\n}\n\nexport function sortContentItems(items: ContentItem[], sortBy: string = 'date', order: 'asc' | 'desc' = 'desc'): ContentItem[] {\n  return [...items].sort((a, b) => {\n    const aValue = a.data?.[sortBy];\n    const bValue = b.data?.[sortBy];\n    \n    if (aValue === undefined && bValue === undefined) return 0;\n    if (aValue === undefined) return order === 'asc' ? 1 : -1;\n    if (bValue === undefined) return order === 'asc' ? -1 : 1;\n    \n    if (aValue instanceof Date && bValue instanceof Date) {\n      return order === 'asc' \n        ? aValue.getTime() - bValue.getTime() \n        : bValue.getTime() - aValue.getTime();\n    }\n    \n    if (typeof aValue === 'string' && typeof bValue === 'string') {\n      return order === 'asc' \n        ? aValue.localeCompare(bValue) \n        : bValue.localeCompare(aValue);\n    }\n    \n    if (typeof aValue === 'number' && typeof bValue === 'number') {\n      return order === 'asc' ? aValue - bValue : bValue - aValue;\n    }\n    \n    return 0;\n  });\n}\n```",
+            "status": "done",
+            "testStrategy": "Write unit tests for content processing functions with various input types and options. Test HTML stripping, excerpt generation, and content sorting with different data types. Verify that the functions handle edge cases like empty content or missing data fields."
+          },
+          {
+            "id": 5,
+            "title": "Advanced TypeScript Migration with Custom Error Classes and Type Guards",
+            "description": "Perform comprehensive TypeScript migration of all utility files with advanced type annotations, custom error classes, and sophisticated type guards. This includes implementing union types, generics, conditional types, and strict null checking across all utilities.",
+            "dependencies": [
+              "3.3",
+              "3.4"
+            ],
+            "details": "Migrate each utility file (i18n, dates, format, content processing) to TypeScript with: 1) Custom error classes extending base Error with proper inheritance and context data, 2) Advanced type guards using 'is' predicates for runtime type narrowing, 3) Generic functions with constraints and conditional types, 4) Comprehensive JSDoc documentation with @param, @return, and @throws annotations, 5) Strict null checks and undefined handling with proper optional chaining, 6) Union types for flexible input handling, 7) Interface definitions for complex data structures, 8) Type assertion functions for runtime validation.",
+            "status": "done",
+            "testStrategy": "Unit tests with TypeScript type validation using Jest and @types/jest. Test type guards with various input types, validate custom error classes with proper inheritance chains, test generic functions with different type parameters, and use property-based testing with fast-check for comprehensive input validation. Include compile-time type checking with tsc --noEmit."
+          },
+          {
+            "id": 6,
+            "title": "Code Consolidation",
+            "description": "Consolidate JavaScript implementations directly into TypeScript files. Remove all wrapper patterns and ensure zero runtime dependencies on original JavaScript files.",
+            "dependencies": [
+              "3.5"
+            ],
+            "details": "For each utility: 1) Move all JavaScript code directly into .ts files, eliminating wrapper patterns, 2) Implement ES6 module exports optimized for tree-shaking with proper named exports, 3) Add lazy loading mechanisms for heavy utility functions using dynamic imports, 4) Implement memory leak prevention for event listeners, timers, and DOM references, 5) Add polyfill detection and conditional loading for browser compatibility, 6) Optimize function implementations for V8 engine performance, 7) Implement caching mechanisms for expensive operations, 8) Add proper cleanup methods for stateful utilities.",
+            "status": "done",
+            "testStrategy": "Unit tests with TypeScript type validation using Jest and @types/jest. Test type guards with various input types, validate custom error classes with proper inheritance chains, test generic functions with different type parameters, and use property-based testing with fast-check for comprehensive input validation. Include compile-time type checking with tsc --noEmit."
+          },
+          {
+            "id": 7,
+            "title": "Enhanced Error Handling with Logging Integration and Fallback Mechanisms",
+            "description": "Implement comprehensive error handling system with custom error hierarchies, detailed error messages, fallback mechanisms for edge cases, and integrated logging for debugging and monitoring purposes.",
+            "dependencies": [
+              "3.5"
+            ],
+            "details": "Create robust error handling: 1) Design custom error class hierarchy (DateUtilityError, I18nError, FormatError, ContentProcessingError) with proper inheritance, 2) Implement input validation with detailed error messages including expected vs actual types, 3) Add fallback mechanisms for graceful degradation (default values, alternative implementations), 4) Integrate logging system with configurable log levels (debug, info, warn, error), 5) Add error context preservation with stack traces and input data, 6) Implement retry mechanisms for transient failures, 7) Add error aggregation for batch operations, 8) Create error reporting utilities for production monitoring.\n<info added on 2025-09-13T19:11:44.554Z>\nBased on your progress, the next steps involve applying the newly created error classes and logger utility to the core utility functions. The focus should be on robust input validation, graceful fallbacks, and contextual logging.\n\n**Implementation Plan:**\n\n1.  **Integrate into `src/utils/dates.ts`:**\n    *   In functions like `formatDate` and `getReadableDate`, add input validation at the beginning. Check if the `date` parameter is a valid `Date` object or a parseable date string.\n    *   If validation fails, throw a `new DateUtilityError()` from `src/utils/errors.ts` with a message detailing the expected vs. actual input type.\n    *   Wrap the core `Intl.DateTimeFormat` logic in a `try...catch` block. On failure (e.g., invalid locale), catch the original error, log it with context using the `logger` from `src/utils/logger.ts`, and re-throw a `DateUtilityError`.\n    *   **Example Pattern:**\n        ```typescript\n        import { logger } from './logger';\n        import { DateUtilityError } from './errors';\n\n        export function formatDate(date: unknown, locale: string = 'en-US'): string {\n          const dateObj = new Date(date as any);\n          if (isNaN(dateObj.getTime())) {\n            logger.warn({ input: date }, 'Invalid date input received.');\n            throw new DateUtilityError(`Invalid date value: ${date}`);\n          }\n          try {\n            // ... formatting logic ...\n          } catch (error) {\n            logger.error({ error, date, locale }, 'Failed to format date.');\n            // Fallback to a simple string representation\n            return dateObj.toISOString();\n          }\n        }\n        ```\n\n2.  **Enhance `src/utils/i18n.ts`:**\n    *   In the main translation function, check if a translation key exists for the given locale.\n    *   If the key is missing, implement a fallback mechanism: log a warning with `logger.warn({ key, locale }, 'Missing translation key.')` and return the key itself or a default placeholder string (e.g., `[MISSING_TRANSLATION: ${key}]`). This prevents the UI from breaking.\n    *   If the entire locale file or data structure is invalid, catch the error, log it, and throw a `new I18nError('Failed to load or parse locale data.')`.\n\n3.  **Fortify `src/utils/format.ts` and `src/utils/content.ts`:**\n    *   For any functions that perform formatting or content processing, apply the same pattern: validate inputs, wrap logic in `try...catch`, and use the `logger` for detailed context.\n    *   Throw specific errors like `FormatError` or `ContentProcessingError` from `src/utils/errors.ts`.\n    *   When logging an error, include the input arguments and any relevant options to preserve context for debugging. For example: `logger.error({ input, options, originalError: error }, 'Content processing failed.');`\n</info added on 2025-09-13T19:11:44.554Z>",
+            "status": "done",
+            "testStrategy": "Error handling tests covering all error scenarios with proper error type validation. Test fallback mechanisms with various failure conditions. Validate logging integration with different log levels and outputs. Test error context preservation and stack trace accuracy. Simulate network failures and resource constraints to test retry mechanisms. Use chaos engineering principles to test system resilience."
+          },
+          {
+            "id": 8,
+            "title": "Transpilation Validation with Multi-Environment Testing and Source Map Verification",
+            "description": "Configure and validate TypeScript transpilation process with strict compiler settings, multi-target output validation, cross-browser testing, and comprehensive source map verification for production deployment.",
+            "dependencies": [
+              "3.6",
+              "3.7"
+            ],
+            "details": "Comprehensive transpilation validation: 1) Configure tsconfig.json with strict mode, noImplicitAny, strictNullChecks, and noImplicitReturns, 2) Set up multi-target compilation (ES5, ES2015, ES2020) with appropriate polyfills, 3) Validate transpiled JavaScript output matches expected syntax and behavior, 4) Test in multiple runtime environments (Node.js versions, browser engines), 5) Verify source map generation and accuracy for debugging, 6) Implement bundle size monitoring with regression detection, 7) Add pre-commit hooks for type checking and compilation validation, 8) Configure webpack/rollup for optimal TypeScript handling with proper module resolution, 9) Test declaration file generation for library consumers.\n<info added on 2025-09-13T19:14:27.257Z>\nUpdate: Transpilation validation has been successfully completed. The `tsconfig.json` is now configured with advanced strict compilation settings, including `noImplicitAny`, `strictNullChecks`, and `exactOptionalPropertyTypes`. The build process has been verified to correctly generate JavaScript files, `.d.ts` declaration files, and accurate source maps. All identified type errors have been resolved, and the output has been validated across multiple environments.\n</info added on 2025-09-13T19:14:27.257Z>",
+            "status": "done",
+            "testStrategy": "Automated transpilation testing with multiple TypeScript compiler targets. Cross-browser testing using Selenium WebDriver or Playwright across Chrome, Firefox, Safari, and Edge. Source map validation by testing breakpoint accuracy and variable inspection. Bundle size regression testing with automated alerts for size increases. Runtime behavior comparison between original JavaScript and transpiled TypeScript using automated test suites. Performance profiling of transpiled code in production-like environments."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Convert Eleventy Configuration to TypeScript",
+        "description": "Migrate the .eleventy.js configuration file to TypeScript with proper type definitions and ensure compatibility with the Eleventy build process.",
+        "details": "1. Create a new .eleventy.ts file with the following structure:\n\n```typescript\nimport { EleventyConfig } from './types/eleventy';\n\n// Import utility functions\nimport { formatDate } from './src/utils/dates';\nimport { translate } from './src/utils/i18n';\n// Import other utilities as needed\n\nmodule.exports = function(eleventyConfig: EleventyConfig) {\n  // Add passthrough copy\n  eleventyConfig.addPassthroughCopy('src/assets');\n  \n  // Add filters\n  eleventyConfig.addFilter('formatDate', formatDate);\n  eleventyConfig.addFilter('translate', translate);\n  \n  // Add collections\n  eleventyConfig.addCollection('posts', (collection) => {\n    return collection.getAll().filter(item => {\n      return item.data.tags && item.data.tags.includes('post');\n    });\n  });\n  \n  // Return configuration object\n  return {\n    dir: {\n      input: 'src',\n      output: 'dist',\n      includes: '_includes',\n      layouts: '_layouts',\n      data: '_data'\n    },\n    templateFormats: ['njk', 'md', 'html'],\n    markdownTemplateEngine: 'njk',\n    htmlTemplateEngine: 'njk',\n    dataTemplateEngine: 'njk'\n  };\n};\n```\n\n2. Update package.json scripts to use the TypeScript configuration:\n\n```json\n\"scripts\": {\n  \"build\": \"npm run build:ts && eleventy --config=.eleventy.ts\",\n  \"dev\": \"concurrently \\\"npm run dev:ts\\\" \\\"eleventy --config=.eleventy.ts --serve --watch\\\"\"\n}\n```\n\n3. Install required dependencies for Eleventy to work with TypeScript:\n\n```bash\nnpm install --save-dev ts-node @types/eleventy\n```\n\n4. Create a .eleventy.js wrapper file if needed for compatibility:\n\n```javascript\n// This file is just a wrapper to load the TypeScript configuration\nrequire('ts-node').register();\nmodule.exports = require('./.eleventy.ts');\n```",
+        "testStrategy": "Test the Eleventy configuration by running a build with 'npx eleventy --config=.eleventy.ts'. Verify that all collections, filters, and other configuration options work as expected. Compare the output with the previous JavaScript-based build to ensure consistency. Check that all TypeScript types are properly resolved without any 'any' types.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Migrate Data Configuration Files to TypeScript",
+        "description": "Convert site.js data file to TypeScript and create type definitions for JSON data files (i18n.json, certifications.json).",
+        "details": "1. Convert site.js to site.ts:\n\n```typescript\n// src/_data/site.ts\ninterface SiteConfig {\n  title: string;\n  description: string;\n  url: string;\n  author: {\n    name: string;\n    email: string;\n  };\n  buildTime: Date;\n  [key: string]: any;\n}\n\nconst siteConfig: SiteConfig = {\n  title: 'Portfolio Website',\n  description: 'Personal portfolio and blog',\n  url: 'https://example.com',\n  author: {\n    name: 'Developer Name',\n    email: 'dev@example.com'\n  },\n  buildTime: new Date()\n};\n\nmodule.exports = siteConfig;\n```\n\n2. Create type definitions for JSON data files:\n\n```typescript\n// types/data.d.ts\nexport interface Certification {\n  title: string;\n  issuer: string;\n  date: string;\n  url?: string;\n  skills: string[];\n}\n\nexport interface I18nData {\n  languages: {\n    [code: string]: {\n      name: string;\n      nativeName: string;\n    };\n  };\n  defaultLanguage: string;\n}\n```\n\n3. Create TypeScript interfaces for frontmatter schemas:\n\n```typescript\n// types/frontmatter.d.ts\nexport interface PostFrontmatter {\n  title: string;\n  date: string;\n  tags: string[];\n  description?: string;\n  featured?: boolean;\n  image?: string;\n  lang: string;\n}\n\nexport interface PageFrontmatter {\n  title: string;\n  layout: string;\n  permalink: string;\n  lang: string;\n  [key: string]: any;\n}\n```\n\n4. Update the build process to handle TypeScript data files:\n\n```bash\nnpm install --save-dev @11ty/eleventy-plugin-typescript\n```\n\nAdd to .eleventy.ts:\n```typescript\nconst eleventyPluginTypescript = require('@11ty/eleventy-plugin-typescript');\neleventyConfig.addPlugin(eleventyPluginTypescript);\n```",
+        "testStrategy": "Validate data files by running a build and checking that the data is correctly loaded into Eleventy. Create test templates that use the data to ensure it's properly typed and accessible. Verify that JSON data files are correctly typed by importing them in TypeScript files and checking for type errors.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install and Configure Eleventy TypeScript Plugin",
+            "description": "Install the necessary Eleventy plugin to process TypeScript data files and add it to the Eleventy configuration.",
+            "dependencies": [],
+            "details": "Run `npm install --save-dev @11ty/eleventy-plugin-typescript`. Then, edit the existing `.eleventy.ts` configuration file. Import the plugin using `import eleventyPluginTypescript from '@11ty/eleventy-plugin-typescript';` and register it within the main configuration function by adding `eleventyConfig.addPlugin(eleventyPluginTypescript);`. This will enable Eleventy to recognize and compile `.ts` files in the `_data` directory.",
+            "status": "done",
+            "testStrategy": "After installation and configuration, run the Eleventy build process. The build should complete without errors related to unrecognized `.ts` files, although it may fail later if the `site.ts` file is not yet created."
+          },
+          {
+            "id": 2,
+            "title": "Convert site.js Data File to site.ts",
+            "description": "Migrate the existing `src/_data/site.js` file to a new TypeScript file `src/_data/site.ts`, including a corresponding interface for type safety.",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Create a new file `src/_data/site.ts`. Inside this file, define a `SiteConfig` interface based on the structure of the existing `site.js`. Create a `siteConfig` constant typed with this interface, populating it with the data from `site.js`. Export the constant using `module.exports = siteConfig;`. Finally, delete the original `src/_data/site.js` file.",
+            "status": "done",
+            "testStrategy": "Run `npx @11ty/eleventy` and verify the build completes successfully. Inspect a generated HTML page that uses `site` data (e.g., in the footer or header) to confirm that the data from `site.ts` is correctly loaded and rendered."
+          },
+          {
+            "id": 3,
+            "title": "Create Type Definitions for JSON Data Files",
+            "description": "Create a new declaration file to define TypeScript interfaces for the `certifications.json` and `i18n.json` data files.",
+            "dependencies": [],
+            "details": "Create a new directory `types`. Inside it, create a file named `data.d.ts`. In this file, define and export an `I18nData` interface matching the structure of `src/_data/i18n.json`. Also, define and export a `Certification` interface for the objects within the `src/_data/certifications.json` array. The full type for the certifications data will be `Certification[]`.",
+            "status": "done",
+            "testStrategy": "This subtask only creates type definitions, so direct testing is not applicable. Verification will occur in subtask 5 when these types are used to type-check data within the application."
+          },
+          {
+            "id": 4,
+            "title": "Create Type Definitions for Frontmatter Schemas",
+            "description": "Create a new declaration file to define TypeScript interfaces for common frontmatter schemas used in posts and pages.",
+            "dependencies": [],
+            "details": "Create a new file `types/frontmatter.d.ts`. In this file, define and export a `PostFrontmatter` interface for blog posts and a `PageFrontmatter` interface for general content pages. These interfaces should include common fields like `title`, `date`, `tags`, `layout`, and `lang` as specified in the task description.",
+            "status": "done",
+            "testStrategy": "Similar to subtask 3, this only creates type definitions. Verification will happen when these interfaces are imported and used to type Eleventy collections or frontmatter data in `.eleventy.ts` or other utility files."
+          },
+          {
+            "id": 5,
+            "title": "Update tsconfig.json and Verify Type Integration",
+            "description": "Update the `tsconfig.json` to include the new TypeScript files and types, then verify that the new types are correctly applied and recognized by the toolchain.",
+            "dependencies": [
+              "5.2",
+              "5.3",
+              "5.4"
+            ],
+            "details": "Modify the `include` array in `tsconfig.json` to add `'src/_data/**/*.ts'` and `'types/**/*.d.ts'`. To verify, open `.eleventy.ts` and import one of the newly created types, for example, `import { PostFrontmatter } from './types/frontmatter';`. Use this type within a collection definition, such as `eleventyConfig.addCollection('posts', collectionApi => { const posts = collectionApi.getFilteredByTag('post'); return posts.map(post => { const typedData = post.data as PostFrontmatter; /* ... */ }); });`. Running `tsc --noEmit` should pass without errors.",
+            "status": "done",
+            "testStrategy": "Run `npx tsc --noEmit` to confirm that the TypeScript compiler can find and correctly parse all new files and type definitions without emitting any errors. Run a full Eleventy build to ensure the changes haven't introduced any runtime issues."
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Convert Client-Side JavaScript to TypeScript",
+        "description": "Migrate browser-side JavaScript files to TypeScript with proper DOM type definitions and event handling types.",
+        "details": "1. Update the tsconfig.json to include client-side files:\n\n```json\n{\n  \"compilerOptions\": {\n    // Existing options...\n    \"lib\": [\"DOM\", \"DOM.Iterable\", \"ESNext\"],\n    \"outDir\": \"dist/assets/js\"\n  },\n  \"include\": [\n    // Existing includes...\n    \"public/assets/js/**/*\"\n  ]\n}\n```\n\n2. Convert each client-side JavaScript file to TypeScript. Example:\n\n```typescript\n// public/assets/js/navigation.ts\ninterface NavigationOptions {\n  menuSelector: string;\n  toggleSelector: string;\n  activeClass: string;\n}\n\nclass Navigation {\n  private menu: HTMLElement | null;\n  private toggle: HTMLElement | null;\n  private activeClass: string;\n  \n  constructor(options: NavigationOptions) {\n    this.menu = document.querySelector(options.menuSelector);\n    this.toggle = document.querySelector(options.toggleSelector);\n    this.activeClass = options.activeClass;\n    \n    this.init();\n  }\n  \n  private init(): void {\n    if (!this.menu || !this.toggle) return;\n    \n    this.toggle.addEventListener('click', this.toggleMenu.bind(this));\n  }\n  \n  private toggleMenu(event: MouseEvent): void {\n    event.preventDefault();\n    this.menu?.classList.toggle(this.activeClass);\n  }\n}\n\n// Initialize navigation when DOM is loaded\ndocument.addEventListener('DOMContentLoaded', () => {\n  new Navigation({\n    menuSelector: '.nav-menu',\n    toggleSelector: '.nav-toggle',\n    activeClass: 'is-active'\n  });\n});\n```\n\n3. Set up a build process for client-side TypeScript:\n\n```json\n// package.json scripts\n\"scripts\": {\n  \"build:client-ts\": \"tsc -p tsconfig.client.json\",\n  \"dev:client-ts\": \"tsc -p tsconfig.client.json --watch\"\n}\n```\n\n4. Create a separate tsconfig.client.json for client-side code if needed:\n\n```json\n{\n  \"extends\": \"./tsconfig.json\",\n  \"compilerOptions\": {\n    \"target\": \"ES2015\",\n    \"module\": \"ESNext\",\n    \"outDir\": \"public/assets/js\"\n  },\n  \"include\": [\"src/client/**/*.ts\"]\n}\n```\n\n5. Update HTML templates to reference the compiled JavaScript files.",
+        "testStrategy": "Test client-side TypeScript by running the build process and checking that the JavaScript files are correctly generated. Manually test the website in different browsers to ensure all interactive features work as expected. Use browser developer tools to check for any JavaScript errors. Consider adding automated browser tests with tools like Cypress or Playwright to verify client-side functionality.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up Client-Side TypeScript Configuration and Build Scripts",
+            "description": "Create a dedicated tsconfig file for client-side code, establish a source directory for TypeScript files, and add the necessary build and watch scripts to package.json.",
+            "dependencies": [],
+            "details": "1. Create a new directory `src/client` to house the client-side TypeScript source files.\n2. Create a `tsconfig.client.json` file in the project root with a configuration optimized for browsers. This file should extend the base `tsconfig.json` but override `target`, `module`, and `outDir`.\n```json\n{\n  \"extends\": \"./tsconfig.json\",\n  \"compilerOptions\": {\n    \"target\": \"ES2015\",\n    \"module\": \"ESNext\",\n    \"lib\": [\"DOM\", \"DOM.Iterable\", \"ESNext\"],\n    \"outDir\": \"public/assets/js\",\n    \"rootDir\": \"src/client\"\n  },\n  \"include\": [\"src/client/**/*.ts\"]\n}\n```\n3. Update `package.json` to add scripts for compiling the client-side TypeScript.\n```json\n\"scripts\": {\n  // ... existing scripts\n  \"build:client\": \"tsc -p tsconfig.client.json\",\n  \"watch:client\": \"tsc -p tsconfig.client.json --watch\"\n}\n```",
+            "status": "done",
+            "testStrategy": "Run `npm run build:client` and verify that the `public/assets/js` directory is created (if it doesn't exist) and that no errors are reported. Since there are no TS files yet, this will just validate the configuration."
+          },
+          {
+            "id": 2,
+            "title": "Migrate `main.js` to `src/client/main.ts`",
+            "description": "Move the existing `main.js` logic to a new TypeScript file, `src/client/main.ts`, and apply strong types for DOM elements and events related to navigation.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "1. Create the file `src/client/main.ts`.\n2. Copy the content from `public/assets/js/main.js` into the new file.\n3. Convert the JavaScript code to TypeScript. Use type assertions or guards to ensure DOM elements are not null.\n```typescript\n// src/client/main.ts\ndocument.addEventListener('DOMContentLoaded', () => {\n  const navToggle = document.querySelector<HTMLButtonElement>('.nav-toggle');\n  const navMenu = document.querySelector<HTMLElement>('.nav-menu');\n\n  if (navToggle && navMenu) {\n    navToggle.addEventListener('click', (e: MouseEvent) => {\n      e.preventDefault();\n      navMenu.classList.toggle('is-active');\n      navToggle.classList.toggle('is-active');\n    });\n  }\n});\n```\n4. The original `public/assets/js/main.js` should be removed after migration is complete in a later subtask, but can be kept for reference for now.",
+            "status": "done",
+            "testStrategy": "Run `npm run build:client`. Verify that `public/assets/js/main.js` is generated without any TypeScript errors. Open the website and confirm that the mobile navigation toggle works as expected."
+          },
+          {
+            "id": 3,
+            "title": "Migrate `theme-switcher.js` to `src/client/theme-switcher.ts`",
+            "description": "Move the theme switching logic to a new TypeScript file, `src/client/theme-switcher.ts`, and add types for the theme switcher input element, its event, and interactions with localStorage.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "1. Create the file `src/client/theme-switcher.ts`.\n2. Copy the content from `public/assets/js/theme-switcher.js` into the new file.\n3. Convert the IIFE to a modern TypeScript module or a simple script scope. Add appropriate types.\n```typescript\n// src/client/theme-switcher.ts\nconst themeSwitcher = document.querySelector<HTMLInputElement>('[data-theme-switcher]');\n\nif (themeSwitcher) {\n  const currentTheme = localStorage.getItem('theme') ?? 'light';\n  document.documentElement.setAttribute('data-theme', currentTheme);\n  themeSwitcher.checked = currentTheme === 'dark';\n\n  themeSwitcher.addEventListener('change', (e: Event) => {\n    const target = e.target as HTMLInputElement;\n    const theme = target.checked ? 'dark' : 'light';\n    document.documentElement.setAttribute('data-theme', theme);\n    localStorage.setItem('theme', theme);\n  });\n}\n```",
+            "status": "done",
+            "testStrategy": "Run `npm run build:client`. Check that `public/assets/js/theme-switcher.js` is generated. Open the website, test the theme switcher toggle, and verify that the theme persists across page reloads by checking `localStorage` in the browser's developer tools."
+          },
+          {
+            "id": 4,
+            "title": "Integrate Client-Side Build into Eleventy Workflow",
+            "description": "Update the main `build` and `start` scripts in `package.json` to automatically compile client-side TypeScript as part of the Eleventy development and production build processes.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "1. Install `npm-run-all` to run scripts concurrently and sequentially.\n`npm install npm-run-all --save-dev`\n2. Modify the `start` and `build` scripts in `package.json` to incorporate the client-side TypeScript compilation.\n```json\n\"scripts\": {\n  \"start\": \"npm-run-all --parallel watch:*\",\n  \"watch:eleventy\": \"eleventy --serve\",\n  \"watch:client\": \"tsc -p tsconfig.client.json --watch\",\n  \"build\": \"npm-run-all build:client build:eleventy\",\n  \"build:eleventy\": \"eleventy\",\n  \"build:client\": \"tsc -p tsconfig.client.json\",\n  \"type-check\": \"tsc --noEmit\"\n}\n```\nThis ensures that client-side TypeScript is watched for changes during development and built before the production Eleventy build.",
+            "status": "done",
+            "testStrategy": "Run `npm start`. Make a change to a `.ts` file in `src/client/` and verify that the `tsc` watcher recompiles it. Run `npm run build` and verify that both the client-side assets and the Eleventy site are built correctly."
+          },
+          {
+            "id": 5,
+            "title": "Finalize Integration and Clean Up Project",
+            "description": "Ensure HTML templates reference the compiled JavaScript files, remove the original source JavaScript files from the `public` directory, and update `.gitignore`.",
+            "dependencies": [
+              "6.2",
+              "6.3",
+              "6.4"
+            ],
+            "details": "1. Verify that the `<script>` tags in `src/_includes/layouts/base.njk` (or other relevant templates) correctly point to the compiled files in `/assets/js/` (e.g., `<script src=\"/assets/js/main.js\" defer></script>`). No changes should be needed if the output filenames are the same.\n2. Delete the original JavaScript source files from `public/assets/js/` that have now been migrated to `src/client/` (e.g., `public/assets/js/main.js`, `public/assets/js/theme-switcher.js`). The directory `public/assets/js` should now be considered a build target.\n3. Add the client-side build output directory to `.gitignore` to prevent compiled files from being committed to version control.\n```\n# .gitignore\n\n# Build output\n/public/assets/js/\n```",
+            "status": "done",
+            "testStrategy": "After running `npm run build`, delete the `public/assets/js` directory and run `npm run build` again to ensure it's fully regenerated. Check the git status to confirm that the generated `public/assets/js` files are ignored. Perform a final manual test of the deployed site to ensure all functionality is intact."
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Integrate TypeScript with Tailwind CSS Configuration",
+        "description": "Configure Tailwind CSS to work with TypeScript files and update the build process for integrated compilation.",
+        "details": "1. Convert tailwind.config.js to tailwind.config.ts:\n\n```typescript\n// tailwind.config.ts\nimport type { Config } from 'tailwindcss';\n\nconst config: Config = {\n  content: [\n    './src/**/*.{html,njk,md,ts,js}',\n    './public/assets/js/**/*.ts'\n  ],\n  theme: {\n    extend: {\n      // Your theme extensions\n    },\n  },\n  plugins: [\n    // Your plugins\n  ],\n};\n\nexport default config;\n```\n\n2. Install required dependencies:\n\n```bash\nnpm install --save-dev @types/tailwindcss\n```\n\n3. Update PostCSS configuration if needed:\n\n```typescript\n// postcss.config.ts\nexport default {\n  plugins: {\n    tailwindcss: {},\n    autoprefixer: {},\n  },\n};\n```\n\n4. Create a CSS processing script that works with TypeScript:\n\n```typescript\n// scripts/build-css.ts\nimport * as fs from 'fs';\nimport * as path from 'path';\nimport postcss from 'postcss';\nimport tailwindcss from 'tailwindcss';\nimport autoprefixer from 'autoprefixer';\n\nasync function buildCss() {\n  const inputFile = path.resolve(__dirname, '../src/assets/css/main.css');\n  const outputFile = path.resolve(__dirname, '../dist/assets/css/main.css');\n  \n  const css = fs.readFileSync(inputFile, 'utf-8');\n  \n  const result = await postcss([\n    tailwindcss,\n    autoprefixer\n  ]).process(css, {\n    from: inputFile,\n    to: outputFile\n  });\n  \n  fs.mkdirSync(path.dirname(outputFile), { recursive: true });\n  fs.writeFileSync(outputFile, result.css);\n  \n  console.log('CSS built successfully');\n}\n\nbuildCss().catch(error => {\n  console.error('Error building CSS:', error);\n  process.exit(1);\n});\n```\n\n5. Update package.json scripts to include CSS processing:\n\n```json\n\"scripts\": {\n  \"build:css\": \"ts-node scripts/build-css.ts\",\n  \"dev:css\": \"npm run build:css -- --watch\",\n  \"build\": \"npm run build:ts && npm run build:css && npm run build:eleventy\"\n}\n```",
+        "testStrategy": "Test the Tailwind CSS integration by running the build process and verifying that CSS is correctly generated with all the expected Tailwind utilities. Check that the CSS correctly processes classes used in TypeScript files. Verify that the watch mode works correctly during development. Test the final output in different browsers to ensure CSS is applied correctly.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          4
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Set Up Incremental Compilation for Development Workflow",
+        "description": "Configure TypeScript for incremental compilation and implement a development workflow with hot reloading.",
+        "details": "1. Update tsconfig.json to enable incremental compilation:\n\n```json\n{\n  \"compilerOptions\": {\n    // Existing options...\n    \"incremental\": true,\n    \"tsBuildInfoFile\": \".tsbuildinfo\",\n    \"composite\": true\n  }\n}\n```\n\n2. Install development dependencies for hot reloading:\n\n```bash\nnpm install --save-dev browser-sync concurrently nodemon\n```\n\n3. Create a development script that coordinates all processes:\n\n```typescript\n// scripts/dev.ts\nimport { spawn } from 'child_process';\nimport * as browserSync from 'browser-sync';\n\n// Start TypeScript compiler in watch mode\nconst tsc = spawn('npx', ['tsc', '--watch'], { stdio: 'inherit' });\n\n// Start Eleventy in watch mode\nconst eleventy = spawn('npx', ['eleventy', '--config=.eleventy.ts', '--serve', '--quiet'], { stdio: 'inherit' });\n\n// Start Tailwind CSS in watch mode\nconst tailwind = spawn('npx', ['tailwindcss', '-i', 'src/assets/css/main.css', '-o', 'dist/assets/css/main.css', '--watch'], { stdio: 'inherit' });\n\n// Initialize Browser-Sync\nconst bs = browserSync.create();\nbs.init({\n  proxy: 'localhost:8080', // Eleventy's default port\n  files: ['dist/**/*'],\n  open: false,\n  notify: false\n});\n\n// Handle process termination\nprocess.on('SIGINT', () => {\n  tsc.kill();\n  eleventy.kill();\n  tailwind.kill();\n  bs.exit();\n  process.exit();\n});\n```\n\n4. Update package.json scripts:\n\n```json\n\"scripts\": {\n  \"dev\": \"ts-node scripts/dev.ts\",\n  \"build\": \"tsc && eleventy --config=.eleventy.ts && tailwindcss -i src/assets/css/main.css -o dist/assets/css/main.css\"\n}\n```\n\n5. Configure nodemon for automatic server restart:\n\n```json\n// nodemon.json\n{\n  \"watch\": [\".eleventy.ts\", \"src/**/*.ts\", \"!src/client/**/*.ts\"],\n  \"ext\": \"ts,json\",\n  \"exec\": \"eleventy --config=.eleventy.ts\"\n}\n```",
+        "testStrategy": "Test the development workflow by running 'npm run dev' and verifying that changes to TypeScript files trigger recompilation. Make changes to different types of files (templates, TypeScript utilities, CSS) and confirm that the browser automatically refreshes with the changes. Measure build times to ensure incremental compilation is working efficiently. Test the workflow on different operating systems if applicable.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          4,
+          7
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement TypeScript Integration with Test Suite",
+        "description": "Update test scripts to work with TypeScript and integrate type checking into the test suite.",
+        "details": "1. Install testing dependencies:\n\n```bash\nnpm install --save-dev jest ts-jest @types/jest\n```\n\n2. Create Jest configuration for TypeScript:\n\n```typescript\n// jest.config.ts\nimport type { Config } from '@jest/types';\n\nconst config: Config.InitialOptions = {\n  preset: 'ts-jest',\n  testEnvironment: 'node',\n  roots: ['<rootDir>/src'],\n  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],\n  transform: {\n    '^.+\\\\.ts$': 'ts-jest'\n  },\n  moduleFileExtensions: ['ts', 'js', 'json'],\n  collectCoverage: true,\n  coverageDirectory: 'coverage',\n  coverageReporters: ['text', 'lcov']\n};\n\nexport default config;\n```\n\n3. Update existing test files to use TypeScript:\n\n```typescript\n// src/utils/__tests__/dates.test.ts\nimport { formatDate, isValidDate } from '../dates';\n\ndescribe('Date utilities', () => {\n  test('formatDate formats dates correctly', () => {\n    const date = new Date('2023-01-15');\n    expect(formatDate(date, { format: 'yyyy-MM-dd' })).toBe('2023-01-15');\n    expect(formatDate('2023-01-15', { format: 'MM/dd/yyyy' })).toBe('01/15/2023');\n  });\n\n  test('isValidDate validates dates correctly', () => {\n    expect(isValidDate(new Date('2023-01-15'))).toBe(true);\n    expect(isValidDate(new Date('invalid'))).toBe(false);\n    expect(isValidDate('not a date')).toBe(false);\n  });\n});\n```\n\n4. Create a script to run type checking as part of the test process:\n\n```typescript\n// scripts/test-with-types.ts\nimport { execSync } from 'child_process';\n\ntry {\n  // Run type checking\n  console.log('Running type checking...');\n  execSync('npx tsc --noEmit', { stdio: 'inherit' });\n  \n  // Run tests if type checking passes\n  console.log('\\nRunning tests...');\n  execSync('npx jest', { stdio: 'inherit' });\n} catch (error) {\n  process.exit(1);\n}\n```\n\n5. Update package.json scripts:\n\n```json\n\"scripts\": {\n  \"test\": \"ts-node scripts/test-with-types.ts\",\n  \"test:unit\": \"jest\",\n  \"test:types\": \"tsc --noEmit\"\n}\n```\n\n6. Set up CI integration in a .github/workflows/ci.yml file (if using GitHub Actions):\n\n```yaml\nname: CI\n\non:\n  push:\n    branches: [ main ]\n  pull_request:\n    branches: [ main ]\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v3\n    - name: Use Node.js\n      uses: actions/setup-node@v3\n      with:\n        node-version: '16.x'\n    - run: npm ci\n    - run: npm run test:types\n    - run: npm run test:unit\n    - run: npm run build\n```",
+        "testStrategy": "Run the test suite with 'npm test' and verify that both type checking and unit tests are executed. Introduce intentional type errors and test failures to confirm that the process correctly identifies and reports issues. Check that test coverage reports are generated correctly. Verify that the CI configuration works by pushing to a test branch or creating a pull request.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4,
+          6
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Finalize Migration and Documentation",
+        "description": "Complete the TypeScript migration by ensuring all files are converted, update documentation, and perform final testing and optimization.",
+        "details": "1. Create a TypeScript migration checklist and verify all files have been converted:\n\n```typescript\n// scripts/migration-status.ts\nimport * as fs from 'fs';\nimport * as path from 'path';\nimport * as glob from 'glob';\n\ninterface FileStatus {\n  path: string;\n  converted: boolean;\n}\n\nfunction checkMigrationStatus() {\n  const jsFiles = glob.sync('src/**/*.js').map(file => ({\n    path: file,\n    converted: fs.existsSync(file.replace('.js', '.ts'))\n  }));\n  \n  const unconverted = jsFiles.filter(file => !file.converted);\n  \n  console.log(`Migration Status: ${jsFiles.length - unconverted.length}/${jsFiles.length} files converted`);\n  \n  if (unconverted.length > 0) {\n    console.log('\\nFiles still needing conversion:');\n    unconverted.forEach(file => console.log(`- ${file.path}`));\n  } else {\n    console.log('\\nAll files have been converted to TypeScript!');\n  }\n}\n\ncheckMigrationStatus();\n```\n\n2. Update project documentation:\n\n- Create a MIGRATION.md file documenting the TypeScript migration process\n- Update README.md with TypeScript-specific information\n- Add JSDoc comments to key functions and interfaces\n- Document any breaking changes or API modifications\n\n3. Perform final optimization:\n\n```typescript\n// scripts/optimize.ts\nimport * as fs from 'fs';\nimport * as path from 'path';\nimport { execSync } from 'child_process';\n\n// Run type checking with --noImplicitAny to find any remaining 'any' types\ntry {\n  execSync('npx tsc --noImplicitAny', { stdio: 'inherit' });\n  console.log('No implicit any types found!');\n} catch (error) {\n  console.error('Found implicit any types that should be fixed');\n}\n\n// Check bundle sizes\nconst jsDir = path.resolve(__dirname, '../dist/assets/js');\nconst jsFiles = fs.readdirSync(jsDir).filter(file => file.endsWith('.js'));\n\nconsole.log('\\nJavaScript bundle sizes:');\njsFiles.forEach(file => {\n  const stats = fs.statSync(path.join(jsDir, file));\n  console.log(`- ${file}: ${(stats.size / 1024).toFixed(2)} KB`);\n});\n```\n\n4. Create a final verification script:\n\n```typescript\n// scripts/verify-build.ts\nimport { execSync } from 'child_process';\n\nconsole.log('Running full verification...');\n\ntry {\n  // Clean previous build\n  execSync('rm -rf dist', { stdio: 'inherit' });\n  \n  // Run type checking\n  console.log('\\nVerifying types...');\n  execSync('npm run test:types', { stdio: 'inherit' });\n  \n  // Run tests\n  console.log('\\nRunning tests...');\n  execSync('npm run test:unit', { stdio: 'inherit' });\n  \n  // Build project\n  console.log('\\nBuilding project...');\n  execSync('npm run build', { stdio: 'inherit' });\n  \n  console.log('\\n✅ Verification complete! The TypeScript migration was successful.');\n} catch (error) {\n  console.error('\\n❌ Verification failed. Please fix the issues before considering the migration complete.');\n  process.exit(1);\n}\n```\n\n5. Update package.json scripts:\n\n```json\n\"scripts\": {\n  \"migration:status\": \"ts-node scripts/migration-status.ts\",\n  \"migration:verify\": \"ts-node scripts/verify-build.ts\",\n  \"optimize\": \"ts-node scripts/optimize.ts\"\n}\n```",
+        "testStrategy": "Run the migration status script to verify all files have been converted. Execute the verification script to perform a complete build and test cycle. Check documentation for accuracy and completeness. Perform manual testing of the website to ensure all features work correctly. Compare performance metrics before and after the migration to ensure there's no regression. Get feedback from other developers on the team about the TypeScript implementation.",
+        "priority": "low",
+        "dependencies": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Migration and Verification Helper Scripts",
+            "description": "Create the `scripts/` directory and add the `migration-status.ts`, `optimize.ts`, and `verify-build.ts` files. Update `package.json` to include the corresponding `migration:status`, `optimize`, and `migration:verify` npm scripts.",
+            "dependencies": [],
+            "details": "Use the provided code snippets from the task description to create the three TypeScript helper scripts. Ensure `ts-node`, `glob`, and their associated types (`@types/node`, `@types/glob`) are listed as dev dependencies in `package.json` to allow these scripts to run correctly via npm.",
+            "status": "done",
+            "testStrategy": "Run `npm run migration:status`, `npm run optimize`, and `npm run migration:verify` individually. Verify that each script executes without crashing, even if they report errors (like unconverted files or type issues), confirming the `package.json` setup is correct."
+          },
+          {
+            "id": 2,
+            "title": "Migrate Eleventy Config and Remaining JS Files to TypeScript",
+            "description": "Convert the main Eleventy configuration file `.eleventy.js` to `.eleventy.ts` and migrate any other remaining JavaScript files within the `src` directory. This includes ensuring the build process correctly handles any client-side TypeScript files.",
+            "dependencies": [],
+            "details": "Rename `.eleventy.js` to `.eleventy.ts` and update its syntax from CommonJS (`require`/`module.exports`) to ES Modules (`import`/`export default`). Add type annotations for the Eleventy config function. Use the `migration:status` script created in the previous subtask to find and convert any other lingering `.js` files in `src`.",
+            "status": "done",
+            "testStrategy": "Run `npm start` or `npm run build` to confirm that Eleventy can correctly read and execute the new `.eleventy.ts` configuration file. Run `npm run migration:status` and verify that it reports 0 files still needing conversion."
+          },
+          {
+            "id": 3,
+            "title": "Execute Optimization Script and Eliminate Implicit 'any' Types",
+            "description": "Run the `npm run optimize` script to identify all instances of implicit `any` types throughout the codebase. Refactor the code to provide explicit types for all identified cases, improving type safety and code clarity.",
+            "dependencies": [
+              "10.1",
+              "10.2"
+            ],
+            "details": "Execute `npx tsc --noImplicitAny` or the `npm run optimize` script. For each error reported, navigate to the file and add the appropriate type definition. This may involve creating or updating interfaces in the `types/` directory or using utility types. Repeat this process until the script completes successfully.",
+            "status": "done",
+            "testStrategy": "Run `npm run optimize` and ensure it exits with a success code and logs 'No implicit any types found!'. Also, check the bundle size output for any significant, unexpected increases that might indicate a problem with the build configuration."
+          },
+          {
+            "id": 4,
+            "title": "Create MIGRATION.md and Update Project Documentation",
+            "description": "Create a new `MIGRATION.md` file documenting the TypeScript migration process. Update the main `README.md` to reflect the new TypeScript-based development workflow, including setup, build, and testing commands.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "In `MIGRATION.md`, describe the steps taken, the rationale for the migration, and how to use the new helper scripts (`migration:status`, `optimize`, `migration:verify`). In `README.md`, update the 'Getting Started' and 'Available Scripts' sections to replace JavaScript-centric instructions with the new TypeScript equivalents (e.g., `npm run test:types`).",
+            "status": "done",
+            "testStrategy": "Review the `MIGRATION.md` and `README.md` files for clarity, accuracy, and completeness. Ask a team member to follow the setup instructions in the updated `README.md` on a fresh clone of the repository to ensure they are correct."
+          },
+          {
+            "id": 5,
+            "title": "Add JSDoc Comments and Perform Final Verification",
+            "description": "Enhance code documentation by adding JSDoc comments to key functions, interfaces, and types, particularly in `.eleventy.ts`, data files, and utilities. Finally, execute the `npm run migration:verify` script to perform a full clean, build, and test cycle to confirm the migration's success.",
+            "dependencies": [
+              "10.2",
+              "10.3"
+            ],
+            "details": "Go through critical files and add JSDoc blocks explaining the purpose, parameters (`@param`), and return values (`@returns`) of functions and properties. After documenting, run `npm run migration:verify`. This script will clean the `dist` directory, run the type checker, execute unit tests, and perform a production build, serving as a final quality gate.",
+            "status": "done",
+            "testStrategy": "Verify that `npm run migration:verify` completes without any errors. After a successful run, manually browse the generated site from the `dist` folder or by using a local server to ensure all pages render correctly and all functionality is intact. Check the browser's developer console for any runtime errors."
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-13T04:08:00.503Z",
+      "updated": "2025-09-13T22:59:40.931Z",
+      "description": "Tasks for typescript-implement context"
+    }
+  },
+  "alpha-version": {
     "tasks": [
       {
         "id": 1,
@@ -896,411 +1300,11 @@
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
       "updated": "2025-09-13T03:54:06.985Z",
-      "description": "Tasks for default context"
-    }
-  },
-  "typescript-implement": {
-    "tasks": [
-      {
-        "id": 1,
-        "title": "Set up TypeScript and Initial Configuration",
-        "description": "Install TypeScript and related dependencies, create tsconfig.json with appropriate compiler options, and set up the initial build process integration.",
-        "details": "1. Install required dependencies:\n```bash\nnpm install --save-dev typescript @types/node ts-node\n```\n2. Create a tsconfig.json file with the following configuration:\n```json\n{\n  \"compilerOptions\": {\n    \"target\": \"ES2020\",\n    \"module\": \"ESNext\",\n    \"moduleResolution\": \"node\",\n    \"esModuleInterop\": true,\n    \"strict\": true,\n    \"skipLibCheck\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"resolveJsonModule\": true,\n    \"outDir\": \"dist\",\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"*\": [\"node_modules/*\"]\n    },\n    \"sourceMap\": true\n  },\n  \"include\": [\"src/**/*\", \".eleventy.ts\", \"public/assets/js/**/*\"],\n  \"exclude\": [\"node_modules\", \"dist\"]\n}\n```\n3. Update package.json to include TypeScript compilation scripts:\n```json\n\"scripts\": {\n  \"build:ts\": \"tsc\",\n  \"dev:ts\": \"tsc --watch\",\n  \"type-check\": \"tsc --noEmit\"\n}\n```\n4. Create a types directory with an initial index.d.ts file for shared type definitions.\n<info added on 2025-09-13T04:36:13.332Z>\n5. Verified all required devDependencies are installed:\n   - typescript\n   - ts-node\n   - @types/node\n\n6. Confirmed tsconfig.json has appropriate strict settings and incremental build configuration.\n\n7. Noted that scripts are already configured to preload ts-node/register for Eleventy in development and build processes.\n\n8. Next steps:\n   - Run `npm run type-check` to verify TypeScript configuration\n   - Create a simple .ts file and test the build process\n   - Create the types/ directory with an initial index.d.ts file for shared type definitions if not already present\n</info added on 2025-09-13T04:36:13.332Z>",
-        "testStrategy": "Verify TypeScript installation by running 'npx tsc --version'. Validate tsconfig.json by running 'npm run type-check' and ensuring it completes without errors. Test the build process by creating a simple .ts file and confirming it compiles correctly.",
-        "priority": "high",
-        "dependencies": [],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 2,
-        "title": "Create Core Type Definitions",
-        "description": "Define shared TypeScript interfaces and types for project metadata, frontmatter, internationalization, date formatting, and content processing.",
-        "details": "Create the following type definition files in the types/ directory:\n\n1. `types/eleventy.d.ts` - Eleventy-specific types:\n```typescript\nexport interface EleventyConfig {\n  addPassthroughCopy: (path: string) => void;\n  addFilter: (name: string, fn: Function) => void;\n  addCollection: (name: string, fn: Function) => EleventyCollection;\n  // Add other Eleventy methods as needed\n}\n\nexport interface EleventyCollection {\n  getAll: () => CollectionItem[];\n  getAllSorted: () => CollectionItem[];\n  // Add other collection methods as needed\n}\n\nexport interface CollectionItem {\n  data: {\n    title: string;\n    date: Date;\n    tags?: string[];\n    [key: string]: any;\n  };\n  url: string;\n  inputPath: string;\n  outputPath: string;\n  // Add other properties as needed\n}\n```\n\n2. `types/content.d.ts` - Content and frontmatter types:\n```typescript\nexport interface Frontmatter {\n  title: string;\n  date: string | Date;\n  tags?: string[];\n  lang?: string;\n  description?: string;\n  [key: string]: any;\n}\n\nexport interface ContentItem {\n  data: Frontmatter;\n  content: string;\n  [key: string]: any;\n}\n```\n\n3. `types/i18n.d.ts` - Internationalization types:\n```typescript\nexport interface TranslationDictionary {\n  [key: string]: string | TranslationDictionary;\n}\n\nexport interface I18nConfig {\n  defaultLanguage: string;\n  languages: string[];\n  translations: {\n    [language: string]: TranslationDictionary;\n  };\n}\n```\n\n4. `types/utils.d.ts` - Utility function types:\n```typescript\nexport interface DateFormatOptions {\n  format?: string;\n  locale?: string;\n}\n\nexport interface ContentFilterOptions {\n  tag?: string | string[];\n  language?: string;\n  limit?: number;\n  sortBy?: string;\n  sortOrder?: 'asc' | 'desc';\n}\n```",
-        "testStrategy": "Validate type definitions by creating test files that import and use these types. Run TypeScript compiler with 'npm run type-check' to ensure there are no type errors. Create sample objects that implement these interfaces and verify they match the expected structure.",
-        "priority": "high",
-        "dependencies": [
-          1
-        ],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 3,
-        "title": "Complete TypeScript Migration with Code Consolidation and Transpilation Validation",
-        "description": "Convert all utility files in src/utils/ to TypeScript with comprehensive type definitions, consolidate JavaScript implementations into TypeScript files, and validate transpilation output for production compatibility. This includes migrating i18n, dates, format, and content processing utilities with advanced error handling, performance optimization, and cross-browser compatibility validation.",
-        "details": "For each utility file in src/utils/, perform a complete migration with code consolidation:\n\n1. **Code Consolidation Phase:**\n   - Move all JavaScript implementation code from .js files directly into corresponding .ts files\n   - Remove wrapper pattern and integrate original logic with TypeScript annotations\n   - Ensure no runtime dependencies on original .js files remain\n\n2. **Advanced TypeScript Implementation:**\n   - Add comprehensive type annotations using union types, generics, and conditional types\n   - Implement strict null checks and undefined handling\n   - Create custom type guards with proper narrowing\n   - Add JSDoc comments with @param and @return type documentation\n\n3. **Enhanced Error Handling:**\n   - Implement custom error classes with proper inheritance\n   - Add input validation with detailed error messages\n   - Create fallback mechanisms for edge cases\n   - Add logging integration for debugging purposes\n\n4. **Performance and Compatibility:**\n   - Optimize for tree-shaking with proper ES6 module exports\n   - Add polyfill detection and conditional loading\n   - Implement lazy loading for heavy utility functions\n   - Add memory leak prevention for event listeners and timers\n\n5. **Transpilation Validation:**\n   - Configure TypeScript compiler with strict mode enabled\n   - Validate output JavaScript matches expected ES5/ES2015 targets\n   - Test transpiled code in multiple browser environments\n   - Verify source map generation for debugging\n   - Check bundle size impact and optimization opportunities\n\nExample enhanced implementation:\n```typescript\n// src/utils/dates.ts (consolidated from dates.js)\nimport { DateFormatOptions, DateValidationResult, CustomDateError } from '../../types/utils';\n\nexport class DateUtilityError extends Error {\n  constructor(message: string, public readonly input: unknown) {\n    super(message);\n    this.name = 'DateUtilityError';\n  }\n}\n\nexport function formatDate<T extends Date | string | number>(\n  date: T, \n  options: DateFormatOptions = {}\n): string {\n  const { format = 'yyyy-MM-dd', locale = 'en-US', timezone, fallback } = options;\n  \n  try {\n    const dateObj = normalizeDate(date);\n    if (!isValidDate(dateObj)) {\n      if (fallback) return fallback;\n      throw new DateUtilityError(`Invalid date provided: ${date}`, date);\n    }\n    \n    // Enhanced formatting with timezone support\n    const formatter = new Intl.DateTimeFormat(locale, {\n      timeZone: timezone,\n      ...parseFormatString(format)\n    });\n    \n    return formatter.format(dateObj);\n  } catch (error) {\n    if (error instanceof DateUtilityError) throw error;\n    throw new DateUtilityError(`Date formatting failed: ${error.message}`, date);\n  }\n}\n\nexport function validateDateRange(\n  startDate: Date | string, \n  endDate: Date | string,\n  options: { allowSameDay?: boolean; maxRange?: number } = {}\n): DateValidationResult {\n  // Comprehensive validation logic with detailed results\n}\n\n// Advanced type guards with proper narrowing\nexport function isValidDate(date: unknown): date is Date {\n  return date instanceof Date && !isNaN(date.getTime()) && isFinite(date.getTime());\n}\n\nfunction normalizeDate(input: Date | string | number): Date {\n  if (input instanceof Date) return input;\n  if (typeof input === 'string' || typeof input === 'number') {\n    return new Date(input);\n  }\n  throw new DateUtilityError('Unsupported date input type', input);\n}\n```\n\n6. **Build Configuration:**\n   - Update tsconfig.json with strict compilation settings\n   - Configure webpack/rollup for proper TypeScript handling\n   - Set up pre-commit hooks for type checking\n   - Add TypeScript declaration file generation\n\n7. **Migration Verification:**\n   - Compare runtime behavior between original JS and new TS implementations\n   - Validate all existing API contracts remain unchanged\n   - Test with real-world data sets and edge cases\n   - Performance benchmark against original implementations",
-        "testStrategy": "Implement comprehensive testing strategy with multiple validation layers:\n\n1. **Unit Testing with Type Validation:**\n   - Create Jest tests with TypeScript support and @types/jest\n   - Test all function signatures with correct and incorrect types\n   - Validate error handling with custom error classes\n   - Test edge cases including null, undefined, and malformed inputs\n   - Use property-based testing with fast-check for random input validation\n\n2. **Integration Testing:**\n   - Test utility functions working together in realistic scenarios\n   - Validate i18n utilities with actual translation files\n   - Test date utilities with different locales and timezones\n   - Verify format utilities with various data structures\n\n3. **Transpilation and Build Testing:**\n   - Automated testing of TypeScript compilation process\n   - Validate generated JavaScript output in multiple environments (Node.js, browsers)\n   - Test source map accuracy for debugging\n   - Bundle size regression testing\n   - Cross-browser compatibility testing (Chrome, Firefox, Safari, Edge)\n\n4. **Performance and Memory Testing:**\n   - Benchmark performance against original JavaScript implementations\n   - Memory leak detection for long-running processes\n   - Load testing with large datasets\n   - Profiling of transpiled code execution\n\n5. **Type Safety Validation:**\n   - Use tsc --noEmit for compile-time type checking\n   - Test with strict TypeScript compiler settings\n   - Validate IntelliSense and IDE support\n   - Test type inference and auto-completion\n\n6. **Regression Testing:**\n   - Maintain existing test suite compatibility\n   - Compare outputs between old JS and new TS implementations\n   - Test with production data samples\n   - Validate backward compatibility for existing consumers",
-        "priority": "high",
-        "dependencies": [
-          2
-        ],
-        "status": "done",
-        "subtasks": [
-          {
-            "id": 1,
-            "title": "Create TypeScript Type Definitions for Utility Functions",
-            "description": "Create TypeScript interface and type definitions for all utility functions before modifying the actual implementation files. This includes types for i18n, dates, formatting, and content processing utilities.",
-            "dependencies": [],
-            "details": "Create a new directory structure in src/types/ with separate files for each utility category:\n\n1. src/types/utils/dates.ts:\n```typescript\nexport interface DateFormatOptions {\n  format?: string;\n  locale?: string;\n  timezone?: string;\n}\n```\n\n2. src/types/utils/i18n.ts:\n```typescript\nexport interface TranslationDictionary {\n  [key: string]: string | TranslationDictionary;\n}\n\nexport interface I18nConfig {\n  defaultLanguage: string;\n  supportedLanguages: string[];\n  translations: {\n    [language: string]: TranslationDictionary;\n  };\n}\n```\n\n3. src/types/utils/format.ts:\n```typescript\nexport interface FormatOptions {\n  truncate?: number;\n  capitalize?: boolean;\n  lowercase?: boolean;\n  uppercase?: boolean;\n}\n```\n\n4. src/types/utils/content.ts:\n```typescript\nexport interface ContentProcessingOptions {\n  stripHtml?: boolean;\n  excerpt?: number;\n  markdown?: boolean;\n}\n\nexport interface ContentItem {\n  content: string;\n  data?: Record<string, unknown>;\n  [key: string]: unknown;\n}\n```",
-            "status": "done",
-            "testStrategy": "Validate type definitions by creating a simple test file that imports and uses these types. Ensure the TypeScript compiler accepts the types without errors."
-          },
-          {
-            "id": 2,
-            "title": "Create TypeScript Wrapper Functions for Date Utilities",
-            "description": "Create TypeScript wrapper functions for date utilities that use the type definitions while maintaining the original JavaScript files. This allows for incremental migration without breaking existing functionality.",
-            "dependencies": [
-              "3.1"
-            ],
-            "details": "1. Create a new file src/utils/dates.ts that imports the original JavaScript functions and wraps them with typed versions:\n\n```typescript\nimport { DateFormatOptions } from '../../types/utils/dates';\n// Import the original functions\nimport * as originalDates from './dates.js';\n\nexport function formatDate(date: Date | string, options: DateFormatOptions = {}): string {\n  return originalDates.formatDate(date, options);\n}\n\nexport function isValidDate(date: unknown): date is Date {\n  return date instanceof Date && !isNaN(date.getTime());\n}\n\nexport function parseDate(dateString: string): Date {\n  const result = originalDates.parseDate(dateString);\n  if (!isValidDate(result)) {\n    throw new Error(`Invalid date string: ${dateString}`);\n  }\n  return result;\n}\n\nexport function dateDifference(date1: Date | string, date2: Date | string): number {\n  const d1 = typeof date1 === 'string' ? parseDate(date1) : date1;\n  const d2 = typeof date2 === 'string' ? parseDate(date2) : date2;\n  return originalDates.dateDifference(d1, d2);\n}\n```\n\n2. Update the build process to compile TypeScript files alongside JavaScript files without replacing them yet.",
-            "status": "done",
-            "testStrategy": "Write unit tests for each wrapper function to verify they correctly call the original functions with the same parameters and return the expected results. Test edge cases like invalid dates and different format options."
-          },
-          {
-            "id": 3,
-            "title": "Migrate I18n and Formatting Utility Functions to TypeScript",
-            "description": "Convert the i18n and formatting utility functions to TypeScript using the previously defined type definitions, implementing proper error handling and type guards.",
-            "dependencies": [
-              "3.1",
-              "3.2"
-            ],
-            "details": "1. Create src/utils/i18n.ts:\n```typescript\nimport { TranslationDictionary, I18nConfig } from '../../types/utils/i18n';\n\nexport function translate(key: string, language: string, translations: I18nConfig['translations']): string {\n  if (!translations[language]) {\n    console.warn(`Language \"${language}\" not found in translations`);\n    return key; // Fallback to key if language not found\n  }\n  \n  // Navigate nested translation objects\n  const keyParts = key.split('.');\n  let result: string | TranslationDictionary = translations[language];\n  \n  for (const part of keyParts) {\n    if (typeof result === 'string') {\n      return result;\n    }\n    \n    result = (result as TranslationDictionary)[part] as string | TranslationDictionary;\n    if (result === undefined) {\n      console.warn(`Translation key \"${key}\" not found for language \"${language}\"`);\n      return key; // Key not found\n    }\n  }\n  \n  return typeof result === 'string' ? result : key;\n}\n\nexport function getLanguageFromUrl(url: string, supportedLanguages: string[]): string {\n  const pathSegments = url.split('/').filter(Boolean);\n  const potentialLang = pathSegments[0];\n  \n  return supportedLanguages.includes(potentialLang) ? potentialLang : 'en';\n}\n```\n\n2. Create src/utils/format.ts:\n```typescript\nimport { FormatOptions } from '../../types/utils/format';\n\nexport function formatText(text: string, options: FormatOptions = {}): string {\n  let result = text;\n  \n  if (options.truncate && result.length > options.truncate) {\n    result = result.substring(0, options.truncate) + '...';\n  }\n  \n  if (options.capitalize) {\n    result = result.charAt(0).toUpperCase() + result.slice(1);\n  }\n  \n  if (options.lowercase) {\n    result = result.toLowerCase();\n  }\n  \n  if (options.uppercase) {\n    result = result.toUpperCase();\n  }\n  \n  return result;\n}\n\nexport function slugify(text: string): string {\n  return text\n    .toLowerCase()\n    .replace(/[^\\w\\s-]/g, '') // Remove non-word chars\n    .replace(/[\\s_-]+/g, '-') // Replace spaces and underscores with hyphens\n    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens\n}\n```",
-            "status": "done",
-            "testStrategy": "Create comprehensive unit tests for the i18n and formatting functions. Test nested translation keys, missing languages, and various formatting options. Verify that error handling works correctly by testing edge cases."
-          },
-          {
-            "id": 4,
-            "title": "Migrate Content Processing Utility Functions to TypeScript",
-            "description": "Convert content processing utility functions to TypeScript with proper type definitions, error handling, and type guards for processing markdown, HTML, and other content types.",
-            "dependencies": [
-              "3.1",
-              "3.3"
-            ],
-            "details": "1. Create src/utils/content.ts:\n```typescript\nimport { ContentProcessingOptions, ContentItem } from '../../types/utils/content';\n\nexport function processContent(content: string, options: ContentProcessingOptions = {}): string {\n  let result = content;\n  \n  if (options.stripHtml) {\n    result = result.replace(/<[^>]*>/g, '');\n  }\n  \n  if (options.excerpt && result.length > options.excerpt) {\n    result = result.substring(0, options.excerpt) + '...';\n  }\n  \n  return result;\n}\n\nexport function extractExcerpt(content: string, length: number = 150): string {\n  // First strip HTML\n  const strippedContent = content.replace(/<[^>]*>/g, '');\n  \n  // Then create excerpt\n  if (strippedContent.length <= length) {\n    return strippedContent;\n  }\n  \n  return strippedContent.substring(0, length) + '...';\n}\n\nexport function sortContentItems(items: ContentItem[], sortBy: string = 'date', order: 'asc' | 'desc' = 'desc'): ContentItem[] {\n  return [...items].sort((a, b) => {\n    const aValue = a.data?.[sortBy];\n    const bValue = b.data?.[sortBy];\n    \n    if (aValue === undefined && bValue === undefined) return 0;\n    if (aValue === undefined) return order === 'asc' ? 1 : -1;\n    if (bValue === undefined) return order === 'asc' ? -1 : 1;\n    \n    if (aValue instanceof Date && bValue instanceof Date) {\n      return order === 'asc' \n        ? aValue.getTime() - bValue.getTime() \n        : bValue.getTime() - aValue.getTime();\n    }\n    \n    if (typeof aValue === 'string' && typeof bValue === 'string') {\n      return order === 'asc' \n        ? aValue.localeCompare(bValue) \n        : bValue.localeCompare(aValue);\n    }\n    \n    if (typeof aValue === 'number' && typeof bValue === 'number') {\n      return order === 'asc' ? aValue - bValue : bValue - aValue;\n    }\n    \n    return 0;\n  });\n}\n```",
-            "status": "done",
-            "testStrategy": "Write unit tests for content processing functions with various input types and options. Test HTML stripping, excerpt generation, and content sorting with different data types. Verify that the functions handle edge cases like empty content or missing data fields."
-          },
-          {
-            "id": 5,
-            "title": "Advanced TypeScript Migration with Custom Error Classes and Type Guards",
-            "description": "Perform comprehensive TypeScript migration of all utility files with advanced type annotations, custom error classes, and sophisticated type guards. This includes implementing union types, generics, conditional types, and strict null checking across all utilities.",
-            "dependencies": [
-              "3.3",
-              "3.4"
-            ],
-            "details": "Migrate each utility file (i18n, dates, format, content processing) to TypeScript with: 1) Custom error classes extending base Error with proper inheritance and context data, 2) Advanced type guards using 'is' predicates for runtime type narrowing, 3) Generic functions with constraints and conditional types, 4) Comprehensive JSDoc documentation with @param, @return, and @throws annotations, 5) Strict null checks and undefined handling with proper optional chaining, 6) Union types for flexible input handling, 7) Interface definitions for complex data structures, 8) Type assertion functions for runtime validation.",
-            "status": "done",
-            "testStrategy": "Unit tests with TypeScript type validation using Jest and @types/jest. Test type guards with various input types, validate custom error classes with proper inheritance chains, test generic functions with different type parameters, and use property-based testing with fast-check for comprehensive input validation. Include compile-time type checking with tsc --noEmit."
-          },
-          {
-            "id": 6,
-            "title": "Code Consolidation",
-            "description": "Consolidate JavaScript implementations directly into TypeScript files. Remove all wrapper patterns and ensure zero runtime dependencies on original JavaScript files.",
-            "dependencies": [
-              "3.5"
-            ],
-            "details": "For each utility: 1) Move all JavaScript code directly into .ts files, eliminating wrapper patterns, 2) Implement ES6 module exports optimized for tree-shaking with proper named exports, 3) Add lazy loading mechanisms for heavy utility functions using dynamic imports, 4) Implement memory leak prevention for event listeners, timers, and DOM references, 5) Add polyfill detection and conditional loading for browser compatibility, 6) Optimize function implementations for V8 engine performance, 7) Implement caching mechanisms for expensive operations, 8) Add proper cleanup methods for stateful utilities.",
-            "status": "done",
-            "testStrategy": "Unit tests with TypeScript type validation using Jest and @types/jest. Test type guards with various input types, validate custom error classes with proper inheritance chains, test generic functions with different type parameters, and use property-based testing with fast-check for comprehensive input validation. Include compile-time type checking with tsc --noEmit."
-          },
-          {
-            "id": 7,
-            "title": "Enhanced Error Handling with Logging Integration and Fallback Mechanisms",
-            "description": "Implement comprehensive error handling system with custom error hierarchies, detailed error messages, fallback mechanisms for edge cases, and integrated logging for debugging and monitoring purposes.",
-            "dependencies": [
-              "3.5"
-            ],
-            "details": "Create robust error handling: 1) Design custom error class hierarchy (DateUtilityError, I18nError, FormatError, ContentProcessingError) with proper inheritance, 2) Implement input validation with detailed error messages including expected vs actual types, 3) Add fallback mechanisms for graceful degradation (default values, alternative implementations), 4) Integrate logging system with configurable log levels (debug, info, warn, error), 5) Add error context preservation with stack traces and input data, 6) Implement retry mechanisms for transient failures, 7) Add error aggregation for batch operations, 8) Create error reporting utilities for production monitoring.\n<info added on 2025-09-13T19:11:44.554Z>\nBased on your progress, the next steps involve applying the newly created error classes and logger utility to the core utility functions. The focus should be on robust input validation, graceful fallbacks, and contextual logging.\n\n**Implementation Plan:**\n\n1.  **Integrate into `src/utils/dates.ts`:**\n    *   In functions like `formatDate` and `getReadableDate`, add input validation at the beginning. Check if the `date` parameter is a valid `Date` object or a parseable date string.\n    *   If validation fails, throw a `new DateUtilityError()` from `src/utils/errors.ts` with a message detailing the expected vs. actual input type.\n    *   Wrap the core `Intl.DateTimeFormat` logic in a `try...catch` block. On failure (e.g., invalid locale), catch the original error, log it with context using the `logger` from `src/utils/logger.ts`, and re-throw a `DateUtilityError`.\n    *   **Example Pattern:**\n        ```typescript\n        import { logger } from './logger';\n        import { DateUtilityError } from './errors';\n\n        export function formatDate(date: unknown, locale: string = 'en-US'): string {\n          const dateObj = new Date(date as any);\n          if (isNaN(dateObj.getTime())) {\n            logger.warn({ input: date }, 'Invalid date input received.');\n            throw new DateUtilityError(`Invalid date value: ${date}`);\n          }\n          try {\n            // ... formatting logic ...\n          } catch (error) {\n            logger.error({ error, date, locale }, 'Failed to format date.');\n            // Fallback to a simple string representation\n            return dateObj.toISOString();\n          }\n        }\n        ```\n\n2.  **Enhance `src/utils/i18n.ts`:**\n    *   In the main translation function, check if a translation key exists for the given locale.\n    *   If the key is missing, implement a fallback mechanism: log a warning with `logger.warn({ key, locale }, 'Missing translation key.')` and return the key itself or a default placeholder string (e.g., `[MISSING_TRANSLATION: ${key}]`). This prevents the UI from breaking.\n    *   If the entire locale file or data structure is invalid, catch the error, log it, and throw a `new I18nError('Failed to load or parse locale data.')`.\n\n3.  **Fortify `src/utils/format.ts` and `src/utils/content.ts`:**\n    *   For any functions that perform formatting or content processing, apply the same pattern: validate inputs, wrap logic in `try...catch`, and use the `logger` for detailed context.\n    *   Throw specific errors like `FormatError` or `ContentProcessingError` from `src/utils/errors.ts`.\n    *   When logging an error, include the input arguments and any relevant options to preserve context for debugging. For example: `logger.error({ input, options, originalError: error }, 'Content processing failed.');`\n</info added on 2025-09-13T19:11:44.554Z>",
-            "status": "done",
-            "testStrategy": "Error handling tests covering all error scenarios with proper error type validation. Test fallback mechanisms with various failure conditions. Validate logging integration with different log levels and outputs. Test error context preservation and stack trace accuracy. Simulate network failures and resource constraints to test retry mechanisms. Use chaos engineering principles to test system resilience."
-          },
-          {
-            "id": 8,
-            "title": "Transpilation Validation with Multi-Environment Testing and Source Map Verification",
-            "description": "Configure and validate TypeScript transpilation process with strict compiler settings, multi-target output validation, cross-browser testing, and comprehensive source map verification for production deployment.",
-            "dependencies": [
-              "3.6",
-              "3.7"
-            ],
-            "details": "Comprehensive transpilation validation: 1) Configure tsconfig.json with strict mode, noImplicitAny, strictNullChecks, and noImplicitReturns, 2) Set up multi-target compilation (ES5, ES2015, ES2020) with appropriate polyfills, 3) Validate transpiled JavaScript output matches expected syntax and behavior, 4) Test in multiple runtime environments (Node.js versions, browser engines), 5) Verify source map generation and accuracy for debugging, 6) Implement bundle size monitoring with regression detection, 7) Add pre-commit hooks for type checking and compilation validation, 8) Configure webpack/rollup for optimal TypeScript handling with proper module resolution, 9) Test declaration file generation for library consumers.\n<info added on 2025-09-13T19:14:27.257Z>\nUpdate: Transpilation validation has been successfully completed. The `tsconfig.json` is now configured with advanced strict compilation settings, including `noImplicitAny`, `strictNullChecks`, and `exactOptionalPropertyTypes`. The build process has been verified to correctly generate JavaScript files, `.d.ts` declaration files, and accurate source maps. All identified type errors have been resolved, and the output has been validated across multiple environments.\n</info added on 2025-09-13T19:14:27.257Z>",
-            "status": "done",
-            "testStrategy": "Automated transpilation testing with multiple TypeScript compiler targets. Cross-browser testing using Selenium WebDriver or Playwright across Chrome, Firefox, Safari, and Edge. Source map validation by testing breakpoint accuracy and variable inspection. Bundle size regression testing with automated alerts for size increases. Runtime behavior comparison between original JavaScript and transpiled TypeScript using automated test suites. Performance profiling of transpiled code in production-like environments."
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "title": "Convert Eleventy Configuration to TypeScript",
-        "description": "Migrate the .eleventy.js configuration file to TypeScript with proper type definitions and ensure compatibility with the Eleventy build process.",
-        "details": "1. Create a new .eleventy.ts file with the following structure:\n\n```typescript\nimport { EleventyConfig } from './types/eleventy';\n\n// Import utility functions\nimport { formatDate } from './src/utils/dates';\nimport { translate } from './src/utils/i18n';\n// Import other utilities as needed\n\nmodule.exports = function(eleventyConfig: EleventyConfig) {\n  // Add passthrough copy\n  eleventyConfig.addPassthroughCopy('src/assets');\n  \n  // Add filters\n  eleventyConfig.addFilter('formatDate', formatDate);\n  eleventyConfig.addFilter('translate', translate);\n  \n  // Add collections\n  eleventyConfig.addCollection('posts', (collection) => {\n    return collection.getAll().filter(item => {\n      return item.data.tags && item.data.tags.includes('post');\n    });\n  });\n  \n  // Return configuration object\n  return {\n    dir: {\n      input: 'src',\n      output: 'dist',\n      includes: '_includes',\n      layouts: '_layouts',\n      data: '_data'\n    },\n    templateFormats: ['njk', 'md', 'html'],\n    markdownTemplateEngine: 'njk',\n    htmlTemplateEngine: 'njk',\n    dataTemplateEngine: 'njk'\n  };\n};\n```\n\n2. Update package.json scripts to use the TypeScript configuration:\n\n```json\n\"scripts\": {\n  \"build\": \"npm run build:ts && eleventy --config=.eleventy.ts\",\n  \"dev\": \"concurrently \\\"npm run dev:ts\\\" \\\"eleventy --config=.eleventy.ts --serve --watch\\\"\"\n}\n```\n\n3. Install required dependencies for Eleventy to work with TypeScript:\n\n```bash\nnpm install --save-dev ts-node @types/eleventy\n```\n\n4. Create a .eleventy.js wrapper file if needed for compatibility:\n\n```javascript\n// This file is just a wrapper to load the TypeScript configuration\nrequire('ts-node').register();\nmodule.exports = require('./.eleventy.ts');\n```",
-        "testStrategy": "Test the Eleventy configuration by running a build with 'npx eleventy --config=.eleventy.ts'. Verify that all collections, filters, and other configuration options work as expected. Compare the output with the previous JavaScript-based build to ensure consistency. Check that all TypeScript types are properly resolved without any 'any' types.",
-        "priority": "high",
-        "dependencies": [
-          2,
-          3
-        ],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 5,
-        "title": "Migrate Data Configuration Files to TypeScript",
-        "description": "Convert site.js data file to TypeScript and create type definitions for JSON data files (i18n.json, certifications.json).",
-        "details": "1. Convert site.js to site.ts:\n\n```typescript\n// src/_data/site.ts\ninterface SiteConfig {\n  title: string;\n  description: string;\n  url: string;\n  author: {\n    name: string;\n    email: string;\n  };\n  buildTime: Date;\n  [key: string]: any;\n}\n\nconst siteConfig: SiteConfig = {\n  title: 'Portfolio Website',\n  description: 'Personal portfolio and blog',\n  url: 'https://example.com',\n  author: {\n    name: 'Developer Name',\n    email: 'dev@example.com'\n  },\n  buildTime: new Date()\n};\n\nmodule.exports = siteConfig;\n```\n\n2. Create type definitions for JSON data files:\n\n```typescript\n// types/data.d.ts\nexport interface Certification {\n  title: string;\n  issuer: string;\n  date: string;\n  url?: string;\n  skills: string[];\n}\n\nexport interface I18nData {\n  languages: {\n    [code: string]: {\n      name: string;\n      nativeName: string;\n    };\n  };\n  defaultLanguage: string;\n}\n```\n\n3. Create TypeScript interfaces for frontmatter schemas:\n\n```typescript\n// types/frontmatter.d.ts\nexport interface PostFrontmatter {\n  title: string;\n  date: string;\n  tags: string[];\n  description?: string;\n  featured?: boolean;\n  image?: string;\n  lang: string;\n}\n\nexport interface PageFrontmatter {\n  title: string;\n  layout: string;\n  permalink: string;\n  lang: string;\n  [key: string]: any;\n}\n```\n\n4. Update the build process to handle TypeScript data files:\n\n```bash\nnpm install --save-dev @11ty/eleventy-plugin-typescript\n```\n\nAdd to .eleventy.ts:\n```typescript\nconst eleventyPluginTypescript = require('@11ty/eleventy-plugin-typescript');\neleventyConfig.addPlugin(eleventyPluginTypescript);\n```",
-        "testStrategy": "Validate data files by running a build and checking that the data is correctly loaded into Eleventy. Create test templates that use the data to ensure it's properly typed and accessible. Verify that JSON data files are correctly typed by importing them in TypeScript files and checking for type errors.",
-        "priority": "medium",
-        "dependencies": [
-          2,
-          4
-        ],
-        "status": "done",
-        "subtasks": [
-          {
-            "id": 1,
-            "title": "Install and Configure Eleventy TypeScript Plugin",
-            "description": "Install the necessary Eleventy plugin to process TypeScript data files and add it to the Eleventy configuration.",
-            "dependencies": [],
-            "details": "Run `npm install --save-dev @11ty/eleventy-plugin-typescript`. Then, edit the existing `.eleventy.ts` configuration file. Import the plugin using `import eleventyPluginTypescript from '@11ty/eleventy-plugin-typescript';` and register it within the main configuration function by adding `eleventyConfig.addPlugin(eleventyPluginTypescript);`. This will enable Eleventy to recognize and compile `.ts` files in the `_data` directory.",
-            "status": "done",
-            "testStrategy": "After installation and configuration, run the Eleventy build process. The build should complete without errors related to unrecognized `.ts` files, although it may fail later if the `site.ts` file is not yet created."
-          },
-          {
-            "id": 2,
-            "title": "Convert site.js Data File to site.ts",
-            "description": "Migrate the existing `src/_data/site.js` file to a new TypeScript file `src/_data/site.ts`, including a corresponding interface for type safety.",
-            "dependencies": [
-              "5.1"
-            ],
-            "details": "Create a new file `src/_data/site.ts`. Inside this file, define a `SiteConfig` interface based on the structure of the existing `site.js`. Create a `siteConfig` constant typed with this interface, populating it with the data from `site.js`. Export the constant using `module.exports = siteConfig;`. Finally, delete the original `src/_data/site.js` file.",
-            "status": "done",
-            "testStrategy": "Run `npx @11ty/eleventy` and verify the build completes successfully. Inspect a generated HTML page that uses `site` data (e.g., in the footer or header) to confirm that the data from `site.ts` is correctly loaded and rendered."
-          },
-          {
-            "id": 3,
-            "title": "Create Type Definitions for JSON Data Files",
-            "description": "Create a new declaration file to define TypeScript interfaces for the `certifications.json` and `i18n.json` data files.",
-            "dependencies": [],
-            "details": "Create a new directory `types`. Inside it, create a file named `data.d.ts`. In this file, define and export an `I18nData` interface matching the structure of `src/_data/i18n.json`. Also, define and export a `Certification` interface for the objects within the `src/_data/certifications.json` array. The full type for the certifications data will be `Certification[]`.",
-            "status": "done",
-            "testStrategy": "This subtask only creates type definitions, so direct testing is not applicable. Verification will occur in subtask 5 when these types are used to type-check data within the application."
-          },
-          {
-            "id": 4,
-            "title": "Create Type Definitions for Frontmatter Schemas",
-            "description": "Create a new declaration file to define TypeScript interfaces for common frontmatter schemas used in posts and pages.",
-            "dependencies": [],
-            "details": "Create a new file `types/frontmatter.d.ts`. In this file, define and export a `PostFrontmatter` interface for blog posts and a `PageFrontmatter` interface for general content pages. These interfaces should include common fields like `title`, `date`, `tags`, `layout`, and `lang` as specified in the task description.",
-            "status": "done",
-            "testStrategy": "Similar to subtask 3, this only creates type definitions. Verification will happen when these interfaces are imported and used to type Eleventy collections or frontmatter data in `.eleventy.ts` or other utility files."
-          },
-          {
-            "id": 5,
-            "title": "Update tsconfig.json and Verify Type Integration",
-            "description": "Update the `tsconfig.json` to include the new TypeScript files and types, then verify that the new types are correctly applied and recognized by the toolchain.",
-            "dependencies": [
-              "5.2",
-              "5.3",
-              "5.4"
-            ],
-            "details": "Modify the `include` array in `tsconfig.json` to add `'src/_data/**/*.ts'` and `'types/**/*.d.ts'`. To verify, open `.eleventy.ts` and import one of the newly created types, for example, `import { PostFrontmatter } from './types/frontmatter';`. Use this type within a collection definition, such as `eleventyConfig.addCollection('posts', collectionApi => { const posts = collectionApi.getFilteredByTag('post'); return posts.map(post => { const typedData = post.data as PostFrontmatter; /* ... */ }); });`. Running `tsc --noEmit` should pass without errors.",
-            "status": "done",
-            "testStrategy": "Run `npx tsc --noEmit` to confirm that the TypeScript compiler can find and correctly parse all new files and type definitions without emitting any errors. Run a full Eleventy build to ensure the changes haven't introduced any runtime issues."
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "title": "Convert Client-Side JavaScript to TypeScript",
-        "description": "Migrate browser-side JavaScript files to TypeScript with proper DOM type definitions and event handling types.",
-        "details": "1. Update the tsconfig.json to include client-side files:\n\n```json\n{\n  \"compilerOptions\": {\n    // Existing options...\n    \"lib\": [\"DOM\", \"DOM.Iterable\", \"ESNext\"],\n    \"outDir\": \"dist/assets/js\"\n  },\n  \"include\": [\n    // Existing includes...\n    \"public/assets/js/**/*\"\n  ]\n}\n```\n\n2. Convert each client-side JavaScript file to TypeScript. Example:\n\n```typescript\n// public/assets/js/navigation.ts\ninterface NavigationOptions {\n  menuSelector: string;\n  toggleSelector: string;\n  activeClass: string;\n}\n\nclass Navigation {\n  private menu: HTMLElement | null;\n  private toggle: HTMLElement | null;\n  private activeClass: string;\n  \n  constructor(options: NavigationOptions) {\n    this.menu = document.querySelector(options.menuSelector);\n    this.toggle = document.querySelector(options.toggleSelector);\n    this.activeClass = options.activeClass;\n    \n    this.init();\n  }\n  \n  private init(): void {\n    if (!this.menu || !this.toggle) return;\n    \n    this.toggle.addEventListener('click', this.toggleMenu.bind(this));\n  }\n  \n  private toggleMenu(event: MouseEvent): void {\n    event.preventDefault();\n    this.menu?.classList.toggle(this.activeClass);\n  }\n}\n\n// Initialize navigation when DOM is loaded\ndocument.addEventListener('DOMContentLoaded', () => {\n  new Navigation({\n    menuSelector: '.nav-menu',\n    toggleSelector: '.nav-toggle',\n    activeClass: 'is-active'\n  });\n});\n```\n\n3. Set up a build process for client-side TypeScript:\n\n```json\n// package.json scripts\n\"scripts\": {\n  \"build:client-ts\": \"tsc -p tsconfig.client.json\",\n  \"dev:client-ts\": \"tsc -p tsconfig.client.json --watch\"\n}\n```\n\n4. Create a separate tsconfig.client.json for client-side code if needed:\n\n```json\n{\n  \"extends\": \"./tsconfig.json\",\n  \"compilerOptions\": {\n    \"target\": \"ES2015\",\n    \"module\": \"ESNext\",\n    \"outDir\": \"public/assets/js\"\n  },\n  \"include\": [\"src/client/**/*.ts\"]\n}\n```\n\n5. Update HTML templates to reference the compiled JavaScript files.",
-        "testStrategy": "Test client-side TypeScript by running the build process and checking that the JavaScript files are correctly generated. Manually test the website in different browsers to ensure all interactive features work as expected. Use browser developer tools to check for any JavaScript errors. Consider adding automated browser tests with tools like Cypress or Playwright to verify client-side functionality.",
-        "priority": "medium",
-        "dependencies": [
-          1,
-          2
-        ],
-        "status": "done",
-        "subtasks": [
-          {
-            "id": 1,
-            "title": "Set Up Client-Side TypeScript Configuration and Build Scripts",
-            "description": "Create a dedicated tsconfig file for client-side code, establish a source directory for TypeScript files, and add the necessary build and watch scripts to package.json.",
-            "dependencies": [],
-            "details": "1. Create a new directory `src/client` to house the client-side TypeScript source files.\n2. Create a `tsconfig.client.json` file in the project root with a configuration optimized for browsers. This file should extend the base `tsconfig.json` but override `target`, `module`, and `outDir`.\n```json\n{\n  \"extends\": \"./tsconfig.json\",\n  \"compilerOptions\": {\n    \"target\": \"ES2015\",\n    \"module\": \"ESNext\",\n    \"lib\": [\"DOM\", \"DOM.Iterable\", \"ESNext\"],\n    \"outDir\": \"public/assets/js\",\n    \"rootDir\": \"src/client\"\n  },\n  \"include\": [\"src/client/**/*.ts\"]\n}\n```\n3. Update `package.json` to add scripts for compiling the client-side TypeScript.\n```json\n\"scripts\": {\n  // ... existing scripts\n  \"build:client\": \"tsc -p tsconfig.client.json\",\n  \"watch:client\": \"tsc -p tsconfig.client.json --watch\"\n}\n```",
-            "status": "done",
-            "testStrategy": "Run `npm run build:client` and verify that the `public/assets/js` directory is created (if it doesn't exist) and that no errors are reported. Since there are no TS files yet, this will just validate the configuration."
-          },
-          {
-            "id": 2,
-            "title": "Migrate `main.js` to `src/client/main.ts`",
-            "description": "Move the existing `main.js` logic to a new TypeScript file, `src/client/main.ts`, and apply strong types for DOM elements and events related to navigation.",
-            "dependencies": [
-              "6.1"
-            ],
-            "details": "1. Create the file `src/client/main.ts`.\n2. Copy the content from `public/assets/js/main.js` into the new file.\n3. Convert the JavaScript code to TypeScript. Use type assertions or guards to ensure DOM elements are not null.\n```typescript\n// src/client/main.ts\ndocument.addEventListener('DOMContentLoaded', () => {\n  const navToggle = document.querySelector<HTMLButtonElement>('.nav-toggle');\n  const navMenu = document.querySelector<HTMLElement>('.nav-menu');\n\n  if (navToggle && navMenu) {\n    navToggle.addEventListener('click', (e: MouseEvent) => {\n      e.preventDefault();\n      navMenu.classList.toggle('is-active');\n      navToggle.classList.toggle('is-active');\n    });\n  }\n});\n```\n4. The original `public/assets/js/main.js` should be removed after migration is complete in a later subtask, but can be kept for reference for now.",
-            "status": "done",
-            "testStrategy": "Run `npm run build:client`. Verify that `public/assets/js/main.js` is generated without any TypeScript errors. Open the website and confirm that the mobile navigation toggle works as expected."
-          },
-          {
-            "id": 3,
-            "title": "Migrate `theme-switcher.js` to `src/client/theme-switcher.ts`",
-            "description": "Move the theme switching logic to a new TypeScript file, `src/client/theme-switcher.ts`, and add types for the theme switcher input element, its event, and interactions with localStorage.",
-            "dependencies": [
-              "6.1"
-            ],
-            "details": "1. Create the file `src/client/theme-switcher.ts`.\n2. Copy the content from `public/assets/js/theme-switcher.js` into the new file.\n3. Convert the IIFE to a modern TypeScript module or a simple script scope. Add appropriate types.\n```typescript\n// src/client/theme-switcher.ts\nconst themeSwitcher = document.querySelector<HTMLInputElement>('[data-theme-switcher]');\n\nif (themeSwitcher) {\n  const currentTheme = localStorage.getItem('theme') ?? 'light';\n  document.documentElement.setAttribute('data-theme', currentTheme);\n  themeSwitcher.checked = currentTheme === 'dark';\n\n  themeSwitcher.addEventListener('change', (e: Event) => {\n    const target = e.target as HTMLInputElement;\n    const theme = target.checked ? 'dark' : 'light';\n    document.documentElement.setAttribute('data-theme', theme);\n    localStorage.setItem('theme', theme);\n  });\n}\n```",
-            "status": "done",
-            "testStrategy": "Run `npm run build:client`. Check that `public/assets/js/theme-switcher.js` is generated. Open the website, test the theme switcher toggle, and verify that the theme persists across page reloads by checking `localStorage` in the browser's developer tools."
-          },
-          {
-            "id": 4,
-            "title": "Integrate Client-Side Build into Eleventy Workflow",
-            "description": "Update the main `build` and `start` scripts in `package.json` to automatically compile client-side TypeScript as part of the Eleventy development and production build processes.",
-            "dependencies": [
-              "6.1"
-            ],
-            "details": "1. Install `npm-run-all` to run scripts concurrently and sequentially.\n`npm install npm-run-all --save-dev`\n2. Modify the `start` and `build` scripts in `package.json` to incorporate the client-side TypeScript compilation.\n```json\n\"scripts\": {\n  \"start\": \"npm-run-all --parallel watch:*\",\n  \"watch:eleventy\": \"eleventy --serve\",\n  \"watch:client\": \"tsc -p tsconfig.client.json --watch\",\n  \"build\": \"npm-run-all build:client build:eleventy\",\n  \"build:eleventy\": \"eleventy\",\n  \"build:client\": \"tsc -p tsconfig.client.json\",\n  \"type-check\": \"tsc --noEmit\"\n}\n```\nThis ensures that client-side TypeScript is watched for changes during development and built before the production Eleventy build.",
-            "status": "done",
-            "testStrategy": "Run `npm start`. Make a change to a `.ts` file in `src/client/` and verify that the `tsc` watcher recompiles it. Run `npm run build` and verify that both the client-side assets and the Eleventy site are built correctly."
-          },
-          {
-            "id": 5,
-            "title": "Finalize Integration and Clean Up Project",
-            "description": "Ensure HTML templates reference the compiled JavaScript files, remove the original source JavaScript files from the `public` directory, and update `.gitignore`.",
-            "dependencies": [
-              "6.2",
-              "6.3",
-              "6.4"
-            ],
-            "details": "1. Verify that the `<script>` tags in `src/_includes/layouts/base.njk` (or other relevant templates) correctly point to the compiled files in `/assets/js/` (e.g., `<script src=\"/assets/js/main.js\" defer></script>`). No changes should be needed if the output filenames are the same.\n2. Delete the original JavaScript source files from `public/assets/js/` that have now been migrated to `src/client/` (e.g., `public/assets/js/main.js`, `public/assets/js/theme-switcher.js`). The directory `public/assets/js` should now be considered a build target.\n3. Add the client-side build output directory to `.gitignore` to prevent compiled files from being committed to version control.\n```\n# .gitignore\n\n# Build output\n/public/assets/js/\n```",
-            "status": "done",
-            "testStrategy": "After running `npm run build`, delete the `public/assets/js` directory and run `npm run build` again to ensure it's fully regenerated. Check the git status to confirm that the generated `public/assets/js` files are ignored. Perform a final manual test of the deployed site to ensure all functionality is intact."
-          }
-        ]
-      },
-      {
-        "id": 7,
-        "title": "Integrate TypeScript with Tailwind CSS Configuration",
-        "description": "Configure Tailwind CSS to work with TypeScript files and update the build process for integrated compilation.",
-        "details": "1. Convert tailwind.config.js to tailwind.config.ts:\n\n```typescript\n// tailwind.config.ts\nimport type { Config } from 'tailwindcss';\n\nconst config: Config = {\n  content: [\n    './src/**/*.{html,njk,md,ts,js}',\n    './public/assets/js/**/*.ts'\n  ],\n  theme: {\n    extend: {\n      // Your theme extensions\n    },\n  },\n  plugins: [\n    // Your plugins\n  ],\n};\n\nexport default config;\n```\n\n2. Install required dependencies:\n\n```bash\nnpm install --save-dev @types/tailwindcss\n```\n\n3. Update PostCSS configuration if needed:\n\n```typescript\n// postcss.config.ts\nexport default {\n  plugins: {\n    tailwindcss: {},\n    autoprefixer: {},\n  },\n};\n```\n\n4. Create a CSS processing script that works with TypeScript:\n\n```typescript\n// scripts/build-css.ts\nimport * as fs from 'fs';\nimport * as path from 'path';\nimport postcss from 'postcss';\nimport tailwindcss from 'tailwindcss';\nimport autoprefixer from 'autoprefixer';\n\nasync function buildCss() {\n  const inputFile = path.resolve(__dirname, '../src/assets/css/main.css');\n  const outputFile = path.resolve(__dirname, '../dist/assets/css/main.css');\n  \n  const css = fs.readFileSync(inputFile, 'utf-8');\n  \n  const result = await postcss([\n    tailwindcss,\n    autoprefixer\n  ]).process(css, {\n    from: inputFile,\n    to: outputFile\n  });\n  \n  fs.mkdirSync(path.dirname(outputFile), { recursive: true });\n  fs.writeFileSync(outputFile, result.css);\n  \n  console.log('CSS built successfully');\n}\n\nbuildCss().catch(error => {\n  console.error('Error building CSS:', error);\n  process.exit(1);\n});\n```\n\n5. Update package.json scripts to include CSS processing:\n\n```json\n\"scripts\": {\n  \"build:css\": \"ts-node scripts/build-css.ts\",\n  \"dev:css\": \"npm run build:css -- --watch\",\n  \"build\": \"npm run build:ts && npm run build:css && npm run build:eleventy\"\n}\n```",
-        "testStrategy": "Test the Tailwind CSS integration by running the build process and verifying that CSS is correctly generated with all the expected Tailwind utilities. Check that the CSS correctly processes classes used in TypeScript files. Verify that the watch mode works correctly during development. Test the final output in different browsers to ensure CSS is applied correctly.",
-        "priority": "medium",
-        "dependencies": [
-          1,
-          4
-        ],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 8,
-        "title": "Set Up Incremental Compilation for Development Workflow",
-        "description": "Configure TypeScript for incremental compilation and implement a development workflow with hot reloading.",
-        "details": "1. Update tsconfig.json to enable incremental compilation:\n\n```json\n{\n  \"compilerOptions\": {\n    // Existing options...\n    \"incremental\": true,\n    \"tsBuildInfoFile\": \".tsbuildinfo\",\n    \"composite\": true\n  }\n}\n```\n\n2. Install development dependencies for hot reloading:\n\n```bash\nnpm install --save-dev browser-sync concurrently nodemon\n```\n\n3. Create a development script that coordinates all processes:\n\n```typescript\n// scripts/dev.ts\nimport { spawn } from 'child_process';\nimport * as browserSync from 'browser-sync';\n\n// Start TypeScript compiler in watch mode\nconst tsc = spawn('npx', ['tsc', '--watch'], { stdio: 'inherit' });\n\n// Start Eleventy in watch mode\nconst eleventy = spawn('npx', ['eleventy', '--config=.eleventy.ts', '--serve', '--quiet'], { stdio: 'inherit' });\n\n// Start Tailwind CSS in watch mode\nconst tailwind = spawn('npx', ['tailwindcss', '-i', 'src/assets/css/main.css', '-o', 'dist/assets/css/main.css', '--watch'], { stdio: 'inherit' });\n\n// Initialize Browser-Sync\nconst bs = browserSync.create();\nbs.init({\n  proxy: 'localhost:8080', // Eleventy's default port\n  files: ['dist/**/*'],\n  open: false,\n  notify: false\n});\n\n// Handle process termination\nprocess.on('SIGINT', () => {\n  tsc.kill();\n  eleventy.kill();\n  tailwind.kill();\n  bs.exit();\n  process.exit();\n});\n```\n\n4. Update package.json scripts:\n\n```json\n\"scripts\": {\n  \"dev\": \"ts-node scripts/dev.ts\",\n  \"build\": \"tsc && eleventy --config=.eleventy.ts && tailwindcss -i src/assets/css/main.css -o dist/assets/css/main.css\"\n}\n```\n\n5. Configure nodemon for automatic server restart:\n\n```json\n// nodemon.json\n{\n  \"watch\": [\".eleventy.ts\", \"src/**/*.ts\", \"!src/client/**/*.ts\"],\n  \"ext\": \"ts,json\",\n  \"exec\": \"eleventy --config=.eleventy.ts\"\n}\n```",
-        "testStrategy": "Test the development workflow by running 'npm run dev' and verifying that changes to TypeScript files trigger recompilation. Make changes to different types of files (templates, TypeScript utilities, CSS) and confirm that the browser automatically refreshes with the changes. Measure build times to ensure incremental compilation is working efficiently. Test the workflow on different operating systems if applicable.",
-        "priority": "medium",
-        "dependencies": [
-          1,
-          4,
-          7
-        ],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 9,
-        "title": "Implement TypeScript Integration with Test Suite",
-        "description": "Update test scripts to work with TypeScript and integrate type checking into the test suite.",
-        "details": "1. Install testing dependencies:\n\n```bash\nnpm install --save-dev jest ts-jest @types/jest\n```\n\n2. Create Jest configuration for TypeScript:\n\n```typescript\n// jest.config.ts\nimport type { Config } from '@jest/types';\n\nconst config: Config.InitialOptions = {\n  preset: 'ts-jest',\n  testEnvironment: 'node',\n  roots: ['<rootDir>/src'],\n  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],\n  transform: {\n    '^.+\\\\.ts$': 'ts-jest'\n  },\n  moduleFileExtensions: ['ts', 'js', 'json'],\n  collectCoverage: true,\n  coverageDirectory: 'coverage',\n  coverageReporters: ['text', 'lcov']\n};\n\nexport default config;\n```\n\n3. Update existing test files to use TypeScript:\n\n```typescript\n// src/utils/__tests__/dates.test.ts\nimport { formatDate, isValidDate } from '../dates';\n\ndescribe('Date utilities', () => {\n  test('formatDate formats dates correctly', () => {\n    const date = new Date('2023-01-15');\n    expect(formatDate(date, { format: 'yyyy-MM-dd' })).toBe('2023-01-15');\n    expect(formatDate('2023-01-15', { format: 'MM/dd/yyyy' })).toBe('01/15/2023');\n  });\n\n  test('isValidDate validates dates correctly', () => {\n    expect(isValidDate(new Date('2023-01-15'))).toBe(true);\n    expect(isValidDate(new Date('invalid'))).toBe(false);\n    expect(isValidDate('not a date')).toBe(false);\n  });\n});\n```\n\n4. Create a script to run type checking as part of the test process:\n\n```typescript\n// scripts/test-with-types.ts\nimport { execSync } from 'child_process';\n\ntry {\n  // Run type checking\n  console.log('Running type checking...');\n  execSync('npx tsc --noEmit', { stdio: 'inherit' });\n  \n  // Run tests if type checking passes\n  console.log('\\nRunning tests...');\n  execSync('npx jest', { stdio: 'inherit' });\n} catch (error) {\n  process.exit(1);\n}\n```\n\n5. Update package.json scripts:\n\n```json\n\"scripts\": {\n  \"test\": \"ts-node scripts/test-with-types.ts\",\n  \"test:unit\": \"jest\",\n  \"test:types\": \"tsc --noEmit\"\n}\n```\n\n6. Set up CI integration in a .github/workflows/ci.yml file (if using GitHub Actions):\n\n```yaml\nname: CI\n\non:\n  push:\n    branches: [ main ]\n  pull_request:\n    branches: [ main ]\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v3\n    - name: Use Node.js\n      uses: actions/setup-node@v3\n      with:\n        node-version: '16.x'\n    - run: npm ci\n    - run: npm run test:types\n    - run: npm run test:unit\n    - run: npm run build\n```",
-        "testStrategy": "Run the test suite with 'npm test' and verify that both type checking and unit tests are executed. Introduce intentional type errors and test failures to confirm that the process correctly identifies and reports issues. Check that test coverage reports are generated correctly. Verify that the CI configuration works by pushing to a test branch or creating a pull request.",
-        "priority": "medium",
-        "dependencies": [
-          3,
-          4,
-          6
-        ],
-        "status": "done",
-        "subtasks": []
-      },
-      {
-        "id": 10,
-        "title": "Finalize Migration and Documentation",
-        "description": "Complete the TypeScript migration by ensuring all files are converted, update documentation, and perform final testing and optimization.",
-        "details": "1. Create a TypeScript migration checklist and verify all files have been converted:\n\n```typescript\n// scripts/migration-status.ts\nimport * as fs from 'fs';\nimport * as path from 'path';\nimport * as glob from 'glob';\n\ninterface FileStatus {\n  path: string;\n  converted: boolean;\n}\n\nfunction checkMigrationStatus() {\n  const jsFiles = glob.sync('src/**/*.js').map(file => ({\n    path: file,\n    converted: fs.existsSync(file.replace('.js', '.ts'))\n  }));\n  \n  const unconverted = jsFiles.filter(file => !file.converted);\n  \n  console.log(`Migration Status: ${jsFiles.length - unconverted.length}/${jsFiles.length} files converted`);\n  \n  if (unconverted.length > 0) {\n    console.log('\\nFiles still needing conversion:');\n    unconverted.forEach(file => console.log(`- ${file.path}`));\n  } else {\n    console.log('\\nAll files have been converted to TypeScript!');\n  }\n}\n\ncheckMigrationStatus();\n```\n\n2. Update project documentation:\n\n- Create a MIGRATION.md file documenting the TypeScript migration process\n- Update README.md with TypeScript-specific information\n- Add JSDoc comments to key functions and interfaces\n- Document any breaking changes or API modifications\n\n3. Perform final optimization:\n\n```typescript\n// scripts/optimize.ts\nimport * as fs from 'fs';\nimport * as path from 'path';\nimport { execSync } from 'child_process';\n\n// Run type checking with --noImplicitAny to find any remaining 'any' types\ntry {\n  execSync('npx tsc --noImplicitAny', { stdio: 'inherit' });\n  console.log('No implicit any types found!');\n} catch (error) {\n  console.error('Found implicit any types that should be fixed');\n}\n\n// Check bundle sizes\nconst jsDir = path.resolve(__dirname, '../dist/assets/js');\nconst jsFiles = fs.readdirSync(jsDir).filter(file => file.endsWith('.js'));\n\nconsole.log('\\nJavaScript bundle sizes:');\njsFiles.forEach(file => {\n  const stats = fs.statSync(path.join(jsDir, file));\n  console.log(`- ${file}: ${(stats.size / 1024).toFixed(2)} KB`);\n});\n```\n\n4. Create a final verification script:\n\n```typescript\n// scripts/verify-build.ts\nimport { execSync } from 'child_process';\n\nconsole.log('Running full verification...');\n\ntry {\n  // Clean previous build\n  execSync('rm -rf dist', { stdio: 'inherit' });\n  \n  // Run type checking\n  console.log('\\nVerifying types...');\n  execSync('npm run test:types', { stdio: 'inherit' });\n  \n  // Run tests\n  console.log('\\nRunning tests...');\n  execSync('npm run test:unit', { stdio: 'inherit' });\n  \n  // Build project\n  console.log('\\nBuilding project...');\n  execSync('npm run build', { stdio: 'inherit' });\n  \n  console.log('\\n✅ Verification complete! The TypeScript migration was successful.');\n} catch (error) {\n  console.error('\\n❌ Verification failed. Please fix the issues before considering the migration complete.');\n  process.exit(1);\n}\n```\n\n5. Update package.json scripts:\n\n```json\n\"scripts\": {\n  \"migration:status\": \"ts-node scripts/migration-status.ts\",\n  \"migration:verify\": \"ts-node scripts/verify-build.ts\",\n  \"optimize\": \"ts-node scripts/optimize.ts\"\n}\n```",
-        "testStrategy": "Run the migration status script to verify all files have been converted. Execute the verification script to perform a complete build and test cycle. Check documentation for accuracy and completeness. Perform manual testing of the website to ensure all features work correctly. Compare performance metrics before and after the migration to ensure there's no regression. Get feedback from other developers on the team about the TypeScript implementation.",
-        "priority": "low",
-        "dependencies": [
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9
-        ],
-        "status": "done",
-        "subtasks": [
-          {
-            "id": 1,
-            "title": "Implement Migration and Verification Helper Scripts",
-            "description": "Create the `scripts/` directory and add the `migration-status.ts`, `optimize.ts`, and `verify-build.ts` files. Update `package.json` to include the corresponding `migration:status`, `optimize`, and `migration:verify` npm scripts.",
-            "dependencies": [],
-            "details": "Use the provided code snippets from the task description to create the three TypeScript helper scripts. Ensure `ts-node`, `glob`, and their associated types (`@types/node`, `@types/glob`) are listed as dev dependencies in `package.json` to allow these scripts to run correctly via npm.",
-            "status": "done",
-            "testStrategy": "Run `npm run migration:status`, `npm run optimize`, and `npm run migration:verify` individually. Verify that each script executes without crashing, even if they report errors (like unconverted files or type issues), confirming the `package.json` setup is correct."
-          },
-          {
-            "id": 2,
-            "title": "Migrate Eleventy Config and Remaining JS Files to TypeScript",
-            "description": "Convert the main Eleventy configuration file `.eleventy.js` to `.eleventy.ts` and migrate any other remaining JavaScript files within the `src` directory. This includes ensuring the build process correctly handles any client-side TypeScript files.",
-            "dependencies": [],
-            "details": "Rename `.eleventy.js` to `.eleventy.ts` and update its syntax from CommonJS (`require`/`module.exports`) to ES Modules (`import`/`export default`). Add type annotations for the Eleventy config function. Use the `migration:status` script created in the previous subtask to find and convert any other lingering `.js` files in `src`.",
-            "status": "done",
-            "testStrategy": "Run `npm start` or `npm run build` to confirm that Eleventy can correctly read and execute the new `.eleventy.ts` configuration file. Run `npm run migration:status` and verify that it reports 0 files still needing conversion."
-          },
-          {
-            "id": 3,
-            "title": "Execute Optimization Script and Eliminate Implicit 'any' Types",
-            "description": "Run the `npm run optimize` script to identify all instances of implicit `any` types throughout the codebase. Refactor the code to provide explicit types for all identified cases, improving type safety and code clarity.",
-            "dependencies": [
-              "10.1",
-              "10.2"
-            ],
-            "details": "Execute `npx tsc --noImplicitAny` or the `npm run optimize` script. For each error reported, navigate to the file and add the appropriate type definition. This may involve creating or updating interfaces in the `types/` directory or using utility types. Repeat this process until the script completes successfully.",
-            "status": "done",
-            "testStrategy": "Run `npm run optimize` and ensure it exits with a success code and logs 'No implicit any types found!'. Also, check the bundle size output for any significant, unexpected increases that might indicate a problem with the build configuration."
-          },
-          {
-            "id": 4,
-            "title": "Create MIGRATION.md and Update Project Documentation",
-            "description": "Create a new `MIGRATION.md` file documenting the TypeScript migration process. Update the main `README.md` to reflect the new TypeScript-based development workflow, including setup, build, and testing commands.",
-            "dependencies": [
-              "10.1"
-            ],
-            "details": "In `MIGRATION.md`, describe the steps taken, the rationale for the migration, and how to use the new helper scripts (`migration:status`, `optimize`, `migration:verify`). In `README.md`, update the 'Getting Started' and 'Available Scripts' sections to replace JavaScript-centric instructions with the new TypeScript equivalents (e.g., `npm run test:types`).",
-            "status": "done",
-            "testStrategy": "Review the `MIGRATION.md` and `README.md` files for clarity, accuracy, and completeness. Ask a team member to follow the setup instructions in the updated `README.md` on a fresh clone of the repository to ensure they are correct."
-          },
-          {
-            "id": 5,
-            "title": "Add JSDoc Comments and Perform Final Verification",
-            "description": "Enhance code documentation by adding JSDoc comments to key functions, interfaces, and types, particularly in `.eleventy.ts`, data files, and utilities. Finally, execute the `npm run migration:verify` script to perform a full clean, build, and test cycle to confirm the migration's success.",
-            "dependencies": [
-              "10.2",
-              "10.3"
-            ],
-            "details": "Go through critical files and add JSDoc blocks explaining the purpose, parameters (`@param`), and return values (`@returns`) of functions and properties. After documenting, run `npm run migration:verify`. This script will clean the `dist` directory, run the type checker, execute unit tests, and perform a production build, serving as a final quality gate.",
-            "status": "done",
-            "testStrategy": "Verify that `npm run migration:verify` completes without any errors. After a successful run, manually browse the generated site from the `dist` folder or by using a local server to ensure all pages render correctly and all functionality is intact. Check the browser's developer console for any runtime errors."
-          }
-        ]
+      "description": "Tasks for default context",
+      "renamed": {
+        "from": "default",
+        "date": "2025-09-13T23:17:13.374Z"
       }
-    ],
-    "metadata": {
-      "created": "2025-09-13T04:08:00.503Z",
-      "updated": "2025-09-13T22:59:40.931Z",
-      "description": "Tasks for typescript-implement context"
     }
   }
 }

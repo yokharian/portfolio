@@ -1,0 +1,68 @@
+# Task ID: 5
+# Title: Implement Featured Work Section
+# Status: done
+# Dependencies: 3, 4, 1
+# Priority: medium
+# Description: Create the 'Featured Work' section on the homepage that displays the most important projects in a card-based layout.
+# Details:
+1. Design project cards that include:
+   - Project thumbnail image
+   - Project title
+   - Brief description
+   - Technologies used (tags)
+   - Visual hover effect (FR9)
+2. Implement a responsive grid layout that shows:
+   - 3 columns on desktop
+   - 2 columns on tablet
+   - 1 column on mobile
+3. Create a system to mark certain projects as 'featured' in the frontmatter
+4. Implement lazy loading for project images (FR19)
+5. Add smooth transitions for hover effects
+6. Ensure proper linking to individual project pages
+
+# Test Strategy:
+Test the grid layout at various screen sizes to verify the correct number of columns. Verify that hover effects work properly and are accessible. Test image lazy loading by simulating slow network conditions. Check that all links to project pages work correctly. Verify the section renders correctly with different numbers of featured projects.
+
+# Subtasks:
+## 1. Create Eleventy Collection for Featured Projects [done]
+### Dependencies: None
+### Description: Set up an Eleventy collection that filters projects with 'featured: true' in their frontmatter to be displayed in the Featured Work section.
+### Details:
+Create a custom Eleventy collection named 'featured_projects' in the .eleventy.js file that filters projects where data.featured === true. Include language filtering based on the current page locale. Sort the collection by date (newest first) or by a custom 'order' field if present in the frontmatter. Limit to a maximum of 6 featured projects.
+
+## 2. Design Project Card Component [done]
+### Dependencies: 5.1
+### Description: Create a reusable project card component that displays project information in an attractive and accessible format.
+### Details:
+Create a partial/include for project cards with the following elements: hero image (with width/height attributes, loading='lazy', decoding='async'), project title as a link to the project page, short description/excerpt (limited to ~120 characters), up to 5 technology tags displayed as chips, and proper alt text from 'alt' or 'title' field. Add hover effects with smooth transitions that slightly elevate the card and change background color. Ensure the entire card is clickable but maintains proper accessibility.
+
+## 3. Implement Responsive Grid Layout [done]
+### Dependencies: 5.2
+### Description: Create a responsive grid layout for the Featured Work section that adapts to different screen sizes.
+### Details:
+Using Tailwind CSS, implement a responsive grid container that displays: 1 column on mobile (xs), 2 columns on tablet (md), and 3 columns on desktop (lg). Add appropriate gap spacing between cards. Ensure the grid maintains proper alignment and spacing at all breakpoints. Use CSS Grid or Flexbox through Tailwind utilities. Add proper container padding that adjusts at different breakpoints.
+
+## 4. Create Featured Work Section Structure [done]
+### Dependencies: 5.3
+### Description: Build the overall structure for the Featured Work section including heading, introduction, and navigation elements.
+### Details:
+Create the section with an id='projects' for direct linking. Add a visually prominent heading ('Featured Work' or equivalent in the current language). Include an optional short introductory paragraph. Add a 'View all projects' link at the bottom of the section that points to a projects listing page. Ensure proper semantic HTML structure with appropriate heading levels. Add section padding and background styling consistent with the site design.
+
+## 5. Implement Image Optimization and Lazy Loading [done]
+### Dependencies: 5.2
+### Description: Set up image optimization and lazy loading for project thumbnails to improve performance.
+### Details:
+Implement responsive images with srcset and sizes attributes for project thumbnails. Set up a build process to generate optimized image versions at different widths (e.g., 300w, 600w, 900w). Add loading='lazy' attribute to all images. Implement a lightweight placeholder or blur-up technique for images. Add decoding='async' attribute. Ensure images have explicit width and height attributes to prevent layout shifts.
+
+## 6. Enhance Accessibility of Featured Work Section [done]
+### Dependencies: 5.4
+### Description: Ensure the Featured Work section meets accessibility standards and provides a good experience for all users.
+### Details:
+Add appropriate ARIA attributes where needed (e.g., aria-label for links that need additional context). Ensure sufficient color contrast for all text elements including technology tags. Implement visible focus states for interactive elements. Make cards fully keyboard navigable. Add screen reader-friendly descriptions where needed. Ensure hover effects don't rely solely on color changes. Test with keyboard navigation to ensure all elements are accessible.
+
+## 7. Add Documentation and Testing for Featured Projects [done]
+### Dependencies: 5.1, 5.4, 5.5, 5.6
+### Description: Create documentation for content authors and implement tests to verify the Featured Work section functions correctly.
+### Details:
+Add documentation in the project README explaining how to mark projects as featured using 'featured: true' in frontmatter. Document image requirements for optimal display in project cards. Create build-time tests that verify the section renders and contains at least one featured card. Add tests to verify external links have proper attributes (target, rel). Create snapshot tests for the section's HTML structure. Document the expected behavior of the responsive layout.
+

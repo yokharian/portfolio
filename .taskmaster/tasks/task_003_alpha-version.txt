@@ -1,0 +1,102 @@
+# Task ID: 3
+# Title: Develop Markdown Processing System
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Create a system to process Markdown files with frontmatter for project content, extracting metadata and generating HTML pages.
+# Details:
+1. Set up a Markdown parser with frontmatter support
+2. Create a schema for project frontmatter that includes:
+   - title
+   - description
+   - employer
+   - startDate
+   - endDate
+   - tags (technologies)
+   - heroImage
+   - language
+3. Implement a function to extract and validate frontmatter data
+4. Create a template for rendering project pages that includes:
+   - Hero banner with project image
+   - Metadata display section
+   - Main content area with proper typography
+   - 'Technologies Used' section generated from tags
+5. Implement the Markdown to HTML conversion process
+6. Set up the build process to generate a static HTML page for each Markdown file
+
+# Test Strategy:
+Create test Markdown files with various frontmatter configurations to verify the extraction process. Test the rendering of Markdown content with different elements (headings, lists, code blocks, etc.). Verify that the generated HTML pages maintain the correct structure and styling. Test with both English and Spanish content to ensure proper language handling.
+
+# Subtasks:
+## 1. Set up Markdown Parser with Frontmatter Support [done]
+### Dependencies: None
+### Description: Select and integrate a Markdown parser library that supports frontmatter extraction. Configure it with safe defaults for the project.
+### Details:
+Research and select a suitable Markdown parser (recommend remark.js or gray-matter). Install the chosen library and create a utility module that exposes a function to parse Markdown content. Configure the parser with safe defaults for HTML sanitization and frontmatter extraction. Include error handling for malformed Markdown files.
+
+## 2. Define Frontmatter Schema with Type Definitions [done]
+### Dependencies: 3.1
+### Description: Create a schema for project frontmatter with proper type definitions, required/optional rules, and default values.
+### Details:
+Define a TypeScript interface or schema object for frontmatter that includes: title (string, required), description (string, required), employer (string, optional), startDate (ISO date string, required), endDate (ISO date string, optional), tags (array of strings, required), heroImage (string path, required), language (string enum, required), slug (string, optional), featured (boolean, optional). Include documentation for each field and specify default values where appropriate.
+
+## 3. Implement Frontmatter Validation Function [done]
+### Dependencies: 3.2
+### Description: Create a validation function that checks frontmatter data against the schema and provides helpful error messages.
+### Details:
+Implement a validation function that takes extracted frontmatter data and validates it against the defined schema. Include checks for required fields, data types, and format validation (e.g., ISO dates). Generate helpful error messages that indicate which fields are missing or invalid. Provide sensible defaults for optional fields when not provided.
+
+## 4. Implement Content Discovery System [done]
+### Dependencies: 3.1, 3.3
+### Description: Create a system to scan the content directory for Markdown files and build a collection of project data.
+### Details:
+Implement a function that recursively scans the content/projects/ directory (or similar) for Markdown files. For each file, extract and validate the frontmatter, storing the results in a collection. Include file path information and generate slugs based on filename or frontmatter. Handle errors gracefully, logging issues but continuing to process valid files.
+
+## 5. Enhance Markdown to HTML Conversion [done]
+### Dependencies: 3.1
+### Description: Implement advanced Markdown to HTML conversion with support for code blocks, tables, images, and properly configured external links.
+### Details:
+Extend the basic Markdown parser to support syntax highlighting for code blocks, properly formatted tables, responsive images, and external links that open in new tabs with appropriate rel attributes (noopener, noreferrer). Configure the parser to maintain heading hierarchy and generate anchor IDs for headings. Implement custom renderers for specific Markdown elements if needed.
+
+## 6. Create Project Page Template with Component Sections [done]
+### Dependencies: 3.5
+### Description: Develop a template for project pages that includes hero image, metadata section, content area, and technology tags.
+### Details:
+Create a template/layout for project pages that integrates with Task 7 (Project Page Template). Include sections for: hero image banner, project metadata display (title, dates, employer), main content area with proper typography (using Tailwind prose), and a 'Technologies Used' section generated from tags. Ensure the template is responsive and follows accessibility best practices.
+
+## 7. Implement Language Handling for Project Content [done]
+### Dependencies: 3.4
+### Description: Add support for multilingual project content with language detection, fallbacks, and filtering.
+### Details:
+Implement functionality to load the language field from frontmatter and support filtering collections by language. Create a system for language fallbacks when content isn't available in the requested language. Integrate with the site's language switching mechanism (if already implemented) to ensure project content changes appropriately when language is switched.
+
+## 8. Develop Date Formatting and Handling System [done]
+### Dependencies: 3.3
+### Description: Create utilities for parsing ISO dates, formatting them according to language preferences, and handling ongoing projects.
+### Details:
+Implement utilities to parse ISO date strings from frontmatter. Create formatting functions that display dates according to language preferences (e.g., 'January 2022' vs 'Enero 2022'). Add special handling for ongoing projects (missing endDate) to display appropriate text (e.g., 'Present' or 'Actual'). Include relative time formatting options (e.g., '2 years ago').
+
+## 9. Implement Image Validation and Processing [done]
+### Dependencies: 3.3
+### Description: Add validation for hero images, generate alt text, and support responsive image attributes.
+### Details:
+Implement validation to ensure heroImage paths reference existing files. Generate default alt text from project titles if not explicitly provided. Add support for responsive image attributes (srcset, sizes) to optimize loading. Include image optimization as part of the build process to reduce file sizes while maintaining quality.
+
+## 10. Integrate with Build Process for Static HTML Generation [done]
+### Dependencies: 3.6, 3.7, 3.8, 3.9
+### Description: Set up the build process to generate a static HTML page for each Markdown file using the project template.
+### Details:
+Integrate the Markdown processing system with the static site generator's build process. For each processed Markdown file, generate a static HTML page using the project template. Create predictable permalinks/URLs based on slugs or file paths. Ensure all metadata and content are correctly passed to the template. Add build-time validation to catch any issues with content or frontmatter.
+
+## 11. Create Comprehensive Test Suite with Fixtures [done]
+### Dependencies: 3.10
+### Description: Develop a test suite with fixtures for various frontmatter configurations, invalid inputs, and snapshot tests of rendered HTML.
+### Details:
+Create a comprehensive test suite with fixtures representing different frontmatter variants (all required fields, optional fields, edge cases). Include tests for invalid inputs (missing required fields, wrong data types). Implement snapshot tests of rendered HTML to detect unintended changes in output. Add tests for the entire build pipeline from Markdown file to generated HTML.
+
+## 12. Write Documentation and Authoring Guide [done]
+### Dependencies: 3.11
+### Description: Create documentation for the Markdown processing system and an authoring guide for content creators.
+### Details:
+Write technical documentation for the Markdown processing system, including architecture overview, API references, and integration points. Create an authoring guide for content creators that explains required fields, naming conventions, Markdown features supported, and how to preview content. Include examples of valid frontmatter and common Markdown patterns used in projects. Document the build and deployment process for content updates.
+

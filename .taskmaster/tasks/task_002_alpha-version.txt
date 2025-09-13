@@ -1,0 +1,57 @@
+# Task ID: 2
+# Title: Implement Base Layout Components
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Create the base layout components that will be used across all pages, including header and footer with required links.
+# Details:
+1. Create a main layout component that includes:
+   - HTML5 boilerplate with proper meta tags
+   - Responsive viewport settings
+   - Tailwind CSS imports
+2. Implement the header component with:
+   - Sofia Escobedo's name as per FR2
+   - Primary CTA button 'Agendar llamada de 30 min' linking to Calendly (FR3)
+   - Language switcher (FR5)
+3. Implement the footer component with:
+   - Links to GitHub, LinkedIn profiles
+   - Calendly link
+   - Email contact (mailto: link)
+   - Copyright information
+4. Create a responsive navigation system
+5. Implement language switching functionality (English/Spanish toggle)
+
+# Test Strategy:
+Test the layout components in different viewport sizes to ensure responsiveness. Verify that all links in the header and footer are working correctly. Test the language switcher to ensure it properly changes the displayed language. Validate HTML structure for accessibility and SEO best practices.
+
+# Subtasks:
+## 1. Create base.njk layout template [done]
+### Dependencies: None
+### Description: Implement the main layout template that will serve as the foundation for all pages, including proper HTML5 structure and metadata.
+### Details:
+Create src/_includes/layouts/base.njk with: 1) HTML5 doctype and structure, 2) <head> section with meta charset, viewport settings, title tag using {{ title }} variable with fallback, 3) link to /assets/styles.css for Tailwind, 4) lang attribute on <html> tag using {{ page.lang }} or site.defaultLanguage, 5) <body> with {% block content %}{% endblock %} for page-specific content.
+
+## 2. Implement header partial with navigation [done]
+### Dependencies: None
+### Description: Create a responsive header component with site title, primary CTA button, and language switcher UI.
+### Details:
+Create src/_includes/partials/header.njk containing: 1) Site title 'Sofia Escobedo' as main heading, 2) Primary CTA button with text 'Agendar llamada de 30 min' linking to a Calendly URL (use {{ site.calendlyUrl }} from data file), 3) Basic navigation menu with responsive design, 4) Language switcher with EN/ES options (stub links for now, full functionality in Task 10).
+
+## 3. Implement footer partial with social links [done]
+### Dependencies: None
+### Description: Create a footer component with social media links, contact information, and copyright notice.
+### Details:
+Create src/_includes/partials/footer.njk containing: 1) Social media links to GitHub and LinkedIn using {{ site.githubUrl }} and {{ site.linkedinUrl }} from data files, 2) Calendly link using {{ site.calendlyUrl }}, 3) Email contact using mailto: with {{ site.email }}, 4) Copyright information with dynamic year using {% year = new Date().getFullYear() %} and site owner name.
+
+## 4. Create site data configuration files [done]
+### Dependencies: None
+### Description: Set up data files to store site-wide configuration and variables used in layout components.
+### Details:
+Create src/_data/site.json with the following properties: 1) title: 'Sofia Escobedo', 2) description: 'Python AWS Developer', 3) defaultLanguage: 'en', 4) githubUrl: 'https://github.com/yourusername' (placeholder), 5) linkedinUrl: 'https://linkedin.com/in/yourusername' (placeholder), 6) calendlyUrl: 'https://calendly.com/yourusername' (placeholder), 7) email: 'your.email@example.com' (placeholder).
+
+## 5. Wire layouts and verify build process [done]
+### Dependencies: 2.1, 2.2, 2.3, 2.4
+### Description: Connect all layout components together, implement index page, and verify the build process works correctly.
+### Details:
+1) Include header/footer in base.njk using {% include "partials/header.njk" %} and {% include "partials/footer.njk" %}, 2) Create src/index.njk that extends base.njk with {% extends "layouts/base.njk" %} and minimal content in {% block content %}, 3) Update package.json with build scripts if needed, 4) Run build process to generate _site directory, 5) Verify generated HTML contains all expected elements and correct structure.
+
