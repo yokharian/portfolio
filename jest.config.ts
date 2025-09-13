@@ -11,6 +11,9 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1'
+  },
   moduleFileExtensions: ['ts', 'js', 'json'],
   collectCoverage: true,
   coverageDirectory: 'coverage',

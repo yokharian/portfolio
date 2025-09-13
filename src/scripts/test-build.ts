@@ -1,15 +1,15 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const assert = require('assert');
-const fs = require('fs');
-const path = require('path');
-const cp = require('child_process');
+import * as assert from 'assert';
+import * as fs from 'fs';
+import * as path from 'path';
+import { execSync } from 'child_process';
 
-function runBuild() {
-  cp.execSync('npm run -s build', { stdio: 'inherit' });
+function runBuild(): void {
+  execSync('npm run -s build', { stdio: 'inherit' });
 }
 
-function readOut(rel) {
+function readOut(rel: string): string {
   const base = path.join(process.cwd(), '_site');
   const p = path.join(base, rel);
   if (fs.existsSync(p)) return fs.readFileSync(p, 'utf8');
@@ -19,7 +19,7 @@ function readOut(rel) {
   throw new Error(`Output file not found in expected locations: ${p} or ${alt}`);
 }
 
-(function main() {
+function main(): void {
   runBuild();
 
   // Project page snapshot
@@ -65,4 +65,6 @@ function readOut(rel) {
   assert.ok(/<script[^>]+type=\"application\/ld\+json\"[\s\S]*EducationalOccupationalCredential/i.test(home), 'JSON-LD for certifications should be present');
 
   console.log('Build snapshot tests passed.');
-})();
+}
+
+main();

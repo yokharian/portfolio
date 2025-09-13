@@ -72,11 +72,11 @@ interface EleventyConfigOptions {
 
 type EleventyConfigFunction = (eleventyConfig: EleventyConfig) => EleventyConfigOptions;
 
-const { filterByLanguage, normalizeLang } = require('./src/utils/language');
-const { formatMonthYear, formatRange, relativeFrom, presentLabel } = require('./src/utils/dates');
-const { createMd } = require('./src/utils/markdown');
-const { t: translate } = require('./src/utils/i18n');
-const { formatNumber, formatCurrency } = require('./src/utils/format');
+const { filterByLanguage, normalizeLang } = require('./.cache/tsbuild/src/utils/language.js');
+const { formatMonthYear, formatRange, relativeFrom, presentLabel } = require('./.cache/tsbuild/src/utils/dates.js');
+const { parseMarkdown } = require('./.cache/tsbuild/src/utils/markdown.js');
+const { t: translate } = require('./.cache/tsbuild/src/utils/i18n.js');
+const { formatNumber, formatCurrency } = require('./.cache/tsbuild/src/utils/format.js');
 const EleventyImage = require('@11ty/eleventy-img');
 const path = require('path');
 
@@ -85,7 +85,11 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
   eleventyConfig.addPassthroughCopy({ "src/public": "/" });
 
   // Use our enhanced Markdown library for Eleventy rendering (Task 3.10 integration)
-  eleventyConfig.setLibrary('md', createMd());
+  eleventyConfig.setLibrary('md', require('markdown-it')({
+    html: true,
+    linkify: true,
+    typographer: true
+  }));
 
   // Minimal Nunjucks date filter used by templates
   eleventyConfig.addNunjucksFilter("date", function (value: string | Date, format: string = "yyyy-LL-dd"): string {
@@ -106,22 +110,22 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
 
   // New date/i18n filters
   eleventyConfig.addNunjucksFilter('dateLong', function (value: string | Date, lang: string = 'en'): string {
-    return formatMonthYear(value, lang);
+    return formatMonthYear(String(value), lang as any);
   });
   eleventyConfig.addNunjucksFilter('dateRange', function (start: string | Date, end: string | Date, lang: string = 'en'): string {
-    return formatRange(start, end, lang);
+    return formatRange(String(start), end ? String(end) : null, lang as any);
   });
   eleventyConfig.addNunjucksFilter('relativeFrom', function (value: string | Date, lang: string = 'en'): string {
-    return relativeFrom(value, lang);
+    return relativeFrom(String(value), lang as any);
   });
   eleventyConfig.addNunjucksFilter('presentLabel', function (lang: string = 'en'): string {
-    return presentLabel(lang);
+    return presentLabel(lang as any);
   });
 
   // i18n translation filter
   eleventyConfig.addNunjucksFilter('t', function (key: string, lang: string = 'en', vars: Record<string, any> = {}): string {
     try {
-      return translate(key, lang, vars);
+      return translate(key, lang as any, vars);
     } catch (e) {
       return '';
     }
@@ -167,11 +171,11 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
   });
   eleventyConfig.addCollection("projects_en", (collectionApi) => {
     const items = collectionApi.getFilteredByGlob("src/content/projects/**/*.md");
-    return filterByLanguage(items, 'en');
+    return filterByLanguage(items as any, 'en');
   });
   eleventyConfig.addCollection("projects_es", (collectionApi) => {
     const items = collectionApi.getFilteredByGlob("src/content/projects/**/*.md");
-    return filterByLanguage(items, 'es');
+    return filterByLanguage(items as any, 'es');
   });
 
   // Featured projects collection (Task 5.1)
