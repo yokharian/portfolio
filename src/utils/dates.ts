@@ -17,7 +17,7 @@ import {
   LanguageCode,
   DateUtilityError,
   DateValidationError
-} from '../types/utils/dates';
+} from '../../types/dates';
 import { normalizeLang } from './language';
 import { logger } from './logger';
 
@@ -245,4 +245,4 @@ function toDate(value: DateInput): Date | null {
 }
 
 // Re-export types
-export type { DateFormatOptions, DateValidationResult, DateRangeOptions, DateInput, LanguageCode } from '../types/utils/dates';
+export type { DateFormatOptions, DateValidationResult, DateRangeOptions, DateInput, LanguageCode } from '../../types/dates';

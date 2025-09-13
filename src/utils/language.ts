@@ -9,7 +9,7 @@
  * - Cross-browser compatibility validation
  */
 
-import { LanguageCode } from '../types/utils/i18n';
+import { LanguageCode } from '../../types/i18n';
 
 // Type guards with proper narrowing
 export function isValidLanguageCode(value: unknown): value is LanguageCode {
@@ -122,4 +122,4 @@ export function resolveInitialLanguage(ctx: {
 // Re-export constants and types
 export const SUPPORTED = SUPPORTED_LANGUAGES;
 export { STORAGE_KEY };
-export type { LanguageCode } from '../types/utils/i18n';
+export type { LanguageCode } from '../../types/i18n';

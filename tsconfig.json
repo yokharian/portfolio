@@ -25,7 +25,8 @@
     "outDir": ".cache/tsbuild",
     "rootDir": ".",
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "typeRoots": [
       "./types",
@@ -49,6 +50,7 @@
     ".eleventy.*",
     "*.config.*",
     "tailwind.config.*",
+    "types/**/*.ts",
     "types/**/*.d.ts"
   ],
   "exclude": [

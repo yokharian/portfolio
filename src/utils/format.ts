@@ -17,7 +17,7 @@ import {
   FormatError,
   InvalidFormatInputError,
   FormatValidationError
-} from '../types/utils/format';
+} from '../../types/format';
 import { logger } from './logger';
 
 // Type guards with proper narrowing
@@ -284,10 +284,10 @@ export type {
   NumberFormatOptions, 
   CurrencyFormatOptions, 
   FormatInput 
-} from '../types/utils/format';
+} from '../../types/format';
 
 export { 
   FormatError, 
   InvalidFormatInputError, 
   FormatValidationError 
-} from '../types/utils/format';
+} from '../../types/format';

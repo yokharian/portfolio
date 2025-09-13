@@ -20,7 +20,7 @@ import {
   ContentProcessingError,
   ContentValidationError,
   FileProcessingError
-} from '../types/utils/content';
+} from '../../types/content';
 import { slugify as formatSlugify } from './format';
 import { parseMarkdown } from './markdown';
 import { validateFrontmatter } from './validateFrontmatter';
@@ -375,10 +375,10 @@ export type {
   DiscoverOptions, 
   ProjectRecord, 
   ContentValidationResult 
-} from '../types/utils/content';
+} from '../../types/content';
 
 export { 
   ContentProcessingError, 
   ContentValidationError, 
   FileProcessingError 
-} from '../types/utils/content';
+} from '../../types/content';
