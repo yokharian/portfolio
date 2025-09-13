@@ -37,5 +37,23 @@ function readOut(rel) {
   assert.ok(/<img[^>]*height=\"640\"/i.test(home), 'Hero image should declare height');
   assert.ok(/<link[^>]+rel=\"preload\"[^>]+as=\"image\"[^>]+href=\"\/assets\/images\/profile\.svg\"/i.test(home), 'Homepage should preload the profile image');
 
+  // Featured projects section
+  assert.ok(/Featured Work/.test(home), 'Homepage should include Featured Work heading');
+  assert.ok(/<a[^>]+href=\"\/projects\/sample-en\/?\/[\s\S]*aria-label=\"View project: Sample Project\"/i.test(home) || /aria-label=\"View project: Sample Project\"[\s\S]*<a[^>]+href=\"\/projects\/sample-en\//i.test(home), 'Featured card link and accessible aria-label should be present');
+  assert.ok(/<img[^>]*sizes=\"/i.test(home), 'Project card image should include a responsive sizes attribute');
+  assert.ok(/<img[^>]*loading=\"lazy\"/i.test(home), 'Project card image should be lazy-loaded');
+  assert.ok(/<img[^>]*decoding=\"async\"/i.test(home), 'Project card image should set decoding=async');
+
+  // At least one featured project card should render
+  const featuredCount = (home.match(/aria-label=\"View project:/g) || []).length;
+  assert.ok(featuredCount >= 1, 'Homepage should render at least one featured project card');
+
+  // Responsive image markup should include srcset or picture element
+  assert.ok(/<picture[\s>]/i.test(home) || /<img[^>]*srcset=/i.test(home), 'Featured project image should use responsive markup (picture/srcset)');
+
+  // Accessibility semantics for list/grid
+  assert.ok(/role=\"list\"/i.test(home), 'Featured grid should have role="list"');
+  assert.ok(/role=\"listitem\"/i.test(home), 'Featured cards should have role="listitem"');
+
   console.log('Build snapshot tests passed.');
 })();

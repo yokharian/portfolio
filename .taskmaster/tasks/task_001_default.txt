@@ -116,3 +116,11 @@ Eleventy (11ty) has been implemented as the static site generator with the follo
 
 # Test Strategy:
 Verify that the repository is properly initialized with all configuration files. Test the build process to ensure it correctly processes Markdown files and generates static HTML. Confirm that Tailwind CSS is properly configured by testing a simple component with Tailwind classes.
+
+# Subtasks:
+## 1. Configure homepage site at root [done]
+### Dependencies: None
+### Description: Visitors shouldn't follow a complex directory structure. There are only two allowed levels: /<homepage> and /blog/<post>
+### Details:
+
+

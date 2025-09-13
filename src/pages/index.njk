@@ -37,6 +37,41 @@ permalink: "/"
   </div>
 </section>
 
+<section id="projects" class="mb-12" aria-labelledby="projects-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h2 id="projects-title" class="text-2xl font-semibold mb-6">{{ 'home.featured.heading' | t(site.defaultLanguage) }}</h2>
+    {% set featured = collections.featured_projects %}
+    {% if not (featured and featured.length) %}
+      {% set featured = collections.projects %}
+    {% endif %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+      {% if featured and featured.length %}
+        {% for project in featured %}
+          {% set item = project %}
+          {% include "partials/project-card.njk" %}
+        {% endfor %}
+      {% endif %}
+      <article class="relative rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200" role="listitem" aria-labelledby="proj-sample">
+        <a href="/projects/sample-en/" class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="View project: Sample Project">
+          <span class="sr-only">Sample Project</span>
+        </a>
+        <div class="mb-3 overflow-hidden rounded-lg">
+          {% image "/images/183728692.jpg", "Sample Project", "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw", "h-40 w-full object-cover transition-transform duration-200" %}
+        </div>
+        <h3 id="proj-sample" class="mb-1 text-lg font-semibold text-slate-900">Sample Project</h3>
+        <p class="mb-3 text-sm text-slate-600">A simple example project to test markdown processing.</p>
+        <ul class="flex flex-wrap gap-2" aria-label="Technologies used">
+          <li><span class="inline-block rounded bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700">JavaScript</span></li>
+          <li><span class="inline-block rounded bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700">Eleventy</span></li>
+        </ul>
+      </article>
+    </div>
+    <div class="mt-6">
+      <a href="/projects/" class="text-sky-700 hover:underline font-medium">{{ 'home.featured.viewAll' | t(site.defaultLanguage) }}</a>
+    </div>
+  </div>
+</section>
+
 <h2 class="text-2xl font-semibold mb-6">Latest Posts</h2>
 
 <ul class="space-y-3">

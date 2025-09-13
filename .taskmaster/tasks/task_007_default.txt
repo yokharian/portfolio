@@ -19,3 +19,85 @@
 
 # Test Strategy:
 Test the project page with various types of Markdown content to ensure proper rendering. Verify that all metadata from frontmatter is correctly displayed. Test responsiveness across different screen sizes. Check that the 'Technologies Used' section correctly displays all tags. Test with both English and Spanish content to verify language switching works correctly.
+
+# Subtasks:
+## 1. Define Project Page Data Schema and Validation [pending]
+### Dependencies: None
+### Description: Create a schema for project page data that defines required and optional fields in the frontmatter, and implement validation functions to ensure data integrity.
+### Details:
+1. Extend the existing frontmatter schema in src/utils/ to include project-specific fields: title, description, employer, startDate, endDate, tags, heroImage, language, and any additional metadata.
+2. Create validation functions that check for required fields and proper data types.
+3. Implement error handling for missing or invalid data.
+4. Document the schema requirements in the project documentation.
+
+## 2. Create Project Page Layout Template [pending]
+### Dependencies: 7.1
+### Description: Develop the base Eleventy layout template for individual project pages with proper semantic HTML structure.
+### Details:
+1. Create a new layout file in src/layouts/project.njk.
+2. Implement semantic HTML structure with appropriate heading hierarchy.
+3. Include slots for all required content sections: hero banner, metadata section, main content area, technologies section, and navigation.
+4. Set up SEO-friendly document structure with proper meta tags.
+5. Add schema.org structured data for projects using JSON-LD.
+
+## 3. Implement Hero Banner Component [pending]
+### Dependencies: 7.2
+### Description: Create a responsive hero banner component that displays the project's featured image with proper sizing and accessibility.
+### Details:
+1. Create a hero banner component that accepts an image path from frontmatter.
+2. Implement responsive image handling with appropriate srcset attributes.
+3. Add proper alt text support from frontmatter.
+4. Style the banner using Tailwind CSS with mobile-first approach.
+5. Implement fallback handling for missing images.
+
+## 4. Develop Project Metadata Display Section [pending]
+### Dependencies: 7.2
+### Description: Create a component to display project metadata (title, dates, employer, etc.) with proper formatting and i18n support.
+### Details:
+1. Create a metadata display component that presents project information in a structured format.
+2. Implement date formatting with localization support.
+3. Add i18n support for labels using src/data/i18n.json.
+4. Style the section using Tailwind CSS for both mobile and desktop layouts.
+5. Ensure proper semantic markup for the metadata section.
+
+## 5. Implement Main Content Area with Typography [pending]
+### Dependencies: 7.2
+### Description: Set up the main content area with Tailwind's prose class and ensure proper typography for different content elements.
+### Details:
+1. Configure the main content area to use Tailwind's prose class for consistent typography.
+2. Customize the prose styles as needed to match the site's design system.
+3. Ensure proper spacing and hierarchy for headings, paragraphs, lists, and code blocks.
+4. Implement responsive adjustments for typography at different breakpoints.
+5. Add support for custom content components within the markdown.
+
+## 6. Create Technologies Used Section [pending]
+### Dependencies: 7.2, 7.4
+### Description: Develop a component to display and style the technologies/tags used in the project.
+### Details:
+1. Create a component that generates a list of technology tags from the frontmatter.
+2. Style the tags using Tailwind CSS with appropriate visual treatment.
+3. Implement hover states for tags.
+4. Add i18n support for any static text in this section.
+5. Ensure the section is responsive and maintains proper layout at all screen sizes.
+
+## 7. Implement Project Navigation Component [pending]
+### Dependencies: 7.2
+### Description: Create a navigation component that allows users to browse to other projects from the current project page.
+### Details:
+1. Create a navigation component that displays links to previous/next projects.
+2. Implement a collection in Eleventy to gather all projects for navigation.
+3. Add visual indicators for navigation direction.
+4. Style the navigation with Tailwind CSS for both mobile and desktop layouts.
+5. Ensure proper keyboard navigation and focus states.
+
+## 8. Add Language-Specific Content Display [pending]
+### Dependencies: 7.1, 7.2, 7.4, 7.5
+### Description: Implement functionality to display project content in the appropriate language based on the user's language setting.
+### Details:
+1. Extend the existing i18n system to support language-specific project content.
+2. Implement logic to select the appropriate language version of project content.
+3. Create fallback mechanisms for missing translations.
+4. Add language switcher functionality on project pages.
+5. Ensure all UI elements and content areas respond to language changes.
+6. Document the approach for content authors.
+

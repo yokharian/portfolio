@@ -42,6 +42,28 @@ The static site will be generated into the `_site/` directory. Assets are copied
 - Blog posts are sourced from `blog_posts/**/*.md`.
 - You can add images to `public/images/` and reference them as `/images/...`.
 
+## Featured Projects (homepage)
+
+Mark any project as featured by adding `featured: true` to its frontmatter. Optional ordering can be set with a numeric `order` (lower numbers appear first). Example:
+
+```md
+---
+title: Sample Project
+description: A simple example.
+lang: en
+featured: true
+order: 10
+heroImage: /assets/images/sample.jpg
+alt: Screenshot of Sample Project
+tags: [JavaScript, Eleventy]
+---
+```
+
+Image guidelines for best results:
+- Use a landscape image approximately 3:2 (e.g., 900×600).
+- Place images under `public/assets/images/` and reference with an absolute path (e.g., `/assets/images/your-image.jpg`).
+- The build generates responsive formats (WebP/JPEG) at multiple widths and lazy-loads them automatically.
+
 ## Next steps
 
 - Git hooks (Husky) are configured with a pre-commit that runs `npm run build`. Run `npm install` once to activate hooks.

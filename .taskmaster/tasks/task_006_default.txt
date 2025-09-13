@@ -18,3 +18,53 @@
 
 # Test Strategy:
 Verify that certification badges display correctly at different screen sizes. Test hover effects to ensure additional information is accessible. Check image loading performance. Verify that verification links work correctly if implemented. Test with both language settings to ensure proper content switching.
+
+# Subtasks:
+## 1. Create Certifications Data Model [pending]
+### Dependencies: None
+### Description: Design and implement the data structure for storing certification information in a JSON file.
+### Details:
+Create src/data/certifications.json with a schema that includes id, name, issuer, issueDate, credentialUrl, badgeImage, alt, and optional expiresDate fields. Include at least one real AWS certification example. Ensure the structure supports both English and Spanish localization by referencing keys in i18n.json for text content.
+
+## 2. Add Certification Badge Assets [pending]
+### Dependencies: None
+### Description: Obtain and optimize AWS certification badge images for web display.
+### Details:
+Source official AWS certification badge images. Create public/assets/certs/ directory. Optimize badges as SVG (preferred) or PNG with appropriate dimensions. Ensure each image has explicit width and height attributes. Name files consistently (e.g., aws-solutions-architect.svg).
+
+## 3. Implement Certifications Section HTML Structure [pending]
+### Dependencies: 6.1, 6.2
+### Description: Create the base HTML structure for the certifications section on the homepage.
+### Details:
+Add a section with id="certifications" to the homepage template. Include a localized H2 heading. Create a responsive grid container for certification cards. Implement the card template in Nunjucks that displays the badge image, certification name, issuer, issue date, and credential verification link.
+
+## 4. Style Certifications Section with Tailwind [pending]
+### Dependencies: 6.3
+### Description: Apply Tailwind CSS styling to the certifications section for responsive layout and visual appeal.
+### Details:
+Implement a responsive grid layout (2 columns on small screens, 3 on medium, 4 on large). Add appropriate padding, margins, and gaps. Style certification cards with consistent spacing. Create hover/focus effects that are reduced-motion friendly. Ensure keyboard focus is visibly indicated.
+
+## 5. Implement i18n for Certification Content [pending]
+### Dependencies: 6.1, 6.3
+### Description: Add localization support for all certification text content.
+### Details:
+Update src/data/i18n.json with keys for certifications.heading, certifications.issuer, certifications.viewCredential, certifications.issuedOn, etc. Provide both English and Spanish translations. Connect these keys to the Nunjucks templates. Format dates according to locale preferences.
+
+## 6. Add JSON-LD Structured Data [pending]
+### Dependencies: 6.1, 6.3
+### Description: Implement structured data for certifications to improve SEO.
+### Details:
+Create a script[type="application/ld+json"] element in the certifications section or page head. Generate JSON-LD for each certification using the EducationalOccupationalCredential schema. Include name, issuer (as Organization), datePublished, and url properties. Dynamically generate this from the certifications data.
+
+## 7. Implement Accessibility Enhancements [pending]
+### Dependencies: 6.3, 6.4
+### Description: Ensure the certifications section meets accessibility standards.
+### Details:
+Add appropriate aria-labels to links where text is not fully descriptive (e.g., aria-label="View credential: {name}"). Ensure all images have descriptive alt text. Verify proper keyboard navigation through the certification cards. Add appropriate external link indicators with target="_blank" rel="noopener noreferrer" for credential URLs.
+
+## 8. Add Documentation and Tests [pending]
+### Dependencies: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7
+### Description: Create documentation for the certifications feature and implement tests.
+### Details:
+Update README.md or create a specific doc explaining how to add new certifications, required fields, asset placement, and i18n considerations. Extend or create build-time tests in scripts/test-build.js to verify: section#certifications exists, at least one card renders, external links include rel attributes, images have width/height attributes, and JSON-LD is present.
+

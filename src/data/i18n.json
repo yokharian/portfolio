@@ -4,6 +4,12 @@
       "title": "Python & AWS Solutions Architect",
       "subtitle": "I design, build, and scale data-intensive systems in the cloud.",
       "cta": "View Projects"
+    },
+    "home": {
+      "featured": {
+        "heading": "Featured Work",
+        "viewAll": "View all projects"
+      }
     }
   },
   "es": {
@@ -11,6 +17,12 @@
       "title": "Arquitecta de Soluciones Python y AWS",
       "subtitle": "Diseño, construyo y escalo sistemas intensivos en datos en la nube.",
       "cta": "Ver Proyectos"
+    },
+    "home": {
+      "featured": {
+        "heading": "Trabajos Destacados",
+        "viewAll": "Ver todos los proyectos"
+      }
     }
   }
 }

@@ -9,7 +9,7 @@
         "testStrategy": "Verify that the repository is properly initialized with all configuration files. Test the build process to ensure it correctly processes Markdown files and generates static HTML. Confirm that Tailwind CSS is properly configured by testing a simple component with Tailwind classes.",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -344,7 +344,7 @@
           4,
           "1"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -352,7 +352,7 @@
             "description": "Set up an Eleventy collection that filters projects with 'featured: true' in their frontmatter to be displayed in the Featured Work section.",
             "dependencies": [],
             "details": "Create a custom Eleventy collection named 'featured_projects' in the .eleventy.js file that filters projects where data.featured === true. Include language filtering based on the current page locale. Sort the collection by date (newest first) or by a custom 'order' field if present in the frontmatter. Limit to a maximum of 6 featured projects.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify the collection returns only projects with featured: true. Test with multiple languages to ensure proper filtering. Check sorting order is correct."
           },
           {
@@ -363,7 +363,7 @@
               "5.1"
             ],
             "details": "Create a partial/include for project cards with the following elements: hero image (with width/height attributes, loading='lazy', decoding='async'), project title as a link to the project page, short description/excerpt (limited to ~120 characters), up to 5 technology tags displayed as chips, and proper alt text from 'alt' or 'title' field. Add hover effects with smooth transitions that slightly elevate the card and change background color. Ensure the entire card is clickable but maintains proper accessibility.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test keyboard navigation and focus states. Verify hover effects work across browsers. Check that truncation of long descriptions works properly. Ensure image aspect ratios are maintained."
           },
           {
@@ -374,7 +374,7 @@
               "5.2"
             ],
             "details": "Using Tailwind CSS, implement a responsive grid container that displays: 1 column on mobile (xs), 2 columns on tablet (md), and 3 columns on desktop (lg). Add appropriate gap spacing between cards. Ensure the grid maintains proper alignment and spacing at all breakpoints. Use CSS Grid or Flexbox through Tailwind utilities. Add proper container padding that adjusts at different breakpoints.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test at various viewport sizes to verify correct number of columns. Check that spacing and alignment remain consistent across breakpoints. Verify no horizontal overflow occurs on mobile devices."
           },
           {
@@ -385,7 +385,7 @@
               "5.3"
             ],
             "details": "Create the section with an id='projects' for direct linking. Add a visually prominent heading ('Featured Work' or equivalent in the current language). Include an optional short introductory paragraph. Add a 'View all projects' link at the bottom of the section that points to a projects listing page. Ensure proper semantic HTML structure with appropriate heading levels. Add section padding and background styling consistent with the site design.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify the anchor ID works for direct navigation. Check that heading hierarchy is correct. Test the 'View all projects' link functionality. Ensure responsive behavior of the section container."
           },
           {
@@ -396,7 +396,7 @@
               "5.2"
             ],
             "details": "Implement responsive images with srcset and sizes attributes for project thumbnails. Set up a build process to generate optimized image versions at different widths (e.g., 300w, 600w, 900w). Add loading='lazy' attribute to all images. Implement a lightweight placeholder or blur-up technique for images. Add decoding='async' attribute. Ensure images have explicit width and height attributes to prevent layout shifts.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test image loading performance with throttled network conditions. Verify lazy loading works correctly for below-the-fold images. Check that no layout shifts occur as images load. Validate image optimization with Lighthouse."
           },
           {
@@ -407,7 +407,7 @@
               "5.4"
             ],
             "details": "Add appropriate ARIA attributes where needed (e.g., aria-label for links that need additional context). Ensure sufficient color contrast for all text elements including technology tags. Implement visible focus states for interactive elements. Make cards fully keyboard navigable. Add screen reader-friendly descriptions where needed. Ensure hover effects don't rely solely on color changes. Test with keyboard navigation to ensure all elements are accessible.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test with keyboard navigation to verify all interactive elements are accessible. Use accessibility tools (like axe or Lighthouse) to check for issues. Verify color contrast meets WCAG AA standards. Test with a screen reader to ensure proper information hierarchy."
           },
           {
@@ -421,7 +421,7 @@
               "5.6"
             ],
             "details": "Add documentation in the project README explaining how to mark projects as featured using 'featured: true' in frontmatter. Document image requirements for optimal display in project cards. Create build-time tests that verify the section renders and contains at least one featured card. Add tests to verify external links have proper attributes (target, rel). Create snapshot tests for the section's HTML structure. Document the expected behavior of the responsive layout.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run automated tests during the build process to verify section rendering. Check that documentation is clear and comprehensive. Verify that example frontmatter is provided for content authors. Test that build fails appropriately if critical elements are missing."
           }
         ]
@@ -772,7 +772,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-13T00:29:56.845Z",
+      "updated": "2025-09-13T01:27:47.101Z",
       "description": "Tasks for default context"
     }
   }

@@ -4,10 +4,12 @@ description: "A simple example project to test markdown processing."
 employer: "Acme Corp"
 startDate: "2022-01-15"
 endDate: "2022-06-30"
+featured: true
+order: 1
 tags:
   - JavaScript
   - Eleventy
-heroImage: "/assets/images/sample.jpg"
+heroImage: "/images/183728692.jpg"
 language: "en"
 ---
 
