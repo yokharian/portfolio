@@ -1,7 +1,7 @@
 # Task ID: 12
 # Title: Implement AWS CloudWatch RUM Integration
 # Status: pending
-# Dependencies: 9
+# Dependencies: None
 # Priority: low
 # Description: Integrate AWS CloudWatch Real User Monitoring (RUM) to track performance metrics and user behavior.
 # Details:
@@ -22,3 +22,54 @@
 
 # Test Strategy:
 Verify that the RUM client is correctly sending data to CloudWatch. Test custom event tracking by performing the tracked actions. Check that dashboards display the expected metrics. Verify that no personally identifiable information is being collected without consent. Test with various browsers to ensure compatibility.
+
+# Subtasks:
+## 1. Install and Configure the RUM Web Client in Base Layout [pending]
+### Dependencies: None
+### Description: Integrate the core AWS RUM script into the main layout of the application. This involves setting up environment variables for the configuration and injecting the script into the <head> of the `BaseLayout.astro` file.
+### Details:
+1. Create a `.env` file in the project root if it doesn't exist. Add `PUBLIC_RUM_APPLICATION_ID` and `PUBLIC_RUM_GUEST_ROLE_ARN` and `PUBLIC_RUM_IDENTITY_POOL_ID` and `PUBLIC_RUM_REGION`.
+2. Edit `src/layouts/BaseLayout.astro`.
+3. In the `<head>` section, add a `<script is:inline>` tag.
+4. Inside the script, paste the AWS RUM web client initialization code.
+5. Replace the hardcoded configuration values in the script with the environment variables using `import.meta.env.PUBLIC_...`.
+6. Ensure the script is one of the first elements in the `<head>` to accurately capture page load performance.
+
+## 2. Create a Centralized RUM Helper Module [pending]
+### Dependencies: 12.1
+### Description: To promote clean code and reusability, create a TypeScript module that encapsulates the logic for sending custom events to AWS RUM. This module will be used by other components to track specific user interactions.
+### Details:
+1. Create a new file at `src/scripts/rum.ts`.
+2. In this file, define and export a function, e.g., `recordRumEvent(type: string, details: object)`. 
+3. This function should check if the `awsRum` object is available on the `window` object before attempting to call `awsRum.recordEvent(type, details)`.
+4. This prevents errors if the RUM script fails to load or is blocked by an ad-blocker.
+
+## 3. Implement Event Tracking for CTA Clicks and Language Switching [pending]
+### Dependencies: 12.2
+### Description: Track key user interactions by attaching custom RUM events to Call-to-Action (CTA) buttons and the language switcher, as specified in the task requirements.
+### Details:
+1. Import the `recordRumEvent` function into relevant components.
+2. In `src/components/Header.astro`, add an `onclick` attribute to the 'Agendar llamada' CTA button. The handler should call `recordRumEvent('cta_click', { button: 'schedule_call' })`.
+3. In `src/components/LanguageSwitcher.astro`, add an `onclick` attribute to the language switch link. The handler should call `recordRumEvent('language_switch', { to_lang: targetLangCode })`.
+4. Add `data-rum-id` attributes to these elements for easier identification in RUM session traces.
+
+## 4. Implement Event Tracking for Project Page Views [pending]
+### Dependencies: 12.2
+### Description: To measure time spent on project pages, dispatch a custom event whenever a user navigates to a specific project page. This will allow for more granular analysis of user engagement with portfolio items.
+### Details:
+1. Edit the project detail page template, likely located at `src/pages/proyectos/[slug].astro`.
+2. Add a `<script is:inline>` tag to the page.
+3. Inside the script, import `recordRumEvent` from `src/scripts/rum.ts`.
+4. Call the function to record a page view event, e.g., `recordRumEvent('project_page_view', { project_slug: Astro.params.slug })`.
+5. This will fire an event each time a project page is loaded, which can be used in CloudWatch to analyze user flow and time on page.
+
+## 5. Implement Privacy Consent for RUM Initialization [pending]
+### Dependencies: 12.1
+### Description: To ensure privacy-conscious data collection, the RUM script should only be initialized after the user has given their consent. This involves creating a simple consent UI and conditionally loading the RUM script.
+### Details:
+1. Create a new Astro component, e.g., `src/components/PrivacyBanner.astro`.
+2. The banner should have an 'Accept' button that, when clicked, sets a flag in `localStorage` (e.g., `localStorage.setItem('consent_given', 'true')`) and hides the banner.
+3. The banner should only be displayed if the `consent_given` flag is not set.
+4. In `src/layouts/BaseLayout.astro`, wrap the RUM initialization script from subtask 12.1 in a client-side script that checks for `localStorage.getItem('consent_given') === 'true'` before executing the RUM initialization code.
+5. Add the `<PrivacyBanner />` component to `BaseLayout.astro`.
+
