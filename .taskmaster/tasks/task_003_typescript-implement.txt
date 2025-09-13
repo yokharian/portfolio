@@ -1,43 +1,258 @@
 # Task ID: 3
-# Title: Migrate Utility Functions to TypeScript
-# Status: pending
+# Title: Complete TypeScript Migration with Code Consolidation and Transpilation Validation
+# Status: done
 # Dependencies: 2
 # Priority: high
-# Description: Convert all utility files in src/utils/ to TypeScript with proper type definitions for i18n, dates, format, and content processing.
+# Description: Convert all utility files in src/utils/ to TypeScript with comprehensive type definitions, consolidate JavaScript implementations into TypeScript files, and validate transpilation output for production compatibility. This includes migrating i18n, dates, format, and content processing utilities with advanced error handling, performance optimization, and cross-browser compatibility validation.
 # Details:
-For each utility file in src/utils/:
+For each utility file in src/utils/, perform a complete migration with code consolidation:
 
-1. Rename the file from .js to .ts
-2. Add appropriate type annotations using the types defined in task #2
-3. Implement proper error handling with type guards
-4. Update import/export statements to use ES6 module syntax
+1. **Code Consolidation Phase:**
+   - Move all JavaScript implementation code from .js files directly into corresponding .ts files
+   - Remove wrapper pattern and integrate original logic with TypeScript annotations
+   - Ensure no runtime dependencies on original .js files remain
 
-Example for date utility conversion:
+2. **Advanced TypeScript Implementation:**
+   - Add comprehensive type annotations using union types, generics, and conditional types
+   - Implement strict null checks and undefined handling
+   - Create custom type guards with proper narrowing
+   - Add JSDoc comments with @param and @return type documentation
+
+3. **Enhanced Error Handling:**
+   - Implement custom error classes with proper inheritance
+   - Add input validation with detailed error messages
+   - Create fallback mechanisms for edge cases
+   - Add logging integration for debugging purposes
+
+4. **Performance and Compatibility:**
+   - Optimize for tree-shaking with proper ES6 module exports
+   - Add polyfill detection and conditional loading
+   - Implement lazy loading for heavy utility functions
+   - Add memory leak prevention for event listeners and timers
+
+5. **Transpilation Validation:**
+   - Configure TypeScript compiler with strict mode enabled
+   - Validate output JavaScript matches expected ES5/ES2015 targets
+   - Test transpiled code in multiple browser environments
+   - Verify source map generation for debugging
+   - Check bundle size impact and optimization opportunities
+
+Example enhanced implementation:
 ```typescript
-// src/utils/dates.ts
-import { DateFormatOptions } from '../../types/utils';
+// src/utils/dates.ts (consolidated from dates.js)
+import { DateFormatOptions, DateValidationResult, CustomDateError } from '../../types/utils';
+
+export class DateUtilityError extends Error {
+  constructor(message: string, public readonly input: unknown) {
+    super(message);
+    this.name = 'DateUtilityError';
+  }
+}
+
+export function formatDate<T extends Date | string | number>(
+  date: T, 
+  options: DateFormatOptions = {}
+): string {
+  const { format = 'yyyy-MM-dd', locale = 'en-US', timezone, fallback } = options;
+  
+  try {
+    const dateObj = normalizeDate(date);
+    if (!isValidDate(dateObj)) {
+      if (fallback) return fallback;
+      throw new DateUtilityError(`Invalid date provided: ${date}`, date);
+    }
+    
+    // Enhanced formatting with timezone support
+    const formatter = new Intl.DateTimeFormat(locale, {
+      timeZone: timezone,
+      ...parseFormatString(format)
+    });
+    
+    return formatter.format(dateObj);
+  } catch (error) {
+    if (error instanceof DateUtilityError) throw error;
+    throw new DateUtilityError(`Date formatting failed: ${error.message}`, date);
+  }
+}
+
+export function validateDateRange(
+  startDate: Date | string, 
+  endDate: Date | string,
+  options: { allowSameDay?: boolean; maxRange?: number } = {}
+): DateValidationResult {
+  // Comprehensive validation logic with detailed results
+}
+
+// Advanced type guards with proper narrowing
+export function isValidDate(date: unknown): date is Date {
+  return date instanceof Date && !isNaN(date.getTime()) && isFinite(date.getTime());
+}
+
+function normalizeDate(input: Date | string | number): Date {
+  if (input instanceof Date) return input;
+  if (typeof input === 'string' || typeof input === 'number') {
+    return new Date(input);
+  }
+  throw new DateUtilityError('Unsupported date input type', input);
+}
+```
+
+6. **Build Configuration:**
+   - Update tsconfig.json with strict compilation settings
+   - Configure webpack/rollup for proper TypeScript handling
+   - Set up pre-commit hooks for type checking
+   - Add TypeScript declaration file generation
+
+7. **Migration Verification:**
+   - Compare runtime behavior between original JS and new TS implementations
+   - Validate all existing API contracts remain unchanged
+   - Test with real-world data sets and edge cases
+   - Performance benchmark against original implementations
+
+# Test Strategy:
+Implement comprehensive testing strategy with multiple validation layers:
+
+1. **Unit Testing with Type Validation:**
+   - Create Jest tests with TypeScript support and @types/jest
+   - Test all function signatures with correct and incorrect types
+   - Validate error handling with custom error classes
+   - Test edge cases including null, undefined, and malformed inputs
+   - Use property-based testing with fast-check for random input validation
+
+2. **Integration Testing:**
+   - Test utility functions working together in realistic scenarios
+   - Validate i18n utilities with actual translation files
+   - Test date utilities with different locales and timezones
+   - Verify format utilities with various data structures
+
+3. **Transpilation and Build Testing:**
+   - Automated testing of TypeScript compilation process
+   - Validate generated JavaScript output in multiple environments (Node.js, browsers)
+   - Test source map accuracy for debugging
+   - Bundle size regression testing
+   - Cross-browser compatibility testing (Chrome, Firefox, Safari, Edge)
+
+4. **Performance and Memory Testing:**
+   - Benchmark performance against original JavaScript implementations
+   - Memory leak detection for long-running processes
+   - Load testing with large datasets
+   - Profiling of transpiled code execution
+
+5. **Type Safety Validation:**
+   - Use tsc --noEmit for compile-time type checking
+   - Test with strict TypeScript compiler settings
+   - Validate IntelliSense and IDE support
+   - Test type inference and auto-completion
+
+6. **Regression Testing:**
+   - Maintain existing test suite compatibility
+   - Compare outputs between old JS and new TS implementations
+   - Test with production data samples
+   - Validate backward compatibility for existing consumers
+
+# Subtasks:
+## 1. Create TypeScript Type Definitions for Utility Functions [done]
+### Dependencies: None
+### Description: Create TypeScript interface and type definitions for all utility functions before modifying the actual implementation files. This includes types for i18n, dates, formatting, and content processing utilities.
+### Details:
+Create a new directory structure in src/types/ with separate files for each utility category:
+
+1. src/types/utils/dates.ts:
+```typescript
+export interface DateFormatOptions {
+  format?: string;
+  locale?: string;
+  timezone?: string;
+}
+```
+
+2. src/types/utils/i18n.ts:
+```typescript
+export interface TranslationDictionary {
+  [key: string]: string | TranslationDictionary;
+}
+
+export interface I18nConfig {
+  defaultLanguage: string;
+  supportedLanguages: string[];
+  translations: {
+    [language: string]: TranslationDictionary;
+  };
+}
+```
+
+3. src/types/utils/format.ts:
+```typescript
+export interface FormatOptions {
+  truncate?: number;
+  capitalize?: boolean;
+  lowercase?: boolean;
+  uppercase?: boolean;
+}
+```
+
+4. src/types/utils/content.ts:
+```typescript
+export interface ContentProcessingOptions {
+  stripHtml?: boolean;
+  excerpt?: number;
+  markdown?: boolean;
+}
+
+export interface ContentItem {
+  content: string;
+  data?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+```
+
+## 2. Create TypeScript Wrapper Functions for Date Utilities [done]
+### Dependencies: 3.1
+### Description: Create TypeScript wrapper functions for date utilities that use the type definitions while maintaining the original JavaScript files. This allows for incremental migration without breaking existing functionality.
+### Details:
+1. Create a new file src/utils/dates.ts that imports the original JavaScript functions and wraps them with typed versions:
+
+```typescript
+import { DateFormatOptions } from '../../types/utils/dates';
+// Import the original functions
+import * as originalDates from './dates.js';
 
 export function formatDate(date: Date | string, options: DateFormatOptions = {}): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
-  const { format = 'yyyy-MM-dd', locale = 'en-US' } = options;
-  
-  // Implementation details...
-  
-  return formattedDate;
+  return originalDates.formatDate(date, options);
 }
 
 export function isValidDate(date: unknown): date is Date {
   return date instanceof Date && !isNaN(date.getTime());
 }
+
+export function parseDate(dateString: string): Date {
+  const result = originalDates.parseDate(dateString);
+  if (!isValidDate(result)) {
+    throw new Error(`Invalid date string: ${dateString}`);
+  }
+  return result;
+}
+
+export function dateDifference(date1: Date | string, date2: Date | string): number {
+  const d1 = typeof date1 === 'string' ? parseDate(date1) : date1;
+  const d2 = typeof date2 === 'string' ? parseDate(date2) : date2;
+  return originalDates.dateDifference(d1, d2);
+}
 ```
 
-Example for i18n utility conversion:
+2. Update the build process to compile TypeScript files alongside JavaScript files without replacing them yet.
+
+## 3. Migrate I18n and Formatting Utility Functions to TypeScript [done]
+### Dependencies: 3.1, 3.2
+### Description: Convert the i18n and formatting utility functions to TypeScript using the previously defined type definitions, implementing proper error handling and type guards.
+### Details:
+1. Create src/utils/i18n.ts:
 ```typescript
-// src/utils/i18n.ts
-import { TranslationDictionary, I18nConfig } from '../../types/i18n';
+import { TranslationDictionary, I18nConfig } from '../../types/utils/i18n';
 
 export function translate(key: string, language: string, translations: I18nConfig['translations']): string {
   if (!translations[language]) {
+    console.warn(`Language "${language}" not found in translations`);
     return key; // Fallback to key if language not found
   }
   
@@ -50,17 +265,187 @@ export function translate(key: string, language: string, translations: I18nConfi
       return result;
     }
     
-    result = result[part] as string | TranslationDictionary;
+    result = (result as TranslationDictionary)[part] as string | TranslationDictionary;
     if (result === undefined) {
+      console.warn(`Translation key "${key}" not found for language "${language}"`);
       return key; // Key not found
     }
   }
   
   return typeof result === 'string' ? result : key;
 }
+
+export function getLanguageFromUrl(url: string, supportedLanguages: string[]): string {
+  const pathSegments = url.split('/').filter(Boolean);
+  const potentialLang = pathSegments[0];
+  
+  return supportedLanguages.includes(potentialLang) ? potentialLang : 'en';
+}
 ```
 
-Repeat this process for all 9 utility files, ensuring type safety throughout.
+2. Create src/utils/format.ts:
+```typescript
+import { FormatOptions } from '../../types/utils/format';
 
-# Test Strategy:
-Create unit tests for each utility function using a testing framework like Jest. Test with various input types to ensure type safety is working correctly. Verify that existing functionality is preserved by comparing outputs with the original JavaScript implementations. Run the full test suite to ensure all utilities work together correctly.
+export function formatText(text: string, options: FormatOptions = {}): string {
+  let result = text;
+  
+  if (options.truncate && result.length > options.truncate) {
+    result = result.substring(0, options.truncate) + '...';
+  }
+  
+  if (options.capitalize) {
+    result = result.charAt(0).toUpperCase() + result.slice(1);
+  }
+  
+  if (options.lowercase) {
+    result = result.toLowerCase();
+  }
+  
+  if (options.uppercase) {
+    result = result.toUpperCase();
+  }
+  
+  return result;
+}
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove non-word chars
+    .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
+    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+}
+```
+
+## 4. Migrate Content Processing Utility Functions to TypeScript [done]
+### Dependencies: 3.1, 3.3
+### Description: Convert content processing utility functions to TypeScript with proper type definitions, error handling, and type guards for processing markdown, HTML, and other content types.
+### Details:
+1. Create src/utils/content.ts:
+```typescript
+import { ContentProcessingOptions, ContentItem } from '../../types/utils/content';
+
+export function processContent(content: string, options: ContentProcessingOptions = {}): string {
+  let result = content;
+  
+  if (options.stripHtml) {
+    result = result.replace(/<[^>]*>/g, '');
+  }
+  
+  if (options.excerpt && result.length > options.excerpt) {
+    result = result.substring(0, options.excerpt) + '...';
+  }
+  
+  return result;
+}
+
+export function extractExcerpt(content: string, length: number = 150): string {
+  // First strip HTML
+  const strippedContent = content.replace(/<[^>]*>/g, '');
+  
+  // Then create excerpt
+  if (strippedContent.length <= length) {
+    return strippedContent;
+  }
+  
+  return strippedContent.substring(0, length) + '...';
+}
+
+export function sortContentItems(items: ContentItem[], sortBy: string = 'date', order: 'asc' | 'desc' = 'desc'): ContentItem[] {
+  return [...items].sort((a, b) => {
+    const aValue = a.data?.[sortBy];
+    const bValue = b.data?.[sortBy];
+    
+    if (aValue === undefined && bValue === undefined) return 0;
+    if (aValue === undefined) return order === 'asc' ? 1 : -1;
+    if (bValue === undefined) return order === 'asc' ? -1 : 1;
+    
+    if (aValue instanceof Date && bValue instanceof Date) {
+      return order === 'asc' 
+        ? aValue.getTime() - bValue.getTime() 
+        : bValue.getTime() - aValue.getTime();
+    }
+    
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return order === 'asc' 
+        ? aValue.localeCompare(bValue) 
+        : bValue.localeCompare(aValue);
+    }
+    
+    if (typeof aValue === 'number' && typeof bValue === 'number') {
+      return order === 'asc' ? aValue - bValue : bValue - aValue;
+    }
+    
+    return 0;
+  });
+}
+```
+
+## 5. Advanced TypeScript Migration with Custom Error Classes and Type Guards [done]
+### Dependencies: 3.3, 3.4
+### Description: Perform comprehensive TypeScript migration of all utility files with advanced type annotations, custom error classes, and sophisticated type guards. This includes implementing union types, generics, conditional types, and strict null checking across all utilities.
+### Details:
+Migrate each utility file (i18n, dates, format, content processing) to TypeScript with: 1) Custom error classes extending base Error with proper inheritance and context data, 2) Advanced type guards using 'is' predicates for runtime type narrowing, 3) Generic functions with constraints and conditional types, 4) Comprehensive JSDoc documentation with @param, @return, and @throws annotations, 5) Strict null checks and undefined handling with proper optional chaining, 6) Union types for flexible input handling, 7) Interface definitions for complex data structures, 8) Type assertion functions for runtime validation.
+
+## 6. Code Consolidation [done]
+### Dependencies: 3.5
+### Description: Consolidate JavaScript implementations directly into TypeScript files. Remove all wrapper patterns and ensure zero runtime dependencies on original JavaScript files.
+### Details:
+For each utility: 1) Move all JavaScript code directly into .ts files, eliminating wrapper patterns, 2) Implement ES6 module exports optimized for tree-shaking with proper named exports, 3) Add lazy loading mechanisms for heavy utility functions using dynamic imports, 4) Implement memory leak prevention for event listeners, timers, and DOM references, 5) Add polyfill detection and conditional loading for browser compatibility, 6) Optimize function implementations for V8 engine performance, 7) Implement caching mechanisms for expensive operations, 8) Add proper cleanup methods for stateful utilities.
+
+## 7. Enhanced Error Handling with Logging Integration and Fallback Mechanisms [done]
+### Dependencies: 3.5
+### Description: Implement comprehensive error handling system with custom error hierarchies, detailed error messages, fallback mechanisms for edge cases, and integrated logging for debugging and monitoring purposes.
+### Details:
+Create robust error handling: 1) Design custom error class hierarchy (DateUtilityError, I18nError, FormatError, ContentProcessingError) with proper inheritance, 2) Implement input validation with detailed error messages including expected vs actual types, 3) Add fallback mechanisms for graceful degradation (default values, alternative implementations), 4) Integrate logging system with configurable log levels (debug, info, warn, error), 5) Add error context preservation with stack traces and input data, 6) Implement retry mechanisms for transient failures, 7) Add error aggregation for batch operations, 8) Create error reporting utilities for production monitoring.
+<info added on 2025-09-13T19:11:44.554Z>
+Based on your progress, the next steps involve applying the newly created error classes and logger utility to the core utility functions. The focus should be on robust input validation, graceful fallbacks, and contextual logging.
+
+**Implementation Plan:**
+
+1.  **Integrate into `src/utils/dates.ts`:**
+    *   In functions like `formatDate` and `getReadableDate`, add input validation at the beginning. Check if the `date` parameter is a valid `Date` object or a parseable date string.
+    *   If validation fails, throw a `new DateUtilityError()` from `src/utils/errors.ts` with a message detailing the expected vs. actual input type.
+    *   Wrap the core `Intl.DateTimeFormat` logic in a `try...catch` block. On failure (e.g., invalid locale), catch the original error, log it with context using the `logger` from `src/utils/logger.ts`, and re-throw a `DateUtilityError`.
+    *   **Example Pattern:**
+        ```typescript
+        import { logger } from './logger';
+        import { DateUtilityError } from './errors';
+
+        export function formatDate(date: unknown, locale: string = 'en-US'): string {
+          const dateObj = new Date(date as any);
+          if (isNaN(dateObj.getTime())) {
+            logger.warn({ input: date }, 'Invalid date input received.');
+            throw new DateUtilityError(`Invalid date value: ${date}`);
+          }
+          try {
+            // ... formatting logic ...
+          } catch (error) {
+            logger.error({ error, date, locale }, 'Failed to format date.');
+            // Fallback to a simple string representation
+            return dateObj.toISOString();
+          }
+        }
+        ```
+
+2.  **Enhance `src/utils/i18n.ts`:**
+    *   In the main translation function, check if a translation key exists for the given locale.
+    *   If the key is missing, implement a fallback mechanism: log a warning with `logger.warn({ key, locale }, 'Missing translation key.')` and return the key itself or a default placeholder string (e.g., `[MISSING_TRANSLATION: ${key}]`). This prevents the UI from breaking.
+    *   If the entire locale file or data structure is invalid, catch the error, log it, and throw a `new I18nError('Failed to load or parse locale data.')`.
+
+3.  **Fortify `src/utils/format.ts` and `src/utils/content.ts`:**
+    *   For any functions that perform formatting or content processing, apply the same pattern: validate inputs, wrap logic in `try...catch`, and use the `logger` for detailed context.
+    *   Throw specific errors like `FormatError` or `ContentProcessingError` from `src/utils/errors.ts`.
+    *   When logging an error, include the input arguments and any relevant options to preserve context for debugging. For example: `logger.error({ input, options, originalError: error }, 'Content processing failed.');`
+</info added on 2025-09-13T19:11:44.554Z>
+
+## 8. Transpilation Validation with Multi-Environment Testing and Source Map Verification [done]
+### Dependencies: 3.6, 3.7
+### Description: Configure and validate TypeScript transpilation process with strict compiler settings, multi-target output validation, cross-browser testing, and comprehensive source map verification for production deployment.
+### Details:
+Comprehensive transpilation validation: 1) Configure tsconfig.json with strict mode, noImplicitAny, strictNullChecks, and noImplicitReturns, 2) Set up multi-target compilation (ES5, ES2015, ES2020) with appropriate polyfills, 3) Validate transpiled JavaScript output matches expected syntax and behavior, 4) Test in multiple runtime environments (Node.js versions, browser engines), 5) Verify source map generation and accuracy for debugging, 6) Implement bundle size monitoring with regression detection, 7) Add pre-commit hooks for type checking and compilation validation, 8) Configure webpack/rollup for optimal TypeScript handling with proper module resolution, 9) Test declaration file generation for library consumers.
+<info added on 2025-09-13T19:14:27.257Z>
+Update: Transpilation validation has been successfully completed. The `tsconfig.json` is now configured with advanced strict compilation settings, including `noImplicitAny`, `strictNullChecks`, and `exactOptionalPropertyTypes`. The build process has been verified to correctly generate JavaScript files, `.d.ts` declaration files, and accurate source maps. All identified type errors have been resolved, and the output has been validated across multiple environments.
+</info added on 2025-09-13T19:14:27.257Z>
+
