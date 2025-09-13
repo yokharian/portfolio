@@ -4,6 +4,16 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "allowJs": true,
@@ -14,11 +24,21 @@
     "noEmit": false,
     "outDir": ".cache/tsbuild",
     "rootDir": ".",
-    "types": ["node"],
-    "typeRoots": ["./types", "./node_modules/@types"],
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
     "incremental": true,
     "tsBuildInfoFile": ".cache/tsbuild/tsconfig.tsbuildinfo",
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "noEmitOnError": true
   },
   "include": [
     "src/**/*",
