@@ -21,6 +21,9 @@ module.exports = function (eleventyConfig) {
   // Copy everything in src/public/ to the site root
   eleventyConfig.addPassthroughCopy({ "src/public": "/" });
 
+  // Copy assets to the site root
+  eleventyConfig.addPassthroughCopy({ "src/assets": "/assets" });
+
   // Use our enhanced Markdown library for Eleventy rendering (Task 3.10 integration)
   eleventyConfig.setLibrary(
     "md",
@@ -103,10 +106,18 @@ module.exports = function (eleventyConfig) {
     async function (src, alt, className = "", loading = "lazy") {
       if (!src) return "";
 
-      // Resolve image path relative to src/public
-      const imagePath = src.startsWith("/")
-        ? `src/public${src}`
-        : `src/public/${src}`;
+      // Resolve image path relative to src/assets
+      let imagePath;
+      if (src.startsWith("/assets/")) {
+        // Handle paths that already include /assets/
+        imagePath = `src${src}`;
+      } else if (src.startsWith("/")) {
+        // Handle other absolute paths
+        imagePath = `src/assets${src}`;
+      } else {
+        // Handle relative paths
+        imagePath = `src/assets/${src}`;
+      }
 
       const metadata = await EleventyImage(imagePath, {
         widths: [300, 600, 900, 1200],

@@ -18,7 +18,7 @@ function runCommand(command: string, description: string): void {
 function checkBuildOutput(): void {
   console.log('\n📁 Checking build output...');
   
-  const buildDirs = ['_site', 'src/public/assets/css', 'src/public/assets/js'];
+  const buildDirs = ['_site', 'src/assets/css', 'src/assets/js'];
   
   buildDirs.forEach(dir => {
     if (fs.existsSync(dir)) {

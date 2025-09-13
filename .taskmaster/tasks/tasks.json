@@ -1062,7 +1062,7 @@
             "description": "Install the necessary Eleventy plugin to process TypeScript data files and add it to the Eleventy configuration.",
             "dependencies": [],
             "details": "Run `npm install --save-dev @11ty/eleventy-plugin-typescript`. Then, edit the existing `.eleventy.ts` configuration file. Import the plugin using `import eleventyPluginTypescript from '@11ty/eleventy-plugin-typescript';` and register it within the main configuration function by adding `eleventyConfig.addPlugin(eleventyPluginTypescript);`. This will enable Eleventy to recognize and compile `.ts` files in the `_data` directory.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "After installation and configuration, run the Eleventy build process. The build should complete without errors related to unrecognized `.ts` files, although it may fail later if the `site.ts` file is not yet created."
           },
           {
@@ -1104,7 +1104,7 @@
               "5.4"
             ],
             "details": "Modify the `include` array in `tsconfig.json` to add `'src/_data/**/*.ts'` and `'types/**/*.d.ts'`. To verify, open `.eleventy.ts` and import one of the newly created types, for example, `import { PostFrontmatter } from './types/frontmatter';`. Use this type within a collection definition, such as `eleventyConfig.addCollection('posts', collectionApi => { const posts = collectionApi.getFilteredByTag('post'); return posts.map(post => { const typedData = post.data as PostFrontmatter; /* ... */ }); });`. Running `tsc --noEmit` should pass without errors.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Run `npx tsc --noEmit` to confirm that the TypeScript compiler can find and correctly parse all new files and type definitions without emitting any errors. Run a full Eleventy build to ensure the changes haven't introduced any runtime issues."
           }
         ]
@@ -1299,7 +1299,7 @@
     ],
     "metadata": {
       "created": "2025-09-13T04:08:00.503Z",
-      "updated": "2025-09-13T22:38:10.573Z",
+      "updated": "2025-09-13T22:59:40.931Z",
       "description": "Tasks for typescript-implement context"
     }
   }

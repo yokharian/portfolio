@@ -8,7 +8,7 @@
             "DOM.Iterable",
             "ESNext"
         ],
-        "outDir": "src/public/assets/js",
+        "outDir": "src/assets/js",
         "rootDir": "src/client",
         "noEmit": false,
         "declaration": true,
