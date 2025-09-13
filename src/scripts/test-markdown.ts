@@ -1,17 +1,16 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as assert from 'assert';
+import { parseMarkdown } from '../utils/markdown.js';
 
-const { parseMarkdown } = require('../src/utils/markdown');
-
-function readFixture(relPath) {
+function readFixture(relPath: string): string {
   const p = path.join(__dirname, '..', relPath);
   return fs.readFileSync(p, 'utf8');
 }
 
-function testValid() {
+function testValid(): void {
   const src = readFixture('content/projects/sample-en.md');
   const { data, content, html } = parseMarkdown(src);
   assert.strictEqual(data.title, 'Sample Project', 'frontmatter.title should be parsed');
@@ -29,19 +28,19 @@ function testValid() {
   assert.ok(!rendered.html.includes('<script>'), 'raw HTML must be disabled by default');
 }
 
-function testInvalidFrontmatter() {
+function testInvalidFrontmatter(): void {
   const bad = readFixture('content/projects/invalid-frontmatter.md');
   let threw = false;
   try {
     parseMarkdown(bad);
-  } catch (e) {
+  } catch (e: any) {
     threw = true;
     assert.ok(/Failed to parse markdown/.test(e.message), 'should wrap and rethrow with context');
   }
   assert.ok(threw, 'parseMarkdown should throw on invalid frontmatter');
 }
 
-function testTablesAndImages() {
+function testTablesAndImages(): void {
   const mdTable = '| a | b |\n| --- | --- |\n| 1 | 2 |';
   const { html: tableHtml } = parseMarkdown(mdTable);
   assert.ok(/<table>/.test(tableHtml), 'tables should render to <table>');
@@ -52,7 +51,7 @@ function testTablesAndImages() {
   assert.ok(/<img[^>]*referrerpolicy="no-referrer"/.test(imgHtml), 'external images should set referrerpolicy');
 }
 
-function main() {
+function main(): void {
   testValid();
   testInvalidFrontmatter();
   testTablesAndImages();

@@ -1,6 +1,6 @@
-# Portfolio — 11ty + Tailwind
+# Portfolio — 11ty + Tailwind + TypeScript
 
-This repository contains a personal portfolio site built with [Eleventy (11ty)](https://www.11ty.dev/) and Tailwind CSS.
+This repository contains a personal portfolio site built with [Eleventy (11ty)](https://www.11ty.dev/), Tailwind CSS, and TypeScript for enhanced type safety and developer experience.
 
 ## Quick start
 
@@ -30,17 +30,57 @@ The static site will be generated into the `_site/` directory. Assets are copied
 
 ## Structure
 
-- `blog_posts/` — existing Markdown posts are auto-collected and listed on the home page.
+- `src/blog_posts/` — existing Markdown posts are auto-collected and listed on the home page.
 - `src/layouts/` — Nunjucks layouts (`base.njk`).
 - `src/pages/` — pages (e.g., `index.njk`).
 - `src/styles/` — Tailwind CSS entry (`tailwind.css`).
-- `public/` — static assets passthrough to site root (e.g., `/assets/css/styles.css`).
+- `src/public/` — static assets passthrough to site root (e.g., `/assets/css/styles.css`).
+- `src/utils/` — TypeScript utility functions for content processing, dates, i18n, etc.
+- `src/types/` — TypeScript type definitions and interfaces.
+- `src/client/` — Client-side TypeScript files for browser functionality.
+- `src/scripts/` — Build and development scripts in TypeScript.
+
+## TypeScript Features
+
+This project uses TypeScript for enhanced type safety and developer experience:
+
+- **Strict Type Checking**: All TypeScript files use strict mode with comprehensive type checking
+- **Type Definitions**: Comprehensive interfaces for all data structures and API contracts
+- **Client-Side TypeScript**: Browser JavaScript converted to TypeScript with DOM type definitions
+- **Build Integration**: TypeScript compilation integrated into development and production workflows
+- **Testing**: Jest integration with TypeScript for type-safe unit testing
+
+### Available Scripts
+
+#### Development
+
+- `npm run dev` - Start development server with hot reloading
+- `npm run dev:css` - Watch Tailwind CSS changes
+- `npm run dev:client` - Watch client-side TypeScript changes
+
+#### Building
+
+- `npm run build` - Full production build with type checking
+- `npm run build:css` - Build CSS with Tailwind
+- `npm run build:client` - Compile client-side TypeScript
+
+#### Testing
+
+- `npm test` - Run full test suite with type checking
+- `npm run test:unit` - Run Jest unit tests
+- `npm run test:types` - Run TypeScript type checking
+
+#### Migration Tools
+
+- `npm run migration:status` - Check migration progress
+- `npm run migration:verify` - Verify complete migration
+- `npm run optimize` - Check for type issues and bundle sizes
 
 ## Notes
 
-- Tailwind scans `**/*.{html,njk,md}` excluding `_site`, `node_modules`, `.taskmaster`, and `UI_UX_GUIDE`.
-- Blog posts are sourced from `blog_posts/**/*.md`.
-- You can add images to `public/images/` and reference them as `/images/...`.
+- Tailwind scans `**/*.{html,njk,md,ts,js}` excluding `_site`, `node_modules`, `.taskmaster`, and `UI_UX_GUIDE`.
+- Blog posts are sourced from `src/blog_posts/**/*.md`.
+- You can add images to `src/public/images/` and reference them as `/images/...`.
 
 ## Featured Projects (homepage)
 

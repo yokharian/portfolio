@@ -17,9 +17,9 @@ import {
   LanguageCode,
   DateUtilityError,
   DateValidationError
-} from '../types/dates';
-import { normalizeLang } from './language';
-import { logger } from './logger';
+} from '../types/dates.js';
+import { normalizeLang } from './language.js';
+import { logger } from './logger.js';
 
 // Type guards with proper narrowing
 export function isValidDate(date: unknown): date is Date {

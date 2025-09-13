@@ -1239,13 +1239,67 @@
           8,
           9
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Migration and Verification Helper Scripts",
+            "description": "Create the `scripts/` directory and add the `migration-status.ts`, `optimize.ts`, and `verify-build.ts` files. Update `package.json` to include the corresponding `migration:status`, `optimize`, and `migration:verify` npm scripts.",
+            "dependencies": [],
+            "details": "Use the provided code snippets from the task description to create the three TypeScript helper scripts. Ensure `ts-node`, `glob`, and their associated types (`@types/node`, `@types/glob`) are listed as dev dependencies in `package.json` to allow these scripts to run correctly via npm.",
+            "status": "done",
+            "testStrategy": "Run `npm run migration:status`, `npm run optimize`, and `npm run migration:verify` individually. Verify that each script executes without crashing, even if they report errors (like unconverted files or type issues), confirming the `package.json` setup is correct."
+          },
+          {
+            "id": 2,
+            "title": "Migrate Eleventy Config and Remaining JS Files to TypeScript",
+            "description": "Convert the main Eleventy configuration file `.eleventy.js` to `.eleventy.ts` and migrate any other remaining JavaScript files within the `src` directory. This includes ensuring the build process correctly handles any client-side TypeScript files.",
+            "dependencies": [],
+            "details": "Rename `.eleventy.js` to `.eleventy.ts` and update its syntax from CommonJS (`require`/`module.exports`) to ES Modules (`import`/`export default`). Add type annotations for the Eleventy config function. Use the `migration:status` script created in the previous subtask to find and convert any other lingering `.js` files in `src`.",
+            "status": "done",
+            "testStrategy": "Run `npm start` or `npm run build` to confirm that Eleventy can correctly read and execute the new `.eleventy.ts` configuration file. Run `npm run migration:status` and verify that it reports 0 files still needing conversion."
+          },
+          {
+            "id": 3,
+            "title": "Execute Optimization Script and Eliminate Implicit 'any' Types",
+            "description": "Run the `npm run optimize` script to identify all instances of implicit `any` types throughout the codebase. Refactor the code to provide explicit types for all identified cases, improving type safety and code clarity.",
+            "dependencies": [
+              "10.1",
+              "10.2"
+            ],
+            "details": "Execute `npx tsc --noImplicitAny` or the `npm run optimize` script. For each error reported, navigate to the file and add the appropriate type definition. This may involve creating or updating interfaces in the `types/` directory or using utility types. Repeat this process until the script completes successfully.",
+            "status": "done",
+            "testStrategy": "Run `npm run optimize` and ensure it exits with a success code and logs 'No implicit any types found!'. Also, check the bundle size output for any significant, unexpected increases that might indicate a problem with the build configuration."
+          },
+          {
+            "id": 4,
+            "title": "Create MIGRATION.md and Update Project Documentation",
+            "description": "Create a new `MIGRATION.md` file documenting the TypeScript migration process. Update the main `README.md` to reflect the new TypeScript-based development workflow, including setup, build, and testing commands.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "In `MIGRATION.md`, describe the steps taken, the rationale for the migration, and how to use the new helper scripts (`migration:status`, `optimize`, `migration:verify`). In `README.md`, update the 'Getting Started' and 'Available Scripts' sections to replace JavaScript-centric instructions with the new TypeScript equivalents (e.g., `npm run test:types`).",
+            "status": "done",
+            "testStrategy": "Review the `MIGRATION.md` and `README.md` files for clarity, accuracy, and completeness. Ask a team member to follow the setup instructions in the updated `README.md` on a fresh clone of the repository to ensure they are correct."
+          },
+          {
+            "id": 5,
+            "title": "Add JSDoc Comments and Perform Final Verification",
+            "description": "Enhance code documentation by adding JSDoc comments to key functions, interfaces, and types, particularly in `.eleventy.ts`, data files, and utilities. Finally, execute the `npm run migration:verify` script to perform a full clean, build, and test cycle to confirm the migration's success.",
+            "dependencies": [
+              "10.2",
+              "10.3"
+            ],
+            "details": "Go through critical files and add JSDoc blocks explaining the purpose, parameters (`@param`), and return values (`@returns`) of functions and properties. After documenting, run `npm run migration:verify`. This script will clean the `dist` directory, run the type checker, execute unit tests, and perform a production build, serving as a final quality gate.",
+            "status": "done",
+            "testStrategy": "Verify that `npm run migration:verify` completes without any errors. After a successful run, manually browse the generated site from the `dist` folder or by using a local server to ensure all pages render correctly and all functionality is intact. Check the browser's developer console for any runtime errors."
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-09-13T04:08:00.503Z",
-      "updated": "2025-09-13T21:11:25.816Z",
+      "updated": "2025-09-13T22:38:10.573Z",
       "description": "Tasks for typescript-implement context"
     }
   }

@@ -33,11 +33,14 @@ jobs:
     - name: Run unit tests
       run: npm run test:unit
       
-    - name: Run legacy tests
-      run: npm run test:legacy
+    - name: Build TypeScript
+      run: npm run build:ts
       
     - name: Build project
       run: npm run build
+      
+    - name: Run migration verification
+      run: npm run migration:verify
       
     - name: Upload coverage reports
       uses: codecov/codecov-action@v3

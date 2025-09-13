@@ -1,24 +1,23 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as assert from 'assert';
+import { parseMarkdown } from '../utils/markdown.js';
+import { validateFrontmatter, isISODateString } from '../utils/validateFrontmatter.js';
 
-const { parseMarkdown } = require('../src/utils/markdown');
-const { validateFrontmatter, isISODateString } = require('../src/utils/validateFrontmatter');
-
-function readFixture(relPath) {
+function readFixture(relPath: string): string {
   const p = path.join(__dirname, '..', relPath);
   return fs.readFileSync(p, 'utf8');
 }
 
-function testISODate() {
+function testISODate(): void {
   assert.ok(isISODateString('2024-12-01'));
   assert.ok(!isISODateString('2024/12/01'));
   assert.ok(!isISODateString('2024-13-01'));
 }
 
-function testValidationSuccess() {
+function testValidationSuccess(): void {
   const src = readFixture('content/projects/sample-en.md');
   const parsed = parseMarkdown(src);
   const fm = validateFrontmatter(parsed.data);
@@ -27,7 +26,7 @@ function testValidationSuccess() {
   assert.strictEqual(typeof fm.featured, 'boolean');
 }
 
-function testValidationFailures() {
+function testValidationFailures(): void {
   const bad = {
     description: 'missing title',
     startDate: '2022-01-15',
@@ -38,7 +37,7 @@ function testValidationFailures() {
   let threw = false;
   try {
     validateFrontmatter(bad);
-  } catch (e) {
+  } catch (e: any) {
     threw = true;
     assert.ok(e.message.includes('title'), 'error should mention missing title');
   }
@@ -55,7 +54,7 @@ function testValidationFailures() {
   assert.throws(() => validateFrontmatter(badLang), /language: invalid value/);
 }
 
-function main() {
+function main(): void {
   testISODate();
   testValidationSuccess();
   testValidationFailures();
