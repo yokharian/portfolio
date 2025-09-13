@@ -1,0 +1,8 @@
+{
+  "rumApplicationId": "your-rum-application-id",
+  "rumGuestRoleArn": "arn:aws:iam::your-account:role/your-rum-guest-role",
+  "rumIdentityPoolId": "your-identity-pool-id",
+  "rumRegion": "us-east-1",
+  "rumEndpoint": "https://dataplane.rum.us-east-1.amazonaws.com",
+  "rumApplicationVersion": "1.0.0"
+}

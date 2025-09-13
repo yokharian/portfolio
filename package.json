@@ -32,6 +32,7 @@
     "optimize": "ts-node src/scripts/optimize.ts"
   },
   "dependencies": {
+    "aws-rum-web": "^1.25.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.9.0",
     "markdown-it": "^14.1.0",

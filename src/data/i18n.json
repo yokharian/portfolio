@@ -26,6 +26,13 @@
     },
     "header": {
       "cta": "Book a 30 min call"
+    },
+    "privacy": {
+      "banner": {
+        "text": "We use analytics to improve your experience. Your data is processed anonymously.",
+        "accept": "Accept",
+        "decline": "Decline"
+      }
     }
   },
   "es": {
@@ -55,6 +62,13 @@
     },
     "header": {
       "cta": "Agendar llamada de 30 min"
+    },
+    "privacy": {
+      "banner": {
+        "text": "Utilizamos análisis para mejorar tu experiencia. Tus datos se procesan de forma anónima.",
+        "accept": "Aceptar",
+        "decline": "Rechazar"
+      }
     }
   }
 }

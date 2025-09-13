@@ -193,6 +193,12 @@ module.exports = function (eleventyConfig) {
     return items[0]?.data || [];
   });
 
+  // RUM Configuration
+  eleventyConfig.addGlobalData(
+    "rumConfig",
+    require("./src/data/rum-config.json")
+  );
+
   return {
     dir: {
       input: "src",

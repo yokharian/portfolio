@@ -1,6 +1,6 @@
 # Task ID: 12
 # Title: Implement AWS CloudWatch RUM Integration
-# Status: pending
+# Status: done
 # Dependencies: None
 # Priority: low
 # Description: Integrate AWS CloudWatch Real User Monitoring (RUM) to track performance metrics and user behavior.
@@ -24,7 +24,7 @@
 Verify that the RUM client is correctly sending data to CloudWatch. Test custom event tracking by performing the tracked actions. Check that dashboards display the expected metrics. Verify that no personally identifiable information is being collected without consent. Test with various browsers to ensure compatibility.
 
 # Subtasks:
-## 1. Install and Configure the RUM Web Client in Base Layout [pending]
+## 1. Install and Configure the RUM Web Client in Base Layout [done]
 ### Dependencies: None
 ### Description: Integrate the core AWS RUM script into the main layout of the application. This involves setting up environment variables for the configuration and injecting the script into the <head> of the `BaseLayout.astro` file.
 ### Details:
@@ -35,7 +35,7 @@ Verify that the RUM client is correctly sending data to CloudWatch. Test custom 
 5. Replace the hardcoded configuration values in the script with the environment variables using `import.meta.env.PUBLIC_...`.
 6. Ensure the script is one of the first elements in the `<head>` to accurately capture page load performance.
 
-## 2. Create a Centralized RUM Helper Module [pending]
+## 2. Create a Centralized RUM Helper Module [done]
 ### Dependencies: 12.1
 ### Description: To promote clean code and reusability, create a TypeScript module that encapsulates the logic for sending custom events to AWS RUM. This module will be used by other components to track specific user interactions.
 ### Details:
@@ -44,7 +44,7 @@ Verify that the RUM client is correctly sending data to CloudWatch. Test custom 
 3. This function should check if the `awsRum` object is available on the `window` object before attempting to call `awsRum.recordEvent(type, details)`.
 4. This prevents errors if the RUM script fails to load or is blocked by an ad-blocker.
 
-## 3. Implement Event Tracking for CTA Clicks and Language Switching [pending]
+## 3. Implement Event Tracking for CTA Clicks and Language Switching [done]
 ### Dependencies: 12.2
 ### Description: Track key user interactions by attaching custom RUM events to Call-to-Action (CTA) buttons and the language switcher, as specified in the task requirements.
 ### Details:
@@ -53,7 +53,7 @@ Verify that the RUM client is correctly sending data to CloudWatch. Test custom 
 3. In `src/components/LanguageSwitcher.astro`, add an `onclick` attribute to the language switch link. The handler should call `recordRumEvent('language_switch', { to_lang: targetLangCode })`.
 4. Add `data-rum-id` attributes to these elements for easier identification in RUM session traces.
 
-## 4. Implement Event Tracking for Project Page Views [pending]
+## 4. Implement Event Tracking for Project Page Views [done]
 ### Dependencies: 12.2
 ### Description: To measure time spent on project pages, dispatch a custom event whenever a user navigates to a specific project page. This will allow for more granular analysis of user engagement with portfolio items.
 ### Details:
@@ -63,7 +63,7 @@ Verify that the RUM client is correctly sending data to CloudWatch. Test custom 
 4. Call the function to record a page view event, e.g., `recordRumEvent('project_page_view', { project_slug: Astro.params.slug })`.
 5. This will fire an event each time a project page is loaded, which can be used in CloudWatch to analyze user flow and time on page.
 
-## 5. Implement Privacy Consent for RUM Initialization [pending]
+## 5. Implement Privacy Consent for RUM Initialization [done]
 ### Dependencies: 12.1
 ### Description: To ensure privacy-conscious data collection, the RUM script should only be initialized after the user has given their consent. This involves creating a simple consent UI and conditionally loading the RUM script.
 ### Details:

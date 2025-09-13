@@ -1251,7 +1251,7 @@
         "testStrategy": "Verify that the RUM client is correctly sending data to CloudWatch. Test custom event tracking by performing the tracked actions. Check that dashboards display the expected metrics. Verify that no personally identifiable information is being collected without consent. Test with various browsers to ensure compatibility.",
         "priority": "low",
         "dependencies": [],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1259,7 +1259,7 @@
             "description": "Integrate the core AWS RUM script into the main layout of the application. This involves setting up environment variables for the configuration and injecting the script into the <head> of the `BaseLayout.astro` file.",
             "dependencies": [],
             "details": "1. Create a `.env` file in the project root if it doesn't exist. Add `PUBLIC_RUM_APPLICATION_ID` and `PUBLIC_RUM_GUEST_ROLE_ARN` and `PUBLIC_RUM_IDENTITY_POOL_ID` and `PUBLIC_RUM_REGION`.\n2. Edit `src/layouts/BaseLayout.astro`.\n3. In the `<head>` section, add a `<script is:inline>` tag.\n4. Inside the script, paste the AWS RUM web client initialization code.\n5. Replace the hardcoded configuration values in the script with the environment variables using `import.meta.env.PUBLIC_...`.\n6. Ensure the script is one of the first elements in the `<head>` to accurately capture page load performance.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Load the website and use the browser's developer tools to verify that the RUM script is loaded. Check the network tab for requests to `dataplane.rum.us-east-1.amazonaws.com` (or the configured region). Verify in the AWS CloudWatch RUM console that session data is starting to appear."
           },
           {
@@ -1270,7 +1270,7 @@
               "12.1"
             ],
             "details": "1. Create a new file at `src/scripts/rum.ts`.\n2. In this file, define and export a function, e.g., `recordRumEvent(type: string, details: object)`. \n3. This function should check if the `awsRum` object is available on the `window` object before attempting to call `awsRum.recordEvent(type, details)`.\n4. This prevents errors if the RUM script fails to load or is blocked by an ad-blocker.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Call the `recordRumEvent` function from the browser console on a page where the RUM client is active. Verify in the CloudWatch RUM console that the custom event appears under the 'Custom events' tab."
           },
           {
@@ -1281,7 +1281,7 @@
               "12.2"
             ],
             "details": "1. Import the `recordRumEvent` function into relevant components.\n2. In `src/components/Header.astro`, add an `onclick` attribute to the 'Agendar llamada' CTA button. The handler should call `recordRumEvent('cta_click', { button: 'schedule_call' })`.\n3. In `src/components/LanguageSwitcher.astro`, add an `onclick` attribute to the language switch link. The handler should call `recordRumEvent('language_switch', { to_lang: targetLangCode })`.\n4. Add `data-rum-id` attributes to these elements for easier identification in RUM session traces.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Click the main CTA button and the language switcher. Go to the AWS CloudWatch RUM console, find your session, and verify that the `cta_click` and `language_switch` custom events were recorded with the correct details."
           },
           {
@@ -1292,7 +1292,7 @@
               "12.2"
             ],
             "details": "1. Edit the project detail page template, likely located at `src/pages/proyectos/[slug].astro`.\n2. Add a `<script is:inline>` tag to the page.\n3. Inside the script, import `recordRumEvent` from `src/scripts/rum.ts`.\n4. Call the function to record a page view event, e.g., `recordRumEvent('project_page_view', { project_slug: Astro.params.slug })`.\n5. This will fire an event each time a project page is loaded, which can be used in CloudWatch to analyze user flow and time on page.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Navigate to several different project detail pages. In the CloudWatch RUM console, check for `project_page_view` events and verify that the `project_slug` detail is correctly populated for each page visited."
           },
           {
@@ -1303,7 +1303,7 @@
               "12.1"
             ],
             "details": "1. Create a new Astro component, e.g., `src/components/PrivacyBanner.astro`.\n2. The banner should have an 'Accept' button that, when clicked, sets a flag in `localStorage` (e.g., `localStorage.setItem('consent_given', 'true')`) and hides the banner.\n3. The banner should only be displayed if the `consent_given` flag is not set.\n4. In `src/layouts/BaseLayout.astro`, wrap the RUM initialization script from subtask 12.1 in a client-side script that checks for `localStorage.getItem('consent_given') === 'true'` before executing the RUM initialization code.\n5. Add the `<PrivacyBanner />` component to `BaseLayout.astro`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "On first visit in a new incognito window, verify the privacy banner is shown and no RUM traffic is sent. Click 'Accept', verify the banner disappears and RUM traffic begins. Reload the page and verify the banner does not reappear and RUM traffic is sent immediately."
           }
         ]
@@ -1311,7 +1311,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-13T03:54:06.985Z",
+      "updated": "2025-09-13T23:48:03.690Z",
       "description": "Tasks for default context",
       "renamed": {
         "from": "default",

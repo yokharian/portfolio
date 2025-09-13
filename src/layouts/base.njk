@@ -10,6 +10,11 @@
     <link rel="alternate" href="{{ page.url }}" hreflang="x-default">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <script id="i18n-data" type="application/json">{{ i18n | json | safe }}</script>
+    <script id="rum-config" type="application/json">{{ rumConfig | json | safe }}</script>
+    
+    <!-- AWS CloudWatch RUM Integration -->
+    <script src="/assets/js/rum.js" defer></script>
+    
     {% block headExtra %}{% endblock %}
   </head>
   <body class="min-h-screen bg-slate-50 text-slate-800 antialiased">
@@ -20,6 +25,7 @@
     </main>
 
     {% include "partials/footer.njk" %}
+    {% include "partials/privacy-banner.njk" %}
     <script src="/assets/js/lang-bootstrap.js" defer></script>
     <script src="/assets/js/lang-switcher.js" defer></script>
     <script src="/assets/js/i18n-client.js" defer></script>

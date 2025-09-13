@@ -75,3 +75,13 @@ permalink: "/projects/{{ page.fileSlug }}/"
   {% endif %}
 
 </div>
+
+<script>
+  // Track project page view in RUM
+  if (window.recordRumEvent) {
+    window.recordRumEvent('project_page_view', { 
+      project_slug: '{{ page.fileSlug }}',
+      project_title: '{{ title }}'
+    });
+  }
+</script>

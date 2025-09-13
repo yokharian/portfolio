@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4 py-4 flex items-center justify-between">
     <a href="/" class="text-lg font-semibold tracking-tight hover:text-sky-700">Sofia Escobedo</a>
     <nav class="flex items-center gap-4">
-      <a href="{{ site.calendlyUrl }}" class="inline-flex items-center rounded-md bg-sky-700 text-white px-3 py-2 text-sm font-medium hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" data-i18n-key="header.cta">
+      <a href="{{ site.calendlyUrl }}" class="inline-flex items-center rounded-md bg-sky-700 text-white px-3 py-2 text-sm font-medium hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" data-i18n-key="header.cta" data-rum-id="schedule_call" onclick="if(window.recordRumEvent){window.recordRumEvent('cta_click', {button: 'schedule_call'});}">
         {{ 'header.cta' | t(site.defaultLanguage) }}
       </a>
       <div class="flex items-center gap-2 text-sm" data-lang-switcher>

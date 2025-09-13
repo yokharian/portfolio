@@ -76,6 +76,11 @@ class LangSwitcher {
       }
       this.updateURLParam(target);
       this.updateSwitcherUI(target);
+      
+      // Track language switch event in RUM
+      if ((window as any).recordRumEvent) {
+        (window as any).recordRumEvent('language_switch', { to_lang: target });
+      }
     } catch (e2) {
       // Fallback to navigation if anything fails
       const href = element.getAttribute('href');
