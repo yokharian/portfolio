@@ -437,7 +437,7 @@
           2,
           4
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -445,7 +445,7 @@
             "description": "Design and implement the data structure for storing certification information in a JSON file.",
             "dependencies": [],
             "details": "Create src/data/certifications.json with a schema that includes id, name, issuer, issueDate, credentialUrl, badgeImage, alt, and optional expiresDate fields. Include at least one real AWS certification example. Ensure the structure supports both English and Spanish localization by referencing keys in i18n.json for text content.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Validate JSON structure with a schema validator. Ensure required fields are present and formatted correctly."
           },
           {
@@ -454,7 +454,7 @@
             "description": "Obtain and optimize AWS certification badge images for web display.",
             "dependencies": [],
             "details": "Source official AWS certification badge images. Create public/assets/certs/ directory. Optimize badges as SVG (preferred) or PNG with appropriate dimensions. Ensure each image has explicit width and height attributes. Name files consistently (e.g., aws-solutions-architect.svg).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify image optimization with tools like ImageOptim. Check file sizes are under 30KB each. Confirm width and height attributes are set."
           },
           {
@@ -466,7 +466,7 @@
               "6.2"
             ],
             "details": "Add a section with id=\"certifications\" to the homepage template. Include a localized H2 heading. Create a responsive grid container for certification cards. Implement the card template in Nunjucks that displays the badge image, certification name, issuer, issue date, and credential verification link.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Validate HTML structure. Ensure proper semantic markup and heading hierarchy."
           },
           {
@@ -477,7 +477,7 @@
               "6.3"
             ],
             "details": "Implement a responsive grid layout (2 columns on small screens, 3 on medium, 4 on large). Add appropriate padding, margins, and gaps. Style certification cards with consistent spacing. Create hover/focus effects that are reduced-motion friendly. Ensure keyboard focus is visibly indicated.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test responsive behavior across different viewport sizes. Verify hover/focus states work correctly. Check for any layout issues or overflow."
           },
           {
@@ -489,7 +489,7 @@
               "6.3"
             ],
             "details": "Update src/data/i18n.json with keys for certifications.heading, certifications.issuer, certifications.viewCredential, certifications.issuedOn, etc. Provide both English and Spanish translations. Connect these keys to the Nunjucks templates. Format dates according to locale preferences.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Switch between languages to verify all text content changes appropriately. Check date formatting is locale-appropriate."
           },
           {
@@ -501,7 +501,7 @@
               "6.3"
             ],
             "details": "Create a script[type=\"application/ld+json\"] element in the certifications section or page head. Generate JSON-LD for each certification using the EducationalOccupationalCredential schema. Include name, issuer (as Organization), datePublished, and url properties. Dynamically generate this from the certifications data.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Validate JSON-LD using Google's Structured Data Testing Tool or Schema.org Validator. Ensure all required properties are present and correctly formatted."
           },
           {
@@ -513,7 +513,7 @@
               "6.4"
             ],
             "details": "Add appropriate aria-labels to links where text is not fully descriptive (e.g., aria-label=\"View credential: {name}\"). Ensure all images have descriptive alt text. Verify proper keyboard navigation through the certification cards. Add appropriate external link indicators with target=\"_blank\" rel=\"noopener noreferrer\" for credential URLs.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test keyboard navigation. Run accessibility checks with tools like axe or Lighthouse. Verify screen reader compatibility."
           },
           {
@@ -530,7 +530,7 @@
               "6.7"
             ],
             "details": "Update README.md or create a specific doc explaining how to add new certifications, required fields, asset placement, and i18n considerations. Extend or create build-time tests in scripts/test-build.js to verify: section#certifications exists, at least one card renders, external links include rel attributes, images have width/height attributes, and JSON-LD is present.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the build-time tests to ensure all components render correctly. Manually verify documentation accuracy by adding a test certification following the instructions."
           }
         ]
@@ -772,7 +772,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-13T01:27:47.101Z",
+      "updated": "2025-09-13T01:35:21.316Z",
       "description": "Tasks for default context"
     }
   }

@@ -72,6 +72,45 @@ permalink: "/"
   </div>
 </section>
 
+<section id="certifications" class="mb-12" aria-labelledby="certifications-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h2 id="certifications-title" class="text-2xl font-semibold mb-6">{{ 'certifications.heading' | t(site.defaultLanguage) }}</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" role="list">
+      {% for item in certifications %}
+      <article class="relative rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200" role="listitem">
+        <a href="{{ item.credentialUrl }}" target="_blank" rel="noopener noreferrer" class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="{{ 'certifications.viewCredential' | t(site.defaultLanguage) }}: {{ item.nameKey | t(site.defaultLanguage) }}">
+          <span class="sr-only">{{ 'certifications.viewCredential' | t(site.defaultLanguage) }}: {{ item.nameKey | t(site.defaultLanguage) }}</span>
+        </a>
+        <div class="flex items-center gap-3">
+          <img src="{{ item.badgeImage }}" alt="{{ item.altKey | t(site.defaultLanguage) }}" width="128" height="128" loading="lazy" decoding="async" class="h-16 w-16 object-contain"/>
+          <div>
+            <h3 class="text-base font-semibold text-slate-900">{{ item.nameKey | t(site.defaultLanguage) }}</h3>
+            <p class="text-xs text-slate-600">
+              <span class="sr-only">{{ 'certifications.issuerLabel' | t(site.defaultLanguage) }}: </span>{{ item.issuerKey | t(site.defaultLanguage) }}
+              · {{ 'certifications.issuedOn' | t(site.defaultLanguage) }} {{ item.issueDate | date("yyyy-LL") }}
+            </p>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <script type="application/ld+json">{
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {% for cert in certifications %}{
+          "@type": "EducationalOccupationalCredential",
+          "name": "{{ cert.nameKey | t(site.defaultLanguage) | escape }}",
+          "url": "{{ cert.credentialUrl }}",
+          "issuer": {"@type": "Organization", "name": "{{ cert.issuerKey | t(site.defaultLanguage) | escape }}"},
+          "datePublished": "{{ cert.issueDate }}"
+        }{% if not loop.last %},{% endif %}{% endfor %}
+      ]
+    }</script>
+  </div>
+</section>
+
 <h2 class="text-2xl font-semibold mb-6">Latest Posts</h2>
 
 <ul class="space-y-3">

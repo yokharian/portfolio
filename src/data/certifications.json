@@ -1,0 +1,11 @@
+[
+  {
+    "id": "aws-sa-associate",
+    "nameKey": "certifications.names.awsSAA.name",
+    "issuerKey": "certifications.names.awsSAA.issuer",
+    "issueDate": "2023-06-15",
+    "credentialUrl": "https://www.credly.com/badges/example-aws-saa",
+    "badgeImage": "/assets/certs/aws-solutions-architect.svg",
+    "altKey": "certifications.names.awsSAA.alt"
+  }
+]

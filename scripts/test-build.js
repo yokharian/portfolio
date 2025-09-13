@@ -55,5 +55,14 @@ function readOut(rel) {
   assert.ok(/role=\"list\"/i.test(home), 'Featured grid should have role="list"');
   assert.ok(/role=\"listitem\"/i.test(home), 'Featured cards should have role="listitem"');
 
+  // Certifications section
+  assert.ok(/<section[^>]+id=\"certifications\"/i.test(home), 'Homepage should include Certifications section');
+  assert.ok(/Certifications/.test(home), 'Certifications heading should be present');
+  const certCardCount = (home.match(/aria-label=\"View credential:/g) || []).length;
+  assert.ok(certCardCount >= 1, 'At least one certification card should render');
+  assert.ok(/<img[^>]*src=\"\/assets\/certs\/[^\"]+\"[^>]*width=\"\d+\"[^>]*height=\"\d+\"[^>]*loading=\"lazy\"[^>]*decoding=\"async\"/i.test(home), 'Certification badge image should include width/height and lazy+async attributes');
+  assert.ok(/<a[^>]*href=\"https:\/\/www\.credly\.com\/badges\/[a-z0-9\-]+\"[^>]*target=\"_blank\"[^>]*rel=\"noopener noreferrer\"/i.test(home), 'Credential link should have external link attributes');
+  assert.ok(/<script[^>]+type=\"application\/ld\+json\"[\s\S]*EducationalOccupationalCredential/i.test(home), 'JSON-LD for certifications should be present');
+
   console.log('Build snapshot tests passed.');
 })();

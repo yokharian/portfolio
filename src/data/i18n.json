@@ -10,6 +10,19 @@
         "heading": "Featured Work",
         "viewAll": "View all projects"
       }
+    },
+    "certifications": {
+      "heading": "Certifications",
+      "issuedOn": "Issued",
+      "issuerLabel": "Issuer",
+      "viewCredential": "View credential",
+      "names": {
+        "awsSAA": {
+          "name": "AWS Certified Solutions Architect – Associate",
+          "issuer": "Amazon Web Services (AWS)",
+          "alt": "AWS Solutions Architect Associate certification badge"
+        }
+      }
     }
   },
   "es": {
@@ -22,6 +35,19 @@
       "featured": {
         "heading": "Trabajos Destacados",
         "viewAll": "Ver todos los proyectos"
+      }
+    },
+    "certifications": {
+      "heading": "Certificaciones",
+      "issuedOn": "Emitido",
+      "issuerLabel": "Emisor",
+      "viewCredential": "Ver credencial",
+      "names": {
+        "awsSAA": {
+          "name": "AWS Certified Solutions Architect – Associate",
+          "issuer": "Amazon Web Services (AWS)",
+          "alt": "Insignia de certificación AWS Solutions Architect Associate"
+        }
       }
     }
   }

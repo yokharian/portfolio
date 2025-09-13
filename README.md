@@ -64,6 +64,20 @@ Image guidelines for best results:
 - Place images under `public/assets/images/` and reference with an absolute path (e.g., `/assets/images/your-image.jpg`).
 - The build generates responsive formats (WebP/JPEG) at multiple widths and lazy-loads them automatically.
 
+## Certifications Section
+
+Add your certifications by editing `src/data/certifications.json`. Each item supports localized text via i18n keys:
+
+- id: stable identifier string
+- nameKey: i18n key for the certification name (e.g., `certifications.names.awsSAA.name`)
+- issuerKey: i18n key for the issuer (e.g., `certifications.names.awsSAA.issuer`)
+- issueDate: ISO date string (YYYY-MM-DD)
+- credentialUrl: verification URL (will open in a new tab)
+- badgeImage: path to an SVG/PNG under `public/assets/certs/`
+- altKey: i18n key for the badge alt text
+
+Translations live in `src/data/i18n.json` under `certifications`. The homepage renders a responsive, accessible grid under the “Certifications” section, including JSON-LD (EducationalOccupationalCredential) for SEO.
+
 ## Next steps
 
 - Git hooks (Husky) are configured with a pre-commit that runs `npm run build`. Run `npm install` once to activate hooks.
