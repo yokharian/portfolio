@@ -20,7 +20,7 @@ import {
   ContentProcessingError,
   ContentValidationError,
   FileProcessingError
-} from '../../types/content';
+} from '../types/content';
 import { slugify as formatSlugify } from './format';
 import { parseMarkdown } from './markdown';
 import { validateFrontmatter } from './validateFrontmatter';
@@ -232,7 +232,7 @@ export function discoverProjects(
   try {
     const baseDir = rootDir ? 
       (path.isAbsolute(rootDir) ? rootDir : path.join(process.cwd(), rootDir)) :
-      path.join(process.cwd(), 'content', 'projects');
+      path.join(process.cwd(), 'src', 'content', 'projects');
     
     if (!fs.existsSync(baseDir) || !fs.statSync(baseDir).isDirectory()) {
       throw new FileProcessingError('Directory not found or not a directory', baseDir);
@@ -316,7 +316,7 @@ function processProjectFile(filePath: string, options: { allowHtml: boolean }): 
     try {
       if (fm.heroImage && typeof fm.heroImage === 'string') {
         const rel = fm.heroImage.replace(/^\//, '');
-        const abs = path.join(process.cwd(), 'public', rel);
+        const abs = path.join(process.cwd(), 'src', 'public', rel);
         imageValid = fs.existsSync(abs);
         if (!imageValid) {
           logger.warn(`discoverProjects: heroImage not found for ${slug}: ${abs}`);
@@ -375,10 +375,10 @@ export type {
   DiscoverOptions, 
   ProjectRecord, 
   ContentValidationResult 
-} from '../../types/content';
+} from '../types/content';
 
 export { 
   ContentProcessingError, 
   ContentValidationError, 
   FileProcessingError 
-} from '../../types/content';
+} from '../types/content';

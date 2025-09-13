@@ -29,7 +29,7 @@
       "jest"
     ],
     "typeRoots": [
-      "./types",
+      "./src/types",
       "./node_modules/@types"
     ],
     "incremental": true,
@@ -45,18 +45,18 @@
   "include": [
     "src/**/*",
     "src/data/**/*.ts",
-    "scripts/**/*",
-    "public/**/*",
+    "src/scripts/**/*",
+    "src/public/**/*",
     ".eleventy.*",
     "*.config.*",
     "tailwind.config.*",
-    "types/**/*.ts",
-    "types/**/*.d.ts"
+    "src/types/**/*.ts",
+    "src/types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules",
     "_site",
     ".cache/tsbuild",
-    "public/assets/js"
+    "src/public/assets/js"
   ]
 }

@@ -81,8 +81,8 @@ const EleventyImage = require('@11ty/eleventy-img');
 const path = require('path');
 
 const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: EleventyConfig) {
-  // Copy everything in public/ to the site root
-  eleventyConfig.addPassthroughCopy({ "public": "/" });
+  // Copy everything in src/public/ to the site root
+  eleventyConfig.addPassthroughCopy({ "src/public": "/" });
 
   // Use our enhanced Markdown library for Eleventy rendering (Task 3.10 integration)
   eleventyConfig.setLibrary('md', createMd());
@@ -147,9 +147,9 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
     return filterByLanguage(items, f);
   });
 
-  // Posts collection from Markdown files in blog_posts/
+  // Posts collection from Markdown files in src/blog_posts/
   eleventyConfig.addCollection("posts", (collectionApi) => {
-    const items = collectionApi.getFilteredByGlob("blog_posts/**/*.md");
+    const items = collectionApi.getFilteredByGlob("src/blog_posts/**/*.md");
     // Sort by startDate (desc) if present, otherwise by date
     return items.sort((a, b) => {
       const aData = a.data as PostFrontmatter;
@@ -160,17 +160,17 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
     });
   });
 
-  // Projects collections from content/projects/
+  // Projects collections from src/content/projects/
   eleventyConfig.addCollection("projects", (collectionApi) => {
-    const items = collectionApi.getFilteredByGlob("content/projects/**/*.md");
+    const items = collectionApi.getFilteredByGlob("src/content/projects/**/*.md");
     return items;
   });
   eleventyConfig.addCollection("projects_en", (collectionApi) => {
-    const items = collectionApi.getFilteredByGlob("content/projects/**/*.md");
+    const items = collectionApi.getFilteredByGlob("src/content/projects/**/*.md");
     return filterByLanguage(items, 'en');
   });
   eleventyConfig.addCollection("projects_es", (collectionApi) => {
-    const items = collectionApi.getFilteredByGlob("content/projects/**/*.md");
+    const items = collectionApi.getFilteredByGlob("src/content/projects/**/*.md");
     return filterByLanguage(items, 'es');
   });
 
@@ -178,7 +178,7 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
   // Filters projects with `featured: true`, sorts by `order` (asc) when present, otherwise by date (newest first), and limits to 6.
   eleventyConfig.addCollection("featured_projects", (collectionApi) => {
     const items = collectionApi
-      .getFilteredByGlob("content/projects/**/*.md")
+      .getFilteredByGlob("src/content/projects/**/*.md")
       .filter((item) => {
         const data = item.data as ProjectFrontmatter;
         return !!(data?.featured);
@@ -220,7 +220,7 @@ const eleventyConfig: EleventyConfigFunction = function (eleventyConfig: Elevent
       let source = src;
       if (typeof src === "string" && !/^https?:/i.test(src)) {
         if (src.startsWith("/")) {
-          source = path.join("public", src.replace(/^\//, ""));
+          source = path.join("src/public", src.replace(/^\//, ""));
         }
       }
       const metadata = await EleventyImage(source, {
