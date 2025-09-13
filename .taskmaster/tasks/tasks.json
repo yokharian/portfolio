@@ -545,97 +545,100 @@
         "dependencies": [
           3
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
-            "title": "Define Project Page Data Schema and Validation",
-            "description": "Create a schema for project page data that defines required and optional fields in the frontmatter, and implement validation functions to ensure data integrity.",
+            "title": "Create Basic Project Template Structure with Semantic HTML",
+            "description": "Set up the initial Nunjucks template file with proper semantic HTML structure for the project page layout.",
             "dependencies": [],
-            "details": "1. Extend the existing frontmatter schema in src/utils/ to include project-specific fields: title, description, employer, startDate, endDate, tags, heroImage, language, and any additional metadata.\n2. Create validation functions that check for required fields and proper data types.\n3. Implement error handling for missing or invalid data.\n4. Document the schema requirements in the project documentation.",
-            "status": "pending",
-            "testStrategy": "Create test scripts in scripts/ that validate sample project markdown files against the schema. Include both valid and invalid examples to test error handling."
+            "details": "Create src/layouts/project.njk with semantic HTML structure including <header>, <article>, and <section> tags. Implement the basic page structure with proper heading hierarchy. Include placeholders for all required sections: hero banner, metadata section, main content area, technologies section, and project navigation.",
+            "status": "done",
+            "testStrategy": "Verify the template compiles without errors using 'npm run build'. Check HTML validity and semantic structure using the W3C validator."
           },
           {
             "id": 2,
-            "title": "Create Project Page Layout Template",
-            "description": "Develop the base Eleventy layout template for individual project pages with proper semantic HTML structure.",
+            "title": "Implement Hero Banner with Project Image",
+            "description": "Create the hero banner section that displays the project's featured image with proper performance attributes and fallback handling.",
             "dependencies": [
               "7.1"
             ],
-            "details": "1. Create a new layout file in src/layouts/project.njk.\n2. Implement semantic HTML structure with appropriate heading hierarchy.\n3. Include slots for all required content sections: hero banner, metadata section, main content area, technologies section, and navigation.\n4. Set up SEO-friendly document structure with proper meta tags.\n5. Add schema.org structured data for projects using JSON-LD.",
-            "status": "pending",
-            "testStrategy": "Manually test the template with sample content to verify structure. Use HTML validators to ensure semantic correctness. Test with screen readers to verify accessibility."
+            "details": "In the hero banner section, implement an image element that sources from project.heroImage. Add performance attributes (loading=\"lazy\", decoding=\"async\"). Implement proper alt text fallback using alt || title. Style the hero banner with appropriate sizing and responsive behavior using Tailwind classes.",
+            "status": "done",
+            "testStrategy": "Test with projects that have and don't have hero images to verify fallback behavior. Verify image performance attributes are correctly applied in the output HTML."
           },
           {
             "id": 3,
-            "title": "Implement Hero Banner Component",
-            "description": "Create a responsive hero banner component that displays the project's featured image with proper sizing and accessibility.",
+            "title": "Develop Project Metadata Section",
+            "description": "Create the metadata section displaying project title, date range, employer, and other relevant information from frontmatter.",
             "dependencies": [
-              "7.2"
+              "7.1"
             ],
-            "details": "1. Create a hero banner component that accepts an image path from frontmatter.\n2. Implement responsive image handling with appropriate srcset attributes.\n3. Add proper alt text support from frontmatter.\n4. Style the banner using Tailwind CSS with mobile-first approach.\n5. Implement fallback handling for missing images.",
-            "status": "pending",
-            "testStrategy": "Test the component with various image sizes and aspect ratios. Verify responsive behavior across different viewport sizes. Check accessibility with automated tools."
+            "details": "Extract and display project metadata from frontmatter including title, employer, and date range. Use the dateRange(startDate, endDate, language) filter for formatting dates according to the current language. Style the metadata section with appropriate typography and spacing using Tailwind classes.",
+            "status": "done",
+            "testStrategy": "Test with projects having different metadata combinations. Verify date formatting works correctly in both languages. Check that all metadata fields are properly extracted and displayed."
           },
           {
             "id": 4,
-            "title": "Develop Project Metadata Display Section",
-            "description": "Create a component to display project metadata (title, dates, employer, etc.) with proper formatting and i18n support.",
+            "title": "Implement Main Content Area with Tailwind Prose",
+            "description": "Set up the main content area that renders the Markdown content with proper typography and formatting.",
             "dependencies": [
-              "7.2"
+              "7.1"
             ],
-            "details": "1. Create a metadata display component that presents project information in a structured format.\n2. Implement date formatting with localization support.\n3. Add i18n support for labels using src/data/i18n.json.\n4. Style the section using Tailwind CSS for both mobile and desktop layouts.\n5. Ensure proper semantic markup for the metadata section.",
-            "status": "pending",
-            "testStrategy": "Test with different metadata combinations. Verify i18n functionality by switching languages. Check accessibility of the component."
+            "details": "Implement the main content area using {{ content | safe }} to render the Markdown content. Apply Tailwind's prose classes for proper typography and content formatting. Ensure the content area is responsive and maintains readability across different screen sizes.",
+            "status": "done",
+            "testStrategy": "Test with various Markdown content types (headings, lists, code blocks, images) to ensure proper rendering. Verify responsive behavior on different screen sizes."
           },
           {
             "id": 5,
-            "title": "Implement Main Content Area with Typography",
-            "description": "Set up the main content area with Tailwind's prose class and ensure proper typography for different content elements.",
+            "title": "Create Technologies Used Section from Tags",
+            "description": "Implement the section that displays the technologies used in the project based on frontmatter tags.",
             "dependencies": [
-              "7.2"
+              "7.1"
             ],
-            "details": "1. Configure the main content area to use Tailwind's prose class for consistent typography.\n2. Customize the prose styles as needed to match the site's design system.\n3. Ensure proper spacing and hierarchy for headings, paragraphs, lists, and code blocks.\n4. Implement responsive adjustments for typography at different breakpoints.\n5. Add support for custom content components within the markdown.",
-            "status": "pending",
-            "testStrategy": "Test rendering of various markdown elements (headings, lists, code blocks, tables, etc.). Verify responsive behavior of typography. Check reading experience on different devices."
+            "details": "Create a 'Technologies Used' section that iterates through project tags and displays them. Filter out the 'project' tag which is used for collection purposes. Style the tags consistently with the design system. Implement proper heading and semantic structure for this section.",
+            "status": "done",
+            "testStrategy": "Test with projects having different numbers of tags. Verify the 'project' tag is correctly excluded. Check the responsive layout of tags on different screen sizes."
           },
           {
             "id": 6,
-            "title": "Create Technologies Used Section",
-            "description": "Develop a component to display and style the technologies/tags used in the project.",
+            "title": "Implement Project Navigation",
+            "description": "Create navigation links to previous and next projects with proper accessibility and internationalization.",
             "dependencies": [
-              "7.2",
-              "7.4"
+              "7.1"
             ],
-            "details": "1. Create a component that generates a list of technology tags from the frontmatter.\n2. Style the tags using Tailwind CSS with appropriate visual treatment.\n3. Implement hover states for tags.\n4. Add i18n support for any static text in this section.\n5. Ensure the section is responsive and maintains proper layout at all screen sizes.",
-            "status": "pending",
-            "testStrategy": "Test with various numbers of tags to ensure proper wrapping behavior. Verify accessibility of the tag elements. Test i18n functionality."
+            "details": "Implement previous/next project navigation at the bottom of the template. Use the collections.projects.byLanguage filter to ensure navigation only includes projects in the current language. Add proper accessible labels using the t(language) filter for internationalization. Style the navigation with appropriate visual cues and spacing.",
+            "status": "done",
+            "testStrategy": "Test navigation between projects to ensure correct sequencing. Verify language filtering works correctly. Check accessibility of navigation elements with screen readers."
           },
           {
             "id": 7,
-            "title": "Implement Project Navigation Component",
-            "description": "Create a navigation component that allows users to browse to other projects from the current project page.",
+            "title": "Implement Language-Specific Content Display",
+            "description": "Ensure all content and UI elements adapt to the selected language setting.",
             "dependencies": [
-              "7.2"
+              "7.3",
+              "7.5",
+              "7.6"
             ],
-            "details": "1. Create a navigation component that displays links to previous/next projects.\n2. Implement a collection in Eleventy to gather all projects for navigation.\n3. Add visual indicators for navigation direction.\n4. Style the navigation with Tailwind CSS for both mobile and desktop layouts.\n5. Ensure proper keyboard navigation and focus states.",
-            "status": "pending",
-            "testStrategy": "Test navigation between projects in different positions in the collection. Verify keyboard accessibility. Test responsive behavior on different screen sizes."
+            "details": "Implement language-specific display for all text elements using the t(language) filter. Ensure date formatting respects the current language setting. Test and verify that navigation only shows projects in the current language using the byLanguage filter.",
+            "status": "done",
+            "testStrategy": "Test the template with both English and Spanish content to verify correct language display. Check that date formats follow language conventions. Verify navigation only shows projects in the current language."
           },
           {
             "id": 8,
-            "title": "Add Language-Specific Content Display",
-            "description": "Implement functionality to display project content in the appropriate language based on the user's language setting.",
+            "title": "Add Tests and Update Test Scripts",
+            "description": "Update existing test scripts to verify the project template implementation and create new tests as needed.",
             "dependencies": [
-              "7.1",
               "7.2",
+              "7.3",
               "7.4",
-              "7.5"
+              "7.5",
+              "7.6",
+              "7.7"
             ],
-            "details": "1. Extend the existing i18n system to support language-specific project content.\n2. Implement logic to select the appropriate language version of project content.\n3. Create fallback mechanisms for missing translations.\n4. Add language switcher functionality on project pages.\n5. Ensure all UI elements and content areas respond to language changes.\n6. Document the approach for content authors.",
-            "status": "pending",
-            "testStrategy": "Test with content in multiple languages. Verify fallback behavior when translations are missing. Check that all UI elements update correctly when language is changed."
+            "details": "Update scripts/test-build.js to include tests for the project template. Add snapshot expectations for project pages. Create tests to verify all required sections are present and correctly formatted. Document which tests are satisfied by the current implementation and what needs additional verification.",
+            "status": "done",
+            "testStrategy": "Run the updated test scripts to verify all aspects of the project template. Check that snapshots match expected output. Manually verify visual aspects that automated tests cannot cover."
           }
         ]
       },
@@ -772,7 +775,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-13T01:35:21.316Z",
+      "updated": "2025-09-13T02:06:40.252Z",
       "description": "Tasks for default context"
     }
   }

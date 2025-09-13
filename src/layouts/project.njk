@@ -4,7 +4,7 @@ permalink: "/projects/{{ page.fileSlug }}/"
 <div class="project">
   {% if heroImage %}
   <div class="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-lg mb-8">
-    <img src="{{ heroImage }}" alt="{{ title }}" class="w-full h-full object-cover" loading="lazy" decoding="async" />
+    <img src="{{ heroImage }}" alt="{{ alt or title }}" class="w-full h-full object-cover" loading="lazy" decoding="async" />
   </div>
   {% endif %}
 
@@ -28,9 +28,50 @@ permalink: "/projects/{{ page.fileSlug }}/"
     <h2 class="text-xl font-semibold mb-3">Technologies Used</h2>
     <ul class="flex flex-wrap gap-2">
       {% for t in tags %}
+        {% if t != 'project' %}
         <li><span class="inline-block bg-slate-100 text-slate-700 text-sm px-2 py-1 rounded">{{ t }}</span></li>
+        {% endif %}
       {% endfor %}
     </ul>
   </section>
   {% endif %}
+
+  {# Project navigation #}
+  {% set list = collections.projects | byLanguage(language) %}
+  {% set currentIndex = -1 %}
+  {% for item in list %}
+    {% if item.url == page.url %}
+      {% set currentIndex = loop.index0 %}
+    {% endif %}
+  {% endfor %}
+  {% if currentIndex > -1 %}
+  <section class="mt-12 border-t border-slate-200 pt-6" aria-label="Project navigation">
+    <nav class="flex justify-between items-center gap-4" aria-label="Pagination">
+      {% if currentIndex > 0 %}
+        {% set prev = list[currentIndex - 1] %}
+        <a href="{{ prev.url }}" class="group inline-flex items-center gap-2 text-slate-700 hover:text-slate-900 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 rounded" aria-label="Previous project: {{ prev.data.title }}">
+          <span aria-hidden="true">←</span>
+          <span>
+            <span class="block text-xs text-slate-500">{{ 'Previous' | t(language) or 'Previous' }}</span>
+            <span class="block font-semibold">{{ prev.data.title }}</span>
+          </span>
+        </a>
+      {% else %}
+        <span></span>
+      {% endif %}
+
+      {% if (currentIndex + 1) < (list | length) %}
+        {% set next = list[currentIndex + 1] %}
+        <a href="{{ next.url }}" class="group inline-flex items-center gap-2 text-slate-700 hover:text-slate-900 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 rounded text-right" aria-label="Next project: {{ next.data.title }}">
+          <span class="text-right">
+            <span class="block text-xs text-slate-500">{{ 'Next' | t(language) or 'Next' }}</span>
+            <span class="block font-semibold">{{ next.data.title }}</span>
+          </span>
+          <span aria-hidden="true">→</span>
+        </a>
+      {% endif %}
+    </nav>
+  </section>
+  {% endif %}
+
 </div>
