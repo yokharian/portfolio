@@ -1,2 +1,11 @@
 # Ignore intentionally invalid test content so production build succeeds
 content/projects/invalid-frontmatter.md
+.aiassistant/
+.cursor/
+.husky/
+.idea/
+.junie/
+.taskmaster/
+docs/
+UI_UX_GUIDE/
+README.md
