@@ -268,3 +268,7 @@ dev-debug.log
 
 # 11ty build output
 _site/
+
+# Compiled client-side JavaScript
+public/assets/js/*.js
+public/assets/js/*.map
