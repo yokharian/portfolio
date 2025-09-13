@@ -11,11 +11,12 @@
     "build:css": "tailwindcss -i src/styles/tailwind.css -o public/assets/styles.css --minify",
     "clean": "rimraf _site",
     "prepare": "husky",
-    "test": "npm-run-all -s test:md test:fm test:dates test:content test:build",
+    "test": "npm-run-all -s test:md test:fm test:dates test:content test:i18n test:build",
     "test:md": "node scripts/test-markdown.js",
     "test:fm": "node scripts/test-frontmatter.js",
     "test:dates": "node scripts/test-dates.js",
     "test:content": "node scripts/test-content.js",
+    "test:i18n": "node scripts/test-i18n.js",
     "test:build": "node scripts/test-build.js"
   },
   "dependencies": {

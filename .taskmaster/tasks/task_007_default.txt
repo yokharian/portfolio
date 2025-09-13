@@ -1,6 +1,6 @@
 # Task ID: 7
 # Title: Develop Individual Project Page Template
-# Status: pending
+# Status: done
 # Dependencies: 3
 # Priority: high
 # Description: Create the template for individual project pages that will display the full content of each project with proper formatting.
@@ -21,83 +21,51 @@
 Test the project page with various types of Markdown content to ensure proper rendering. Verify that all metadata from frontmatter is correctly displayed. Test responsiveness across different screen sizes. Check that the 'Technologies Used' section correctly displays all tags. Test with both English and Spanish content to verify language switching works correctly.
 
 # Subtasks:
-## 1. Define Project Page Data Schema and Validation [pending]
+## 1. Create Basic Project Template Structure with Semantic HTML [done]
 ### Dependencies: None
-### Description: Create a schema for project page data that defines required and optional fields in the frontmatter, and implement validation functions to ensure data integrity.
+### Description: Set up the initial Nunjucks template file with proper semantic HTML structure for the project page layout.
 ### Details:
-1. Extend the existing frontmatter schema in src/utils/ to include project-specific fields: title, description, employer, startDate, endDate, tags, heroImage, language, and any additional metadata.
-2. Create validation functions that check for required fields and proper data types.
-3. Implement error handling for missing or invalid data.
-4. Document the schema requirements in the project documentation.
+Create src/layouts/project.njk with semantic HTML structure including <header>, <article>, and <section> tags. Implement the basic page structure with proper heading hierarchy. Include placeholders for all required sections: hero banner, metadata section, main content area, technologies section, and project navigation.
 
-## 2. Create Project Page Layout Template [pending]
+## 2. Implement Hero Banner with Project Image [done]
 ### Dependencies: 7.1
-### Description: Develop the base Eleventy layout template for individual project pages with proper semantic HTML structure.
+### Description: Create the hero banner section that displays the project's featured image with proper performance attributes and fallback handling.
 ### Details:
-1. Create a new layout file in src/layouts/project.njk.
-2. Implement semantic HTML structure with appropriate heading hierarchy.
-3. Include slots for all required content sections: hero banner, metadata section, main content area, technologies section, and navigation.
-4. Set up SEO-friendly document structure with proper meta tags.
-5. Add schema.org structured data for projects using JSON-LD.
+In the hero banner section, implement an image element that sources from project.heroImage. Add performance attributes (loading="lazy", decoding="async"). Implement proper alt text fallback using alt || title. Style the hero banner with appropriate sizing and responsive behavior using Tailwind classes.
 
-## 3. Implement Hero Banner Component [pending]
-### Dependencies: 7.2
-### Description: Create a responsive hero banner component that displays the project's featured image with proper sizing and accessibility.
+## 3. Develop Project Metadata Section [done]
+### Dependencies: 7.1
+### Description: Create the metadata section displaying project title, date range, employer, and other relevant information from frontmatter.
 ### Details:
-1. Create a hero banner component that accepts an image path from frontmatter.
-2. Implement responsive image handling with appropriate srcset attributes.
-3. Add proper alt text support from frontmatter.
-4. Style the banner using Tailwind CSS with mobile-first approach.
-5. Implement fallback handling for missing images.
+Extract and display project metadata from frontmatter including title, employer, and date range. Use the dateRange(startDate, endDate, language) filter for formatting dates according to the current language. Style the metadata section with appropriate typography and spacing using Tailwind classes.
 
-## 4. Develop Project Metadata Display Section [pending]
-### Dependencies: 7.2
-### Description: Create a component to display project metadata (title, dates, employer, etc.) with proper formatting and i18n support.
+## 4. Implement Main Content Area with Tailwind Prose [done]
+### Dependencies: 7.1
+### Description: Set up the main content area that renders the Markdown content with proper typography and formatting.
 ### Details:
-1. Create a metadata display component that presents project information in a structured format.
-2. Implement date formatting with localization support.
-3. Add i18n support for labels using src/data/i18n.json.
-4. Style the section using Tailwind CSS for both mobile and desktop layouts.
-5. Ensure proper semantic markup for the metadata section.
+Implement the main content area using {{ content | safe }} to render the Markdown content. Apply Tailwind's prose classes for proper typography and content formatting. Ensure the content area is responsive and maintains readability across different screen sizes.
 
-## 5. Implement Main Content Area with Typography [pending]
-### Dependencies: 7.2
-### Description: Set up the main content area with Tailwind's prose class and ensure proper typography for different content elements.
+## 5. Create Technologies Used Section from Tags [done]
+### Dependencies: 7.1
+### Description: Implement the section that displays the technologies used in the project based on frontmatter tags.
 ### Details:
-1. Configure the main content area to use Tailwind's prose class for consistent typography.
-2. Customize the prose styles as needed to match the site's design system.
-3. Ensure proper spacing and hierarchy for headings, paragraphs, lists, and code blocks.
-4. Implement responsive adjustments for typography at different breakpoints.
-5. Add support for custom content components within the markdown.
+Create a 'Technologies Used' section that iterates through project tags and displays them. Filter out the 'project' tag which is used for collection purposes. Style the tags consistently with the design system. Implement proper heading and semantic structure for this section.
 
-## 6. Create Technologies Used Section [pending]
-### Dependencies: 7.2, 7.4
-### Description: Develop a component to display and style the technologies/tags used in the project.
+## 6. Implement Project Navigation [done]
+### Dependencies: 7.1
+### Description: Create navigation links to previous and next projects with proper accessibility and internationalization.
 ### Details:
-1. Create a component that generates a list of technology tags from the frontmatter.
-2. Style the tags using Tailwind CSS with appropriate visual treatment.
-3. Implement hover states for tags.
-4. Add i18n support for any static text in this section.
-5. Ensure the section is responsive and maintains proper layout at all screen sizes.
+Implement previous/next project navigation at the bottom of the template. Use the collections.projects.byLanguage filter to ensure navigation only includes projects in the current language. Add proper accessible labels using the t(language) filter for internationalization. Style the navigation with appropriate visual cues and spacing.
 
-## 7. Implement Project Navigation Component [pending]
-### Dependencies: 7.2
-### Description: Create a navigation component that allows users to browse to other projects from the current project page.
+## 7. Implement Language-Specific Content Display [done]
+### Dependencies: 7.3, 7.5, 7.6
+### Description: Ensure all content and UI elements adapt to the selected language setting.
 ### Details:
-1. Create a navigation component that displays links to previous/next projects.
-2. Implement a collection in Eleventy to gather all projects for navigation.
-3. Add visual indicators for navigation direction.
-4. Style the navigation with Tailwind CSS for both mobile and desktop layouts.
-5. Ensure proper keyboard navigation and focus states.
+Implement language-specific display for all text elements using the t(language) filter. Ensure date formatting respects the current language setting. Test and verify that navigation only shows projects in the current language using the byLanguage filter.
 
-## 8. Add Language-Specific Content Display [pending]
-### Dependencies: 7.1, 7.2, 7.4, 7.5
-### Description: Implement functionality to display project content in the appropriate language based on the user's language setting.
+## 8. Add Tests and Update Test Scripts [done]
+### Dependencies: 7.2, 7.3, 7.4, 7.5, 7.6, 7.7
+### Description: Update existing test scripts to verify the project template implementation and create new tests as needed.
 ### Details:
-1. Extend the existing i18n system to support language-specific project content.
-2. Implement logic to select the appropriate language version of project content.
-3. Create fallback mechanisms for missing translations.
-4. Add language switcher functionality on project pages.
-5. Ensure all UI elements and content areas respond to language changes.
-6. Document the approach for content authors.
+Update scripts/test-build.js to include tests for the project template. Add snapshot expectations for project pages. Create tests to verify all required sections are present and correctly formatted. Document which tests are satisfied by the current implementation and what needs additional verification.
 

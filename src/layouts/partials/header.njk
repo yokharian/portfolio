@@ -2,13 +2,13 @@
   <div class="container mx-auto px-4 py-4 flex items-center justify-between">
     <a href="/" class="text-lg font-semibold tracking-tight hover:text-sky-700">Sofia Escobedo</a>
     <nav class="flex items-center gap-4">
-      <a href="{{ site.calendlyUrl }}" class="inline-flex items-center rounded-md bg-sky-700 text-white px-3 py-2 text-sm font-medium hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
-        Agendar llamada de 30 min
+      <a href="{{ site.calendlyUrl }}" class="inline-flex items-center rounded-md bg-sky-700 text-white px-3 py-2 text-sm font-medium hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" data-i18n-key="header.cta">
+        {{ 'header.cta' | t(site.defaultLanguage) }}
       </a>
-      <div class="flex items-center gap-2 text-sm">
-        <a href="#" aria-label="Switch to English" class="hover:text-sky-700">EN</a>
+      <div class="flex items-center gap-2 text-sm" data-lang-switcher>
+        <a data-lang-link="en" href="?lang=en" aria-label="Switch to English" class="hover:text-sky-700">EN</a>
         <span class="text-slate-400">/</span>
-        <a href="#" aria-label="Cambiar a Español" class="hover:text-sky-700">ES</a>
+        <a data-lang-link="es" href="?lang=es" aria-label="Cambiar a Español" class="hover:text-sky-700">ES</a>
       </div>
     </nav>
   </div>

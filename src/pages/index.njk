@@ -14,14 +14,14 @@ permalink: "/"
       <div class="px-4 sm:px-6 lg:px-12 py-10 sm:py-16 lg:py-20">
         <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12">
           <div class="order-2 lg:order-1 text-center lg:text-left">
-            <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900" data-anim="heading">
+            <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900" data-anim="heading" data-i18n-key="hero.title">
               {{ 'hero.title' | t(site.defaultLanguage) }}
             </h1>
-            <p class="mt-4 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0" data-anim="subheading">
+            <p class="mt-4 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0" data-anim="subheading" data-i18n-key="hero.subtitle">
               {{ 'hero.subtitle' | t(site.defaultLanguage) }}
             </p>
             <div class="mt-6" data-anim="cta">
-              <a href="/#projects" class="inline-block rounded-md bg-sky-600 px-5 py-3 text-white font-medium shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white">
+              <a href="/#projects" class="inline-block rounded-md bg-sky-600 px-5 py-3 text-white font-medium shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white" data-i18n-key="hero.cta">
                 {{ 'hero.cta' | t(site.defaultLanguage) }}
               </a>
             </div>
@@ -39,7 +39,7 @@ permalink: "/"
 
 <section id="projects" class="mb-12" aria-labelledby="projects-title">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <h2 id="projects-title" class="text-2xl font-semibold mb-6">{{ 'home.featured.heading' | t(site.defaultLanguage) }}</h2>
+    <h2 id="projects-title" class="text-2xl font-semibold mb-6" data-i18n-key="home.featured.heading">{{ 'home.featured.heading' | t(site.defaultLanguage) }}</h2>
     {% set featured = collections.featured_projects %}
     {% if not (featured and featured.length) %}
       {% set featured = collections.projects %}
@@ -67,14 +67,14 @@ permalink: "/"
       </article>
     </div>
     <div class="mt-6">
-      <a href="/projects/" class="text-sky-700 hover:underline font-medium">{{ 'home.featured.viewAll' | t(site.defaultLanguage) }}</a>
+      <a href="/projects/" class="text-sky-700 hover:underline font-medium" data-i18n-key="home.featured.viewAll">{{ 'home.featured.viewAll' | t(site.defaultLanguage) }}</a>
     </div>
   </div>
 </section>
 
 <section id="certifications" class="mb-12" aria-labelledby="certifications-title">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <h2 id="certifications-title" class="text-2xl font-semibold mb-6">{{ 'certifications.heading' | t(site.defaultLanguage) }}</h2>
+    <h2 id="certifications-title" class="text-2xl font-semibold mb-6" data-i18n-key="certifications.heading">{{ 'certifications.heading' | t(site.defaultLanguage) }}</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" role="list">
       {% for item in certifications %}
       <article class="relative rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200" role="listitem">

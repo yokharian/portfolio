@@ -687,8 +687,128 @@
           3,
           7
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create language state management module",
+            "description": "Implement a core language state management module that handles language selection, persistence, and retrieval.",
+            "dependencies": [],
+            "details": "Create a languageManager.js module with functions to: 1) Get current language (defaulting to browser language or 'en'), 2) Set language preference, 3) Save language to localStorage, 4) Read language from localStorage, 5) Parse language from URL parameters. Include a default language configuration object with supported languages (en, es). Implement proper error handling and input validation for URL parameters.",
+            "status": "done",
+            "testStrategy": "Unit test each function in isolation. Test localStorage persistence across page reloads. Test URL parameter parsing with valid and invalid inputs. Test browser language detection fallback."
+          },
+          {
+            "id": 2,
+            "title": "Design and implement language switcher UI component",
+            "description": "Create an accessible language switcher UI component for the site header that allows users to toggle between English and Spanish.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Create a language-switcher.js component that renders a toggle button with language options. Style according to site design system. Implement with proper ARIA attributes (aria-label, aria-expanded, etc.). Add keyboard navigation support. Ensure the component displays the current active language. Add event listeners to trigger language change using the language state manager. Prevent page flicker on language change.",
+            "status": "done",
+            "testStrategy": "Test keyboard accessibility (tab navigation, Enter/Space activation). Test ARIA attributes are correctly set. Test visual states (hover, focus, active). Test that language change events are properly triggered."
+          },
+          {
+            "id": 3,
+            "title": "Implement translation system for UI elements",
+            "description": "Create a translation system for UI elements like navigation, buttons, and other static interface components.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Create a translations.js file with a structured object containing UI string translations for both languages. Implement a translate() function that accepts a key and returns the appropriate string based on current language. Add a mechanism to update all UI elements when language changes. Create data attributes (e.g., data-i18n-key) for HTML elements that need translation. Implement observer pattern to notify UI when language changes.",
+            "status": "done",
+            "testStrategy": "Test translation retrieval for all UI strings in both languages. Test fallback behavior for missing translations. Test dynamic UI updates when language changes. Verify all navigation items and buttons display correctly in both languages."
+          },
+          {
+            "id": 4,
+            "title": "Implement static content translation for homepage",
+            "description": "Create a system to translate static content on the homepage between English and Spanish.",
+            "dependencies": [
+              "10.1",
+              "10.3"
+            ],
+            "details": "Extend the translation system to handle longer content blocks. Create content JSON files for homepage sections in both languages. Implement a content loader that fetches the appropriate language content. Add a mechanism to swap content when language changes without page reload. Ensure content maintains proper formatting and layout when switched.",
+            "status": "done",
+            "testStrategy": "Test content loading for both languages. Verify all homepage sections display correctly after language switch. Test edge cases like partial translations. Check that formatting and layout remain consistent across languages."
+          },
+          {
+            "id": 5,
+            "title": "Implement Markdown content language handling",
+            "description": "Create a system to handle multilingual content in Markdown files with appropriate fallback mechanisms.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Modify the Markdown processing pipeline to support language-specific content. Update frontmatter schema to include language identifier. Implement a content selection algorithm that: 1) Tries to load content in the requested language, 2) Falls back to default language if translation unavailable, 3) Indicates to the user when content is displayed in fallback language. Create a directory structure that supports multilingual content organization.",
+            "status": "done",
+            "testStrategy": "Test content loading with both languages available. Test fallback behavior when translation is missing. Verify frontmatter parsing works correctly with language metadata. Test edge cases like partial translations or malformed language identifiers."
+          },
+          {
+            "id": 6,
+            "title": "Implement URL-based language switching",
+            "description": "Add support for language selection via URL parameters and update URLs when language is changed.",
+            "dependencies": [
+              "10.1",
+              "10.2"
+            ],
+            "details": "Extend languageManager.js to parse the 'lang' URL parameter. Implement URL updating when language changes (using History API). Add language parameter to all internal links. Ensure bookmarking works with language preference. Sanitize URL parameters to prevent XSS. Handle edge cases like invalid language codes in URL. Maintain other URL parameters when updating language.",
+            "status": "done",
+            "testStrategy": "Test URL parameter parsing with various inputs. Test URL updates when language changes. Verify bookmarked URLs load with correct language. Test security aspects with malformed inputs. Test that other URL parameters are preserved during language change."
+          },
+          {
+            "id": 7,
+            "title": "Implement HTML language attributes and metadata",
+            "description": "Update HTML lang attribute and add appropriate language metadata to the page head for SEO and accessibility.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Create a function to update the HTML lang attribute when language changes. Implement hreflang link tags in the head for language alternatives. Add language-specific metadata for SEO. Update document title with localized version when language changes. Ensure all language codes follow ISO standards. Implement proper RTL support if needed in the future.",
+            "status": "done",
+            "testStrategy": "Verify HTML lang attribute updates correctly. Test hreflang tags are properly generated. Check that metadata is correctly updated for SEO. Test with screen readers to verify accessibility improvements."
+          },
+          {
+            "id": 8,
+            "title": "Implement localized date and number formatting",
+            "description": "Create a system to format dates, numbers, and other locale-specific content according to the selected language.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Create a formatting.js utility with functions for date and number formatting based on current language. Use Intl API for localization. Implement functions for common formats (short date, long date, currency, etc.). Add data attributes to mark elements needing localized formatting. Update formatted elements when language changes. Handle timezone considerations.",
+            "status": "done",
+            "testStrategy": "Test date formatting in both languages. Verify number formatting follows locale conventions. Test currency formatting if applicable. Test dynamic updates of formatted content when language changes."
+          },
+          {
+            "id": 9,
+            "title": "Implement language preference persistence",
+            "description": "Ensure language preference is saved between sessions and properly restored on site revisit.",
+            "dependencies": [
+              "10.1",
+              "10.6"
+            ],
+            "details": "Enhance languageManager.js to robustly save language preference to localStorage. Implement proper initialization sequence: 1) Check URL parameters first, 2) Fall back to localStorage if no URL parameter, 3) Use browser language detection as final fallback, 4) Default to English if all else fails. Add expiration to stored preferences if needed. Handle localStorage unavailability gracefully.",
+            "status": "done",
+            "testStrategy": "Test persistence across page reloads and browser restarts. Test the full initialization sequence with different scenarios. Test behavior when localStorage is unavailable or disabled. Verify priority order of different language sources (URL > localStorage > browser language > default)."
+          },
+          {
+            "id": 10,
+            "title": "Create comprehensive tests for language system",
+            "description": "Implement end-to-end and integration tests for the complete language switching functionality.",
+            "dependencies": [
+              "10.1",
+              "10.2",
+              "10.3",
+              "10.4",
+              "10.5",
+              "10.6",
+              "10.7",
+              "10.8",
+              "10.9"
+            ],
+            "details": "Create automated tests that verify the complete language switching flow. Test integration between all components. Implement visual regression tests to ensure layout doesn't break with different language content lengths. Create test cases for all edge cases and error scenarios. Test performance impact of language switching. Verify accessibility compliance in both languages. Document test coverage and results.",
+            "status": "done",
+            "testStrategy": "Run end-to-end tests simulating real user language switching. Test all pages in both languages. Verify visual consistency across languages. Test with screen readers and keyboard navigation. Measure and document performance metrics for language switching operations."
+          }
+        ]
       },
       {
         "id": 11,
@@ -775,7 +895,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-13T02:06:40.252Z",
+      "updated": "2025-09-13T03:54:06.985Z",
       "description": "Tasks for default context"
     }
   }

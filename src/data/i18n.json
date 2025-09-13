@@ -23,6 +23,9 @@
           "alt": "AWS Solutions Architect Associate certification badge"
         }
       }
+    },
+    "header": {
+      "cta": "Book a 30 min call"
     }
   },
   "es": {
@@ -49,6 +52,9 @@
           "alt": "Insignia de certificación AWS Solutions Architect Associate"
         }
       }
+    },
+    "header": {
+      "cta": "Agendar llamada de 30 min"
     }
   }
 }

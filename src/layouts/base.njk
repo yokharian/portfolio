@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title or site.title }}</title>
     <meta name="description" content="{{ description or site.description }}">
+    <link rel="alternate" href="{{ page.url }}?lang=en" hreflang="en">
+    <link rel="alternate" href="{{ page.url }}?lang=es" hreflang="es">
+    <link rel="alternate" href="{{ page.url }}" hreflang="x-default">
     <link rel="stylesheet" href="/assets/styles.css">
+    <script id="i18n-data" type="application/json">{{ i18n | json | safe }}</script>
     {% block headExtra %}{% endblock %}
   </head>
   <body class="min-h-screen bg-slate-50 text-slate-800 antialiased">
@@ -16,5 +20,8 @@
     </main>
 
     {% include "partials/footer.njk" %}
+    <script src="/assets/js/lang-bootstrap.js" defer></script>
+    <script src="/assets/js/lang-switcher.js" defer></script>
+    <script src="/assets/js/i18n-client.js" defer></script>
   </body>
 </html>

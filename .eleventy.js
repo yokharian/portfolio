@@ -2,6 +2,7 @@ const { filterByLanguage, normalizeLang } = require('./src/utils/language');
 const { formatMonthYear, formatRange, relativeFrom, presentLabel } = require('./src/utils/dates');
 const { createMd } = require('./src/utils/markdown');
 const { t: translate } = require('./src/utils/i18n');
+const { formatNumber, formatCurrency } = require('./src/utils/format');
 const Image = require('@11ty/eleventy-img');
 const path = require('path');
 
@@ -22,6 +23,11 @@ module.exports = function (eleventyConfig) {
     if (format === "yyyy-LL-dd") return `${yyyy}-${mm}-${dd}`;
     // Fallback ISO-like
     return `${yyyy}-${mm}-${dd}`;
+  });
+
+  // Utility filters
+  eleventyConfig.addNunjucksFilter('json', function (obj) {
+    try { return JSON.stringify(obj || {}); } catch (e) { return '{}'; }
   });
 
   // New date/i18n filters
@@ -47,9 +53,24 @@ module.exports = function (eleventyConfig) {
     }
   });
 
+  // Number formatting filters
+  eleventyConfig.addNunjucksFilter('number', function (value, lang = 'en', options = {}) {
+    return formatNumber(value, lang, options);
+  });
+  eleventyConfig.addNunjucksFilter('currency', function (value, currency = 'USD', lang = 'en') {
+    return formatCurrency(value, currency, lang);
+  });
+
   // Helper filter to pick items by language in templates
   eleventyConfig.addNunjucksFilter('byLanguage', function (items, lang) {
     return filterByLanguage(items, normalizeLang(lang));
+  });
+  eleventyConfig.addNunjucksFilter('byLanguageOrFallback', function (items, lang, fallback = 'en') {
+    const l = normalizeLang(lang);
+    const f = normalizeLang(fallback);
+    const filtered = filterByLanguage(items, l);
+    if (filtered && filtered.length) return filtered;
+    return filterByLanguage(items, f);
   });
 
   // Posts collection from Markdown files in blog_posts/

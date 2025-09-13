@@ -19,3 +19,65 @@
 
 # Test Strategy:
 Test language switching on all pages to verify content changes correctly. Verify that language preference is saved between sessions. Test URL-based language switching. Check that dates and other formatted content adapt to the selected language. Verify that the lang attribute is correctly updated in the HTML. Test with screen readers to ensure accessibility.
+
+# Subtasks:
+## 1. Create language state management module [done]
+### Dependencies: None
+### Description: Implement a core language state management module that handles language selection, persistence, and retrieval.
+### Details:
+Create a languageManager.js module with functions to: 1) Get current language (defaulting to browser language or 'en'), 2) Set language preference, 3) Save language to localStorage, 4) Read language from localStorage, 5) Parse language from URL parameters. Include a default language configuration object with supported languages (en, es). Implement proper error handling and input validation for URL parameters.
+
+## 2. Design and implement language switcher UI component [done]
+### Dependencies: 10.1
+### Description: Create an accessible language switcher UI component for the site header that allows users to toggle between English and Spanish.
+### Details:
+Create a language-switcher.js component that renders a toggle button with language options. Style according to site design system. Implement with proper ARIA attributes (aria-label, aria-expanded, etc.). Add keyboard navigation support. Ensure the component displays the current active language. Add event listeners to trigger language change using the language state manager. Prevent page flicker on language change.
+
+## 3. Implement translation system for UI elements [done]
+### Dependencies: 10.1
+### Description: Create a translation system for UI elements like navigation, buttons, and other static interface components.
+### Details:
+Create a translations.js file with a structured object containing UI string translations for both languages. Implement a translate() function that accepts a key and returns the appropriate string based on current language. Add a mechanism to update all UI elements when language changes. Create data attributes (e.g., data-i18n-key) for HTML elements that need translation. Implement observer pattern to notify UI when language changes.
+
+## 4. Implement static content translation for homepage [done]
+### Dependencies: 10.1, 10.3
+### Description: Create a system to translate static content on the homepage between English and Spanish.
+### Details:
+Extend the translation system to handle longer content blocks. Create content JSON files for homepage sections in both languages. Implement a content loader that fetches the appropriate language content. Add a mechanism to swap content when language changes without page reload. Ensure content maintains proper formatting and layout when switched.
+
+## 5. Implement Markdown content language handling [done]
+### Dependencies: 10.1
+### Description: Create a system to handle multilingual content in Markdown files with appropriate fallback mechanisms.
+### Details:
+Modify the Markdown processing pipeline to support language-specific content. Update frontmatter schema to include language identifier. Implement a content selection algorithm that: 1) Tries to load content in the requested language, 2) Falls back to default language if translation unavailable, 3) Indicates to the user when content is displayed in fallback language. Create a directory structure that supports multilingual content organization.
+
+## 6. Implement URL-based language switching [done]
+### Dependencies: 10.1, 10.2
+### Description: Add support for language selection via URL parameters and update URLs when language is changed.
+### Details:
+Extend languageManager.js to parse the 'lang' URL parameter. Implement URL updating when language changes (using History API). Add language parameter to all internal links. Ensure bookmarking works with language preference. Sanitize URL parameters to prevent XSS. Handle edge cases like invalid language codes in URL. Maintain other URL parameters when updating language.
+
+## 7. Implement HTML language attributes and metadata [done]
+### Dependencies: 10.1
+### Description: Update HTML lang attribute and add appropriate language metadata to the page head for SEO and accessibility.
+### Details:
+Create a function to update the HTML lang attribute when language changes. Implement hreflang link tags in the head for language alternatives. Add language-specific metadata for SEO. Update document title with localized version when language changes. Ensure all language codes follow ISO standards. Implement proper RTL support if needed in the future.
+
+## 8. Implement localized date and number formatting [done]
+### Dependencies: 10.1
+### Description: Create a system to format dates, numbers, and other locale-specific content according to the selected language.
+### Details:
+Create a formatting.js utility with functions for date and number formatting based on current language. Use Intl API for localization. Implement functions for common formats (short date, long date, currency, etc.). Add data attributes to mark elements needing localized formatting. Update formatted elements when language changes. Handle timezone considerations.
+
+## 9. Implement language preference persistence [done]
+### Dependencies: 10.1, 10.6
+### Description: Ensure language preference is saved between sessions and properly restored on site revisit.
+### Details:
+Enhance languageManager.js to robustly save language preference to localStorage. Implement proper initialization sequence: 1) Check URL parameters first, 2) Fall back to localStorage if no URL parameter, 3) Use browser language detection as final fallback, 4) Default to English if all else fails. Add expiration to stored preferences if needed. Handle localStorage unavailability gracefully.
+
+## 10. Create comprehensive tests for language system [done]
+### Dependencies: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9
+### Description: Implement end-to-end and integration tests for the complete language switching functionality.
+### Details:
+Create automated tests that verify the complete language switching flow. Test integration between all components. Implement visual regression tests to ensure layout doesn't break with different language content lengths. Create test cases for all edge cases and error scenarios. Test performance impact of language switching. Verify accessibility compliance in both languages. Document test coverage and results.
+
