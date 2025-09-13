@@ -11,8 +11,8 @@
         "outDir": "public/assets/js",
         "rootDir": "src/client",
         "noEmit": false,
-        "declaration": false,
-        "declarationMap": false,
+        "declaration": true,
+        "declarationMap": true,
         "sourceMap": true
     },
     "include": [

@@ -1,0 +1,23 @@
+{
+  "watch": [
+    ".eleventy.ts",
+    "src/**/*.ts",
+    "!src/client/**/*.ts",
+    "src/layouts/**/*.njk",
+    "src/pages/**/*.njk",
+    "blog_posts/**/*.md",
+    "content/**/*.md"
+  ],
+  "ext": "ts,js,json,njk,md",
+  "ignore": [
+    "node_modules/**/*",
+    "_site/**/*",
+    ".cache/**/*",
+    "public/assets/js/**/*"
+  ],
+  "exec": "npx eleventy --config=.eleventy.ts --serve --watch --quiet",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "delay": 1000
+}
