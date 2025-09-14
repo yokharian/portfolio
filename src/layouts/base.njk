@@ -3,17 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ title or site.title }}</title>
-    <meta name="description" content="{{ description or site.description }}">
+    
+    {# SEO Meta Tags #}
+    {% include "partials/seo.njk" %}
+    
+    {# Language alternates #}
     <link rel="alternate" href="{{ page.url }}?lang=en" hreflang="en">
     <link rel="alternate" href="{{ page.url }}?lang=es" hreflang="es">
     <link rel="alternate" href="{{ page.url }}" hreflang="x-default">
+    
+    {# Styles and Scripts #}
     <link rel="stylesheet" href="/assets/css/styles.css">
     <script id="i18n-data" type="application/json">{{ i18n | json | safe }}</script>
     <script id="rum-config" type="application/json">{{ rumConfig | json | safe }}</script>
     
     <!-- AWS CloudWatch RUM Integration -->
     <script src="/assets/js/rum.js" defer></script>
+    
+    {# JSON-LD Structured Data #}
+    {% include "partials/json-ld.njk" %}
     
     {% block headExtra %}{% endblock %}
   </head>

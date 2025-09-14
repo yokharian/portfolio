@@ -1057,7 +1057,7 @@
           3,
           7
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1065,7 +1065,7 @@
             "description": "Develop a reusable Astro component (e.g., `Seo.astro`) that dynamically generates essential meta tags. This component will be integrated into the main `BaseLayout.astro` to ensure all pages have proper SEO metadata.",
             "dependencies": [],
             "details": "The `Seo.astro` component should accept props like `title`, `description`, `image`, `canonicalURL`, and `type` (e.g., 'website', 'article'). It must generate: \n- `<title>` tag (formatted as 'Page Title | Sofia Escobedo - Python & AWS Developer')\n- `<meta name=\"description\">`\n- `<link rel=\"canonical\">` to the page's absolute URL.\n- Open Graph tags (`og:title`, `og:description`, `og:image`, `og:url`, `og:type`)\n- Twitter Card tags (`twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`).\nUpdate `BaseLayout.astro` to use this component, passing data from the page's frontmatter or props.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Inspect the `<head>` of the homepage, a project page, and other pages to verify that all meta and canonical tags are generated correctly and reflect the page's specific content. Use a browser extension like 'SEO META in 1 CLICK' to validate."
           },
           {
@@ -1074,7 +1074,7 @@
             "description": "Configure the project to automatically generate a `sitemap.xml` file and create a `robots.txt` file to guide search engine crawlers.",
             "dependencies": [],
             "details": "1. Install and configure the official Astro sitemap integration (`@astrojs/sitemap`) in the `astro.config.mjs` file. Ensure the `site` property is correctly set to the production domain. \n2. Create a `robots.txt` file in the `public/` directory. The file should allow crawling for all user agents (`User-agent: *`, `Allow: /`) and include a line pointing to the sitemap's location (e.g., `Sitemap: https://your-domain.com/sitemap-index.xml`).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "After building the site for production, verify that `dist/sitemap-index.xml` and its referenced sitemaps are created correctly. Check that `dist/robots.txt` exists and has the correct content. Submit the sitemap to Google Search Console for validation."
           },
           {
@@ -1085,7 +1085,7 @@
               "8.1"
             ],
             "details": "Create a new component, `JsonLD.astro`, to generate a `<script type=\"application/ld+json\">` tag. On the homepage (`src/pages/index.astro`), use this component to output a `Person` schema. This schema should include `name`, `url` (portfolio link), `sameAs` (links to LinkedIn, GitHub), `jobTitle` ('Python & AWS Developer'), and `alumniOf`. You can also nest or add a `WebSite` schema. The data should be stored in a central config file (e.g., `src/config.ts`) for easy management.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Deploy the changes and use Google's Rich Results Test to validate the homepage URL. Ensure there are no errors and that the `Person` structured data is correctly parsed."
           },
           {
@@ -1094,7 +1094,7 @@
             "description": "Conduct a site-wide audit to ensure every `<img>` tag and Astro `<Image>` component has meaningful and descriptive `alt` text for accessibility and SEO.",
             "dependencies": [],
             "details": "Review all `.astro` files in `src/components` and `src/pages`. Pay special attention to components that render images, such as `FeaturedWork.astro` (project thumbnails) and `Certifications.astro` (certification badges). For dynamic images from Markdown frontmatter, ensure the `alt` text is either included in the frontmatter or derived from the project title. For static images like logos or UI elements, add descriptive static `alt` attributes.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Use a browser's developer tools to inspect all images on the live site. Run a Lighthouse audit in Chrome DevTools and check that the SEO score is not penalized for missing alt text. The accessibility score should also improve."
           },
           {
@@ -1103,7 +1103,7 @@
             "description": "Audit and refactor the site's HTML to ensure a logical heading hierarchy (H1-H6) and the correct use of semantic elements like `<main>`, `<section>`, and `<article>`.",
             "dependencies": [],
             "details": "1. **Heading Audit:** Review `BaseLayout.astro`, `index.astro`, and the project detail page template (`src/pages/work/[...slug].astro`). Ensure there is strictly one `<h1>` per page (typically the page title). Subsequent headings should follow a logical order (`<h2>`, `<h3>`, etc.) without skipping levels. \n2. **Semantic HTML:** Verify that the main content of each page is wrapped in a `<main>` tag. Use `<section>` for distinct sections on the homepage (e.g., 'Featured Work', 'About Me'). Use the `<article>` tag for self-contained content, such as individual project entries on the work detail page.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Use a browser extension like 'Web Developer' to outline heading structures on key pages to verify logical order. Manually inspect the DOM to confirm the correct usage of `<main>`, `<section>`, and `<article>` tags. Re-run a Lighthouse audit to check for improvements in SEO and Accessibility scores."
           }
         ]
@@ -1311,7 +1311,7 @@
     ],
     "metadata": {
       "created": "2025-09-12T17:38:29.434Z",
-      "updated": "2025-09-13T23:48:03.690Z",
+      "updated": "2025-09-13T23:58:05.380Z",
       "description": "Tasks for default context",
       "renamed": {
         "from": "default",

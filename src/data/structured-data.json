@@ -1,0 +1,46 @@
+{
+  "person": {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sofia Escobedo",
+    "url": "https://sofiaescobedo.dev",
+    "jobTitle": "Python & AWS Developer",
+    "description": "Python and AWS solutions architect specializing in data-intensive systems in the cloud.",
+    "image": "https://sofiaescobedo.dev/assets/images/profile.svg",
+    "sameAs": [
+      "https://github.com/yourusername",
+      "https://linkedin.com/in/yourusername"
+    ],
+    "alumniOf": "University Name",
+    "knowsAbout": [
+      "Python",
+      "AWS",
+      "Cloud Architecture",
+      "Data Engineering",
+      "Machine Learning",
+      "DevOps"
+    ],
+    "hasOccupation": {
+      "@type": "Occupation",
+      "name": "Python & AWS Developer",
+      "description": "Design, build, and scale data-intensive systems in the cloud"
+    }
+  },
+  "website": {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Sofia Escobedo - Portfolio",
+    "url": "https://sofiaescobedo.dev",
+    "description": "Portfolio of Sofia Escobedo: Python and AWS solutions architect.",
+    "author": {
+      "@type": "Person",
+      "name": "Sofia Escobedo"
+    },
+    "inLanguage": ["en", "es"],
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://sofiaescobedo.dev/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+}

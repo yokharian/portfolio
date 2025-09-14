@@ -8,6 +8,9 @@ interface SiteConfig {
   calendlyUrl: string;
   email: string;
   currentYear: number;
+  url: string;
+  twitterHandle?: string;
+  image: string;
 }
 
 const siteConfig: SiteConfig = {
@@ -19,6 +22,9 @@ const siteConfig: SiteConfig = {
   calendlyUrl: "https://calendly.com/yourusername",
   email: "your.email@example.com",
   currentYear: new Date().getFullYear(),
+  url: "https://sofiaescobedo.dev", // Update with your actual domain
+  twitterHandle: "sofiaescobedo", // Update with your actual Twitter handle
+  image: "/assets/images/profile.svg",
 };
 
 module.exports = siteConfig;

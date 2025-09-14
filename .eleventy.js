@@ -199,6 +199,12 @@ module.exports = function (eleventyConfig) {
     require("./src/data/rum-config.json")
   );
 
+  // Structured Data
+  eleventyConfig.addGlobalData(
+    "structuredData",
+    require("./src/data/structured-data.json")
+  );
+
   return {
     dir: {
       input: "src",

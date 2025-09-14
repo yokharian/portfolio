@@ -6,6 +6,10 @@ permalink: "/"
 
 {% block headExtra %}
 <link rel="preload" as="image" href="/assets/images/profile.svg">
+{% set jsonLdData = structuredData.person %}
+{% include "partials/json-ld.njk" %}
+{% set jsonLdData = structuredData.website %}
+{% include "partials/json-ld.njk" %}
 {% endblock %}
 
 <section id="hero" class="mb-12" aria-labelledby="hero-title">

@@ -1,6 +1,6 @@
 # Task ID: 8
 # Title: Implement SEO Optimization
-# Status: pending
+# Status: done
 # Dependencies: 2, 3, 7
 # Priority: medium
 # Description: Implement SEO features to optimize the site for search engines, particularly for terms related to 'Python AWS developer'.
@@ -25,7 +25,7 @@
 Use tools like Google's Structured Data Testing Tool to verify JSON-LD implementation. Test meta tags generation for various page types. Validate the sitemap.xml format. Use Lighthouse to test SEO score (target >90 as per SM6). Verify that all images have appropriate alt text. Check that canonical URLs are correctly implemented.
 
 # Subtasks:
-## 1. Create a centralized SEO component for Meta Tags and Canonical URLs [pending]
+## 1. Create a centralized SEO component for Meta Tags and Canonical URLs [done]
 ### Dependencies: None
 ### Description: Develop a reusable Astro component (e.g., `Seo.astro`) that dynamically generates essential meta tags. This component will be integrated into the main `BaseLayout.astro` to ensure all pages have proper SEO metadata.
 ### Details:
@@ -37,26 +37,26 @@ The `Seo.astro` component should accept props like `title`, `description`, `imag
 - Twitter Card tags (`twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`).
 Update `BaseLayout.astro` to use this component, passing data from the page's frontmatter or props.
 
-## 2. Implement sitemap.xml and robots.txt [pending]
+## 2. Implement sitemap.xml and robots.txt [done]
 ### Dependencies: None
 ### Description: Configure the project to automatically generate a `sitemap.xml` file and create a `robots.txt` file to guide search engine crawlers.
 ### Details:
 1. Install and configure the official Astro sitemap integration (`@astrojs/sitemap`) in the `astro.config.mjs` file. Ensure the `site` property is correctly set to the production domain. 
 2. Create a `robots.txt` file in the `public/` directory. The file should allow crawling for all user agents (`User-agent: *`, `Allow: /`) and include a line pointing to the sitemap's location (e.g., `Sitemap: https://your-domain.com/sitemap-index.xml`).
 
-## 3. Implement JSON-LD Structured Data for Person and Profile [pending]
+## 3. Implement JSON-LD Structured Data for Person and Profile [done]
 ### Dependencies: 8.1
 ### Description: Create and inject JSON-LD structured data into the homepage to provide rich context about Sofia Escobedo to search engines.
 ### Details:
 Create a new component, `JsonLD.astro`, to generate a `<script type="application/ld+json">` tag. On the homepage (`src/pages/index.astro`), use this component to output a `Person` schema. This schema should include `name`, `url` (portfolio link), `sameAs` (links to LinkedIn, GitHub), `jobTitle` ('Python & AWS Developer'), and `alumniOf`. You can also nest or add a `WebSite` schema. The data should be stored in a central config file (e.g., `src/config.ts`) for easy management.
 
-## 4. Audit and Implement Alt Text for All Images [pending]
+## 4. Audit and Implement Alt Text for All Images [done]
 ### Dependencies: None
 ### Description: Conduct a site-wide audit to ensure every `<img>` tag and Astro `<Image>` component has meaningful and descriptive `alt` text for accessibility and SEO.
 ### Details:
 Review all `.astro` files in `src/components` and `src/pages`. Pay special attention to components that render images, such as `FeaturedWork.astro` (project thumbnails) and `Certifications.astro` (certification badges). For dynamic images from Markdown frontmatter, ensure the `alt` text is either included in the frontmatter or derived from the project title. For static images like logos or UI elements, add descriptive static `alt` attributes.
 
-## 5. Optimize Heading Hierarchy and Semantic HTML Structure [pending]
+## 5. Optimize Heading Hierarchy and Semantic HTML Structure [done]
 ### Dependencies: None
 ### Description: Audit and refactor the site's HTML to ensure a logical heading hierarchy (H1-H6) and the correct use of semantic elements like `<main>`, `<section>`, and `<article>`.
 ### Details:

@@ -1,0 +1,17 @@
+{# JSON-LD Structured Data Component #}
+{# 
+  Props:
+  - type: Schema type ('Person', 'WebSite', 'Article', etc.)
+  - data: Schema data object
+  - jsonLdData: Direct data object (alternative to type/data)
+#}
+
+{% if jsonLdData %}
+<script type="application/ld+json">
+{{ jsonLdData | json | safe }}
+</script>
+{% elif type and data %}
+<script type="application/ld+json">
+{{ data | json | safe }}
+</script>
+{% endif %}
