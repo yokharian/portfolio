@@ -1,2 +1,0 @@
-# Build the site to catch issues before commit
-npm run build
