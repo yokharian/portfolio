@@ -1,53 +1,90 @@
 ---
 // Header component for Astro
-// This will be enhanced with i18n data in later tasks
+import i18nData from '../data/i18n.json';
+import siteData from '../data/site.json';
 
-const site = {
-  calendlyUrl: "https://calendly.com/sofia-escobedo",
-  githubUrl: "https://github.com/sofia-escobedo",
-  linkedinUrl: "https://linkedin.com/in/sofia-escobedo",
-  email: "hello@sofiaescobedo.com"
-};
+// Get current locale
+const currentLocale = Astro.currentLocale || 'en';
+const t = i18nData[currentLocale];
 
-// For now, we'll use static text. This will be replaced with i18n in later tasks
-const headerText = {
-  cta: "Schedule a Call",
-  en: "EN",
-  es: "ES"
-};
+// Helper function to get localized URL
+function getLocalizedUrl(path: string, locale: string): string {
+  // With prefixDefaultLocale: true, all locales need prefix
+  return `/${locale}${path}`;
+}
+
+// Get current path without locale prefix
+const currentPath = Astro.url.pathname.replace(/^\/[a-z]{2}\//, '/');
+if (currentPath === '') {
+  currentPath = '/';
+}
+
+// Get alternate language URLs
+const enUrl = getLocalizedUrl(currentPath, 'en');
+const esUrl = getLocalizedUrl(currentPath, 'es');
 ---
 
 <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
   <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-    <a href="/" class="text-lg font-semibold tracking-tight hover:text-sky-700">
-      Sofia Escobedo
+    <a href={getLocalizedUrl('/', currentLocale)} class="text-lg font-semibold tracking-tight hover:text-sky-700">
+      {siteData.author}
     </a>
-    <nav class="flex items-center gap-4">
+    <nav class="flex items-center gap-6">
+      <div class="hidden md:flex items-center gap-6">
+        <a 
+          href={getLocalizedUrl('/', currentLocale)} 
+          class="text-slate-600 hover:text-slate-900 font-medium transition-colors"
+        >
+          Home
+        </a>
+        <a 
+          href={getLocalizedUrl('/blog', currentLocale)} 
+          class="text-slate-600 hover:text-slate-900 font-medium transition-colors"
+        >
+          Blog
+        </a>
+        <a 
+          href={getLocalizedUrl('/certifications', currentLocale)} 
+          class="text-slate-600 hover:text-slate-900 font-medium transition-colors"
+        >
+          {t.certifications.heading}
+        </a>
+      </div>
+      
       <a 
-        href={site.calendlyUrl} 
+        href={siteData.calendlyUrl} 
         class="inline-flex items-center rounded-md bg-sky-700 text-white px-3 py-2 text-sm font-medium hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" 
         data-rum-id="schedule_call" 
         onclick="if(window.recordRumEvent){window.recordRumEvent('cta_click', {button: 'schedule_call'});}"
       >
-        {headerText.cta}
+        {t.header.cta}
       </a>
+      
       <div class="flex items-center gap-2 text-sm" data-lang-switcher>
         <a 
           data-lang-link="en" 
-          href="?lang=en" 
+          href={enUrl}
           aria-label="Switch to English" 
-          class="hover:text-sky-700"
+          class={`px-2 py-1 rounded transition-colors ${
+            currentLocale === 'en' 
+              ? 'bg-sky-100 text-sky-700 font-medium' 
+              : 'text-slate-600 hover:text-sky-700'
+          }`}
         >
-          {headerText.en}
+          EN
         </a>
         <span class="text-slate-400">/</span>
         <a 
           data-lang-link="es" 
-          href="?lang=es" 
+          href={esUrl}
           aria-label="Cambiar a Español" 
-          class="hover:text-sky-700"
+          class={`px-2 py-1 rounded transition-colors ${
+            currentLocale === 'es' 
+              ? 'bg-sky-100 text-sky-700 font-medium' 
+              : 'text-slate-600 hover:text-sky-700'
+          }`}
         >
-          {headerText.es}
+          ES
         </a>
       </div>
     </nav>

@@ -11,6 +11,7 @@ const blog = defineCollection({
     banner: z.string().url().optional(),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
+    pubDate: z.string().optional(),
     lucidchartUrl: z.string().optional(),
     tags: z.array(z.object({
       name: z.string(),

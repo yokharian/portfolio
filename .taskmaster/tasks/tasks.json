@@ -1529,15 +1529,15 @@
           7,
           8
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
             "title": "Migrate Homepage (index.njk) to an i18n Astro Page",
             "description": "Convert the Nunjucks homepage template into a single `src/pages/index.astro` file. This page will be automatically built by Astro for both English (`/`) and Spanish (`/es/`) routes based on the i18n configuration.",
             "dependencies": [],
-            "details": "Create `src/pages/index.astro`. Use the `Layout.astro` component (from Task 7). Fetch UI strings like navigation labels and footer text from `src/data/i18n.json` using `Astro.currentLocale` to determine the language. Fetch project data from `src/data/projects.json` and render them using the `ProjectCard.astro` component. This will establish the primary pattern for migrating static pages with the configured i18n routing.",
-            "status": "pending",
+            "details": "Create `src/pages/index.astro`. Use the `Layout.astro` component (from Task 7). Fetch UI strings like navigation labels and footer text from `src/data/i18n.json` using `Astro.currentLocale` to determine the language. Fetch project data from `src/data/projects.json` and render them using the `ProjectCard.astro` component. This will establish the primary pattern for migrating static pages with the configured i18n routing.\n<info added on 2025-09-17T22:39:24.352Z>\n**UPDATE:** The initial approach of using a single `src/pages/index.astro` resulted in a 404 error on the root path (`/`) because the `i18n` configuration `prefixDefaultLocale: true` requires all pages to be prefixed with a locale.\n\nTo resolve this, the implementation was adjusted:\n1.  The main homepage logic was moved to a dynamic route at `src/pages/[lang]/index.astro`.\n2.  A `getStaticPaths` function was added to this page to generate both the `/en/` and `/es/` versions.\n3.  A new, simple `src/pages/index.astro` was created to handle the root path. It contains only a redirect to the default locale's homepage (`/en/`). This ensures that users visiting the root domain are correctly forwarded.\n</info added on 2025-09-17T22:39:24.352Z>",
+            "status": "done",
             "testStrategy": "Navigate to `/` and verify the English content is displayed. Navigate to `/es/` and verify the Spanish content is displayed. Check that project cards are rendered correctly on both versions."
           },
           {
@@ -1548,7 +1548,7 @@
               "9.1"
             ],
             "details": "Create `src/pages/certifications.astro`. Follow the pattern established in the homepage migration. Use the main `Layout.astro` and fetch language-specific strings from `i18n.json` based on `Astro.currentLocale`. The content for certifications can be hardcoded within the Astro component for now, using conditional rendering or separate variables for EN/ES text.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Navigate to `/certifications` and verify English content. Navigate to `/es/certifications` and verify Spanish content. Ensure the correct header/footer translations are shown."
           },
           {
@@ -1558,8 +1558,8 @@
             "dependencies": [
               "9.1"
             ],
-            "details": "Create the file `src/pages/blog/index.astro`. This page will be automatically built for `/blog` (en) and `/es/blog` (es). Inside the component script, use `getCollection('blog')` to fetch all blog entries. Filter the entries to show only those matching the current language by checking if `post.id` starts with `${Astro.currentLocale}/`. Map over the filtered posts and render links pointing to their respective detail pages (e.g., `/en/blog/some-post` or `/es/blog/algun-post`).",
-            "status": "pending",
+            "details": "Create the file `src/pages/blog/index.astro`. This page will be automatically built for `/blog` (en) and `/es/blog` (es). Inside the component script, use `getCollection('blog')` to fetch all blog entries. Filter the entries to show only those matching the current language by checking if `post.id` starts with `${Astro.currentLocale}/`. Map over the filtered posts and render links pointing to their respective detail pages (e.g., `/en/blog/some-post` or `/es/blog/algun-post`).\n<info added on 2025-09-17T22:33:52.941Z>\n**UPDATE:** The initial implementation plan was flawed and resulted in a 404 error for `/en/blog`. This was due to the `i18n: { prefixDefaultLocale: true }` setting in `astro.config.mjs`, which requires all routes to be prefixed with a language code. The following corrections were successfully implemented:\n\n- **File Path:** The page was moved from `src/pages/blog/index.astro` to `src/pages/[lang]/blog/index.astro`. This creates a dynamic route that correctly generates both `/en/blog` and `/es/blog`.\n- **Static Paths:** A `getStaticPaths` function was added to `src/pages/[lang]/blog/index.astro` to explicitly generate the page for each supported locale (`en` and `es`).\n- **Filtering Logic:** The logic for filtering posts was updated to match the project's file naming convention (`post-name.en.md`, `post-name.es.md`). Instead of checking if `post.id` starts with a locale, the filter now checks if the `post.slug` ends with `.${Astro.currentLocale}`.\n</info added on 2025-09-17T22:33:52.941Z>",
+            "status": "done",
             "testStrategy": "Visit `/blog` and confirm only English posts are listed. Visit `/es/blog` and confirm only Spanish posts are listed. Click on a post title and verify it attempts to navigate to the correct dynamic URL."
           },
           {
@@ -1570,7 +1570,7 @@
               "9.3"
             ],
             "details": "Create the file `src/pages/[lang]/blog/[slug].astro`. Implement `getStaticPaths` to generate the routes. Fetch all posts using `getCollection('blog')`. For each post, extract the language and slug from its `id` (e.g., 'en/first-post'). Return an array of path objects, for example: `{ params: { lang: 'en', slug: 'first-post' }, props: { post } }`. The page component will then use `Astro.props.post` to access the post data and render its title, metadata, and body using the `<Content />` component.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "After clicking a blog post link on the `/blog` or `/es/blog` pages, verify that the correct blog post content is rendered. Check that the URL matches the expected structure, like `/en/blog/first-post`."
           },
           {
@@ -1584,7 +1584,7 @@
               "9.4"
             ],
             "details": "Modify the `Header.astro` component. Add a UI element (e.g., a link or button) that allows users to switch between 'EN' and 'ES'. Use `Astro.url` to determine the current page's path and construct the URL for the alternate language. For static pages, this is straightforward (e.g., `/certifications` -> `/es/certifications`). For dynamic blog posts, you may need to add a `translationKey` to the frontmatter of related posts to find the correct corresponding slug. Update all navigation links in the header to use a helper function that generates the correct path, respecting the `prefixDefaultLocale: false` setting (e.g., links for 'en' should not have the `/en/` prefix).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "On the homepage, click the language switcher and verify you are taken to the Spanish homepage. On a blog post page, click the switcher and verify you are taken to the translated version of that post (if it exists). Navigate the entire site in both languages to ensure no broken links."
           }
         ]
@@ -1662,7 +1662,7 @@
     ],
     "metadata": {
       "created": "2025-09-17T18:40:00.163Z",
-      "updated": "2025-09-17T22:10:15.392Z",
+      "updated": "2025-09-17T22:25:15.568Z",
       "description": "Tasks for astro-migration context"
     }
   }

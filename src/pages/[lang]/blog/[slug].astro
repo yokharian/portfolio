@@ -1,0 +1,311 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import JsonLD from '../../../components/JsonLD.astro';
+import { getCollection } from 'astro:content';
+import i18nData from '../../../data/i18n.json';
+import siteData from '../../../data/site.json';
+
+// Generate static paths for all blog posts
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  
+  const paths = allPosts
+    .filter(post => post.data.published !== false)
+    .map(post => {
+      // Extract language and slug from the filename
+      // Format: nombre.en.md -> lang: en, slug: nombre
+      const filename = post.id;
+      const match = filename.match(/^(.+)\.(en|es)\.md$/);
+      
+      if (!match) {
+        console.warn(`Unexpected filename format: ${filename}`);
+        return null;
+      }
+      
+      const [, slug, lang] = match;
+      
+      return {
+        params: { 
+          lang, 
+          slug 
+        },
+        props: { 
+          post 
+        }
+      };
+    })
+    .filter(Boolean); // Remove null entries
+  
+  return paths;
+}
+
+// Get the post from props
+const { post } = Astro.props;
+const { lang, slug } = Astro.params;
+
+// Get current locale
+const currentLocale = lang || 'en';
+const t = i18nData[currentLocale];
+
+// Format date helper
+function formatDate(date: string | Date): string {
+  const d = new Date(date);
+  return d.toLocaleDateString(currentLocale, { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+}
+
+// Get all posts for related posts and translations
+const allPosts = await getCollection('blog');
+
+// Get related posts (same language, different posts)
+const relatedPosts = allPosts
+  .filter(p => {
+    const filename = p.id;
+    const match = filename.match(/^(.+)\.(en|es)\.md$/);
+    return match && match[2] === currentLocale && p.id !== post.id && p.data.published !== false;
+  })
+  .slice(0, 3);
+
+// Get the translation if it exists
+const translationKey = post.data.translationKey;
+const translatedPost = translationKey ? 
+  allPosts.find(p => {
+    const filename = p.id;
+    const match = filename.match(/^(.+)\.(en|es)\.md$/);
+    return match && p.data.translationKey === translationKey && p.id !== post.id;
+  }) : 
+  null;
+---
+
+<Layout 
+  title={`${post.data.title} | ${siteData.title}`}
+  description={post.data.description}
+  lang={currentLocale}
+  type="article"
+  publishedTime={post.data.pubDate || post.data.startDate}
+  modifiedTime={post.data.endDate}
+  author={siteData.author}
+  tags={post.data.tags?.map((tag: any) => tag.name)}
+>
+  <slot name="head">
+    <JsonLD type="Article" data={{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": post.data.title,
+      "description": post.data.description,
+      "author": {
+        "@type": "Person",
+        "name": siteData.author
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": siteData.title,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteData.url}/assets/images/profile.svg`
+        }
+      },
+      "datePublished": post.data.pubDate || post.data.startDate,
+      "dateModified": post.data.endDate,
+      "image": post.data.thumbnail || post.data.banner,
+      "inLanguage": currentLocale,
+      "url": `${siteData.url}/${currentLocale}/blog/${slug}`
+    }} />
+  </slot>
+
+  <article class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <header class="mb-8">
+      <div class="mb-4">
+        <a 
+          href={`/${currentLocale}/blog`}
+          class="inline-flex items-center text-sm text-sky-600 hover:text-sky-700 font-medium"
+        >
+          ← Back to Blog
+        </a>
+      </div>
+      
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-4">
+        {post.data.title}
+      </h1>
+      
+      <p class="text-xl text-slate-600 mb-6">
+        {post.data.description}
+      </p>
+      
+      <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 mb-6">
+        <time>
+          {post.data.pubDate ? formatDate(post.data.pubDate) : 
+           post.data.startDate ? formatDate(post.data.startDate) : 
+           'No date'}
+        </time>
+        
+        {post.data.employer && (
+          <>
+            <span>•</span>
+            <span class="text-sky-600 font-medium">
+              {post.data.employer}
+            </span>
+          </>
+        )}
+        
+        {post.data.endDate && post.data.startDate && (
+          <>
+            <span>•</span>
+            <span>
+              {formatDate(post.data.startDate)} - {formatDate(post.data.endDate)}
+            </span>
+          </>
+        )}
+      </div>
+      
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-6">
+          {post.data.tags.map((tag: any) => (
+            <span 
+              class="inline-block rounded px-3 py-1 text-sm font-medium"
+              style={`background-color: ${tag.color}; color: ${tag.color.replace('hsla(', 'hsla(').replace(/,\s*[0-9.]+\)$/, ', 1)')}`}
+            >
+              {tag.name}
+            </span>
+          ))}
+        </div>
+      )}
+      
+      {post.data.banner && (
+        <div class="aspect-video overflow-hidden rounded-xl mb-8">
+          <img 
+            src={post.data.banner} 
+            alt={post.data.title}
+            class="h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      )}
+    </header>
+
+    <div class="prose prose-slate max-w-none">
+      <slot />
+    </div>
+
+    {post.data.lucidchartUrl && (
+      <div class="mt-8 p-6 bg-slate-50 rounded-xl">
+        <h3 class="text-lg font-semibold text-slate-900 mb-4">Architecture Diagram</h3>
+        <div class="aspect-video">
+          <iframe 
+            src={post.data.lucidchartUrl}
+            class="w-full h-full rounded-lg"
+            title={`Architecture diagram for ${post.data.title}`}
+          ></iframe>
+        </div>
+      </div>
+    )}
+
+    {translatedPost && (
+      <div class="mt-8 p-6 bg-sky-50 rounded-xl">
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">Available in other languages</h3>
+        <a 
+          href={`/${translatedPost.id.split('/')[0]}/blog/${translatedPost.slug}`}
+          class="text-sky-600 hover:text-sky-700 font-medium"
+        >
+          Read in {translatedPost.id.split('/')[0] === 'en' ? 'English' : 'Spanish'}
+        </a>
+      </div>
+    )}
+
+    {relatedPosts.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold text-slate-900 mb-6">Related Posts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedPosts.map((relatedPost) => (
+            <article class="group relative rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200">
+              <a 
+                href={`/${currentLocale}/blog/${relatedPost.slug}`}
+                class="absolute inset-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                aria-label={`Read ${relatedPost.data.title}`}
+              >
+                <span class="sr-only">Read {relatedPost.data.title}</span>
+              </a>
+              
+              {relatedPost.data.thumbnail && (
+                <div class="aspect-video overflow-hidden rounded-lg mb-3">
+                  <img 
+                    src={relatedPost.data.thumbnail} 
+                    alt={relatedPost.data.title}
+                    class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )}
+              
+              <h3 class="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                {relatedPost.data.title}
+              </h3>
+              
+              <p class="text-sm text-slate-600 mb-2 line-clamp-2">
+                {relatedPost.data.description}
+              </p>
+              
+              <div class="text-xs text-slate-500">
+                {relatedPost.data.pubDate ? formatDate(relatedPost.data.pubDate) : 
+                 relatedPost.data.startDate ? formatDate(relatedPost.data.startDate) : 
+                 'No date'}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .prose {
+    color: #334155;
+  }
+  
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    color: #0f172a;
+  }
+  
+  .prose a {
+    color: #0ea5e9;
+    text-decoration: none;
+  }
+  
+  .prose a:hover {
+    color: #0284c7;
+    text-decoration: underline;
+  }
+  
+  .prose code {
+    background-color: #f1f5f9;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+  }
+  
+  .prose pre {
+    background-color: #1e293b;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+  }
+  
+  .prose pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+</style>
