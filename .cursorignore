@@ -8,6 +8,10 @@ build/
 out/
 
 node_modules/
-.taskmaster/
+.taskmaster/generated/
+.taskmaster/tasks/
+.taskmaster/templates/
+.taskmaster/config.json
+.taskmaster/state.json
 _site/
 .idea/
