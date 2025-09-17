@@ -1,0 +1,208 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import JsonLD from '../../components/JsonLD.astro';
+import { getCollection } from 'astro:content';
+import i18nData from '../../data/i18n.json';
+import siteData from '../../data/site.json';
+import certificationsData from '../../data/certifications.json';
+
+// Generate static paths for homepage
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'es' } }
+  ];
+}
+
+// Get current locale
+const currentLocale = Astro.currentLocale || 'en';
+const t = i18nData[currentLocale];
+
+// Get blog posts for latest posts section
+const allPosts = await getCollection('blog');
+const latestPosts = allPosts
+  .filter(post => {
+    // Check if filename ends with current locale
+    const filename = post.id;
+    const match = filename.match(/^(.+)\.(en|es)\.md$/);
+    return match && match[2] === currentLocale;
+  })
+  .sort((a, b) => {
+    const dateA = a.data.pubDate || a.data.startDate || a.slug;
+    const dateB = b.data.pubDate || b.data.startDate || b.slug;
+    return new Date(dateB).getTime() - new Date(dateA).getTime();
+  })
+  .slice(0, 5);
+
+// Get certifications for current locale
+const certifications = certificationsData[currentLocale]?.names ? Object.values(certificationsData[currentLocale].names) : [];
+
+// Sample project data (this would normally come from a projects collection)
+const sampleProject = {
+  url: `/${currentLocale}/projects/sample-en/`,
+  fileSlug: 'sample-en',
+  data: {
+    title: 'Sample Project',
+    description: 'A simple example project to test markdown processing.',
+    heroImage: '/assets/images/57b557508e5d5af340f50f3ac847bcb895a54aeb.gif',
+    alt: 'Sample Project',
+    tags: ['JavaScript', 'Eleventy']
+  }
+};
+
+// Format date helper
+function formatDate(date: string | Date): string {
+  const d = new Date(date);
+  return d.toLocaleDateString(currentLocale, { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit' 
+  });
+}
+---
+
+<Layout 
+  title={siteData.title}
+  description={siteData.description}
+  lang={currentLocale}
+>
+  <slot name="head">
+    <link rel="preload" as="image" href="/assets/images/profile.svg">
+    <JsonLD type="Person" data={{
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Sofia Escobedo",
+      "url": "https://sofiaescobedo.com",
+      "jobTitle": "Python & AWS Developer",
+      "description": "Python and AWS solutions architect specializing in data-intensive systems in the cloud.",
+      "image": "https://sofiaescobedo.com/assets/images/profile.svg",
+      "sameAs": [
+        "https://github.com/sofia-escobedo",
+        "https://linkedin.com/in/sofia-escobedo"
+      ],
+      "knowsAbout": [
+        "Python",
+        "AWS",
+        "Cloud Architecture",
+        "Data Engineering",
+        "Machine Learning",
+        "DevOps"
+      ],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Python & AWS Developer",
+        "description": "Design, build, and scale data-intensive systems in the cloud"
+      }
+    }} />
+    <JsonLD type="WebSite" data={{
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Sofia Escobedo - Portfolio",
+      "url": "https://sofiaescobedo.com",
+      "description": "Portfolio of Sofia Escobedo: Python and AWS solutions architect.",
+      "author": {
+        "@type": "Person",
+        "name": "Sofia Escobedo"
+      },
+      "inLanguage": ["en", "es"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://sofiaescobedo.com/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }} />
+  </slot>
+
+  <section id="hero" class="mb-12" aria-labelledby="hero-title">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-sky-50 to-white ring-1 ring-slate-200">
+        <div class="px-4 sm:px-6 lg:px-12 py-10 sm:py-16 lg:py-20">
+          <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12">
+            <div class="order-2 lg:order-1 text-center lg:text-left">
+              <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900" data-anim="heading" data-i18n-key="hero.title">
+                {t.hero.title}
+              </h1>
+              <p class="mt-4 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0" data-anim="subheading" data-i18n-key="hero.subtitle">
+                {t.hero.subtitle}
+              </p>
+              <div class="mt-6" data-anim="cta">
+                <a href={`/${currentLocale}/#projects`} class="inline-block rounded-md bg-sky-600 px-5 py-3 text-white font-medium shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white" data-i18n-key="hero.cta">
+                  {t.hero.cta}
+                </a>
+              </div>
+            </div>
+            <div class="order-1 lg:order-2 w-full max-w-xs sm:max-w-sm lg:max-w-md mx-auto">
+              <figure class="relative">
+                <img src="/assets/images/profile.svg" alt="Professional profile photo of Sofia" width="640" height="640" decoding="async" fetchpriority="high" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square" data-anim="image">
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="mb-12" aria-labelledby="projects-title">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 id="projects-title" class="text-2xl font-semibold mb-6" data-i18n-key="home.featured.heading">{t.home.featured.heading}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+        <ProjectCard project={sampleProject} />
+      </div>
+      <div class="mt-6">
+        <a href={`/${currentLocale}/projects/`} class="text-sky-700 hover:underline font-medium" data-i18n-key="home.featured.viewAll">{t.home.featured.viewAll}</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications" class="mb-12" aria-labelledby="certifications-title">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 id="certifications-title" class="text-2xl font-semibold mb-6" data-i18n-key="certifications.heading">{t.certifications.heading}</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" role="list">
+        {certifications.map((cert: any) => (
+          <article class="relative rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200" role="listitem">
+            <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer" class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label={`${t.certifications.viewCredential}: ${cert.name}`}>
+              <span class="sr-only">{t.certifications.viewCredential}: {cert.name}</span>
+            </a>
+            <div class="flex items-center gap-3">
+              <img src={cert.imageUrl} alt={cert.name} width="128" height="128" loading="lazy" decoding="async" class="h-16 w-16 object-contain"/>
+              <div>
+                <h3 class="text-base font-semibold text-slate-900">{cert.name}</h3>
+                <p class="text-xs text-slate-600">
+                  <span class="sr-only">{t.certifications.issuerLabel}: </span>{cert.issuer}
+                  · {t.certifications.issuedOn} {formatDate(cert.issuedOn)}
+                </p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": certifications.map((cert: any) => ({
+          "@type": "EducationalOccupationalCredential",
+          "name": cert.name,
+          "url": cert.credentialUrl,
+          "issuer": {"@type": "Organization", "name": cert.issuer},
+          "datePublished": cert.issuedOn
+        }))
+      })}></script>
+    </div>
+  </section>
+
+  <section id="latest-posts" class="mb-12">
+    <h2 class="text-2xl font-semibold mb-6">Latest Posts</h2>
+    <ul class="space-y-3">
+      {latestPosts.map((post) => (
+        <li class="p-4 bg-white rounded-lg shadow-sm border">
+          <a href={`/${currentLocale}/blog/${post.slug}`} class="text-sky-700 hover:underline font-medium">
+            {post.data.title || post.slug}
+          </a>
+          <span class="ml-2 text-xs text-slate-500">({formatDate(post.data.pubDate || post.data.startDate || post.slug)})</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>
