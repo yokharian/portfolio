@@ -1397,7 +1397,7 @@
         "dependencies": [
           6
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1405,7 +1405,7 @@
             "description": "Create a new `src/layouts/Layout.astro` file that replicates the basic HTML structure of `src/_includes/base.njk`. This includes the `<html>`, `<head>`, and `<body>` tags, and uses Astro's `<slot />` element in place of Nunjucks' `{{ content | safe }}`.",
             "dependencies": [],
             "details": "Analyze `src/_includes/base.njk`. Create `src/layouts/Layout.astro`. Define a `Props` interface for expected page-level properties like `title` and `description`. Use these props to populate the `<title>` tag and basic meta tags (charset, viewport). The body should contain a `<main>` tag wrapping the `<slot />` for now. Other partials like header/footer will be added in subsequent tasks.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create a temporary `src/pages/test-layout.astro` page that uses the new `Layout.astro` and contains a simple `<h1>Hello World</h1>`. Run the dev server and verify the page title and basic HTML structure are correct."
           },
           {
@@ -1416,7 +1416,7 @@
               "7.1"
             ],
             "details": "Create `src/components/Header.astro`, `src/components/Footer.astro`, and `src/components/SkipLink.astro`. Migrate the HTML from the corresponding `.njk` files. Replace any Nunjucks syntax with static HTML or Astro variables. Import and place these new components into `src/layouts/Layout.astro`. The `SkipLink` should be placed at the beginning of the `<body>`, and the `Header` and `Footer` should wrap the `<main>` element.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Refresh the `test-layout.astro` page and verify that the header and footer now render correctly as part of the main layout."
           },
           {
@@ -1427,7 +1427,7 @@
               "7.1"
             ],
             "details": "Convert `src/_includes/partials/json-ld.njk` into a `src/components/JsonLD.astro` component that accepts props and uses `JSON.stringify()` within a `<script type=\"application/ld+json\">` tag. Copy the AWS RUM script block into `Layout.astro`, wrapping it in an Astro expression to ensure it only runs in production, e.g., `{import.meta.env.PROD && <script>...</script>}`. Add the remaining SEO meta tags (e.g., `og:title`, `twitter:card`) to `Layout.astro`, using the layout's props for dynamic content. Import and use the `JsonLD` component within the `<head>` of `Layout.astro`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Inspect the source code of the `test-layout.astro` page. Verify that all meta tags are present, the JSON-LD script is correctly formatted, and the RUM script is included (when running a production preview)."
           },
           {
@@ -1436,7 +1436,7 @@
             "description": "Convert the `src/_includes/partials/project-card.njk` partial into a reusable `src/components/ProjectCard.astro` component that accepts props for project data.",
             "dependencies": [],
             "details": "Create `src/components/ProjectCard.astro`. Analyze `project-card.njk` to identify the data it uses (e.g., `project.title`, `project.description`, `project.url`, `project.tags`). Define a `Props` interface in the component's frontmatter to type this data. Convert the Nunjucks template logic and variable placeholders (`{{ project.title }}`) to their Astro/JSX equivalents (`{project.title}`). Use `{project.tags.map(tag => <span>{tag}</span>)}` for loops.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Import the `ProjectCard.astro` component into `test-layout.astro`. Pass it a static mock project object as a prop. Verify the card renders correctly with the provided data."
           },
           {
@@ -1449,7 +1449,7 @@
               "7.4"
             ],
             "details": "Enhance the `src/pages/test-layout.astro` page. Ensure it uses `Layout.astro` and passes appropriate props for `title`, `description`, and data for the `JsonLD` component. Inside the page content, instantiate the `ProjectCard` component at least twice with different mock data to simulate a list. This page will serve as a complete integration test for all migrated layout and partial components.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Load the `test-layout.astro` page in the browser. Confirm the header, footer, and two project cards are all visible and styled correctly. Use browser dev tools to verify that the page title, meta description, JSON-LD data, and RUM script are all present and correct in the final HTML output."
           }
         ]
@@ -1662,7 +1662,7 @@
     ],
     "metadata": {
       "created": "2025-09-17T18:40:00.163Z",
-      "updated": "2025-09-17T19:43:25.946Z",
+      "updated": "2025-09-17T20:28:13.836Z",
       "description": "Tasks for astro-migration context"
     }
   }

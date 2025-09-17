@@ -1,6 +1,6 @@
 # Task ID: 7
 # Title: Migrate Nunjucks Layouts and Partials to Astro Components
-# Status: pending
+# Status: done
 # Dependencies: 6
 # Priority: high
 # Description: Convert the existing Nunjucks base layout (`base.njk`) and all included partials (e.g., header, footer, project cards) into reusable Astro components (`.astro`). This includes migrating the AWS RUM script.
@@ -11,31 +11,31 @@ Create a main `src/layouts/Layout.astro` file that replicates the structure of `
 Create a temporary test page that uses the new `Layout.astro` and includes the migrated components. Verify that the layout renders correctly and that all components appear as expected with static props. Check the browser's source code to ensure the RUM script and meta tags are present.
 
 # Subtasks:
-## 1. Create Base Astro Layout from base.njk [pending]
+## 1. Create Base Astro Layout from base.njk [done]
 ### Dependencies: None
 ### Description: Create a new `src/layouts/Layout.astro` file that replicates the basic HTML structure of `src/_includes/base.njk`. This includes the `<html>`, `<head>`, and `<body>` tags, and uses Astro's `<slot />` element in place of Nunjucks' `{{ content | safe }}`.
 ### Details:
 Analyze `src/_includes/base.njk`. Create `src/layouts/Layout.astro`. Define a `Props` interface for expected page-level properties like `title` and `description`. Use these props to populate the `<title>` tag and basic meta tags (charset, viewport). The body should contain a `<main>` tag wrapping the `<slot />` for now. Other partials like header/footer will be added in subsequent tasks.
 
-## 2. Migrate Header, Footer, and Skip-Link Partials [pending]
+## 2. Migrate Header, Footer, and Skip-Link Partials [done]
 ### Dependencies: 7.1
 ### Description: Convert `header.njk`, `footer.njk`, and `skip-link.njk` from `src/_includes/partials/` into reusable Astro components within a new `src/components/` directory.
 ### Details:
 Create `src/components/Header.astro`, `src/components/Footer.astro`, and `src/components/SkipLink.astro`. Migrate the HTML from the corresponding `.njk` files. Replace any Nunjucks syntax with static HTML or Astro variables. Import and place these new components into `src/layouts/Layout.astro`. The `SkipLink` should be placed at the beginning of the `<body>`, and the `Header` and `Footer` should wrap the `<main>` element.
 
-## 3. Migrate SEO Meta, JSON-LD, and AWS RUM Script [pending]
+## 3. Migrate SEO Meta, JSON-LD, and AWS RUM Script [done]
 ### Dependencies: 7.1
 ### Description: Migrate the advanced SEO meta tags, the `json-ld.njk` partial, and the AWS CloudWatch RUM script from `base.njk` into the `<head>` of `src/layouts/Layout.astro`.
 ### Details:
 Convert `src/_includes/partials/json-ld.njk` into a `src/components/JsonLD.astro` component that accepts props and uses `JSON.stringify()` within a `<script type="application/ld+json">` tag. Copy the AWS RUM script block into `Layout.astro`, wrapping it in an Astro expression to ensure it only runs in production, e.g., `{import.meta.env.PROD && <script>...</script>}`. Add the remaining SEO meta tags (e.g., `og:title`, `twitter:card`) to `Layout.astro`, using the layout's props for dynamic content. Import and use the `JsonLD` component within the `<head>` of `Layout.astro`.
 
-## 4. Convert project-card.njk to a ProjectCard.astro Component [pending]
+## 4. Convert project-card.njk to a ProjectCard.astro Component [done]
 ### Dependencies: None
 ### Description: Convert the `src/_includes/partials/project-card.njk` partial into a reusable `src/components/ProjectCard.astro` component that accepts props for project data.
 ### Details:
 Create `src/components/ProjectCard.astro`. Analyze `project-card.njk` to identify the data it uses (e.g., `project.title`, `project.description`, `project.url`, `project.tags`). Define a `Props` interface in the component's frontmatter to type this data. Convert the Nunjucks template logic and variable placeholders (`{{ project.title }}`) to their Astro/JSX equivalents (`{project.title}`). Use `{project.tags.map(tag => <span>{tag}</span>)}` for loops.
 
-## 5. Create and Finalize a Test Page to Validate All Migrated Components [pending]
+## 5. Create and Finalize a Test Page to Validate All Migrated Components [done]
 ### Dependencies: 7.2, 7.3, 7.4
 ### Description: Create a comprehensive test page that utilizes the new `Layout.astro` and integrates all migrated components (`Header`, `Footer`, `JsonLD`, `ProjectCard`) to ensure they work together correctly.
 ### Details:

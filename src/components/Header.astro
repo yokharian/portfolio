@@ -1,0 +1,55 @@
+---
+// Header component for Astro
+// This will be enhanced with i18n data in later tasks
+
+const site = {
+  calendlyUrl: "https://calendly.com/sofia-escobedo",
+  githubUrl: "https://github.com/sofia-escobedo",
+  linkedinUrl: "https://linkedin.com/in/sofia-escobedo",
+  email: "hello@sofiaescobedo.com"
+};
+
+// For now, we'll use static text. This will be replaced with i18n in later tasks
+const headerText = {
+  cta: "Schedule a Call",
+  en: "EN",
+  es: "ES"
+};
+---
+
+<header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
+  <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="text-lg font-semibold tracking-tight hover:text-sky-700">
+      Sofia Escobedo
+    </a>
+    <nav class="flex items-center gap-4">
+      <a 
+        href={site.calendlyUrl} 
+        class="inline-flex items-center rounded-md bg-sky-700 text-white px-3 py-2 text-sm font-medium hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" 
+        data-rum-id="schedule_call" 
+        onclick="if(window.recordRumEvent){window.recordRumEvent('cta_click', {button: 'schedule_call'});}"
+      >
+        {headerText.cta}
+      </a>
+      <div class="flex items-center gap-2 text-sm" data-lang-switcher>
+        <a 
+          data-lang-link="en" 
+          href="?lang=en" 
+          aria-label="Switch to English" 
+          class="hover:text-sky-700"
+        >
+          {headerText.en}
+        </a>
+        <span class="text-slate-400">/</span>
+        <a 
+          data-lang-link="es" 
+          href="?lang=es" 
+          aria-label="Cambiar a Español" 
+          class="hover:text-sky-700"
+        >
+          {headerText.es}
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>

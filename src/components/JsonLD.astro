@@ -1,0 +1,33 @@
+---
+// JSON-LD Structured Data Component for Astro
+export interface Props {
+  type?: 'Person' | 'WebSite' | 'Article' | 'Organization' | 'BreadcrumbList';
+  data?: Record<string, any>;
+  jsonLdData?: Record<string, any>;
+}
+
+const { type, data, jsonLdData } = Astro.props;
+
+// If jsonLdData is provided, use it directly
+// Otherwise, use type and data to construct the schema
+const schemaData = jsonLdData || (type && data ? data : null);
+
+// Default Person schema if no data is provided
+const defaultPersonSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Sofia Escobedo",
+  "description": "Python and AWS solutions architect",
+  "url": "https://sofiaescobedo.com",
+  "sameAs": [
+    "https://github.com/sofia-escobedo",
+    "https://linkedin.com/in/sofia-escobedo"
+  ]
+};
+
+const finalData = schemaData || defaultPersonSchema;
+---
+
+{schemaData && (
+  <script type="application/ld+json" set:html={JSON.stringify(finalData)} />
+)}

@@ -1,0 +1,62 @@
+---
+// Footer component for Astro
+// This will be enhanced with i18n data in later tasks
+
+const site = {
+  title: "Sofia Escobedo",
+  currentYear: new Date().getFullYear(),
+  githubUrl: "https://github.com/sofia-escobedo",
+  linkedinUrl: "https://linkedin.com/in/sofia-escobedo",
+  calendlyUrl: "https://calendly.com/sofia-escobedo",
+  email: "hello@sofiaescobedo.com"
+};
+---
+
+<footer class="mt-16 border-t bg-white">
+  <div class="container mx-auto px-4 py-8 text-sm text-slate-600">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        {site.githubUrl && (
+          <a 
+            href={site.githubUrl} 
+            class="hover:text-sky-700" 
+            rel="me noopener" 
+            target="_blank"
+          >
+            GitHub
+          </a>
+        )}
+        {site.linkedinUrl && (
+          <a 
+            href={site.linkedinUrl} 
+            class="hover:text-sky-700" 
+            rel="me noopener" 
+            target="_blank"
+          >
+            LinkedIn
+          </a>
+        )}
+        {site.calendlyUrl && (
+          <a 
+            href={site.calendlyUrl} 
+            class="hover:text-sky-700" 
+            target="_blank"
+          >
+            Calendly
+          </a>
+        )}
+        {site.email && (
+          <a 
+            href={`mailto:${site.email}`} 
+            class="hover:text-sky-700"
+          >
+            Email
+          </a>
+        )}
+      </div>
+      <div class="text-slate-500">
+        &copy; {site.currentYear} {site.title}
+      </div>
+    </div>
+  </div>
+</footer>

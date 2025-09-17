@@ -126,35 +126,36 @@ Translations live in `src/data/i18n.json` under `certifications`. The homepage r
 - Add more pages and components as needed.
 
 <!-- TASKMASTER_EXPORT_START -->
-> 🎯 **Taskmaster Export** - 2025-09-17 20:22:08 UTC
+> 🎯 **Taskmaster Export** - 2025-09-17 22:03:34 UTC
 > 📋 Export: without subtasks • Status filter: none
 > 🔗 Powered by [Task Master](https://task-master.dev?utm_source=github-readme&utm_medium=readme-export&utm_campaign=portfolio&utm_content=task-export-link)
 
 | Project Dashboard |  |
 | :-                |:-|
-| Task Progress     | ████░░░░░░░░░░░░░░░░ 20% |
-| Done | 1 |
+| Task Progress     | ████████░░░░░░░░░░░░ 40% |
+| Done | 2 |
 | In Progress | 0 |
-| Pending | 4 |
+| Pending | 3 |
 | Deferred | 0 |
 | Cancelled | 0 |
 |-|-|
-| Subtask Progress | ████░░░░░░░░░░░░░░░░ 20% |
-| Completed | 5 |
+| Subtask Progress | ████████░░░░░░░░░░░░ 40% |
+| Completed | 10 |
 | In Progress | 0 |
-| Pending | 20 |
+| Pending | 15 |
 
 
 | ID | Title | Status | Priority | Dependencies | Complexity |
 | :- | :-    | :-     | :-       | :-           | :-         |
 | 6 | Initialize Astro Project and Core Configuration | ✓&nbsp;done | high | None | N/A |
-| 7 | Migrate Nunjucks Layouts and Partials to Astro Components | ○&nbsp;pending | high | 6 | N/A |
+| 7 | Migrate Nunjucks Layouts and Partials to Astro Components | ✓&nbsp;done | high | 6 | N/A |
 | 8 | Set Up Content Collections and Migrate Data Files | ○&nbsp;pending | high | 6 | N/A |
 | 9 | Migrate Page Templates and Implement i18n Routing | ○&nbsp;pending | high | 7, 8 | N/A |
 | 10 | Finalize Build, Verify SEO, and Test Deployment | ○&nbsp;pending | high | 9 | N/A |
 
 > 📋 **End of Taskmaster Export** - Tasks are synced from your project using the `sync-readme` command.
 <!-- TASKMASTER_EXPORT_END -->
+
 
 
 
