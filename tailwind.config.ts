@@ -2,9 +2,9 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./**/*.{html,njk,md,ts,js}",
+    "./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}",
     "!./node_modules/**/*",
-    "!./_site/**/*",
+    "!./dist/**/*",
     "!./.taskmaster/**/*",
     "!./UI_UX_GUIDE/**/*",
   ],
