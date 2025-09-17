@@ -1,5 +1,13 @@
 {
-  "title": "Sofia Ramirez — Portfolio",
-  "description": "Portfolio of Sofia Ramirez: Python and AWS solutions architect.",
-  "defaultLanguage": "en"
+  "title": "Sofia Escobedo — Portfolio",
+  "description": "Portfolio of Sofia Escobedo: Python and AWS solutions architect.",
+  "defaultLanguage": "en",
+  "url": "https://sofiaescobedo.com",
+  "author": "Sofia Escobedo",
+  "email": "hello@sofiaescobedo.com",
+  "githubUrl": "https://github.com/sofia-escobedo",
+  "linkedinUrl": "https://linkedin.com/in/sofia-escobedo",
+  "calendlyUrl": "https://calendly.com/sofia-escobedo",
+  "twitterHandle": "sofiaescobedo",
+  "currentYear": 2024
 }

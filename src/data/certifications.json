@@ -1,11 +1,46 @@
-[
-  {
-    "id": "aws-sa-associate",
-    "nameKey": "certifications.names.awsSAA.name",
-    "issuerKey": "certifications.names.awsSAA.issuer",
-    "issueDate": "2023-06-15",
-    "credentialUrl": "https://www.credly.com/badges/example-aws-saa",
-    "badgeImage": "/assets/images/aws-solutions-architect.svg",
-    "altKey": "certifications.names.awsSAA.alt"
+{
+  "en": {
+    "heading": "Certifications",
+    "issuedOn": "Issued",
+    "issuerLabel": "Issuer",
+    "viewCredential": "View credential",
+    "names": {
+      "awsSAA": {
+        "name": "AWS Solutions Architect Associate",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-06-15",
+        "credentialUrl": "https://www.credly.com/badges/aws-saa",
+        "imageUrl": "/assets/images/certifications/aws-saa.png"
+      },
+      "awsDVA": {
+        "name": "AWS Developer Associate",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-03-20",
+        "credentialUrl": "https://www.credly.com/badges/aws-dva",
+        "imageUrl": "/assets/images/certifications/aws-dva.png"
+      }
+    }
+  },
+  "es": {
+    "heading": "Certificaciones",
+    "issuedOn": "Emitida",
+    "issuerLabel": "Emisor",
+    "viewCredential": "Ver credencial",
+    "names": {
+      "awsSAA": {
+        "name": "AWS Solutions Architect Associate",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-06-15",
+        "credentialUrl": "https://www.credly.com/badges/aws-saa",
+        "imageUrl": "/assets/images/certifications/aws-saa.png"
+      },
+      "awsDVA": {
+        "name": "AWS Developer Associate",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-03-20",
+        "credentialUrl": "https://www.credly.com/badges/aws-dva",
+        "imageUrl": "/assets/images/certifications/aws-dva.png"
+      }
+    }
   }
-]
+}

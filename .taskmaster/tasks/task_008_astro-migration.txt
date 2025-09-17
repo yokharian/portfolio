@@ -1,6 +1,6 @@
 # Task ID: 8
 # Title: Set Up Content Collections and Migrate Data Files
-# Status: pending
+# Status: done
 # Dependencies: 6
 # Priority: high
 # Description: Establish Astro's Content Collections for the bilingual blog posts and migrate all global and i18n data files from the `src/_data` directory.
@@ -11,31 +11,31 @@ Create a `src/content/config.ts` file. Define a collection schema for blog posts
 Use `getCollection()` in a test page to query the blog posts and verify that the data is parsed correctly according to the schema. Import data from the new `src/data/` files and log it to the console on a test page to ensure it's accessible. Write unit tests for any new utility functions (e.g., date formatting).
 
 # Subtasks:
-## 1. Define Blog Content Collection Schema [pending]
+## 1. Define Blog Content Collection Schema [done]
 ### Dependencies: None
 ### Description: Create the `src/content/config.ts` file and define a Zod schema for the 'blog' collection that matches the frontmatter of the existing Markdown posts.
 ### Details:
 Based on the analysis of `src/posts/en/hello-world.md`, the schema in `src/content/config.ts` should include fields for `title` (string), `description` (string), `date` (date), `tags` (array of strings), `lang` (enum of 'en'/'es'), and `translationKey` (string). Use `z.object` from the `astro:content` import to define this structure.
 
-## 2. Migrate Blog Markdown Files to Content Collection [pending]
+## 2. Migrate Blog Markdown Files to Content Collection [done]
 ### Dependencies: 8.1
 ### Description: Move all bilingual blog post Markdown files from the `src/posts/` directory into the newly established `src/content/blog/` directory.
 ### Details:
 Create the `src/content/blog/` directory. Move all files from `src/posts/en/` and `src/posts/es/` into `src/content/blog/`. The existing language-specific subdirectories (`en/`, `es/`) should be flattened, as the `lang` property in the frontmatter will now be the source of truth for the post's language.
 
-## 3. Migrate Data Files and Define TypeScript Types [pending]
+## 3. Migrate Data Files and Define TypeScript Types [done]
 ### Dependencies: None
 ### Description: Move `site.json`, `certifications.json`, and `i18n.json` from `src/_data/` to a new `src/data/` directory, and create TypeScript types for them.
 ### Details:
 Create a new directory `src/data/`. Move the three JSON files into it. Then, create a new file, `src/data/types.ts`, and define TypeScript interfaces or types (e.g., `SiteData`, `Certification`, `I18nData`) that match the structure of each JSON file to ensure type-safe imports across the project.
 
-## 4. Refactor 'readableDate' Eleventy Filter to a Utility Function [pending]
+## 4. Refactor 'readableDate' Eleventy Filter to a Utility Function [done]
 ### Dependencies: None
 ### Description: Re-implement the `readableDate` filter from `.eleventy.js` as a standalone TypeScript function in a new `src/utils/` directory.
 ### Details:
 Create a `src/utils/` directory if it doesn't exist. Create a file `src/utils/date.ts`. Inside this file, write a function `formatReadableDate(date: Date, lang: 'en' | 'es')` that takes a Date object and a language, and returns a formatted date string (e.g., 'Oct 26, 2023'). You can use the native `Intl.DateTimeFormat` API to replicate the logic from the original Luxon-based filter.
 
-## 5. Create Test Page to Validate Data and Collection Migration [pending]
+## 5. Create Test Page to Validate Data and Collection Migration [done]
 ### Dependencies: 8.2, 8.3
 ### Description: Create a temporary Astro page to query the new blog collection and import the migrated data files to verify that everything is accessible.
 ### Details:

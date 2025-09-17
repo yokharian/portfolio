@@ -1464,7 +1464,7 @@
         "dependencies": [
           6
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1472,7 +1472,7 @@
             "description": "Create the `src/content/config.ts` file and define a Zod schema for the 'blog' collection that matches the frontmatter of the existing Markdown posts.",
             "dependencies": [],
             "details": "Based on the analysis of `src/posts/en/hello-world.md`, the schema in `src/content/config.ts` should include fields for `title` (string), `description` (string), `date` (date), `tags` (array of strings), `lang` (enum of 'en'/'es'), and `translationKey` (string). Use `z.object` from the `astro:content` import to define this structure.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "After creation, run `npx astro check` to ensure the TypeScript configuration is valid and Astro recognizes the new collection schema."
           },
           {
@@ -1483,7 +1483,7 @@
               "8.1"
             ],
             "details": "Create the `src/content/blog/` directory. Move all files from `src/posts/en/` and `src/posts/es/` into `src/content/blog/`. The existing language-specific subdirectories (`en/`, `es/`) should be flattened, as the `lang` property in the frontmatter will now be the source of truth for the post's language.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run `npx astro check` again. If there are any mismatches between the frontmatter in the moved files and the schema defined in subtask 1, Astro's type checker will report errors."
           },
           {
@@ -1492,7 +1492,7 @@
             "description": "Move `site.json`, `certifications.json`, and `i18n.json` from `src/_data/` to a new `src/data/` directory, and create TypeScript types for them.",
             "dependencies": [],
             "details": "Create a new directory `src/data/`. Move the three JSON files into it. Then, create a new file, `src/data/types.ts`, and define TypeScript interfaces or types (e.g., `SiteData`, `Certification`, `I18nData`) that match the structure of each JSON file to ensure type-safe imports across the project.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "In a temporary test file, attempt to import the JSON data and cast it to the newly created types to ensure they match, e.g., `import siteData from '~/data/site.json'; const typedData: SiteData = siteData;`."
           },
           {
@@ -1501,7 +1501,7 @@
             "description": "Re-implement the `readableDate` filter from `.eleventy.js` as a standalone TypeScript function in a new `src/utils/` directory.",
             "dependencies": [],
             "details": "Create a `src/utils/` directory if it doesn't exist. Create a file `src/utils/date.ts`. Inside this file, write a function `formatReadableDate(date: Date, lang: 'en' | 'es')` that takes a Date object and a language, and returns a formatted date string (e.g., 'Oct 26, 2023'). You can use the native `Intl.DateTimeFormat` API to replicate the logic from the original Luxon-based filter.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create a unit test file for `date.ts` (e.g., `src/utils/date.test.ts`) using a framework like Vitest. Add test cases to verify that the function correctly formats dates for both English and Spanish locales."
           },
           {
@@ -1513,7 +1513,7 @@
               "8.3"
             ],
             "details": "Create a new page at `src/pages/test-migration.astro`. In the frontmatter script, use `getCollection('blog')` to fetch all blog entries. Also, import the data from `src/data/site.json` and `src/data/i18n.json`. In the template section, render the title of the first blog post and the site name from the imported data to confirm they are loaded correctly.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the dev server with `npm run dev` and navigate to `/test-migration`. Verify that the page renders without errors and that the blog post title and site name are displayed as expected in the browser."
           }
         ]
@@ -1662,7 +1662,7 @@
     ],
     "metadata": {
       "created": "2025-09-17T18:40:00.163Z",
-      "updated": "2025-09-17T20:28:13.836Z",
+      "updated": "2025-09-17T22:10:15.392Z",
       "description": "Tasks for astro-migration context"
     }
   }

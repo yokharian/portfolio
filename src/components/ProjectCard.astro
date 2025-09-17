@@ -66,7 +66,7 @@ function truncateText(text: string, maxLength: number = 120): string {
   
   {tags.length > 0 && (
     <ul class="flex flex-wrap gap-2" aria-label="Technologies used">
-      {tags.slice(0, 5).map(tag => (
+      {tags.slice(0, 5).map((tag: any) => (
         <li>
           <span class="inline-block rounded bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700">
             {tag}

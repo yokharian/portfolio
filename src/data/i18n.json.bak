@@ -1,0 +1,74 @@
+{
+  "en": {
+    "hero": {
+      "title": "Python & AWS Solutions Architect",
+      "subtitle": "I design, build, and scale data-intensive systems in the cloud.",
+      "cta": "View Projects"
+    },
+    "home": {
+      "featured": {
+        "heading": "Featured Work",
+        "viewAll": "View all projects"
+      }
+    },
+    "certifications": {
+      "heading": "Certifications",
+      "issuedOn": "Issued",
+      "issuerLabel": "Issuer",
+      "viewCredential": "View credential",
+      "names": {
+        "awsSAA": {
+          "name": "AWS Certified Solutions Architect – Associate",
+          "issuer": "Amazon Web Services (AWS)",
+          "alt": "AWS Solutions Architect Associate certification badge"
+        }
+      }
+    },
+    "header": {
+      "cta": "Book a 30 min call"
+    },
+    "privacy": {
+      "banner": {
+        "text": "We use analytics to improve your experience. Your data is processed anonymously.",
+        "accept": "Accept",
+        "decline": "Decline"
+      }
+    }
+  },
+  "es": {
+    "hero": {
+      "title": "Arquitecta de Soluciones Python y AWS",
+      "subtitle": "Diseño, construyo y escalo sistemas intensivos en datos en la nube.",
+      "cta": "Ver Proyectos"
+    },
+    "home": {
+      "featured": {
+        "heading": "Trabajos Destacados",
+        "viewAll": "Ver todos los proyectos"
+      }
+    },
+    "certifications": {
+      "heading": "Certificaciones",
+      "issuedOn": "Emitido",
+      "issuerLabel": "Emisor",
+      "viewCredential": "Ver credencial",
+      "names": {
+        "awsSAA": {
+          "name": "AWS Certified Solutions Architect – Associate",
+          "issuer": "Amazon Web Services (AWS)",
+          "alt": "Insignia de certificación AWS Solutions Architect Associate"
+        }
+      }
+    },
+    "header": {
+      "cta": "Agendar llamada de 30 min"
+    },
+    "privacy": {
+      "banner": {
+        "text": "Utilizamos análisis para mejorar tu experiencia. Tus datos se procesan de forma anónima.",
+        "accept": "Aceptar",
+        "decline": "Rechazar"
+      }
+    }
+  }
+}
