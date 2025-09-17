@@ -263,7 +263,8 @@ dev-debug.log
 *.sw?
 # OS specific
 
-!.taskmaster/
+# Astro build output
+.astro/
 
 # 11ty build output
 _site/
@@ -276,5 +277,6 @@ src/assets/js/*.map
 src/assets/css/*.css
 
 # Task files
+!.taskmaster/
 # tasks.json
 # tasks/ 
