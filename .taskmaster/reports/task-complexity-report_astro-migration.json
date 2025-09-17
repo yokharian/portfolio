@@ -1,0 +1,53 @@
+{
+	"meta": {
+		"generatedAt": "2025-09-17T19:21:40.145Z",
+		"tasksAnalyzed": 5,
+		"totalTasks": 5,
+		"analysisCount": 5,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 6,
+			"taskTitle": "Initialize Astro Project and Core Configuration",
+			"complexityScore": 3,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Based on the analysis of the project requirements for Astro initialization (Task 6), generate the complete code for the following new or modified files: `astro.config.mjs`, the `scripts` section of `package.json`, `tsconfig.json`, `tailwind.config.mjs`, and `src/styles/global.css`. Ensure the configurations include Tailwind, Sitemap, i18n for 'en' and 'es' with `prefixDefaultLocale: true`, and the `@/*` path alias.",
+			"reasoning": "Codebase analysis confirms this is a foundational task that involves creating and modifying configuration files, not writing complex application logic. The steps are well-defined: run CLI commands, install dependencies, and edit JSON/JS config files. The complexity is low because it's primarily a setup and cleanup process, replacing the existing `.eleventy.js` and `package.json` scripts with Astro's standard boilerplate. The existing `tailwind.config.js` can be easily adapted."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Migrate Nunjucks Layouts and Partials to Astro Components",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Based on the content of `src/_includes/base.njk`, `src/_includes/partials/header.njk`, `src/_includes/partials/footer.njk`, and `src/_includes/partials/project-card.njk`, generate the corresponding Astro components: `src/layouts/Layout.astro`, `src/components/Header.astro`, `src/components/Footer.astro`, and `src/components/ProjectCard.astro`. The `Layout.astro` should define props for title and description, include a `<slot />`, and conditionally render the AWS RUM script in production. The `ProjectCard.astro` component should accept a `project` object as a prop.",
+			"reasoning": "Analysis of the `src/_includes` directory shows several Nunjucks files (`base.njk`, `header.njk`, `project-card.njk`, etc.) with standard templating logic (variables, includes, loops). The task is a direct translation of Nunjucks syntax to Astro/JSX syntax. The complexity is moderate (5/10) not due to algorithmic difficulty, but because it requires careful, file-by-file conversion, defining prop interfaces in TypeScript, and correctly structuring the new `src/components` and `src/layouts` directories. No major refactoring is needed, just translation."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Set Up Content Collections and Migrate Data Files",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Based on the project structure, generate the necessary code for setting up content collections and data handling (Task 8). Create the content for: 1. `src/content/config.ts`, defining a 'blog' collection schema with fields for title, description, date, tags, lang, and translationKey. 2. `src/data/types.ts`, with TypeScript interfaces for `site.json` and `i18n.json`. 3. `src/utils/date.ts`, containing a `formatReadableDate` function that uses `Intl.DateTimeFormat` to format a date for 'en' and 'es' locales.",
+			"reasoning": "Codebase analysis confirms the existence of `src/posts/**/*.md` for content, `src/_data/*.json` for data, and `.eleventy.js` for filters. This task is primarily organizational. Defining a Zod schema for content collections is straightforward configuration. Migrating files is a structural change. Rewriting the `readableDate` filter from `.eleventy.js` into a standalone TS function using `Intl.DateTimeFormat` is a small, isolated piece of work. The complexity is low-to-medium as it's mostly setup and does not involve complex component interactions."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Migrate Page Templates and Implement i18n Routing",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Generate the Astro page components for migrating the site's main pages (Task 9). Create the code for: 1. `src/pages/index.astro`, which uses the main layout, fetches projects from `src/data/projects.json`, and renders them with the `ProjectCard` component. 2. `src/pages/blog/index.astro`, which uses `getCollection`, filters posts by `Astro.currentLocale`, and lists them. 3. `src/pages/[lang]/blog/[slug].astro`, including the complete `getStaticPaths` function to generate pages for all blog posts and the component body to render the post's content using `<Content />`.",
+			"reasoning": "This task is the most complex as it integrates all previous work (layouts, components, data, content collections) into functional pages. Analysis shows existing Nunjucks pages in `src/pages/`. The complexity (7/10) comes from implementing Astro's specific features for the first time in this project: fetching from content collections (`getCollection`), creating dynamic routes with `getStaticPaths` for the blog, and handling i18n logic using `Astro.currentLocale`. This moves beyond simple translation into application logic."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Finalize Build, Verify SEO, and Test Deployment",
+			"complexityScore": 3,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Based on the migration to Astro, generate the updated deployment configuration for Netlify (Task 10). Provide the complete content for the `netlify.toml` file, ensuring the `[build]` command is set to `npm run build` and the `publish` directory is set to `dist`. Also include a basic `[build.environment]` block to specify a recent Node.js version like `NODE_VERSION = \"18\"`.",
+			"reasoning": "Codebase analysis identified a `netlify.toml` file, which is the primary file to be modified for this task. The task itself is procedural: run build, run preview, test, and update deployment config. The technical complexity is low (3/10) because it involves running standard commands and performing verification, not writing new application features. The only code change is updating the build command and publish directory in `netlify.toml` from Eleventy's (`_site`) to Astro's (`dist`). The effort is in the manual testing process, not the implementation."
+		}
+	]
+}

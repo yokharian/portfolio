@@ -1320,11 +1320,350 @@
     }
   },
   "astro-migration": {
-    "tasks": [],
+    "tasks": [
+      {
+        "id": 6,
+        "title": "Initialize Astro Project and Core Configuration",
+        "description": "Set up a new Astro project, install all necessary dependencies, and configure the basic project settings for TypeScript, Tailwind CSS, and sitemap generation. This task establishes the foundation for the migration.",
+        "details": "Create a new Astro project. Install `@astrojs/tailwind`, `@astrojs/typescript`, and `@astrojs/sitemap`. Create and configure `astro.config.mjs`, including setting up the Tailwind integration and i18n domains for 'en' and 'es'. Configure `tsconfig.json` for Astro's requirements. Update `package.json` with new `dev`, `build`, and `preview` scripts, and remove Eleventy-related dependencies like `@11ty/eleventy` and `nunjucks`.",
+        "testStrategy": "Run `npm run dev` and verify that the Astro development server starts without errors. Check that a basic 'Hello World' page renders correctly. Ensure the `astro.config.mjs` and `tsconfig.json` files are correctly parsed by the Astro CLI.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Empty Astro Project",
+            "description": "Create a new, empty Astro project within the existing repository structure. This will generate the foundational files like `package.json`, `astro.config.mjs`, and `tsconfig.json` without any boilerplate pages.",
+            "dependencies": [],
+            "details": "Run `npm create astro@latest . -- --template empty --skip-houston` in the project root. The `.` argument ensures installation in the current directory. This command will overwrite the existing `package.json` and create the necessary Astro configuration files.",
+            "status": "in-progress",
+            "testStrategy": "Verify that `astro.config.mjs`, a new `package.json` with Astro dependencies, and `tsconfig.json` are created in the project root."
+          },
+          {
+            "id": 2,
+            "title": "Clean Up Old Dependencies and Install Astro Integrations",
+            "description": "Remove all Eleventy-related dependencies from `package.json` and install the required Astro integrations for Tailwind CSS and sitemap generation.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Manually edit `package.json` to remove devDependencies like `@11ty/eleventy` and `nunjucks`. Then, run `npm install`. After cleaning up, install the new integrations by running `npm install @astrojs/tailwind @astrojs/sitemap`. Note: `@astrojs/typescript` is built-in and does not need to be installed separately.",
+            "status": "pending",
+            "testStrategy": "Inspect `package.json` and the `node_modules` directory to confirm that Eleventy packages are gone and `@astrojs/tailwind` and `@astrojs/sitemap` are present."
+          },
+          {
+            "id": 3,
+            "title": "Update package.json Scripts for Astro CLI",
+            "description": "Replace the outdated Eleventy build scripts in `package.json` with the standard commands for running, building, and previewing an Astro site.",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Modify the `scripts` object in `package.json` to include: `\"dev\": \"astro dev\"`, `\"start\": \"astro dev\"`, `\"build\": \"astro build\"`, and `\"preview\": \"astro preview\"`. This ensures that `npm run dev` and other commands will use the Astro CLI.",
+            "status": "pending",
+            "testStrategy": "Run `npm run dev` and confirm that the Astro development server starts up without errors, displaying a default 404 page since no pages have been created yet."
+          },
+          {
+            "id": 4,
+            "title": "Configure Astro Integrations and i18n",
+            "description": "Configure the `astro.config.mjs` file to enable the Tailwind and Sitemap integrations, and set up the internationalization (i18n) routing for English ('en') and Spanish ('es').",
+            "dependencies": [
+              "6.2"
+            ],
+            "details": "In `astro.config.mjs`, import `tailwind` and `sitemap`. Add them to the `integrations` array. Set the `site` property to the production URL (e.g., 'https://www.davebitter.com'). Configure the `i18n` object with `defaultLocale: 'en'`, `locales: ['en', 'es']`, and `routing: { prefixDefaultLocale: true }`.",
+            "status": "pending",
+            "testStrategy": "Restart the dev server. While no pages exist, check the server logs for any errors related to parsing `astro.config.mjs`. No errors indicates a successful configuration."
+          },
+          {
+            "id": 5,
+            "title": "Configure tsconfig.json and Tailwind",
+            "description": "Finalize the TypeScript configuration for Astro path aliases and ensure the Tailwind CSS configuration file is set up to scan Astro components for classes.",
+            "dependencies": [
+              "6.1",
+              "6.4"
+            ],
+            "details": "In `tsconfig.json`, update `compilerOptions` to add a `baseUrl` of `.` and `paths` for `'@/*': ['src/*']`. In `tailwind.config.mjs` (you may need to rename `tailwind.config.js`), ensure the `content` array includes `'./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'`. Create a `src/styles/global.css` file with the three Tailwind directives: `@tailwind base;`, `@tailwind components;`, `@tailwind utilities;`.",
+            "status": "pending",
+            "testStrategy": "Create a temporary `src/pages/index.astro` file. Import `../styles/global.css`. Add an `<h1>` with a Tailwind class like `text-red-500`. Run `npm run dev` and verify the text is red, confirming both `tsconfig.json` paths (for CSS import) and Tailwind are working."
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Migrate Nunjucks Layouts and Partials to Astro Components",
+        "description": "Convert the existing Nunjucks base layout (`base.njk`) and all included partials (e.g., header, footer, project cards) into reusable Astro components (`.astro`). This includes migrating the AWS RUM script.",
+        "details": "Create a main `src/layouts/Layout.astro` file that replicates the structure of `base.njk`, including the `<head>`, SEO meta tags, and the AWS CloudWatch RUM script. Use Astro's `<slot />` element to render page content. Convert all files from `src/_includes/partials/` (like `project-card.njk`, `json-ld.njk`) into corresponding `.astro` components in a `src/components/` directory. Replace Nunjucks syntax (`{{ variable }}`, `{% if %}`) with Astro/JSX equivalents (`{variable}`, `{condition && ...}`).",
+        "testStrategy": "Create a temporary test page that uses the new `Layout.astro` and includes the migrated components. Verify that the layout renders correctly and that all components appear as expected with static props. Check the browser's source code to ensure the RUM script and meta tags are present.",
+        "priority": "high",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Base Astro Layout from base.njk",
+            "description": "Create a new `src/layouts/Layout.astro` file that replicates the basic HTML structure of `src/_includes/base.njk`. This includes the `<html>`, `<head>`, and `<body>` tags, and uses Astro's `<slot />` element in place of Nunjucks' `{{ content | safe }}`.",
+            "dependencies": [],
+            "details": "Analyze `src/_includes/base.njk`. Create `src/layouts/Layout.astro`. Define a `Props` interface for expected page-level properties like `title` and `description`. Use these props to populate the `<title>` tag and basic meta tags (charset, viewport). The body should contain a `<main>` tag wrapping the `<slot />` for now. Other partials like header/footer will be added in subsequent tasks.",
+            "status": "pending",
+            "testStrategy": "Create a temporary `src/pages/test-layout.astro` page that uses the new `Layout.astro` and contains a simple `<h1>Hello World</h1>`. Run the dev server and verify the page title and basic HTML structure are correct."
+          },
+          {
+            "id": 2,
+            "title": "Migrate Header, Footer, and Skip-Link Partials",
+            "description": "Convert `header.njk`, `footer.njk`, and `skip-link.njk` from `src/_includes/partials/` into reusable Astro components within a new `src/components/` directory.",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "Create `src/components/Header.astro`, `src/components/Footer.astro`, and `src/components/SkipLink.astro`. Migrate the HTML from the corresponding `.njk` files. Replace any Nunjucks syntax with static HTML or Astro variables. Import and place these new components into `src/layouts/Layout.astro`. The `SkipLink` should be placed at the beginning of the `<body>`, and the `Header` and `Footer` should wrap the `<main>` element.",
+            "status": "pending",
+            "testStrategy": "Refresh the `test-layout.astro` page and verify that the header and footer now render correctly as part of the main layout."
+          },
+          {
+            "id": 3,
+            "title": "Migrate SEO Meta, JSON-LD, and AWS RUM Script",
+            "description": "Migrate the advanced SEO meta tags, the `json-ld.njk` partial, and the AWS CloudWatch RUM script from `base.njk` into the `<head>` of `src/layouts/Layout.astro`.",
+            "dependencies": [
+              "7.1"
+            ],
+            "details": "Convert `src/_includes/partials/json-ld.njk` into a `src/components/JsonLD.astro` component that accepts props and uses `JSON.stringify()` within a `<script type=\"application/ld+json\">` tag. Copy the AWS RUM script block into `Layout.astro`, wrapping it in an Astro expression to ensure it only runs in production, e.g., `{import.meta.env.PROD && <script>...</script>}`. Add the remaining SEO meta tags (e.g., `og:title`, `twitter:card`) to `Layout.astro`, using the layout's props for dynamic content. Import and use the `JsonLD` component within the `<head>` of `Layout.astro`.",
+            "status": "pending",
+            "testStrategy": "Inspect the source code of the `test-layout.astro` page. Verify that all meta tags are present, the JSON-LD script is correctly formatted, and the RUM script is included (when running a production preview)."
+          },
+          {
+            "id": 4,
+            "title": "Convert project-card.njk to a ProjectCard.astro Component",
+            "description": "Convert the `src/_includes/partials/project-card.njk` partial into a reusable `src/components/ProjectCard.astro` component that accepts props for project data.",
+            "dependencies": [],
+            "details": "Create `src/components/ProjectCard.astro`. Analyze `project-card.njk` to identify the data it uses (e.g., `project.title`, `project.description`, `project.url`, `project.tags`). Define a `Props` interface in the component's frontmatter to type this data. Convert the Nunjucks template logic and variable placeholders (`{{ project.title }}`) to their Astro/JSX equivalents (`{project.title}`). Use `{project.tags.map(tag => <span>{tag}</span>)}` for loops.",
+            "status": "pending",
+            "testStrategy": "Import the `ProjectCard.astro` component into `test-layout.astro`. Pass it a static mock project object as a prop. Verify the card renders correctly with the provided data."
+          },
+          {
+            "id": 5,
+            "title": "Create and Finalize a Test Page to Validate All Migrated Components",
+            "description": "Create a comprehensive test page that utilizes the new `Layout.astro` and integrates all migrated components (`Header`, `Footer`, `JsonLD`, `ProjectCard`) to ensure they work together correctly.",
+            "dependencies": [
+              "7.2",
+              "7.3",
+              "7.4"
+            ],
+            "details": "Enhance the `src/pages/test-layout.astro` page. Ensure it uses `Layout.astro` and passes appropriate props for `title`, `description`, and data for the `JsonLD` component. Inside the page content, instantiate the `ProjectCard` component at least twice with different mock data to simulate a list. This page will serve as a complete integration test for all migrated layout and partial components.",
+            "status": "pending",
+            "testStrategy": "Load the `test-layout.astro` page in the browser. Confirm the header, footer, and two project cards are all visible and styled correctly. Use browser dev tools to verify that the page title, meta description, JSON-LD data, and RUM script are all present and correct in the final HTML output."
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Set Up Content Collections and Migrate Data Files",
+        "description": "Establish Astro's Content Collections for the bilingual blog posts and migrate all global and i18n data files from the `src/_data` directory.",
+        "details": "Create a `src/content/config.ts` file. Define a collection schema for blog posts that matches the frontmatter of the existing Markdown files. Move all blog post `.md` files into `src/content/blog/`. Migrate `site.json`, `certifications.json`, and `i18n.json` to a new `src/data/` directory. Create TypeScript types for this data to ensure type safety. Refactor any custom Eleventy filters (like `readableDate`) into JavaScript helper functions in a `src/utils/` directory.",
+        "testStrategy": "Use `getCollection()` in a test page to query the blog posts and verify that the data is parsed correctly according to the schema. Import data from the new `src/data/` files and log it to the console on a test page to ensure it's accessible. Write unit tests for any new utility functions (e.g., date formatting).",
+        "priority": "high",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Blog Content Collection Schema",
+            "description": "Create the `src/content/config.ts` file and define a Zod schema for the 'blog' collection that matches the frontmatter of the existing Markdown posts.",
+            "dependencies": [],
+            "details": "Based on the analysis of `src/posts/en/hello-world.md`, the schema in `src/content/config.ts` should include fields for `title` (string), `description` (string), `date` (date), `tags` (array of strings), `lang` (enum of 'en'/'es'), and `translationKey` (string). Use `z.object` from the `astro:content` import to define this structure.",
+            "status": "pending",
+            "testStrategy": "After creation, run `npx astro check` to ensure the TypeScript configuration is valid and Astro recognizes the new collection schema."
+          },
+          {
+            "id": 2,
+            "title": "Migrate Blog Markdown Files to Content Collection",
+            "description": "Move all bilingual blog post Markdown files from the `src/posts/` directory into the newly established `src/content/blog/` directory.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Create the `src/content/blog/` directory. Move all files from `src/posts/en/` and `src/posts/es/` into `src/content/blog/`. The existing language-specific subdirectories (`en/`, `es/`) should be flattened, as the `lang` property in the frontmatter will now be the source of truth for the post's language.",
+            "status": "pending",
+            "testStrategy": "Run `npx astro check` again. If there are any mismatches between the frontmatter in the moved files and the schema defined in subtask 1, Astro's type checker will report errors."
+          },
+          {
+            "id": 3,
+            "title": "Migrate Data Files and Define TypeScript Types",
+            "description": "Move `site.json`, `certifications.json`, and `i18n.json` from `src/_data/` to a new `src/data/` directory, and create TypeScript types for them.",
+            "dependencies": [],
+            "details": "Create a new directory `src/data/`. Move the three JSON files into it. Then, create a new file, `src/data/types.ts`, and define TypeScript interfaces or types (e.g., `SiteData`, `Certification`, `I18nData`) that match the structure of each JSON file to ensure type-safe imports across the project.",
+            "status": "pending",
+            "testStrategy": "In a temporary test file, attempt to import the JSON data and cast it to the newly created types to ensure they match, e.g., `import siteData from '~/data/site.json'; const typedData: SiteData = siteData;`."
+          },
+          {
+            "id": 4,
+            "title": "Refactor 'readableDate' Eleventy Filter to a Utility Function",
+            "description": "Re-implement the `readableDate` filter from `.eleventy.js` as a standalone TypeScript function in a new `src/utils/` directory.",
+            "dependencies": [],
+            "details": "Create a `src/utils/` directory if it doesn't exist. Create a file `src/utils/date.ts`. Inside this file, write a function `formatReadableDate(date: Date, lang: 'en' | 'es')` that takes a Date object and a language, and returns a formatted date string (e.g., 'Oct 26, 2023'). You can use the native `Intl.DateTimeFormat` API to replicate the logic from the original Luxon-based filter.",
+            "status": "pending",
+            "testStrategy": "Create a unit test file for `date.ts` (e.g., `src/utils/date.test.ts`) using a framework like Vitest. Add test cases to verify that the function correctly formats dates for both English and Spanish locales."
+          },
+          {
+            "id": 5,
+            "title": "Create Test Page to Validate Data and Collection Migration",
+            "description": "Create a temporary Astro page to query the new blog collection and import the migrated data files to verify that everything is accessible.",
+            "dependencies": [
+              "8.2",
+              "8.3"
+            ],
+            "details": "Create a new page at `src/pages/test-migration.astro`. In the frontmatter script, use `getCollection('blog')` to fetch all blog entries. Also, import the data from `src/data/site.json` and `src/data/i18n.json`. In the template section, render the title of the first blog post and the site name from the imported data to confirm they are loaded correctly.",
+            "status": "pending",
+            "testStrategy": "Run the dev server with `npm run dev` and navigate to `/test-migration`. Verify that the page renders without errors and that the blog post title and site name are displayed as expected in the browser."
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Migrate Page Templates and Implement i18n Routing",
+        "description": "Convert all main page templates (index, blog overview, etc.) from Nunjucks to Astro pages and implement Astro's i18n routing to handle the bilingual (EN/ES) structure.",
+        "details": "Create Astro pages in `src/pages/` that correspond to the old Nunjucks templates (e.g., `src/pages/index.astro`, `src/pages/certifications.astro`). Utilize the i18n routing configuration from `astro.config.mjs` to generate pages for both `/en/` and `/es/`. Fetch data from Content Collections and data files to populate these pages. Create dynamic routes for blog posts, such as `src/pages/[lang]/blog/[slug].astro`, which will generate a page for each Markdown file in the blog collection.",
+        "testStrategy": "Navigate to all pages in both English and Spanish (e.g., `/`, `/es/`, `/en/blog`, `/es/blog`). Verify that the correct content and language strings from `i18n.json` are displayed. Click on a blog post link and confirm that the dynamic route renders the correct Markdown content. Check that all internal links work correctly.",
+        "priority": "high",
+        "dependencies": [
+          7,
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Migrate Homepage (index.njk) to an i18n Astro Page",
+            "description": "Convert the Nunjucks homepage template into a single `src/pages/index.astro` file. This page will be automatically built by Astro for both English (`/`) and Spanish (`/es/`) routes based on the i18n configuration.",
+            "dependencies": [],
+            "details": "Create `src/pages/index.astro`. Use the `Layout.astro` component (from Task 7). Fetch UI strings like navigation labels and footer text from `src/data/i18n.json` using `Astro.currentLocale` to determine the language. Fetch project data from `src/data/projects.json` and render them using the `ProjectCard.astro` component. This will establish the primary pattern for migrating static pages with the configured i18n routing.",
+            "status": "pending",
+            "testStrategy": "Navigate to `/` and verify the English content is displayed. Navigate to `/es/` and verify the Spanish content is displayed. Check that project cards are rendered correctly on both versions."
+          },
+          {
+            "id": 2,
+            "title": "Migrate Static Page (certifications.njk) to an i18n Astro Page",
+            "description": "Convert the Nunjucks certifications template into `src/pages/certifications.astro`. This page will leverage Astro's i18n routing to generate both `/certifications` and `/es/certifications`.",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "Create `src/pages/certifications.astro`. Follow the pattern established in the homepage migration. Use the main `Layout.astro` and fetch language-specific strings from `i18n.json` based on `Astro.currentLocale`. The content for certifications can be hardcoded within the Astro component for now, using conditional rendering or separate variables for EN/ES text.",
+            "status": "pending",
+            "testStrategy": "Navigate to `/certifications` and verify English content. Navigate to `/es/certifications` and verify Spanish content. Ensure the correct header/footer translations are shown."
+          },
+          {
+            "id": 3,
+            "title": "Create an i18n-aware Blog Overview Page",
+            "description": "Create a blog index page that lists posts appropriate for the selected language. This will replace `blog.njk` and use Astro's Content Collections.",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "Create the file `src/pages/blog/index.astro`. This page will be automatically built for `/blog` (en) and `/es/blog` (es). Inside the component script, use `getCollection('blog')` to fetch all blog entries. Filter the entries to show only those matching the current language by checking if `post.id` starts with `${Astro.currentLocale}/`. Map over the filtered posts and render links pointing to their respective detail pages (e.g., `/en/blog/some-post` or `/es/blog/algun-post`).",
+            "status": "pending",
+            "testStrategy": "Visit `/blog` and confirm only English posts are listed. Visit `/es/blog` and confirm only Spanish posts are listed. Click on a post title and verify it attempts to navigate to the correct dynamic URL."
+          },
+          {
+            "id": 4,
+            "title": "Create Dynamic i18n Route for Individual Blog Posts",
+            "description": "Implement the dynamic route `[lang]/blog/[slug].astro` to generate a unique page for each Markdown file in the blog content collection, respecting both its language and slug.",
+            "dependencies": [
+              "9.3"
+            ],
+            "details": "Create the file `src/pages/[lang]/blog/[slug].astro`. Implement `getStaticPaths` to generate the routes. Fetch all posts using `getCollection('blog')`. For each post, extract the language and slug from its `id` (e.g., 'en/first-post'). Return an array of path objects, for example: `{ params: { lang: 'en', slug: 'first-post' }, props: { post } }`. The page component will then use `Astro.props.post` to access the post data and render its title, metadata, and body using the `<Content />` component.",
+            "status": "pending",
+            "testStrategy": "After clicking a blog post link on the `/blog` or `/es/blog` pages, verify that the correct blog post content is rendered. Check that the URL matches the expected structure, like `/en/blog/first-post`."
+          },
+          {
+            "id": 5,
+            "title": "Implement Language Switcher and Unify Navigation Links",
+            "description": "Update the header component to include a language switcher and ensure all navigation links are locale-aware, providing seamless navigation between English and Spanish sections of the site.",
+            "dependencies": [
+              "9.1",
+              "9.2",
+              "9.3",
+              "9.4"
+            ],
+            "details": "Modify the `Header.astro` component. Add a UI element (e.g., a link or button) that allows users to switch between 'EN' and 'ES'. Use `Astro.url` to determine the current page's path and construct the URL for the alternate language. For static pages, this is straightforward (e.g., `/certifications` -> `/es/certifications`). For dynamic blog posts, you may need to add a `translationKey` to the frontmatter of related posts to find the correct corresponding slug. Update all navigation links in the header to use a helper function that generates the correct path, respecting the `prefixDefaultLocale: false` setting (e.g., links for 'en' should not have the `/en/` prefix).",
+            "status": "pending",
+            "testStrategy": "On the homepage, click the language switcher and verify you are taken to the Spanish homepage. On a blog post page, click the switcher and verify you are taken to the translated version of that post (if it exists). Navigate the entire site in both languages to ensure no broken links."
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Finalize Build, Verify SEO, and Test Deployment",
+        "description": "Ensure the build process is fully functional, verify all SEO elements are preserved, conduct thorough end-to-end testing, and prepare for deployment.",
+        "details": "Run `npm run build` to generate the static site. Inspect the output `dist/` directory to ensure all assets (CSS, JS, images) are processed and optimized correctly. Use browser developer tools and online checkers to verify that SEO meta tags, JSON-LD scripts, and the sitemap (`/sitemap-index.xml`) are correctly generated. Perform a full regression test of the site on multiple browsers and devices. Update any deployment scripts or CI/CD configurations to use the new Astro build commands.",
+        "testStrategy": "Serve the build output locally using `npm run preview` and perform a final click-through of the entire site. Run a Lighthouse audit on key pages (homepage, blog post) to ensure performance and SEO scores are maintained or improved. Validate the generated sitemap using an online tool. Deploy to a staging environment and perform a final verification before pushing to production.",
+        "priority": "high",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Generate Production Build and Verify Asset Integrity",
+            "description": "Run the Astro production build command and inspect the output directory to ensure all static assets are correctly processed, minified, and placed.",
+            "dependencies": [],
+            "details": "Execute `npm run build` in the terminal. After the build completes, navigate to the `dist/` directory. Verify that CSS and JS files are minified and have hash-based names for cache-busting. Check that images from `src/assets` are processed and that files from the `public/` directory are copied over correctly.",
+            "status": "pending",
+            "testStrategy": "Confirm the `dist/` directory is created and populated. Check the file sizes of JS/CSS assets to ensure they are smaller than their source counterparts. Manually check for the existence of a few key images and public files (like `favicon.svg`) in the output."
+          },
+          {
+            "id": 2,
+            "title": "Validate SEO Meta Tags, JSON-LD, and Sitemap",
+            "description": "Serve the production build locally and use browser tools and online validators to confirm that all SEO-related elements are correctly generated and preserved.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Run `npm run preview` to serve the `dist/` directory. Open the site in a browser and navigate to the homepage, a blog post page, and the projects page. Use the browser's developer tools (Elements and Network tabs) to inspect the `<head>` section. Verify that the `title`, `meta description`, `canonical` URL, Open Graph tags, and JSON-LD scripts generated by the `astro-seo` component are present and accurate. Locate the `dist/sitemap-index.xml` and its referenced sub-sitemaps, and validate them using an online sitemap validator.",
+            "status": "pending",
+            "testStrategy": "On a blog post page, ensure the title and description are specific to that post. Check that the `og:image` tag is present. Use a tool like the Schema Markup Validator (schema.org) to test the JSON-LD output. Use a tool like XML-Sitemaps.com's validator for the sitemap."
+          },
+          {
+            "id": 3,
+            "title": "Conduct Cross-Browser and Responsive End-to-End Testing",
+            "description": "Perform a full manual regression test on the locally served production build across different browsers and device sizes to catch any rendering or functionality issues.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "With the site running via `npm run preview`, perform a thorough click-through of the entire website. Test all navigation links, interactive elements, and page layouts. Perform this testing on the latest versions of Chrome, Firefox, and Safari. Use the browser's responsive design mode to simulate and test on common mobile, tablet, and desktop viewport sizes.",
+            "status": "pending",
+            "testStrategy": "Verify that the mobile navigation menu works as expected. Check that Tailwind CSS classes apply correctly across all tested browsers and viewports. Ensure there are no console errors on any page. Confirm that all internal links resolve correctly and there are no 404s."
+          },
+          {
+            "id": 4,
+            "title": "Run Lighthouse Audits for Performance and Accessibility",
+            "description": "Use Google Lighthouse to audit key pages of the production build, ensuring high scores are maintained for performance, accessibility, best practices, and SEO.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "While serving the site with `npm run preview`, open Chrome DevTools. Navigate to the 'Lighthouse' tab. Run a full audit (all categories) on the homepage and at least one content-heavy page, like a blog post. Analyze the report and identify any major regressions or areas for improvement.",
+            "status": "pending",
+            "testStrategy": "Target scores of 90+ in all four Lighthouse categories. Pay close attention to the 'Performance' metrics like Largest Contentful Paint (LCP) and Cumulative Layout Shift (CLS). Address any critical accessibility issues reported by the audit."
+          },
+          {
+            "id": 5,
+            "title": "Update Deployment Platform Configuration",
+            "description": "Configure the deployment service (e.g., Netlify, Vercel, GitHub Actions) to use the correct Astro build commands and settings for continuous deployment.",
+            "dependencies": [
+              "10.1",
+              "10.2",
+              "10.3",
+              "10.4"
+            ],
+            "details": "Access your deployment platform's settings for this project. Update the 'Build Command' to `npm run build` or `astro build`. Set the 'Publish Directory' (or 'Output Directory') to `dist`. Ensure the Node.js version is set to a compatible version (e.g., 18.x or higher). If a `netlify.toml` or similar configuration file is preferred, create or update it with these settings.",
+            "status": "pending",
+            "testStrategy": "Trigger a new deployment on the platform. After the build and deployment are complete, visit the live production URL and perform a quick smoke test to ensure the site is live and functioning as expected. Verify the domain and HTTPS are correctly configured."
+          }
+        ]
+      }
+    ],
     "metadata": {
       "created": "2025-09-17T18:40:00.163Z",
-      "updated": "2025-09-17T18:40:00.163Z",
-      "description": "Tag created from git branch \"astro-migration\""
+      "updated": "2025-09-17T19:39:42.124Z",
+      "description": "Tasks for astro-migration context"
     }
   }
 }

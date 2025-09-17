@@ -1,0 +1,43 @@
+# Task ID: 9
+# Title: Migrate Page Templates and Implement i18n Routing
+# Status: pending
+# Dependencies: 7, 8
+# Priority: high
+# Description: Convert all main page templates (index, blog overview, etc.) from Nunjucks to Astro pages and implement Astro's i18n routing to handle the bilingual (EN/ES) structure.
+# Details:
+Create Astro pages in `src/pages/` that correspond to the old Nunjucks templates (e.g., `src/pages/index.astro`, `src/pages/certifications.astro`). Utilize the i18n routing configuration from `astro.config.mjs` to generate pages for both `/en/` and `/es/`. Fetch data from Content Collections and data files to populate these pages. Create dynamic routes for blog posts, such as `src/pages/[lang]/blog/[slug].astro`, which will generate a page for each Markdown file in the blog collection.
+
+# Test Strategy:
+Navigate to all pages in both English and Spanish (e.g., `/`, `/es/`, `/en/blog`, `/es/blog`). Verify that the correct content and language strings from `i18n.json` are displayed. Click on a blog post link and confirm that the dynamic route renders the correct Markdown content. Check that all internal links work correctly.
+
+# Subtasks:
+## 1. Migrate Homepage (index.njk) to an i18n Astro Page [pending]
+### Dependencies: None
+### Description: Convert the Nunjucks homepage template into a single `src/pages/index.astro` file. This page will be automatically built by Astro for both English (`/`) and Spanish (`/es/`) routes based on the i18n configuration.
+### Details:
+Create `src/pages/index.astro`. Use the `Layout.astro` component (from Task 7). Fetch UI strings like navigation labels and footer text from `src/data/i18n.json` using `Astro.currentLocale` to determine the language. Fetch project data from `src/data/projects.json` and render them using the `ProjectCard.astro` component. This will establish the primary pattern for migrating static pages with the configured i18n routing.
+
+## 2. Migrate Static Page (certifications.njk) to an i18n Astro Page [pending]
+### Dependencies: 9.1
+### Description: Convert the Nunjucks certifications template into `src/pages/certifications.astro`. This page will leverage Astro's i18n routing to generate both `/certifications` and `/es/certifications`.
+### Details:
+Create `src/pages/certifications.astro`. Follow the pattern established in the homepage migration. Use the main `Layout.astro` and fetch language-specific strings from `i18n.json` based on `Astro.currentLocale`. The content for certifications can be hardcoded within the Astro component for now, using conditional rendering or separate variables for EN/ES text.
+
+## 3. Create an i18n-aware Blog Overview Page [pending]
+### Dependencies: 9.1
+### Description: Create a blog index page that lists posts appropriate for the selected language. This will replace `blog.njk` and use Astro's Content Collections.
+### Details:
+Create the file `src/pages/blog/index.astro`. This page will be automatically built for `/blog` (en) and `/es/blog` (es). Inside the component script, use `getCollection('blog')` to fetch all blog entries. Filter the entries to show only those matching the current language by checking if `post.id` starts with `${Astro.currentLocale}/`. Map over the filtered posts and render links pointing to their respective detail pages (e.g., `/en/blog/some-post` or `/es/blog/algun-post`).
+
+## 4. Create Dynamic i18n Route for Individual Blog Posts [pending]
+### Dependencies: 9.3
+### Description: Implement the dynamic route `[lang]/blog/[slug].astro` to generate a unique page for each Markdown file in the blog content collection, respecting both its language and slug.
+### Details:
+Create the file `src/pages/[lang]/blog/[slug].astro`. Implement `getStaticPaths` to generate the routes. Fetch all posts using `getCollection('blog')`. For each post, extract the language and slug from its `id` (e.g., 'en/first-post'). Return an array of path objects, for example: `{ params: { lang: 'en', slug: 'first-post' }, props: { post } }`. The page component will then use `Astro.props.post` to access the post data and render its title, metadata, and body using the `<Content />` component.
+
+## 5. Implement Language Switcher and Unify Navigation Links [pending]
+### Dependencies: 9.1, 9.2, 9.3, 9.4
+### Description: Update the header component to include a language switcher and ensure all navigation links are locale-aware, providing seamless navigation between English and Spanish sections of the site.
+### Details:
+Modify the `Header.astro` component. Add a UI element (e.g., a link or button) that allows users to switch between 'EN' and 'ES'. Use `Astro.url` to determine the current page's path and construct the URL for the alternate language. For static pages, this is straightforward (e.g., `/certifications` -> `/es/certifications`). For dynamic blog posts, you may need to add a `translationKey` to the frontmatter of related posts to find the correct corresponding slug. Update all navigation links in the header to use a helper function that generates the correct path, respecting the `prefixDefaultLocale: false` setting (e.g., links for 'en' should not have the `/en/` prefix).
+
