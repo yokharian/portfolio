@@ -1,8 +1,9 @@
 {
-  "currentTag": "alpha-version",
-  "lastSwitched": "2025-09-13T23:17:13.374Z",
+  "currentTag": "astro-migration",
+  "lastSwitched": "2025-09-17T18:18:20.656Z",
   "branchTagMapping": {
-    "typescript-implement": "typescript-implement"
+    "typescript-implement": "typescript-implement",
+    "astro-migration": "astro-migration"
   },
   "migrationNoticeShown": false
 }

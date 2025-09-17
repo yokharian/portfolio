@@ -1318,5 +1318,13 @@
         "date": "2025-09-13T23:17:13.374Z"
       }
     }
+  },
+  "astro-migration": {
+    "tasks": [],
+    "metadata": {
+      "created": "2025-09-17T18:40:00.163Z",
+      "updated": "2025-09-17T18:40:00.163Z",
+      "description": "Tag created from git branch \"astro-migration\""
+    }
   }
 }

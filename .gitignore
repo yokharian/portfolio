@@ -275,3 +275,7 @@ src/assets/js/*.map
 
 # Compiled client-side CSS
 src/assets/css/*.css
+
+# Task files
+# tasks.json
+# tasks/ 

@@ -1,0 +1,193 @@
+# PRD: Portfolio Migration from Eleventy to Astro
+
+## Project Overview
+**Project Name:** Portfolio Migration to Astro
+**Timeline:** 20-25 hours total
+**Priority:** High
+**Technology Stack Migration:** Eleventy (11ty) → Astro, TypeScript, Tailwind CSS
+
+## Current State Analysis
+The portfolio website is currently built with:
+- Eleventy (11ty) static site generator
+- TypeScript integration
+- Tailwind CSS styling
+- Nunjucks templating
+- Personal portfolio with featured projects
+- Bilingual blog system (EN/ES)
+- Certifications section
+- Internationalization (i18n)
+- SEO optimization
+- AWS CloudWatch RUM integration
+
+## Migration Goals
+**Primary Goal:** Migrate from Eleventy to Astro while maintaining all existing functionality
+
+**Success Criteria:**
+- All existing pages and functionality preserved
+- Performance maintained or improved
+- Build process simplified
+- TypeScript integration maintained
+- Tailwind CSS styling preserved
+- SEO optimization retained
+- i18n functionality working
+
+## Technical Migration Requirements
+
+### 1. Core Framework Setup and Configuration (4-5 hours)
+**Goal:** Install Astro and configure basic setup
+
+**Tasks:**
+- Install Astro and core dependencies (@astrojs/tailwind, @astrojs/typescript, @astrojs/sitemap)
+- Create astro.config.mjs with proper configuration
+- Update package.json scripts (dev, build, preview)
+- Configure TypeScript for Astro
+- Set up basic project structure
+
+**Deliverables:**
+- Working Astro development server
+- Basic configuration files
+- Updated build scripts
+
+### 2. Template System Migration (6-7 hours)
+**Goal:** Convert Nunjucks templates to Astro components
+
+**Tasks:**
+- Convert base layout (base.njk → Layout.astro)
+- Migrate all partials to Astro components (project-card, json-ld, etc.)
+- Convert main page templates (index.njk → index.astro)
+- Migrate blog post template
+- Update component imports and references
+
+**Deliverables:**
+- All templates converted to Astro components
+- Working page layouts
+- Preserved styling and functionality
+
+### 3. Content Collections and Data Migration (4-5 hours)
+**Goal:** Migrate content management system
+
+**Tasks:**
+- Set up Astro content collections for blog posts
+- Migrate all data files (site.json, certifications.json, i18n.json)
+- Convert markdown processing and frontmatter handling
+- Update image processing and optimization
+- Migrate all blog posts content
+
+**Deliverables:**
+- Working content collections
+- All content migrated and accessible
+- Preserved i18n functionality
+
+### 4. Build System and Asset Processing (3-4 hours)
+**Goal:** Update build process and asset handling
+
+**Tasks:**
+- Configure Tailwind CSS for Astro
+- Update PostCSS configuration
+- Migrate asset processing (images, CSS, JS)
+- Update TypeScript compilation
+- Configure build output and optimization
+
+**Deliverables:**
+- Working build process
+- Optimized assets
+- Proper TypeScript compilation
+
+### 5. Testing, Optimization and Deployment (3-4 hours)
+**Goal:** Ensure everything works and deploy
+
+**Tasks:**
+- Test all pages and functionality
+- Verify SEO elements and performance
+- Update deployment configuration
+- Performance optimization
+- Final testing and bug fixes
+
+**Deliverables:**
+- Fully functional Astro site
+- Deployed and verified
+- Performance maintained
+
+## Technical Requirements
+
+### Dependencies
+- Astro (latest stable)
+- @astrojs/tailwind
+- @astrojs/typescript
+- @astrojs/sitemap
+- @astrojs/check
+- Keep existing: TypeScript, Tailwind CSS
+- Remove: @11ty/eleventy, nunjucks
+
+### Performance Requirements
+- Maintain current build times
+- Keep bundle size minimal
+- Preserve Core Web Vitals scores
+- Maintain mobile-first responsive design
+
+### Browser Support
+- Same as current (modern browsers)
+- Progressive enhancement approach
+- No breaking changes for users
+
+## Implementation Strategy
+
+### Phase 1 (Hours 1-12): Core Migration
+- Install and configure Astro
+- Migrate base layout and components
+- Convert main pages and templates
+- Set up content collections
+
+### Phase 2 (Hours 13-25): Content and Polish
+- Migrate all content and data
+- Update build process
+- Test all functionality
+- Deploy and verify
+
+## Migration Checklist
+
+### Pre-Migration
+- [ ] Document current functionality
+- [ ] Set up new Astro project structure
+
+### Core Migration
+- [ ] Install Astro and dependencies
+- [ ] Create astro.config.mjs
+- [ ] Migrate base layout
+- [ ] Convert main components
+- [ ] Set up content collections
+
+### Content Migration
+- [ ] Migrate blog posts
+- [ ] Update data files
+- [ ] Test i18n functionality
+
+### Build System
+- [ ] Update package.json scripts
+- [ ] Configure TypeScript
+- [ ] Update Tailwind config
+- [ ] Test build process
+
+### Testing and Deployment
+- [ ] Test all pages and functionality
+- [ ] Verify SEO and performance
+- [ ] Update deployment configuration
+- [ ] Deploy and verify
+
+## Risks and Mitigation
+- **Risk:** Breaking existing functionality
+  - **Mitigation:** Incremental migration and thorough testing
+- **Risk:** Performance degradation
+  - **Mitigation:** Performance monitoring and optimization
+- **Risk:** SEO impact
+  - **Mitigation:** Preserve all SEO elements and test thoroughly
+
+## Success Metrics
+- All existing pages load correctly
+- Build process works without errors
+- Performance metrics maintained
+- SEO scores preserved
+- All functionality working as before
+
+## Notes
+This migration focuses purely on the technical framework change from Eleventy to Astro. No UX changes, service workers, or additional features are included. The goal is a 1:1 functional migration with improved developer experience. Total estimated time: 20-25 hours across 5 main tasks.
