@@ -43,6 +43,9 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { lang, slug } = Astro.params;
 
+// Render the post content to HTML
+const { Content } = await post.render();
+
 // Get current locale
 const currentLocale = lang || 'en';
 const t = i18nData[currentLocale];
@@ -66,6 +69,17 @@ const relatedPosts = allPosts
     const filename = p.id;
     const match = filename.match(/^(.+)\.(en|es)\.md$/);
     return match && match[2] === currentLocale && p.id !== post.id && p.data.published !== false;
+  })
+  .map(p => {
+    // Extract the base slug without language suffix
+    const filename = p.id;
+    const match = filename.match(/^(.+)\.(en|es)\.md$/);
+    const baseSlug = match ? match[1] : p.slug;
+    
+    return {
+      ...p,
+      baseSlug // Add the base slug without language suffix
+    };
   })
   .slice(0, 3);
 
@@ -188,7 +202,7 @@ const translatedPost = translationKey ?
     </header>
 
     <div class="prose prose-slate max-w-none">
-      <slot />
+      <Content />
     </div>
 
     {post.data.lucidchartUrl && (
@@ -208,10 +222,10 @@ const translatedPost = translationKey ?
       <div class="mt-8 p-6 bg-sky-50 rounded-xl">
         <h3 class="text-lg font-semibold text-slate-900 mb-2">Available in other languages</h3>
         <a 
-          href={`/${translatedPost.id.split('/')[0]}/blog/${translatedPost.slug}`}
+          href={`/${translatedPost.id.split('.')[1]}/blog/${translatedPost.id.split('.')[0]}`}
           class="text-sky-600 hover:text-sky-700 font-medium"
         >
-          Read in {translatedPost.id.split('/')[0] === 'en' ? 'English' : 'Spanish'}
+          Read in {translatedPost.id.split('.')[1] === 'en' ? 'English' : 'Spanish'}
         </a>
       </div>
     )}
@@ -223,7 +237,7 @@ const translatedPost = translationKey ?
           {relatedPosts.map((relatedPost) => (
             <article class="group relative rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200">
               <a 
-                href={`/${currentLocale}/blog/${relatedPost.slug}`}
+                href={`/${currentLocale}/blog/${relatedPost.baseSlug}`}
                 class="absolute inset-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 aria-label={`Read ${relatedPost.data.title}`}
               >

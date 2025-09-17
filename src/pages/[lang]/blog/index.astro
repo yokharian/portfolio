@@ -27,6 +27,17 @@ const posts = allPosts
     const match = filename.match(/^(.+)\.(en|es)\.md$/);
     return match && match[2] === currentLocale && post.data.published !== false;
   })
+  .map(post => {
+    // Extract the base slug without language suffix
+    const filename = post.id;
+    const match = filename.match(/^(.+)\.(en|es)\.md$/);
+    const baseSlug = match ? match[1] : post.slug;
+    
+    return {
+      ...post,
+      baseSlug // Add the base slug without language suffix
+    };
+  })
   .sort((a, b) => {
     // Sort by pubDate if available, otherwise by startDate, otherwise by slug
     const dateA = a.data.pubDate || a.data.startDate || a.slug;
@@ -71,7 +82,7 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
           {featuredPosts.map((post) => (
             <article class="group relative rounded-xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200">
               <a 
-                href={`/${currentLocale}/blog/${post.slug}`}
+                href={`/${currentLocale}/blog/${post.baseSlug}`}
                 class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 aria-label={`Read ${post.data.title}`}
               >
@@ -141,7 +152,7 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
           {regularPosts.map((post) => (
             <article class="group relative rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200">
               <a 
-                href={`/${currentLocale}/blog/${post.slug}`}
+                href={`/${currentLocale}/blog/${post.baseSlug}`}
                 class="absolute inset-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 aria-label={`Read ${post.data.title}`}
               >
