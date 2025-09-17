@@ -16,6 +16,14 @@ Navigate to all pages in both English and Spanish (e.g., `/`, `/es/`, `/en/blog`
 ### Description: Convert the Nunjucks homepage template into a single `src/pages/index.astro` file. This page will be automatically built by Astro for both English (`/`) and Spanish (`/es/`) routes based on the i18n configuration.
 ### Details:
 Create `src/pages/index.astro`. Use the `Layout.astro` component (from Task 7). Fetch UI strings like navigation labels and footer text from `src/data/i18n.json` using `Astro.currentLocale` to determine the language. Fetch project data from `src/data/projects.json` and render them using the `ProjectCard.astro` component. This will establish the primary pattern for migrating static pages with the configured i18n routing.
+<info added on 2025-09-17T22:39:24.352Z>
+**UPDATE:** The initial approach of using a single `src/pages/index.astro` resulted in a 404 error on the root path (`/`) because the `i18n` configuration `prefixDefaultLocale: true` requires all pages to be prefixed with a locale.
+
+To resolve this, the implementation was adjusted:
+1.  The main homepage logic was moved to a dynamic route at `src/pages/[lang]/index.astro`.
+2.  A `getStaticPaths` function was added to this page to generate both the `/en/` and `/es/` versions.
+3.  A new, simple `src/pages/index.astro` was created to handle the root path. It contains only a redirect to the default locale's homepage (`/en/`). This ensures that users visiting the root domain are correctly forwarded.
+</info added on 2025-09-17T22:39:24.352Z>
 
 ## 2. Migrate Static Page (certifications.njk) to an i18n Astro Page [done]
 ### Dependencies: 9.1
@@ -28,6 +36,13 @@ Create `src/pages/certifications.astro`. Follow the pattern established in the h
 ### Description: Create a blog index page that lists posts appropriate for the selected language. This will replace `blog.njk` and use Astro's Content Collections.
 ### Details:
 Create the file `src/pages/blog/index.astro`. This page will be automatically built for `/blog` (en) and `/es/blog` (es). Inside the component script, use `getCollection('blog')` to fetch all blog entries. Filter the entries to show only those matching the current language by checking if `post.id` starts with `${Astro.currentLocale}/`. Map over the filtered posts and render links pointing to their respective detail pages (e.g., `/en/blog/some-post` or `/es/blog/algun-post`).
+<info added on 2025-09-17T22:33:52.941Z>
+**UPDATE:** The initial implementation plan was flawed and resulted in a 404 error for `/en/blog`. This was due to the `i18n: { prefixDefaultLocale: true }` setting in `astro.config.mjs`, which requires all routes to be prefixed with a language code. The following corrections were successfully implemented:
+
+- **File Path:** The page was moved from `src/pages/blog/index.astro` to `src/pages/[lang]/blog/index.astro`. This creates a dynamic route that correctly generates both `/en/blog` and `/es/blog`.
+- **Static Paths:** A `getStaticPaths` function was added to `src/pages/[lang]/blog/index.astro` to explicitly generate the page for each supported locale (`en` and `es`).
+- **Filtering Logic:** The logic for filtering posts was updated to match the project's file naming convention (`post-name.en.md`, `post-name.es.md`). Instead of checking if `post.id` starts with a locale, the filter now checks if the `post.slug` ends with `.${Astro.currentLocale}`.
+</info added on 2025-09-17T22:33:52.941Z>
 
 ## 4. Create Dynamic i18n Route for Individual Blog Posts [done]
 ### Dependencies: 9.3
