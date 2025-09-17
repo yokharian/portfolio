@@ -1329,7 +1329,7 @@
         "testStrategy": "Run `npm run dev` and verify that the Astro development server starts without errors. Check that a basic 'Hello World' page renders correctly. Ensure the `astro.config.mjs` and `tsconfig.json` files are correctly parsed by the Astro CLI.",
         "priority": "high",
         "dependencies": [],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1337,7 +1337,7 @@
             "description": "Create a new, empty Astro project within the existing repository structure. This will generate the foundational files like `package.json`, `astro.config.mjs`, and `tsconfig.json` without any boilerplate pages.",
             "dependencies": [],
             "details": "Run `npm create astro@latest . -- --template empty --skip-houston` in the project root. The `.` argument ensures installation in the current directory. This command will overwrite the existing `package.json` and create the necessary Astro configuration files.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Verify that `astro.config.mjs`, a new `package.json` with Astro dependencies, and `tsconfig.json` are created in the project root."
           },
           {
@@ -1348,7 +1348,7 @@
               "6.1"
             ],
             "details": "Manually edit `package.json` to remove devDependencies like `@11ty/eleventy` and `nunjucks`. Then, run `npm install`. After cleaning up, install the new integrations by running `npm install @astrojs/tailwind @astrojs/sitemap`. Note: `@astrojs/typescript` is built-in and does not need to be installed separately.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Inspect `package.json` and the `node_modules` directory to confirm that Eleventy packages are gone and `@astrojs/tailwind` and `@astrojs/sitemap` are present."
           },
           {
@@ -1359,7 +1359,7 @@
               "6.1"
             ],
             "details": "Modify the `scripts` object in `package.json` to include: `\"dev\": \"astro dev\"`, `\"start\": \"astro dev\"`, `\"build\": \"astro build\"`, and `\"preview\": \"astro preview\"`. This ensures that `npm run dev` and other commands will use the Astro CLI.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run `npm run dev` and confirm that the Astro development server starts up without errors, displaying a default 404 page since no pages have been created yet."
           },
           {
@@ -1370,7 +1370,7 @@
               "6.2"
             ],
             "details": "In `astro.config.mjs`, import `tailwind` and `sitemap`. Add them to the `integrations` array. Set the `site` property to the production URL (e.g., 'https://www.davebitter.com'). Configure the `i18n` object with `defaultLocale: 'en'`, `locales: ['en', 'es']`, and `routing: { prefixDefaultLocale: true }`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Restart the dev server. While no pages exist, check the server logs for any errors related to parsing `astro.config.mjs`. No errors indicates a successful configuration."
           },
           {
@@ -1382,7 +1382,7 @@
               "6.4"
             ],
             "details": "In `tsconfig.json`, update `compilerOptions` to add a `baseUrl` of `.` and `paths` for `'@/*': ['src/*']`. In `tailwind.config.mjs` (you may need to rename `tailwind.config.js`), ensure the `content` array includes `'./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'`. Create a `src/styles/global.css` file with the three Tailwind directives: `@tailwind base;`, `@tailwind components;`, `@tailwind utilities;`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Create a temporary `src/pages/index.astro` file. Import `../styles/global.css`. Add an `<h1>` with a Tailwind class like `text-red-500`. Run `npm run dev` and verify the text is red, confirming both `tsconfig.json` paths (for CSS import) and Tailwind are working."
           }
         ]
@@ -1662,7 +1662,7 @@
     ],
     "metadata": {
       "created": "2025-09-17T18:40:00.163Z",
-      "updated": "2025-09-17T19:39:42.124Z",
+      "updated": "2025-09-17T19:43:25.946Z",
       "description": "Tasks for astro-migration context"
     }
   }

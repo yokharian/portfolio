@@ -1,6 +1,6 @@
 # Task ID: 6
 # Title: Initialize Astro Project and Core Configuration
-# Status: pending
+# Status: done
 # Dependencies: None
 # Priority: high
 # Description: Set up a new Astro project, install all necessary dependencies, and configure the basic project settings for TypeScript, Tailwind CSS, and sitemap generation. This task establishes the foundation for the migration.
@@ -11,31 +11,31 @@ Create a new Astro project. Install `@astrojs/tailwind`, `@astrojs/typescript`, 
 Run `npm run dev` and verify that the Astro development server starts without errors. Check that a basic 'Hello World' page renders correctly. Ensure the `astro.config.mjs` and `tsconfig.json` files are correctly parsed by the Astro CLI.
 
 # Subtasks:
-## 1. Initialize Empty Astro Project [pending]
+## 1. Initialize Empty Astro Project [done]
 ### Dependencies: None
 ### Description: Create a new, empty Astro project within the existing repository structure. This will generate the foundational files like `package.json`, `astro.config.mjs`, and `tsconfig.json` without any boilerplate pages.
 ### Details:
 Run `npm create astro@latest . -- --template empty --skip-houston` in the project root. The `.` argument ensures installation in the current directory. This command will overwrite the existing `package.json` and create the necessary Astro configuration files.
 
-## 2. Clean Up Old Dependencies and Install Astro Integrations [pending]
+## 2. Clean Up Old Dependencies and Install Astro Integrations [done]
 ### Dependencies: 6.1
 ### Description: Remove all Eleventy-related dependencies from `package.json` and install the required Astro integrations for Tailwind CSS and sitemap generation.
 ### Details:
 Manually edit `package.json` to remove devDependencies like `@11ty/eleventy` and `nunjucks`. Then, run `npm install`. After cleaning up, install the new integrations by running `npm install @astrojs/tailwind @astrojs/sitemap`. Note: `@astrojs/typescript` is built-in and does not need to be installed separately.
 
-## 3. Update package.json Scripts for Astro CLI [pending]
+## 3. Update package.json Scripts for Astro CLI [done]
 ### Dependencies: 6.1
 ### Description: Replace the outdated Eleventy build scripts in `package.json` with the standard commands for running, building, and previewing an Astro site.
 ### Details:
 Modify the `scripts` object in `package.json` to include: `"dev": "astro dev"`, `"start": "astro dev"`, `"build": "astro build"`, and `"preview": "astro preview"`. This ensures that `npm run dev` and other commands will use the Astro CLI.
 
-## 4. Configure Astro Integrations and i18n [pending]
+## 4. Configure Astro Integrations and i18n [done]
 ### Dependencies: 6.2
 ### Description: Configure the `astro.config.mjs` file to enable the Tailwind and Sitemap integrations, and set up the internationalization (i18n) routing for English ('en') and Spanish ('es').
 ### Details:
 In `astro.config.mjs`, import `tailwind` and `sitemap`. Add them to the `integrations` array. Set the `site` property to the production URL (e.g., 'https://www.davebitter.com'). Configure the `i18n` object with `defaultLocale: 'en'`, `locales: ['en', 'es']`, and `routing: { prefixDefaultLocale: true }`.
 
-## 5. Configure tsconfig.json and Tailwind [pending]
+## 5. Configure tsconfig.json and Tailwind [done]
 ### Dependencies: 6.1, 6.4
 ### Description: Finalize the TypeScript configuration for Astro path aliases and ensure the Tailwind CSS configuration file is set up to scan Astro components for classes.
 ### Details:
