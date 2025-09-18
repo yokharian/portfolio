@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
+import BlogCard from '../../components/BlogCard.astro';
 import JsonLD from '../../components/JsonLD.astro';
 import { getCollection } from 'astro:content';
 import i18nData from '../../data/i18n.json';
@@ -28,28 +28,28 @@ const latestPosts = allPosts
     const match = filename.match(/^(.+)\.(en|es)\.md$/);
     return match && match[2] === currentLocale;
   })
+  .map(post => {
+    // Extract the base slug without language suffix
+    const filename = post.id;
+    const match = filename.match(/^(.+)\.(en|es)\.md$/);
+    const baseSlug = match ? match[1] : post.slug;
+    
+    return {
+      ...post,
+      slug: baseSlug
+    };
+  })
   .sort((a, b) => {
     const dateA = a.data.pubDate || a.data.startDate || a.slug;
     const dateB = b.data.pubDate || b.data.startDate || b.slug;
     return new Date(dateB).getTime() - new Date(dateA).getTime();
   })
-  .slice(0, 5);
+  .slice(0, 6); // Show 6 posts instead of 5
 
 // Get certifications for current locale
 const certifications = certificationsData[currentLocale]?.names ? Object.values(certificationsData[currentLocale].names) : [];
 
-// Sample project data (this would normally come from a projects collection)
-const sampleProject = {
-  url: `/${currentLocale}/projects/sample-en/`,
-  fileSlug: 'sample-en',
-  data: {
-    title: 'Sample Project',
-    description: 'A simple example project to test markdown processing.',
-    heroImage: '/assets/images/57b557508e5d5af340f50f3ac847bcb895a54aeb.gif',
-    alt: 'Sample Project',
-    tags: ['JavaScript', 'Eleventy']
-  }
-};
+// No longer needed - using blog posts instead
 
 // Format date helper
 function formatDate(date: string | Date): string {
@@ -127,7 +127,7 @@ function formatDate(date: string | Date): string {
                 {t.hero.subtitle}
               </p>
               <div class="mt-6" data-anim="cta">
-                <a href={`/${currentLocale}/#projects`} class="inline-block rounded-md bg-sky-600 px-5 py-3 text-white font-medium shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white" data-i18n-key="hero.cta">
+                <a href={`/${currentLocale}/#blog`} class="inline-block rounded-md bg-brand-600 px-5 py-3 text-white font-medium shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-white" data-i18n-key="hero.cta">
                   {t.hero.cta}
                 </a>
               </div>
@@ -143,14 +143,16 @@ function formatDate(date: string | Date): string {
     </div>
   </section>
 
-  <section id="projects" class="mb-12" aria-labelledby="projects-title">
+  <section id="blog" class="mb-12" aria-labelledby="blog-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 id="projects-title" class="text-2xl font-semibold mb-6" data-i18n-key="home.featured.heading">{t.home.featured.heading}</h2>
+      <h2 id="blog-title" class="text-2xl font-semibold mb-6" data-i18n-key="home.featured.heading">{t.home.featured.heading}</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
-        <ProjectCard project={sampleProject} />
+        {latestPosts.map((post) => (
+          <BlogCard post={post} currentLocale={currentLocale} />
+        ))}
       </div>
       <div class="mt-6">
-        <a href={`/${currentLocale}/projects/`} class="text-sky-700 hover:underline font-medium" data-i18n-key="home.featured.viewAll">{t.home.featured.viewAll}</a>
+        <a href={`/${currentLocale}/blog/`} class="text-brand-600 hover:underline font-medium" data-i18n-key="home.featured.viewAll">{t.home.featured.viewAll}</a>
       </div>
     </div>
   </section>
@@ -192,17 +194,4 @@ function formatDate(date: string | Date): string {
     </div>
   </section>
 
-  <section id="latest-posts" class="mb-12">
-    <h2 class="text-2xl font-semibold mb-6">Latest Posts</h2>
-    <ul class="space-y-3">
-      {latestPosts.map((post) => (
-        <li class="p-4 bg-white rounded-lg shadow-sm border">
-          <a href={`/${currentLocale}/blog/${post.slug}`} class="text-sky-700 hover:underline font-medium">
-            {post.data.title || post.slug}
-          </a>
-          <span class="ml-2 text-xs text-slate-500">({formatDate(post.data.pubDate || post.data.startDate || post.slug)})</span>
-        </li>
-      ))}
-    </ul>
-  </section>
 </Layout>

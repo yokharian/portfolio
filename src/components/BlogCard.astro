@@ -1,0 +1,77 @@
+---
+export interface Props {
+  post: {
+    slug: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate?: Date | string;
+      heroImage?: string;
+      tags?: Array<{ name: string; color?: string }> | string[];
+    };
+  };
+  currentLocale: string;
+}
+
+const { post, currentLocale } = Astro.props;
+const postUrl = `/${currentLocale}/blog/${post.slug}`;
+const heroImage = post.data.heroImage || '/assets/images/blog-default.jpg';
+const tags = post.data.tags || [];
+
+// Format date helper
+function formatDate(date: Date | string | undefined): string {
+  if (!date) return '';
+  const d = new Date(date);
+  return d.toLocaleDateString(currentLocale, { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+}
+---
+
+<article class="relative rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200" role="listitem">
+  <a href={postUrl} class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label={`Read blog post: ${post.data.title}`}>
+    <span class="sr-only">{post.data.title}</span>
+  </a>
+  
+  <div class="mb-4 overflow-hidden rounded-lg">
+    <img 
+      src={heroImage} 
+      alt={post.data.title} 
+      class="h-48 w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]" 
+      loading="lazy" 
+      decoding="async"
+    />
+  </div>
+  
+  <div class="space-y-3">
+    {post.data.pubDate && (
+      <div class="flex items-center gap-2 text-sm text-gray-500">
+        <time datetime={new Date(post.data.pubDate).toISOString()}>
+          {formatDate(post.data.pubDate)}
+        </time>
+      </div>
+    )}
+    
+    <h3 class="text-xl font-semibold text-gray-900 line-clamp-2">
+      {post.data.title}
+    </h3>
+    
+    <p class="text-gray-600 line-clamp-3">
+      {post.data.description}
+    </p>
+    
+    {tags.length > 0 && (
+      <ul class="flex flex-wrap gap-2" aria-label="Tags">
+        {tags.map((tag: any) => (
+          <li>
+            <span class="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">
+              {typeof tag === 'string' ? tag : tag.name || tag.toString()}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</article>

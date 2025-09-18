@@ -1,3 +1,104 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base styles using the new theme */
+@layer base {
+  html {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-800 antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    @apply outline-2 outline-brand-600 outline-offset-2;
+  }
+}
+
+/* CSS Variables for dynamic tag colors */
+:root {
+  --tag-blue: #3b82f6;
+  --tag-green: #10b981;
+  --tag-yellow: #f59e0b;
+  --tag-red: #ef4444;
+  --tag-purple: #8b5cf6;
+  --tag-pink: #ec4899;
+  --tag-indigo: #6366f1;
+  --tag-cyan: #06b6d4;
+}
+
+/* Custom component styles */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+  
+  .tag {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  
+  .tag-blue {
+    @apply bg-blue-100 text-blue-800;
+  }
+  
+  .tag-green {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .tag-yellow {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .tag-red {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .tag-purple {
+    @apply bg-purple-100 text-purple-800;
+  }
+  
+  .tag-pink {
+    @apply bg-pink-100 text-pink-800;
+  }
+  
+  .tag-indigo {
+    @apply bg-indigo-100 text-indigo-800;
+  }
+  
+  .tag-cyan {
+    @apply bg-cyan-100 text-cyan-800;
+  }
+  
+  /* Line clamp utilities for blog content */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
