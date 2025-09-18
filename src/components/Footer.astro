@@ -5,49 +5,53 @@ import siteData from '../data/site.json';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-16 border-t bg-white">
-  <div class="container mx-auto px-4 py-8 text-sm text-slate-600">
+<footer class="mt-16 border-t border-gray-200 bg-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 py-8">
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
         {siteData.githubUrl && (
           <a 
             href={siteData.githubUrl} 
-            class="hover:text-sky-700" 
+            class="w-8 h-8 bg-gray-600 rounded text-white flex items-center justify-center text-sm font-semibold hover:bg-brand-600 transition-colors duration-200" 
             rel="me noopener" 
             target="_blank"
+            aria-label="GitHub"
           >
-            GitHub
+            GH
           </a>
         )}
         {siteData.linkedinUrl && (
           <a 
             href={siteData.linkedinUrl} 
-            class="hover:text-sky-700" 
+            class="w-8 h-8 bg-blue-600 rounded text-white flex items-center justify-center text-sm font-semibold hover:bg-brand-600 transition-colors duration-200" 
             rel="me noopener" 
             target="_blank"
+            aria-label="LinkedIn"
           >
-            LinkedIn
+            LI
           </a>
         )}
         {siteData.calendlyUrl && (
           <a 
             href={siteData.calendlyUrl} 
-            class="hover:text-sky-700" 
+            class="w-8 h-8 bg-green-600 rounded text-white flex items-center justify-center text-sm font-semibold hover:bg-brand-600 transition-colors duration-200" 
             target="_blank"
+            aria-label="Calendly"
           >
-            Calendly
+            C
           </a>
         )}
         {siteData.email && (
           <a 
             href={`mailto:${siteData.email}`} 
-            class="hover:text-sky-700"
+            class="w-8 h-8 bg-red-600 rounded text-white flex items-center justify-center text-sm font-semibold hover:bg-brand-600 transition-colors duration-200"
+            aria-label="Email"
           >
-            Email
+            E
           </a>
         )}
       </div>
-      <div class="text-slate-500">
+      <div class="text-center text-gray-500 text-sm">
         &copy; {currentYear} {siteData.author}
       </div>
     </div>
