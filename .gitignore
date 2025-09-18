@@ -1,10 +1,5 @@
 ### VisualStudioCode template
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -274,10 +269,15 @@ src/assets/js/*.map
 # Compiled client-side CSS
 src/assets/css/*.css
 
+# AWS Amplify files
+amplify_outputs.json
+amplify_outputs.json.bak
+cdk.out/
+
 # Taskmaster files
 # ALLOW
-!.taskmaster/
-!.taskmaster/docs/
+!/.taskmaster/
+!/.taskmaster/docs/
 # DENY
 /.aiassistant/rules/taskmaster.md
 /.cursor/rules/taskmaster/dev_workflow.mdc

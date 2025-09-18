@@ -12,16 +12,22 @@
     "clean": "rimraf dist .astro",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "amplify:dev": "npx ampx sandbox",
+    "amplify:deploy": "npx ampx deploy",
+    "amplify:delete": "npx ampx sandbox delete"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "astro": "^5.13.8",
+    "aws-amplify": "^6.15.6",
     "aws-rum-web": "^1.25.0"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.2.0",
     "@astrojs/tailwind": "^5.1.2",
+    "@aws-amplify/backend": "^1.16.1",
+    "@aws-amplify/backend-cli": "^1.8.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.16.10",
