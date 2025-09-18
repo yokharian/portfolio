@@ -12,6 +12,7 @@ on:
 
 jobs:
   deploy:
+    environment: ${{ github.event.inputs.branch || github.ref_name }}
     name: Deploy with Amplify CLI
     runs-on: ubuntu-latest
     env:
