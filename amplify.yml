@@ -15,7 +15,7 @@ frontend:
         - |
           if [ -n "$AWS_BUCKET" ]; then
             echo "Syncing assets from s3://$AWS_BUCKET !"
-            rm -rf src/blog_posts/*
+            cd src/blog_posts && echo "Deleting $(ls | wc -l) files..." && rm -rf * && echo "Remaining $(ls | wc -l) files..." && cd -
             aws s3 sync s3://$AWS_BUCKET src/blog_posts/ ${AWS_REGION:+--region $AWS_REGION}
           else
             echo "AWS_BUCKET not set; skipping asset sync!"
