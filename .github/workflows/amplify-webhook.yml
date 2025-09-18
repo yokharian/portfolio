@@ -19,6 +19,9 @@ jobs:
     name: Trigger Amplify Frontend Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
       - name: Call Amplify webhook
         env:
           AMPLIFY_WEBHOOK_URL: ${{ secrets.AMPLIFY_WEBHOOK_URL }}
@@ -31,23 +34,7 @@ jobs:
             exit 1
           fi
 
-          payload=$(python - <<'PY'
-import json
-import os
-
-payload = {
-    "source": "github-actions",
-    "commit": os.environ["COMMIT_SHA"],
-    "branch": os.environ["BRANCH_NAME"],
-}
-
-reason = os.environ.get("DEPLOY_REASON", "").strip()
-if reason:
-    payload["reason"] = reason
-
-print(json.dumps(payload))
-PY
-          )
+          payload=$(python3 .github/workflows/amplify_webhook_payload.py)
 
           response_file=$(mktemp)
           status=$(curl -sSL -o "$response_file" -w "%{http_code}" -X POST \
