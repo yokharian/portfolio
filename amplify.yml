@@ -5,7 +5,7 @@ frontend:
       commands:
         - npm ci
         - mkdir -p assets
-        - aws s3 sync s3://portfolio-assets-bucket assets/ --region $AWS_REGION
+        - aws s3 sync s3://$AWS_BUCKET_ASSETS assets/ --region $AWS_REGION
     build:
       commands:
         - npm run build
