@@ -1,6 +1,6 @@
 # Task ID: 1
 # Title: Tailwind CSS Configuration and Theme Setup
-# Status: pending
+# Status: done
 # Dependencies: None
 # Priority: high
 # Description: Configure Tailwind CSS with custom brand colors, typography scale, and responsive design system to support the design specifications
@@ -11,33 +11,36 @@ Extend tailwind.config.js to include custom color palette with brand-600 primary
 Verify custom colors render correctly across all design elements, test typography hierarchy on different screen sizes, validate spacing consistency across components, and ensure prose styling works properly for markdown content rendering.
 
 # Subtasks:
-## 1. Configure Custom Color Palette [pending]
+## 1. Configure Custom Color Palette [done]
 ### Dependencies: None
 ### Description: Extend the Tailwind theme to include the project's custom color palette, including the primary brand color, an extended gray scale, and a set of colors for dynamic tags.
 ### Details:
 In `tailwind.config.js`, modify the `theme.extend.colors` object. Add a `brand` object with a `600` key for the primary accent color. Replace the default `colors.gray` with an extended palette (e.g., from 50 to 950) to provide more shades for UI elements and text, ensuring better contrast. Add a series of named colors (e.g., `tag-blue`, `tag-green`, `tag-yellow`) for use in blog post tags.
 
-## 2. Set Up Responsive Typography Scale [pending]
+## 2. Set Up Responsive Typography Scale [done]
 ### Dependencies: None
 ### Description: Define a consistent and responsive typography scale for headings (h1-h6) and body text, including font sizes, weights, and line heights.
 ### Details:
 In `tailwind.config.js`, extend the `theme` with a `fontSize` object. Define sizes for `h1` through `h6` and standard text elements (`sm`, `base`, `lg`, `xl`). Use responsive array syntax for key elements to adjust font size across breakpoints, for example: `"5xl": ["3rem", { lineHeight: "1.1" }]`. Also, configure the `fontWeight` and `lineHeight` scales to ensure consistency.
 
-## 3. Configure Layout System: Breakpoints, Spacing, and Containers [pending]
+## 3. Configure Layout System: Breakpoints, Spacing, and Containers [done]
 ### Dependencies: None
 ### Description: Establish the core responsive layout system by configuring custom breakpoints, the master spacing scale, and default container properties.
 ### Details:
 In `tailwind.config.js`, define the project's responsive breakpoints (e.g., sm, md, lg, xl, 2xl) in the `theme.screens` object. Review and extend the `theme.spacing` scale if necessary to match design specifications for padding and margins. Configure the `container` properties in the theme to set a `max-width` for each breakpoint and enable `center: true` to auto-margin the main layout container.
 
-## 4. Install and Configure Tailwind Typography Plugin for Prose [pending]
+## 4. Install and Configure Tailwind Typography Plugin for Prose [done]
 ### Dependencies: None
 ### Description: Install the `@tailwindcss/typography` plugin and configure it to style markdown-rendered content for blog posts, customizing the `prose-lg` variant.
 ### Details:
 Run `npm install -D @tailwindcss/typography`. In `tailwind.config.js`, add `require('@tailwindcss/typography')` to the `plugins` array. Use the `theme.extend.typography` key to customize the default prose styles. Specifically, target the `lg` modifier to adjust styles for headings, links, paragraphs, and code blocks to align with the new brand colors and typography scale.
 
-## 5. Integrate Theme with Global Styles and CSS Variables [pending]
+## 5. Integrate Theme with Global Styles and CSS Variables [done]
 ### Dependencies: 1.1
 ### Description: Update the main `globals.css` file to remove default styles, set base body styles using the new theme, and define CSS variables for dynamic tag colors.
 ### Details:
 In `src/styles/globals.css`, remove the boilerplate `:root` variables from the Next.js starter. Apply base styles to the `body` tag using `@apply` with utilities from the newly configured theme (e.g., `@apply bg-gray-50 text-gray-800;`). Define CSS variables in the `:root` selector for the dynamic tag colors to allow them to be easily applied programmatically in components.
+<info added on 2025-09-18T02:29:24.173Z>
+An issue was identified where assets, including the main stylesheet, were returning 404 errors. This was because they were located in `src/assets/`, which is not served directly by Astro. The fix involved moving all assets to the `public/assets/` directory and updating the references in `Layout.astro` to point to the new paths (e.g., `/assets/css/styles.css`). This step was critical for ensuring the global styles defined in this subtask were successfully loaded and applied by the browser.
+</info added on 2025-09-18T02:29:24.173Z>
 

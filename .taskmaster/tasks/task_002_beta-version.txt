@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Core Layout Components Enhancement
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: Enhance Header and Footer components with improved styling, navigation, and responsive behavior according to design specifications
@@ -11,31 +11,39 @@ Update Header component with clean typography using proper font weights, subtle 
 Test header responsiveness across breakpoints, verify CTA button hover states and accessibility, validate language switcher functionality, test footer social icon rendering and layout on mobile/desktop, and ensure proper contrast ratios for accessibility compliance.
 
 # Subtasks:
-## 1. Header Component Typography and Layout Enhancement [pending]
+## 1. Header Component Typography and Layout Enhancement [done]
 ### Dependencies: None
 ### Description: Update Header component with clean typography, proper font weights, and responsive layout structure
 ### Details:
 Implement clean typography with text-2xl font-bold text-gray-900 for name styling, apply proper font weights throughout the header, add responsive padding (py-6 px-4 md:px-8), and set up maximum width container (max-w-7xl mx-auto) with subtle border-bottom using border-gray-100
 
-## 2. Header CTA Button Implementation [pending]
+## 2. Header CTA Button Implementation [done]
 ### Dependencies: 2.1
 ### Description: Implement call-to-action button with brand colors and skeumorphic shadow effects
 ### Details:
 Create CTA button using brand color palette with proper hover states, implement skeumorphic shadow effects for depth, ensure proper spacing and alignment within header layout, and add smooth transition animations
+<info added on 2025-09-18T02:40:45.537Z>
+The language switcher functionality has been restored by re-integrating the `lang-bootstrap.js` and `lang-switcher.js` scripts (located in `/public/scripts/`) into the main `src/layouts/Layout.astro` file.
 
-## 3. Language Switcher Enhancement [pending]
+- **`lang-bootstrap.js`**: Inlined in the `<head>` to run before page render. It handles initial language detection by checking `localStorage` and `navigator.language`, redirecting to the appropriate path (`/` for EN, `/es/` for ES) to prevent content flashing.
+- **`lang-switcher.js`**: Loaded as a standard script. It adds `click` and `keydown` event listeners to the switcher component in `src/components/Header.astro` (identified by `data-lang-switcher`). It manages navigation, updates `localStorage`, and toggles `aria-pressed` attributes for accessibility.
+
+This implementation restores the full feature set, including persistence, automatic detection, and accessible keyboard navigation, leveraging the existing Tailwind CSS transition classes for smooth visual feedback.
+</info added on 2025-09-18T02:40:45.537Z>
+
+## 3. Language Switcher Enhancement [done]
 ### Dependencies: 2.1
 ### Description: Enhance language switcher with proper EN/ES toggle styling and functionality
 ### Details:
 Style language switcher with proper toggle design for EN/ES options, implement active state styling, ensure proper spacing and alignment, and add smooth transition effects between language states
 
-## 4. Footer Layout and Structure Implementation [pending]
+## 4. Footer Layout and Structure Implementation [done]
 ### Dependencies: None
 ### Description: Update Footer with simple horizontal layout and proper container structure
 ### Details:
 Implement simple horizontal layout for footer content, add proper container structure with consistent spacing, ensure responsive behavior across breakpoints, and set up foundation for social icons and copyright text
 
-## 5. Footer Social Icons and Copyright Styling [pending]
+## 5. Footer Social Icons and Copyright Styling [done]
 ### Dependencies: 2.4
 ### Description: Implement social icons as colored squares with letters/initials and centered copyright text
 ### Details:

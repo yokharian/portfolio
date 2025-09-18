@@ -6,6 +6,7 @@ export interface Props {
       title: string;
       description: string;
       pubDate?: Date | string;
+      thumbnail?: string;
       heroImage?: string;
       tags?: Array<{ name: string; color?: string }> | string[];
     };
@@ -15,7 +16,7 @@ export interface Props {
 
 const { post, currentLocale } = Astro.props;
 const postUrl = `/${currentLocale}/blog/${post.slug}`;
-const heroImage = post.data.heroImage || '/assets/images/blog-default.jpg';
+const heroImage = post.data.thumbnail || post.data.heroImage || '/assets/images/background.png';
 const tags = post.data.tags || [];
 
 // Format date helper

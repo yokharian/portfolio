@@ -1,6 +1,6 @@
 # Task ID: 4
 # Title: Blog Pages Styling Implementation
-# Status: pending
+# Status: done
 # Dependencies: 1, 2
 # Priority: medium
 # Description: Implement comprehensive styling for blog index page and individual blog post pages with enhanced cards, content rendering, and interactive elements
@@ -11,31 +11,31 @@ Style blog index page with clean page title typography, descriptive subtitle, fe
 Test blog index page layout and card hover effects, verify individual post page hero section responsiveness, validate markdown content rendering with proper typography, test language toggle functionality, ensure Lucidchart embeds display correctly when present, verify related posts grid layout, and test all interactive elements for accessibility.
 
 # Subtasks:
-## 1. Style Blog Index Page Header and Featured Posts Grid [pending]
+## 1. Style Blog Index Page Header and Featured Posts Grid [done]
 ### Dependencies: None
 ### Description: Implement the styling for the main blog index page, including the page title, subtitle, and the two-column grid for featured posts. This involves enhancing the existing `BlogCard.astro` component with a new design, hover effects, and tag display.
 ### Details:
 In `src/pages/blog/index.astro`, style the `h1` and `p` tags for the page title and subtitle with clean, responsive typography. Modify the featured posts `div` to be a `grid grid-cols-1 md:grid-cols-2 gap-8`. Update `src/components/BlogCard.astro` to include a container with `rounded-lg`, `overflow-hidden`, and a subtle `shadow-md`. Implement a hover effect: `transition-all duration-300 hover:shadow-xl hover:-translate-y-1`. Ensure the post image uses `aspect-video` or a similar class for consistent aspect ratios with `object-cover`. Inside the card's content area, style the title, description, and implement a flex container to display tags using the `src/components/Tag.astro` component, applying dynamic colors based on the tag name.
 
-## 2. Implement Regular Posts List Layout on Blog Index Page [pending]
+## 2. Implement Regular Posts List Layout on Blog Index Page [done]
 ### Dependencies: None
 ### Description: Redesign the 'All Posts' section on the blog index page from a simple unordered list to a styled list layout, where each item includes a thumbnail, title, date, and description with hover transitions.
 ### Details:
 In `src/pages/blog/index.astro`, replace the `<ul>` for `regularPosts` with a `div` containing a loop. Each post item should be an `<a>` tag with `flex items-center gap-4` or `gap-6`. The link should have a subtle background color change on hover, e.g., `hover:bg-gray-50`. Inside the link, add a small, fixed-size image container (e.g., `w-32 h-20 flex-shrink-0`) for a thumbnail with `object-cover` and `rounded-md`. To the right of the image, create a `div` for the text content, including the post title with `font-bold`, the publication date in a smaller, lighter font, and a short description. Ensure consistent spacing and typography between list items.
 
-## 3. Create Individual Blog Post Hero Section [pending]
+## 3. Create Individual Blog Post Hero Section [done]
 ### Dependencies: None
 ### Description: Implement the full-width hero section for individual blog post pages using the `BlogPostLayout.astro` file. This includes a background image with a dark overlay, and styled text for the title, employer, and date range.
 ### Details:
 In `src/layouts/BlogPostLayout.astro`, create a full-width `div` for the hero. Set the post's `image` from frontmatter as a background image. Add a semi-transparent dark overlay (e.g., `bg-black/50`) on top of the image to ensure text is readable. Inside a centered, max-width container, display the post tags in the upper-left corner using the `Tag.astro` component. Below the tags, display the post `title` with large, bold, white text (e.g., `text-4xl md:text-5xl font-bold text-white`). Under the title, display the `employer` and `dateRange` in a smaller, white font. Use flexbox or grid for layout and ensure the entire section is responsive.
 
-## 4. Style Post Content Area, Markdown, and Language Toggle [pending]
+## 4. Style Post Content Area, Markdown, and Language Toggle [done]
 ### Dependencies: 4.3
 ### Description: Style the main content area of a blog post, including the description block, markdown content rendering with `prose`, code highlighting, and the 'Technologies Used' section.
 ### Details:
 In `src/layouts/BlogPostLayout.astro`, below the hero, create a main content container with a `max-w-4xl mx-auto` and appropriate padding. Add a distinct description block that stands out from the main content. Implement the language toggle button (🇺🇸/🇪🇸) if `post.data.language` is present. Wrap the `<slot />` (which renders the markdown) in a `div` with `prose prose-lg`. Ensure that `tailwind.config.mjs` is configured with `@tailwindcss/typography` and that styles for headings, links, lists, and code blocks are applied correctly. Below the markdown content, create a 'Technologies Used' section that iterates over the post's `tags` array and displays each one using the styled `Tag.astro` component.
 
-## 5. Implement Conditional Lucidchart Embed and Related Posts Grid [pending]
+## 5. Implement Conditional Lucidchart Embed and Related Posts Grid [done]
 ### Dependencies: 4.1, 4.3
 ### Description: Add the logic and styling for conditionally embedding a Lucidchart diagram and displaying a grid of related posts at the bottom of a blog post page.
 ### Details:
