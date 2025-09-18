@@ -1,0 +1,43 @@
+# Task ID: 2
+# Title: Core Layout Components Enhancement
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Enhance Header and Footer components with improved styling, navigation, and responsive behavior according to design specifications
+# Details:
+Update Header component with clean typography using proper font weights, subtle border-bottom with border-gray-100, responsive padding (py-6 px-4 md:px-8), and maximum width container (max-w-7xl mx-auto). Style name as 'text-2xl font-bold text-gray-900' and implement CTA button with brand colors and skeumorphic shadow. Enhance language switcher with proper EN/ES toggle styling. Update Footer with simple horizontal layout, social icons as colored squares with letters/initials, centered copyright text with proper color contrast.
+
+# Test Strategy:
+Test header responsiveness across breakpoints, verify CTA button hover states and accessibility, validate language switcher functionality, test footer social icon rendering and layout on mobile/desktop, and ensure proper contrast ratios for accessibility compliance.
+
+# Subtasks:
+## 1. Header Component Typography and Layout Enhancement [pending]
+### Dependencies: None
+### Description: Update Header component with clean typography, proper font weights, and responsive layout structure
+### Details:
+Implement clean typography with text-2xl font-bold text-gray-900 for name styling, apply proper font weights throughout the header, add responsive padding (py-6 px-4 md:px-8), and set up maximum width container (max-w-7xl mx-auto) with subtle border-bottom using border-gray-100
+
+## 2. Header CTA Button Implementation [pending]
+### Dependencies: 2.1
+### Description: Implement call-to-action button with brand colors and skeumorphic shadow effects
+### Details:
+Create CTA button using brand color palette with proper hover states, implement skeumorphic shadow effects for depth, ensure proper spacing and alignment within header layout, and add smooth transition animations
+
+## 3. Language Switcher Enhancement [pending]
+### Dependencies: 2.1
+### Description: Enhance language switcher with proper EN/ES toggle styling and functionality
+### Details:
+Style language switcher with proper toggle design for EN/ES options, implement active state styling, ensure proper spacing and alignment, and add smooth transition effects between language states
+
+## 4. Footer Layout and Structure Implementation [pending]
+### Dependencies: None
+### Description: Update Footer with simple horizontal layout and proper container structure
+### Details:
+Implement simple horizontal layout for footer content, add proper container structure with consistent spacing, ensure responsive behavior across breakpoints, and set up foundation for social icons and copyright text
+
+## 5. Footer Social Icons and Copyright Styling [pending]
+### Dependencies: 2.4
+### Description: Implement social icons as colored squares with letters/initials and centered copyright text
+### Details:
+Create social icons as colored squares containing letters or initials, implement proper color contrast for accessibility, add centered copyright text with appropriate typography, and ensure proper spacing between elements
+

@@ -126,35 +126,36 @@ Translations live in `src/data/i18n.json` under `certifications`. The homepage r
 - Add more pages and components as needed.
 
 <!-- TASKMASTER_EXPORT_START -->
-> 🎯 **Taskmaster Export** - 2025-09-17 23:16:51 UTC
+> 🎯 **Taskmaster Export** - 2025-09-18 01:45:30 UTC
 > 📋 Export: without subtasks • Status filter: none
 > 🔗 Powered by [Task Master](https://task-master.dev?utm_source=github-readme&utm_medium=readme-export&utm_campaign=portfolio&utm_content=task-export-link)
 
 | Project Dashboard |  |
 | :-                |:-|
-| Task Progress     | ████████████████████ 100% |
-| Done | 5 |
+| Task Progress     | ░░░░░░░░░░░░░░░░░░░░ 0% |
+| Done | 0 |
 | In Progress | 0 |
-| Pending | 0 |
+| Pending | 5 |
 | Deferred | 0 |
 | Cancelled | 0 |
 |-|-|
-| Subtask Progress | ████████████████████ 100% |
-| Completed | 25 |
+| Subtask Progress | ░░░░░░░░░░░░░░░░░░░░ 0% |
+| Completed | 0 |
 | In Progress | 0 |
-| Pending | 0 |
+| Pending | 25 |
 
 
 | ID | Title | Status | Priority | Dependencies | Complexity |
 | :- | :-    | :-     | :-       | :-           | :-         |
-| 6 | Initialize Astro Project and Core Configuration | ✓&nbsp;done | high | None | N/A |
-| 7 | Migrate Nunjucks Layouts and Partials to Astro Components | ✓&nbsp;done | high | 6 | N/A |
-| 8 | Set Up Content Collections and Migrate Data Files | ✓&nbsp;done | high | 6 | N/A |
-| 9 | Migrate Page Templates and Implement i18n Routing | ✓&nbsp;done | high | 7, 8 | N/A |
-| 10 | Finalize Build, Verify SEO, and Test Deployment | ✓&nbsp;done | high | 9 | N/A |
+| 1 | Tailwind CSS Configuration and Theme Setup | ○&nbsp;pending | high | None | N/A |
+| 2 | Core Layout Components Enhancement | ○&nbsp;pending | high | 1 | N/A |
+| 3 | Homepage Sections Implementation | ○&nbsp;pending | high | 1, 2 | N/A |
+| 4 | Blog Pages Styling Implementation | ○&nbsp;pending | medium | 1, 2 | N/A |
+| 5 | Performance Optimization and Polish | ○&nbsp;pending | medium | 3, 4 | N/A |
 
 > 📋 **End of Taskmaster Export** - Tasks are synced from your project using the `sync-readme` command.
 <!-- TASKMASTER_EXPORT_END -->
+
 
 
 

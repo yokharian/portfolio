@@ -1,0 +1,43 @@
+# Task ID: 5
+# Title: Performance Optimization and Polish
+# Status: pending
+# Dependencies: 3, 4
+# Priority: medium
+# Description: Implement animations, optimize performance, ensure accessibility compliance, and conduct comprehensive testing across browsers and devices
+# Details:
+Implement smooth hover effects with scale and shadow effects on cards, color transitions on links and buttons, proper image loading with lazy loading for below-fold content, and WebP format support where possible. Add loading states with proper placeholders and smooth content transitions. Ensure accessible focus indicators and keyboard navigation support. Optimize Tailwind CSS with unused class purging, minimize bundle size with critical CSS inlining, and implement proper caching headers. Add responsive images with srcset implementation. Conduct cross-browser testing (Chrome, Firefox, Safari, Edge) and mobile testing (iOS Safari, Chrome Mobile). Validate Core Web Vitals compliance with LCP optimization through hero image optimization and critical resource prioritization, CLS stability through proper image dimensions, and FID optimization with minimal JavaScript execution.
+
+# Test Strategy:
+Run Lighthouse audits to achieve >90 score for all metrics, test page load times under 3G conditions, validate accessibility compliance with screen readers and keyboard navigation, conduct cross-browser compatibility testing, verify all animations work smoothly without performance issues, test responsive images loading correctly across devices, and ensure proper error handling for missing content or failed image loads.
+
+# Subtasks:
+## 1. Implement Advanced Image Optimization with Astro Image [pending]
+### Dependencies: None
+### Description: Replace all standard `<img>` tags with Astro's built-in `<Image>` component to automatically generate responsive `srcset` attributes, serve next-gen WebP formats, and handle lazy-loading for below-the-fold images. This will also prevent Cumulative Layout Shift (CLS) by enforcing image dimensions.
+### Details:
+First, install an image integration if one is not present (e.g., `npx astro add image`). Then, go through all components and pages (e.g., `src/components/Card.astro`, `src/pages/blog/[...slug].astro`) and refactor existing `<img>` tags to use the `<Image>` component. Ensure the hero image on the homepage and blog posts is prioritized (not lazy-loaded) to optimize Largest Contentful Paint (LCP). For all other images, use the default lazy-loading behavior.
+
+## 2. Enhance UI with Smooth Animations and Transitions [pending]
+### Dependencies: None
+### Description: Implement smooth hover and transition effects on interactive elements to improve user experience. This includes adding scale and shadow effects to cards and ensuring smooth color transitions on links and buttons.
+### Details:
+In component files like `src/components/Card.astro` and `src/components/Button.astro`, add Tailwind CSS utility classes. For cards, use a combination of `transition`, `duration-300`, `ease-in-out`, `hover:scale-105`, and `hover:shadow-xl`. For links and buttons, ensure the `transition-colors` class is applied to provide smooth feedback on hover and focus states.
+
+## 3. Improve Accessibility with Focus Indicators and Keyboard Navigation [pending]
+### Dependencies: None
+### Description: Ensure the entire website is fully accessible via keyboard and that all interactive elements have clear, visible focus states to comply with WCAG standards.
+### Details:
+In the global stylesheet (`src/styles/global.css`), add site-wide styles for the `:focus-visible` pseudo-class to provide a distinct outline or box-shadow on focused elements, overriding the default browser outline. A good pattern is `*:focus-visible { outline: 2px solid theme('colors.brand.600'); outline-offset: 2px; }`. Then, perform a full keyboard audit by tabbing through all pages to ensure the focus order is logical and all interactive elements (links, buttons, form fields) are reachable and operable.
+
+## 4. Optimize Build Output and Implement Caching Strategy [pending]
+### Dependencies: None
+### Description: Ensure the production build is optimized by verifying Tailwind CSS purging is working correctly and implementing a proper browser caching strategy via server headers.
+### Details:
+Verify that the `content` array in `tailwind.config.cjs` correctly includes all files containing Tailwind classes. For caching, create a configuration file for the deployment platform (e.g., a `public/_headers` file for Netlify/Cloudflare Pages or a `vercel.json` for Vercel). In this file, set aggressive `Cache-Control` headers for immutable assets in the `/_astro/` directory (e.g., `Cache-Control: public, max-age=31536000, immutable`). For HTML pages, use a revalidation strategy (e.g., `Cache-Control: public, max-age=0, must-revalidate`).
+
+## 5. Final Polish: Loading States, Resource Prioritization, and CWV Validation [pending]
+### Dependencies: 5.1, 5.2, 5.3, 5.4
+### Description: Implement final performance optimizations by preloading critical resources and adding loading states. Conduct a comprehensive Core Web Vitals audit to ensure all metrics meet the 'good' threshold.
+### Details:
+In `src/layouts/Layout.astro`, add `<link rel="preload">` tags in the `<head>` for the LCP image (e.g., the hero image) and any critical fonts to prioritize their loading. If any components fetch data on the client-side, implement skeleton placeholder UIs. Finally, run a full Lighthouse audit on key pages (homepage, blog index, blog post) and analyze the results. Address any remaining issues to achieve a score of >90 across Performance, Accessibility, Best Practices, and SEO.
+

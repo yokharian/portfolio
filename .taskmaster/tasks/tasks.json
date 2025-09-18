@@ -1665,5 +1665,386 @@
       "updated": "2025-09-17T22:50:09.089Z",
       "description": "Tasks for astro-migration context"
     }
+  },
+  "beta-version": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Tailwind CSS Configuration and Theme Setup",
+        "description": "Configure Tailwind CSS with custom brand colors, typography scale, and responsive design system to support the design specifications",
+        "details": "Extend tailwind.config.js to include custom color palette with brand-600 primary accent color, extended gray scale for better contrast, and custom color variables for dynamic tag colors. Configure typography scale with proper heading hierarchy (h1-h6), consistent font weights and line heights, and responsive font sizing. Set up spacing system with consistent padding/margin scales and responsive spacing utilities. Add custom prose styling for blog content with prose-lg configuration. Configure container max-widths and breakpoint system for responsive design.",
+        "testStrategy": "Verify custom colors render correctly across all design elements, test typography hierarchy on different screen sizes, validate spacing consistency across components, and ensure prose styling works properly for markdown content rendering.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configure Custom Color Palette",
+            "description": "Extend the Tailwind theme to include the project's custom color palette, including the primary brand color, an extended gray scale, and a set of colors for dynamic tags.",
+            "dependencies": [],
+            "details": "In `tailwind.config.js`, modify the `theme.extend.colors` object. Add a `brand` object with a `600` key for the primary accent color. Replace the default `colors.gray` with an extended palette (e.g., from 50 to 950) to provide more shades for UI elements and text, ensuring better contrast. Add a series of named colors (e.g., `tag-blue`, `tag-green`, `tag-yellow`) for use in blog post tags.",
+            "status": "pending",
+            "testStrategy": "Verify that `bg-brand-600`, `text-gray-950`, and `bg-tag-blue` classes can be applied to elements and render the correct colors in the browser."
+          },
+          {
+            "id": 2,
+            "title": "Set Up Responsive Typography Scale",
+            "description": "Define a consistent and responsive typography scale for headings (h1-h6) and body text, including font sizes, weights, and line heights.",
+            "dependencies": [],
+            "details": "In `tailwind.config.js`, extend the `theme` with a `fontSize` object. Define sizes for `h1` through `h6` and standard text elements (`sm`, `base`, `lg`, `xl`). Use responsive array syntax for key elements to adjust font size across breakpoints, for example: `\"5xl\": [\"3rem\", { lineHeight: \"1.1\" }]`. Also, configure the `fontWeight` and `lineHeight` scales to ensure consistency.",
+            "status": "pending",
+            "testStrategy": "Create a test page with h1-h6 elements and paragraphs. Inspect the computed styles at different breakpoints to ensure font sizes, weights, and line heights match the configuration."
+          },
+          {
+            "id": 3,
+            "title": "Configure Layout System: Breakpoints, Spacing, and Containers",
+            "description": "Establish the core responsive layout system by configuring custom breakpoints, the master spacing scale, and default container properties.",
+            "dependencies": [],
+            "details": "In `tailwind.config.js`, define the project's responsive breakpoints (e.g., sm, md, lg, xl, 2xl) in the `theme.screens` object. Review and extend the `theme.spacing` scale if necessary to match design specifications for padding and margins. Configure the `container` properties in the theme to set a `max-width` for each breakpoint and enable `center: true` to auto-margin the main layout container.",
+            "status": "pending",
+            "testStrategy": "Apply container classes and responsive spacing utilities (e.g., `p-4 md:p-8`) to a test component. Resize the browser window to verify that breakpoints trigger correctly and that container width and spacing adjust as expected."
+          },
+          {
+            "id": 4,
+            "title": "Install and Configure Tailwind Typography Plugin for Prose",
+            "description": "Install the `@tailwindcss/typography` plugin and configure it to style markdown-rendered content for blog posts, customizing the `prose-lg` variant.",
+            "dependencies": [],
+            "details": "Run `npm install -D @tailwindcss/typography`. In `tailwind.config.js`, add `require('@tailwindcss/typography')` to the `plugins` array. Use the `theme.extend.typography` key to customize the default prose styles. Specifically, target the `lg` modifier to adjust styles for headings, links, paragraphs, and code blocks to align with the new brand colors and typography scale.",
+            "status": "pending",
+            "testStrategy": "Create a sample markdown file and render it on a page within a `div` that has the `prose prose-lg` classes. Verify that all elements (headings, links, lists, blockquotes) are styled correctly according to the theme customizations."
+          },
+          {
+            "id": 5,
+            "title": "Integrate Theme with Global Styles and CSS Variables",
+            "description": "Update the main `globals.css` file to remove default styles, set base body styles using the new theme, and define CSS variables for dynamic tag colors.",
+            "dependencies": [
+              "1.1"
+            ],
+            "details": "In `src/styles/globals.css`, remove the boilerplate `:root` variables from the Next.js starter. Apply base styles to the `body` tag using `@apply` with utilities from the newly configured theme (e.g., `@apply bg-gray-50 text-gray-800;`). Define CSS variables in the `:root` selector for the dynamic tag colors to allow them to be easily applied programmatically in components.",
+            "status": "pending",
+            "testStrategy": "Load the application and inspect the `body` element to confirm the base background and text colors are applied. Verify that the custom CSS variables for tags are available globally in the browser's developer tools."
+          }
+        ],
+        "tag": "beta-version",
+        "metadata": {
+          "moveHistory": [
+            {
+              "fromTag": "ui-styling",
+              "toTag": "beta-version",
+              "timestamp": "2025-09-18T01:26:38.001Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "title": "Core Layout Components Enhancement",
+        "description": "Enhance Header and Footer components with improved styling, navigation, and responsive behavior according to design specifications",
+        "details": "Update Header component with clean typography using proper font weights, subtle border-bottom with border-gray-100, responsive padding (py-6 px-4 md:px-8), and maximum width container (max-w-7xl mx-auto). Style name as 'text-2xl font-bold text-gray-900' and implement CTA button with brand colors and skeumorphic shadow. Enhance language switcher with proper EN/ES toggle styling. Update Footer with simple horizontal layout, social icons as colored squares with letters/initials, centered copyright text with proper color contrast.",
+        "testStrategy": "Test header responsiveness across breakpoints, verify CTA button hover states and accessibility, validate language switcher functionality, test footer social icon rendering and layout on mobile/desktop, and ensure proper contrast ratios for accessibility compliance.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Header Component Typography and Layout Enhancement",
+            "description": "Update Header component with clean typography, proper font weights, and responsive layout structure",
+            "dependencies": [],
+            "details": "Implement clean typography with text-2xl font-bold text-gray-900 for name styling, apply proper font weights throughout the header, add responsive padding (py-6 px-4 md:px-8), and set up maximum width container (max-w-7xl mx-auto) with subtle border-bottom using border-gray-100",
+            "status": "pending",
+            "testStrategy": "Test typography rendering across different screen sizes, verify responsive padding adjustments, validate font weight consistency, and ensure border styling appears correctly"
+          },
+          {
+            "id": 2,
+            "title": "Header CTA Button Implementation",
+            "description": "Implement call-to-action button with brand colors and skeumorphic shadow effects",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Create CTA button using brand color palette with proper hover states, implement skeumorphic shadow effects for depth, ensure proper spacing and alignment within header layout, and add smooth transition animations",
+            "status": "pending",
+            "testStrategy": "Test button hover states and shadow effects, verify brand color implementation, validate button accessibility with focus indicators, and ensure smooth transitions"
+          },
+          {
+            "id": 3,
+            "title": "Language Switcher Enhancement",
+            "description": "Enhance language switcher with proper EN/ES toggle styling and functionality",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Style language switcher with proper toggle design for EN/ES options, implement active state styling, ensure proper spacing and alignment, and add smooth transition effects between language states",
+            "status": "pending",
+            "testStrategy": "Test language toggle functionality, verify active state styling, validate proper spacing within header layout, and ensure smooth state transitions"
+          },
+          {
+            "id": 4,
+            "title": "Footer Layout and Structure Implementation",
+            "description": "Update Footer with simple horizontal layout and proper container structure",
+            "dependencies": [],
+            "details": "Implement simple horizontal layout for footer content, add proper container structure with consistent spacing, ensure responsive behavior across breakpoints, and set up foundation for social icons and copyright text",
+            "status": "pending",
+            "testStrategy": "Test footer layout responsiveness across breakpoints, verify horizontal alignment of elements, validate container structure and spacing consistency"
+          },
+          {
+            "id": 5,
+            "title": "Footer Social Icons and Copyright Styling",
+            "description": "Implement social icons as colored squares with letters/initials and centered copyright text",
+            "dependencies": [
+              "2.4"
+            ],
+            "details": "Create social icons as colored squares containing letters or initials, implement proper color contrast for accessibility, add centered copyright text with appropriate typography, and ensure proper spacing between elements",
+            "status": "pending",
+            "testStrategy": "Test social icon rendering and color contrast ratios, verify copyright text centering and typography, validate accessibility compliance for color contrast, and ensure proper spacing on mobile and desktop"
+          }
+        ],
+        "tag": "beta-version",
+        "metadata": {
+          "moveHistory": [
+            {
+              "fromTag": "ui-styling",
+              "toTag": "beta-version",
+              "timestamp": "2025-09-18T01:26:41.891Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 3,
+        "title": "Homepage Sections Implementation",
+        "description": "Implement all main page sections including Hero, Featured Work, Experience, and Certifications with enhanced visual styling and responsive layouts",
+        "details": "Implement Hero section with two-column responsive grid (grid-cols-1 lg:grid-cols-2), left column with large bold typography (text-5xl md:text-6xl font-bold), branded italic text (text-brand-600 italic), description paragraph (text-xl text-gray-600 leading-relaxed), and right column with circular profile image (w-80 h-80 rounded-full) with proper object-cover scaling. Create Featured Work section with responsive grid (grid-cols-1 md:grid-cols-2 lg:grid-cols-3), white background cards with rounded corners (rounded-xl), subtle border and shadow effects, hover animations (hover:shadow-lg transition-all duration-300), and image overlay with dark gradient. Implement Experience section with enhanced cards featuring date/category badges, color-coded tags (bg-green-100 text-green-800), and improved hover states. Build Certifications section with responsive grid (grid-cols-2 md:grid-cols-3 lg:grid-cols-5), light gray background (bg-gray-50), centered certification badges (w-32 h-32), and clean typography for names and issuer information.",
+        "testStrategy": "Test responsive layouts across all breakpoints, verify hover animations and transitions work smoothly, validate image loading and aspect ratios, test card hover states and focus management, ensure proper spacing and alignment across sections, and verify dynamic color generation for tags works correctly.",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Prepare Homepage Layout and Create Section Component Files",
+            "description": "Clean the boilerplate content from `src/app/page.tsx` and establish the main page layout. Create placeholder component files for Hero, FeaturedWork, Experience, and Certifications sections within the `src/components` directory to structure the implementation.",
+            "dependencies": [],
+            "details": "In `src/app/page.tsx`, remove the default Next.js content and set up a `<main>` element. Inside, import and render the new (currently empty) components in the correct order: `<Hero />`, `<FeaturedWork />`, `<Experience />`, `<Certifications />`. Create the following empty files: `src/components/Hero.tsx`, `src/components/FeaturedWork.tsx`, `src/components/Experience.tsx`, and `src/components/Certifications.tsx`. Each file should export a basic React functional component.",
+            "status": "pending",
+            "testStrategy": "Verify that `src/app/page.tsx` renders without errors and that the component files are created in the correct directory."
+          },
+          {
+            "id": 2,
+            "title": "Implement the Hero Section Component",
+            "description": "Develop the Hero section in `src/components/Hero.tsx` with a two-column responsive layout, large typography, branded text, and a circular profile image as per the design specifications.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Implement a `section` with a `max-w-7xl mx-auto` container and responsive padding. Use a responsive grid (`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center`). The left column should contain an `h1` with `text-5xl md:text-6xl font-bold`, a `span` with `text-brand-600 italic`, and a `p` tag with `text-xl text-gray-600 leading-relaxed`. The right column should contain a Next.js `Image` component for the profile picture, styled with `w-80 h-80 rounded-full object-cover mx-auto lg:mx-0`.",
+            "status": "pending",
+            "testStrategy": "Test the Hero section's responsiveness, ensuring the layout switches from single to double column at the `lg` breakpoint. Verify typography scales correctly and the profile image maintains its aspect ratio and shape."
+          },
+          {
+            "id": 3,
+            "title": "Implement the Featured Work Section and Project Card",
+            "description": "Build the Featured Work section, including a responsive grid and a reusable project card component with specified styling, hover animations, and an image overlay effect.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "In `src/components/FeaturedWork.tsx`, create a section with a title and a responsive grid (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`). Create a new `ProjectCard.tsx` component. This card should have a white background, `rounded-xl` corners, a subtle border, and shadow. Implement a `hover:shadow-lg transition-all duration-300` effect. The card's image should feature an overlay with a dark gradient that appears on hover.",
+            "status": "pending",
+            "testStrategy": "Verify the grid responsiveness across mobile, tablet, and desktop breakpoints. Test the card's hover animation for smoothness and ensure the image overlay appears correctly. Use placeholder images and text to validate the layout."
+          },
+          {
+            "id": 4,
+            "title": "Implement the Experience Section with Enhanced Cards",
+            "description": "Create the Experience section, focusing on a list or timeline layout. Implement enhanced experience cards featuring date/category badges, color-coded skill tags, and improved hover states.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "In `src/components/Experience.tsx`, create a section with a title. Design and implement an `ExperienceCard.tsx` component. This card should display a job title, company, and date range. Include a small badge for the category (e.g., 'Full-time'). Use flexbox to display a list of skill tags, styled with classes like `bg-green-100 text-green-800 rounded-full px-3 py-1 text-sm`. Implement a distinct hover state, such as a border color change or a subtle lift effect.",
+            "status": "pending",
+            "testStrategy": "Test the layout of experience cards. Verify that the color-coded tags render with the correct background and text colors. Check the hover state on the cards to ensure it provides clear visual feedback."
+          },
+          {
+            "id": 5,
+            "title": "Implement the Certifications Section",
+            "description": "Build the Certifications section with a responsive grid layout on a light gray background to display certification badges and their corresponding names and issuers.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "In `src/components/Certifications.tsx`, create a section with a `bg-gray-50` background and appropriate padding. Add a section title. Implement a responsive grid (`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8`). Each grid item should be a flex container (`flex flex-col items-center text-center`). It will contain a Next.js `Image` for the certification badge (`w-32 h-32 object-contain`), a `p` tag for the certification name (`font-semibold`), and another `p` tag for the issuer (`text-sm text-gray-500`).",
+            "status": "pending",
+            "testStrategy": "Verify the section's background color and padding. Test the grid's responsiveness to ensure the number of columns adjusts correctly at `md` and `lg` breakpoints. Check that images are centered and maintain their aspect ratio, and that the typography is clean and legible."
+          }
+        ],
+        "tag": "beta-version",
+        "metadata": {
+          "moveHistory": [
+            {
+              "fromTag": "ui-styling",
+              "toTag": "beta-version",
+              "timestamp": "2025-09-18T01:26:43.863Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "title": "Blog Pages Styling Implementation",
+        "description": "Implement comprehensive styling for blog index page and individual blog post pages with enhanced cards, content rendering, and interactive elements",
+        "details": "Style blog index page with clean page title typography, descriptive subtitle, featured posts in two-column grid with enhanced card design and hover effects, proper image handling and aspect ratios, and tag display with dynamic colors. Style regular posts section with list layout, thumbnail images, consistent spacing and typography, and smooth hover transitions. Implement individual blog post page with full-width background image hero section with dark overlay, post title/employer/date range display, dynamic tag colors in upper left corner, responsive typography and spacing. Create content area with description block, language toggle button (🇺🇸 English / 🇪🇸 Spanish), main markdown content with prose prose-lg styling, proper code highlighting, Technologies Used section with dynamic tag/badge display, conditional Lucidchart embedding with proper iframe styling, and related posts grid with consistent card design.",
+        "testStrategy": "Test blog index page layout and card hover effects, verify individual post page hero section responsiveness, validate markdown content rendering with proper typography, test language toggle functionality, ensure Lucidchart embeds display correctly when present, verify related posts grid layout, and test all interactive elements for accessibility.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Style Blog Index Page Header and Featured Posts Grid",
+            "description": "Implement the styling for the main blog index page, including the page title, subtitle, and the two-column grid for featured posts. This involves enhancing the existing `BlogCard.astro` component with a new design, hover effects, and tag display.",
+            "dependencies": [],
+            "details": "In `src/pages/blog/index.astro`, style the `h1` and `p` tags for the page title and subtitle with clean, responsive typography. Modify the featured posts `div` to be a `grid grid-cols-1 md:grid-cols-2 gap-8`. Update `src/components/BlogCard.astro` to include a container with `rounded-lg`, `overflow-hidden`, and a subtle `shadow-md`. Implement a hover effect: `transition-all duration-300 hover:shadow-xl hover:-translate-y-1`. Ensure the post image uses `aspect-video` or a similar class for consistent aspect ratios with `object-cover`. Inside the card's content area, style the title, description, and implement a flex container to display tags using the `src/components/Tag.astro` component, applying dynamic colors based on the tag name.",
+            "status": "pending",
+            "testStrategy": "Verify the blog index page title and subtitle render correctly. Confirm the featured posts section displays as a two-column grid on medium screens and a single column on mobile. Test the hover effects on the blog cards for smooth transitions. Ensure images maintain their aspect ratio and tags are displayed with appropriate colors."
+          },
+          {
+            "id": 2,
+            "title": "Implement Regular Posts List Layout on Blog Index Page",
+            "description": "Redesign the 'All Posts' section on the blog index page from a simple unordered list to a styled list layout, where each item includes a thumbnail, title, date, and description with hover transitions.",
+            "dependencies": [],
+            "details": "In `src/pages/blog/index.astro`, replace the `<ul>` for `regularPosts` with a `div` containing a loop. Each post item should be an `<a>` tag with `flex items-center gap-4` or `gap-6`. The link should have a subtle background color change on hover, e.g., `hover:bg-gray-50`. Inside the link, add a small, fixed-size image container (e.g., `w-32 h-20 flex-shrink-0`) for a thumbnail with `object-cover` and `rounded-md`. To the right of the image, create a `div` for the text content, including the post title with `font-bold`, the publication date in a smaller, lighter font, and a short description. Ensure consistent spacing and typography between list items.",
+            "status": "pending",
+            "testStrategy": "Check the regular posts section on `/blog` to ensure it's no longer a simple bulleted list. Verify each list item displays a thumbnail, title, and date. Test the hover effect on each list item. Ensure the layout is responsive and maintains alignment on different screen sizes."
+          },
+          {
+            "id": 3,
+            "title": "Create Individual Blog Post Hero Section",
+            "description": "Implement the full-width hero section for individual blog post pages using the `BlogPostLayout.astro` file. This includes a background image with a dark overlay, and styled text for the title, employer, and date range.",
+            "dependencies": [],
+            "details": "In `src/layouts/BlogPostLayout.astro`, create a full-width `div` for the hero. Set the post's `image` from frontmatter as a background image. Add a semi-transparent dark overlay (e.g., `bg-black/50`) on top of the image to ensure text is readable. Inside a centered, max-width container, display the post tags in the upper-left corner using the `Tag.astro` component. Below the tags, display the post `title` with large, bold, white text (e.g., `text-4xl md:text-5xl font-bold text-white`). Under the title, display the `employer` and `dateRange` in a smaller, white font. Use flexbox or grid for layout and ensure the entire section is responsive.",
+            "status": "pending",
+            "testStrategy": "Navigate to an individual blog post page. Verify the hero section spans the full width and displays the correct background image. Check that the dark overlay is present and text is legible. Confirm that tags, title, employer, and date range are all correctly positioned and styled. Test responsiveness on mobile and desktop."
+          },
+          {
+            "id": 4,
+            "title": "Style Post Content Area, Markdown, and Language Toggle",
+            "description": "Style the main content area of a blog post, including the description block, markdown content rendering with `prose`, code highlighting, and the 'Technologies Used' section.",
+            "dependencies": [
+              "4.3"
+            ],
+            "details": "In `src/layouts/BlogPostLayout.astro`, below the hero, create a main content container with a `max-w-4xl mx-auto` and appropriate padding. Add a distinct description block that stands out from the main content. Implement the language toggle button (🇺🇸/🇪🇸) if `post.data.language` is present. Wrap the `<slot />` (which renders the markdown) in a `div` with `prose prose-lg`. Ensure that `tailwind.config.mjs` is configured with `@tailwindcss/typography` and that styles for headings, links, lists, and code blocks are applied correctly. Below the markdown content, create a 'Technologies Used' section that iterates over the post's `tags` array and displays each one using the styled `Tag.astro` component.",
+            "status": "pending",
+            "testStrategy": "Verify the post description block is styled correctly. Check that markdown content is rendered with the specified `prose` styling for typography, spacing, and links. Confirm that code blocks have proper syntax highlighting. Test the language toggle button's appearance. Ensure the 'Technologies Used' section displays all tags correctly."
+          },
+          {
+            "id": 5,
+            "title": "Implement Conditional Lucidchart Embed and Related Posts Grid",
+            "description": "Add the logic and styling for conditionally embedding a Lucidchart diagram and displaying a grid of related posts at the bottom of a blog post page.",
+            "dependencies": [
+              "4.1",
+              "4.3"
+            ],
+            "details": "In `src/layouts/BlogPostLayout.astro`, add a conditional block that checks for `post.data.lucidchartId`. If it exists, render an `iframe` inside a responsive container that maintains a 16:9 aspect ratio. Style the iframe to have a `border` and `rounded-lg`. Below this, implement the 'Related Posts' section. Fetch the posts specified in the `post.data.relatedPosts` frontmatter array. Display these posts in a responsive grid (e.g., `grid-cols-1 md:grid-cols-2 gap-8`). Reuse the `src/components/BlogCard.astro` component (as styled in subtask 4.1) to display each related post, ensuring a consistent look and feel with the main blog index page.",
+            "status": "pending",
+            "testStrategy": "On a post with a `lucidchartId` in its frontmatter, verify the Lucidchart embed appears and is responsive. On a post without it, confirm the section is not rendered. On a post with `relatedPosts` defined, verify the related posts section appears and displays the correct posts using the `BlogCard` component. Check that the grid layout is responsive."
+          }
+        ],
+        "tag": "beta-version",
+        "metadata": {
+          "moveHistory": [
+            {
+              "fromTag": "ui-styling",
+              "toTag": "beta-version",
+              "timestamp": "2025-09-18T01:26:46.084Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": 5,
+        "title": "Performance Optimization and Polish",
+        "description": "Implement animations, optimize performance, ensure accessibility compliance, and conduct comprehensive testing across browsers and devices",
+        "details": "Implement smooth hover effects with scale and shadow effects on cards, color transitions on links and buttons, proper image loading with lazy loading for below-fold content, and WebP format support where possible. Add loading states with proper placeholders and smooth content transitions. Ensure accessible focus indicators and keyboard navigation support. Optimize Tailwind CSS with unused class purging, minimize bundle size with critical CSS inlining, and implement proper caching headers. Add responsive images with srcset implementation. Conduct cross-browser testing (Chrome, Firefox, Safari, Edge) and mobile testing (iOS Safari, Chrome Mobile). Validate Core Web Vitals compliance with LCP optimization through hero image optimization and critical resource prioritization, CLS stability through proper image dimensions, and FID optimization with minimal JavaScript execution.",
+        "testStrategy": "Run Lighthouse audits to achieve >90 score for all metrics, test page load times under 3G conditions, validate accessibility compliance with screen readers and keyboard navigation, conduct cross-browser compatibility testing, verify all animations work smoothly without performance issues, test responsive images loading correctly across devices, and ensure proper error handling for missing content or failed image loads.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Advanced Image Optimization with Astro Image",
+            "description": "Replace all standard `<img>` tags with Astro's built-in `<Image>` component to automatically generate responsive `srcset` attributes, serve next-gen WebP formats, and handle lazy-loading for below-the-fold images. This will also prevent Cumulative Layout Shift (CLS) by enforcing image dimensions.",
+            "dependencies": [],
+            "details": "First, install an image integration if one is not present (e.g., `npx astro add image`). Then, go through all components and pages (e.g., `src/components/Card.astro`, `src/pages/blog/[...slug].astro`) and refactor existing `<img>` tags to use the `<Image>` component. Ensure the hero image on the homepage and blog posts is prioritized (not lazy-loaded) to optimize Largest Contentful Paint (LCP). For all other images, use the default lazy-loading behavior.",
+            "status": "pending",
+            "testStrategy": "Verify that images are served in WebP format in supported browsers. Inspect the generated HTML to confirm `srcset` and `sizes` attributes are present. Use browser dev tools to confirm that below-the-fold images are lazy-loaded on scroll. Run a Lighthouse audit to check for improvements in LCP and CLS scores."
+          },
+          {
+            "id": 2,
+            "title": "Enhance UI with Smooth Animations and Transitions",
+            "description": "Implement smooth hover and transition effects on interactive elements to improve user experience. This includes adding scale and shadow effects to cards and ensuring smooth color transitions on links and buttons.",
+            "dependencies": [],
+            "details": "In component files like `src/components/Card.astro` and `src/components/Button.astro`, add Tailwind CSS utility classes. For cards, use a combination of `transition`, `duration-300`, `ease-in-out`, `hover:scale-105`, and `hover:shadow-xl`. For links and buttons, ensure the `transition-colors` class is applied to provide smooth feedback on hover and focus states.",
+            "status": "pending",
+            "testStrategy": "Manually test all cards, buttons, and links across the site to ensure hover animations are smooth and not janky. Verify that transitions work as expected in Chrome, Firefox, and Safari. Check for any performance degradation using the browser's performance profiler during animations."
+          },
+          {
+            "id": 3,
+            "title": "Improve Accessibility with Focus Indicators and Keyboard Navigation",
+            "description": "Ensure the entire website is fully accessible via keyboard and that all interactive elements have clear, visible focus states to comply with WCAG standards.",
+            "dependencies": [],
+            "details": "In the global stylesheet (`src/styles/global.css`), add site-wide styles for the `:focus-visible` pseudo-class to provide a distinct outline or box-shadow on focused elements, overriding the default browser outline. A good pattern is `*:focus-visible { outline: 2px solid theme('colors.brand.600'); outline-offset: 2px; }`. Then, perform a full keyboard audit by tabbing through all pages to ensure the focus order is logical and all interactive elements (links, buttons, form fields) are reachable and operable.",
+            "status": "pending",
+            "testStrategy": "Navigate the entire website using only the Tab key. Confirm that every interactive element receives focus and has a visible indicator. Ensure the focus order follows the visual layout. Use a screen reader (e.g., VoiceOver, NVDA) to verify a seamless navigation experience."
+          },
+          {
+            "id": 4,
+            "title": "Optimize Build Output and Implement Caching Strategy",
+            "description": "Ensure the production build is optimized by verifying Tailwind CSS purging is working correctly and implementing a proper browser caching strategy via server headers.",
+            "dependencies": [],
+            "details": "Verify that the `content` array in `tailwind.config.cjs` correctly includes all files containing Tailwind classes. For caching, create a configuration file for the deployment platform (e.g., a `public/_headers` file for Netlify/Cloudflare Pages or a `vercel.json` for Vercel). In this file, set aggressive `Cache-Control` headers for immutable assets in the `/_astro/` directory (e.g., `Cache-Control: public, max-age=31536000, immutable`). For HTML pages, use a revalidation strategy (e.g., `Cache-Control: public, max-age=0, must-revalidate`).",
+            "status": "pending",
+            "testStrategy": "After deployment, inspect the production site's CSS file to confirm its size is minimal and unused classes have been purged. Use browser dev tools' Network tab to inspect the response headers for assets and HTML documents, verifying that the `Cache-Control` headers are set as configured."
+          },
+          {
+            "id": 5,
+            "title": "Final Polish: Loading States, Resource Prioritization, and CWV Validation",
+            "description": "Implement final performance optimizations by preloading critical resources and adding loading states. Conduct a comprehensive Core Web Vitals audit to ensure all metrics meet the 'good' threshold.",
+            "dependencies": [
+              "5.1",
+              "5.2",
+              "5.3",
+              "5.4"
+            ],
+            "details": "In `src/layouts/Layout.astro`, add `<link rel=\"preload\">` tags in the `<head>` for the LCP image (e.g., the hero image) and any critical fonts to prioritize their loading. If any components fetch data on the client-side, implement skeleton placeholder UIs. Finally, run a full Lighthouse audit on key pages (homepage, blog index, blog post) and analyze the results. Address any remaining issues to achieve a score of >90 across Performance, Accessibility, Best Practices, and SEO.",
+            "status": "pending",
+            "testStrategy": "Run Lighthouse in an incognito window to get accurate performance metrics. Test the site on a simulated 3G network using browser dev tools to assess perceived performance and loading behavior. Validate that LCP is under 2.5s, CLS is under 0.1, and FID (or INP) is low. Confirm the final Lighthouse scores are above 90."
+          }
+        ],
+        "tag": "beta-version",
+        "metadata": {
+          "moveHistory": [
+            {
+              "fromTag": "ui-styling",
+              "toTag": "beta-version",
+              "timestamp": "2025-09-18T01:26:48.064Z"
+            }
+          ]
+        }
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-18T01:05:10.171Z",
+      "updated": "2025-09-18T01:05:10.171Z",
+      "description": "Tag created from git branch \"beta-version\""
+    }
   }
 }
