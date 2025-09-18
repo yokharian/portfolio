@@ -165,8 +165,8 @@ function formatDate(date: string | Date): string {
         </p>
       </div>
       
-      <!-- Grid layout matching Real Life Projects style -->
-      <div class="projects-grid" role="list">
+      <!-- Grid layout matching Real Life Projects style - 4 columns desktop, 2 mobile -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" role="list">
         {latestPosts.slice(0, 8).map((post, index) => (
           <div class={`project-stagger project-stagger-${(index % 8) + 1}`}>
             <BlogCard post={post} currentLocale={currentLocale} />
@@ -185,7 +185,7 @@ function formatDate(date: string | Date): string {
     </div>
   </section>
 
-    <section id="certifications" class="py-20 bg-white" aria-labelledby="certifications-title" role="region">
+    <section id="certifications" class="py-20" aria-labelledby="certifications-title" role="region">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <!-- Left side - Text content -->
@@ -201,51 +201,28 @@ function formatDate(date: string | Date): string {
           </p>
         </div>
         
-        <!-- Right side - Certification badges -->
-        <div class="grid grid-cols-2 gap-6 justify-items-center" role="list">
-          {certifications.slice(0, 4).map((cert: any, index: number) => (
-            <div class="relative group" role="listitem">
-              <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-2xl" aria-label={`${t.certifications.viewCredential}: ${cert.name}`}>
-                <span class="sr-only">{t.certifications.viewCredential}: {cert.name}</span>
-                <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-visible transition-all duration-500 hover:scale-110 hover:rotate-2 group-hover:z-10 relative certification-container" style={`animation-delay: ${index * 0.1}s`}>
-                  <Image 
-                    src={cert.imageUrl} 
-                    alt={cert.name} 
-                    width={144}
-                    height={144}
-                    loading="lazy" 
-                    decoding="async" 
-                    class="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
-                    format="webp"
-                    quality={85}
-                  />
-                </div>
-              </a>
-            </div>
-          ))}
-          {/* Terraform badge in second row, centered */}
-          {certifications.length > 4 && (
-            <div class="col-span-2 flex justify-center">
-              <div class="relative group" role="listitem">
-                <a href={certifications[4].credentialUrl} target="_blank" rel="noopener noreferrer" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-2xl" aria-label={`${t.certifications.viewCredential}: ${certifications[4].name}`}>
-                  <span class="sr-only">{t.certifications.viewCredential}: {certifications[4].name}</span>
-                  <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-visible transition-all duration-500 hover:scale-110 hover:rotate-2 group-hover:z-10 relative certification-container" style="animation-delay: 0.4s">
-                    <Image 
-                      src={certifications[4].imageUrl} 
-                      alt={certifications[4].name} 
-                      width={144}
-                      height={144}
-                      loading="lazy" 
-                      decoding="async" 
-                      class="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
-                      format="webp"
-                      quality={85}
-                    />
-                  </div>
-                </a>
+      <!-- Certification badges grid - 3 columns desktop, 2 mobile -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6 justify-items-center" role="list">
+        {certifications.map((cert: any, index: number) => (
+          <div class="relative group" role="listitem">
+            <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-2xl" aria-label={`${t.certifications.viewCredential}: ${cert.name}`}>
+              <span class="sr-only">{t.certifications.viewCredential}: {cert.name}</span>
+              <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-visible transition-all duration-500 hover:scale-110 hover:rotate-2 group-hover:z-10 relative certification-container" style={`animation-delay: ${index * 0.1}s`}>
+                <Image 
+                  src={cert.imageUrl} 
+                  alt={cert.name} 
+                  width={144}
+                  height={144}
+                  loading="lazy" 
+                  decoding="async" 
+                  class="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
+                  format="webp"
+                  quality={85}
+                />
               </div>
-            </div>
-          )}
+            </a>
+          </div>
+        ))}
         </div>
       </div>
 

@@ -18,6 +18,8 @@
     },
     "certifications": {
       "heading": "Certifications",
+      "subtitle": "As a self-taught professional, I learn quickly, adapt easily, and solve complex challenges with a flexible approach.",
+      "officialTag": "Official",
       "issuedOn": "Issued",
       "issuerLabel": "Issuer",
       "viewCredential": "View credential",
@@ -59,6 +61,8 @@
     },
     "certifications": {
       "heading": "Certificaciones",
+      "subtitle": "Como profesional autodidacta, aprendo rápidamente, me adapto fácilmente y resuelvo desafíos complejos con un enfoque flexible.",
+      "officialTag": "Official",
       "issuedOn": "Emitido",
       "issuerLabel": "Emisor",
       "viewCredential": "Ver credencial",
