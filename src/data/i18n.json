@@ -7,9 +7,14 @@
     },
     "home": {
       "featured": {
-        "heading": "Latest Blog Posts",
+        "heading": "Real Life Projects",
+        "subtitle": "Take a look at the best of my work that I can show you in a tangible way",
         "viewAll": "View all posts"
       }
+    },
+    "experience": {
+      "heading": "Technical Expertise",
+      "subtitle": "Core technologies and frameworks I work with to build scalable cloud solutions."
     },
     "certifications": {
       "heading": "Certifications",
@@ -43,9 +48,14 @@
     },
     "home": {
       "featured": {
-        "heading": "Últimas Entradas del Blog",
+        "heading": "Proyectos Reales",
+        "subtitle": "Echa un vistazo a lo mejor de mi trabajo que puedo mostrarte de manera tangible",
         "viewAll": "Ver todas las entradas"
       }
+    },
+    "experience": {
+      "heading": "Experiencia Técnica",
+      "subtitle": "Tecnologías principales y frameworks con los que trabajo para construir soluciones escalables en la nube."
     },
     "certifications": {
       "heading": "Certificaciones",

@@ -10,19 +10,70 @@
   }
   
   body {
-    @apply bg-gray-50 text-gray-800 antialiased;
+    @apply text-gray-800 antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image: url('/assets/images/background.png');
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    background-attachment: fixed;
+    background-color: #f8fafc !important;
+    background-image: url('/assets/images/background.png') !important;
+    background-repeat: repeat !important;
+    background-size: 222px 222px !important;
+    background-attachment: fixed !important;
+    background-position: 0 0 !important;
   }
   
-  /* Focus styles for accessibility */
-  *:focus-visible {
-    @apply outline-2 outline-brand-600 outline-offset-2;
-  }
+      /* Enhanced focus styles for accessibility */
+      *:focus-visible {
+        @apply outline-2 outline-brand-600 outline-offset-2;
+        outline-style: solid;
+        outline-width: 2px;
+        outline-color: theme('colors.brand.600');
+        outline-offset: 2px;
+      }
+      
+      /* Focus styles for interactive elements */
+      a:focus-visible,
+      button:focus-visible,
+      [role="button"]:focus-visible {
+        @apply outline-2 outline-brand-500 outline-offset-2 ring-2 ring-brand-500/20;
+        box-shadow: 0 0 0 2px theme('colors.brand.500'), 0 0 0 4px theme('colors.brand.500/20');
+      }
+      
+      /* Focus styles for form elements */
+      input:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible {
+        @apply outline-2 outline-brand-500 outline-offset-2 ring-2 ring-brand-500/20;
+        box-shadow: 0 0 0 2px theme('colors.brand.500'), 0 0 0 4px theme('colors.brand.500/20');
+      }
+      
+      /* Skip link for keyboard navigation */
+      .skip-link {
+        @apply absolute -top-10 left-4 bg-brand-600 text-white px-4 py-2 rounded-md z-50;
+        transition: top 0.3s ease;
+      }
+      
+      .skip-link:focus {
+        @apply top-4;
+      }
+      
+      /* High contrast mode support */
+      @media (prefers-contrast: high) {
+        *:focus-visible {
+          outline-width: 3px;
+          outline-color: ButtonText;
+        }
+      }
+      
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
 }
 
 /* CSS Variables for dynamic tag colors */
@@ -105,4 +156,176 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  /* Enhanced smooth animations and transitions */
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .hover-lift {
+    @apply transform transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .hover-scale {
+    @apply transform transition-all duration-300 ease-in-out hover:scale-105;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 ease-in-out hover:shadow-xl hover:shadow-brand-500/25;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  
+  .slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .stagger-animation {
+    animation: staggerIn 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes staggerIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Stagger delay classes */
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+  .stagger-6 { animation-delay: 0.6s; }
+  
+  /* Floating certification cards */
+  .certification-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(1deg);
+    }
+  }
+  
+  .certification-float:nth-child(odd) {
+    animation-delay: 0.5s;
+  }
+  
+  .certification-float:nth-child(even) {
+    animation-delay: 1s;
+  }
+  
+  /* Ensure animations don't clip content */
+  .certification-container {
+    overflow: visible !important;
+    transform-origin: center;
+  }
+  
+  .certification-container:hover {
+    overflow: visible !important;
+  }
+  
+  /* Certification badge styles to match AWS design */
+  .certification-badge {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .certification-badge:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .certification-badge.hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+  
+  .certification-badge.shield {
+    clip-path: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+  }
+  
+  /* Gradient backgrounds for different badge types */
+  .badge-gradient-blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  }
+  
+  .badge-gradient-purple {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  }
+  
+  .badge-gradient-gray {
+    background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+  }
+  
+  .badge-gradient-black {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  }
+  
+  /* Enhanced grid layout for projects */
+  .projects-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+  }
+  
+  /* Subtle background pattern for projects section */
+  .projects-section {
+    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0);
+    background-size: 20px 20px;
+  }
+  
+  /* Stagger animation for project cards */
+  .project-stagger {
+    @apply opacity-0 transform translate-y-4;
+    animation: projectStaggerIn 0.6s ease-out forwards;
+  }
+  
+  @keyframes projectStaggerIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Project card stagger delays */
+  .project-stagger-1 { animation-delay: 0.1s; }
+  .project-stagger-2 { animation-delay: 0.2s; }
+  .project-stagger-3 { animation-delay: 0.3s; }
+  .project-stagger-4 { animation-delay: 0.4s; }
+  .project-stagger-5 { animation-delay: 0.5s; }
+  .project-stagger-6 { animation-delay: 0.6s; }
+  .project-stagger-7 { animation-delay: 0.7s; }
+  .project-stagger-8 { animation-delay: 0.8s; }
 }

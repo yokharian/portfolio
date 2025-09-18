@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 export interface Props {
   post: {
     slug: string;
@@ -9,6 +11,7 @@ export interface Props {
       thumbnail?: string;
       heroImage?: string;
       tags?: Array<{ name: string; color?: string }> | string[];
+      employer?: string;
     };
   };
   currentLocale: string;
@@ -29,50 +32,69 @@ function formatDate(date: Date | string | undefined): string {
     day: 'numeric' 
   });
 }
+
+// Format company and date metadata
+function formatMetadata(date: Date | string | undefined, employer?: string): string {
+  const formattedDate = formatDate(date);
+  if (employer && formattedDate) {
+    return `${employer} ${formattedDate}`;
+  } else if (employer) {
+    return employer;
+  } else if (formattedDate) {
+    return formattedDate;
+  }
+  return '';
+}
 ---
 
-<article class="relative rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200" role="listitem">
-  <a href={postUrl} class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label={`Read blog post: ${post.data.title}`}>
+<article class="group relative rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus-within:shadow-xl focus-within:-translate-y-1" role="listitem">
+  <a href={postUrl} class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label={`Read blog post: ${post.data.title}`}>
     <span class="sr-only">{post.data.title}</span>
   </a>
   
-  <div class="mb-4 overflow-hidden rounded-lg">
-    <img 
+  <!-- Image with rounded top corners -->
+  <div class="aspect-video overflow-hidden rounded-t-2xl">
+    <Image 
       src={heroImage} 
       alt={post.data.title} 
-      class="h-48 w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]" 
-      loading="lazy" 
+      width={400}
+      height={225}
+      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" 
+      loading="lazy"
       decoding="async"
+      format="webp"
+      quality={85}
     />
   </div>
   
-  <div class="space-y-3">
-    {post.data.pubDate && (
-      <div class="flex items-center gap-2 text-sm text-gray-500">
-        <time datetime={new Date(post.data.pubDate).toISOString()}>
-          {formatDate(post.data.pubDate)}
-        </time>
+  <!-- Card content with padding -->
+  <div class="p-6 space-y-4">
+    <!-- Company & Date metadata -->
+    {formatMetadata(post.data.pubDate, post.data.employer) && (
+      <div class="text-sm text-gray-500 font-medium">
+        {formatMetadata(post.data.pubDate, post.data.employer)}
       </div>
     )}
     
-    <h3 class="text-xl font-semibold text-gray-900 line-clamp-2">
+    <!-- Project title -->
+    <h3 class="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-brand-600 transition-colors">
       {post.data.title}
     </h3>
     
-    <p class="text-gray-600 line-clamp-3">
+    <!-- Description -->
+    <p class="text-gray-600 line-clamp-3 leading-relaxed">
       {post.data.description}
     </p>
     
+    <!-- Tags -->
     {tags.length > 0 && (
-      <ul class="flex flex-wrap gap-2" aria-label="Tags">
-        {tags.map((tag: any) => (
-          <li>
-            <span class="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">
-              {typeof tag === 'string' ? tag : tag.name || tag.toString()}
-            </span>
-          </li>
+      <div class="flex flex-wrap gap-2" aria-label="Tags">
+        {tags.slice(0, 3).map((tag: any) => (
+          <span class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+            {typeof tag === 'string' ? tag : tag.name || tag.toString()}
+          </span>
         ))}
-      </ul>
+      </div>
     )}
   </div>
 </article>

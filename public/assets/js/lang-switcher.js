@@ -90,6 +90,29 @@ class LangSwitcher {
           element.classList.remove("text-sky-700", "font-semibold");
         }
       }
+
+      // Animate text elements with data-i18n-key
+      this.animateTextElements();
+    } catch (e) {
+      // Ignore errors
+    }
+  }
+
+  animateTextElements() {
+    try {
+      const elements = document.querySelectorAll("[data-i18n-key]");
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        // Add fade out effect
+        element.style.opacity = "0.3";
+        element.style.transform = "translateY(10px)";
+
+        // After a short delay, fade back in
+        setTimeout(() => {
+          element.style.opacity = "1";
+          element.style.transform = "translateY(0)";
+        }, 150);
+      }
     } catch (e) {
       // Ignore errors
     }

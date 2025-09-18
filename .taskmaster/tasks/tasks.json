@@ -1976,7 +1976,7 @@
           3,
           4
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1984,7 +1984,7 @@
             "description": "Replace all standard `<img>` tags with Astro's built-in `<Image>` component to automatically generate responsive `srcset` attributes, serve next-gen WebP formats, and handle lazy-loading for below-the-fold images. This will also prevent Cumulative Layout Shift (CLS) by enforcing image dimensions.",
             "dependencies": [],
             "details": "First, install an image integration if one is not present (e.g., `npx astro add image`). Then, go through all components and pages (e.g., `src/components/Card.astro`, `src/pages/blog/[...slug].astro`) and refactor existing `<img>` tags to use the `<Image>` component. Ensure the hero image on the homepage and blog posts is prioritized (not lazy-loaded) to optimize Largest Contentful Paint (LCP). For all other images, use the default lazy-loading behavior.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that images are served in WebP format in supported browsers. Inspect the generated HTML to confirm `srcset` and `sizes` attributes are present. Use browser dev tools to confirm that below-the-fold images are lazy-loaded on scroll. Run a Lighthouse audit to check for improvements in LCP and CLS scores."
           },
           {
@@ -1993,7 +1993,7 @@
             "description": "Implement smooth hover and transition effects on interactive elements to improve user experience. This includes adding scale and shadow effects to cards and ensuring smooth color transitions on links and buttons.",
             "dependencies": [],
             "details": "In component files like `src/components/Card.astro` and `src/components/Button.astro`, add Tailwind CSS utility classes. For cards, use a combination of `transition`, `duration-300`, `ease-in-out`, `hover:scale-105`, and `hover:shadow-xl`. For links and buttons, ensure the `transition-colors` class is applied to provide smooth feedback on hover and focus states.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Manually test all cards, buttons, and links across the site to ensure hover animations are smooth and not janky. Verify that transitions work as expected in Chrome, Firefox, and Safari. Check for any performance degradation using the browser's performance profiler during animations."
           },
           {
@@ -2002,7 +2002,7 @@
             "description": "Ensure the entire website is fully accessible via keyboard and that all interactive elements have clear, visible focus states to comply with WCAG standards.",
             "dependencies": [],
             "details": "In the global stylesheet (`src/styles/global.css`), add site-wide styles for the `:focus-visible` pseudo-class to provide a distinct outline or box-shadow on focused elements, overriding the default browser outline. A good pattern is `*:focus-visible { outline: 2px solid theme('colors.brand.600'); outline-offset: 2px; }`. Then, perform a full keyboard audit by tabbing through all pages to ensure the focus order is logical and all interactive elements (links, buttons, form fields) are reachable and operable.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Navigate the entire website using only the Tab key. Confirm that every interactive element receives focus and has a visible indicator. Ensure the focus order follows the visual layout. Use a screen reader (e.g., VoiceOver, NVDA) to verify a seamless navigation experience."
           },
           {
@@ -2011,7 +2011,7 @@
             "description": "Ensure the production build is optimized by verifying Tailwind CSS purging is working correctly and implementing a proper browser caching strategy via server headers.",
             "dependencies": [],
             "details": "Verify that the `content` array in `tailwind.config.cjs` correctly includes all files containing Tailwind classes. For caching, create a configuration file for the deployment platform (e.g., a `public/_headers` file for Netlify/Cloudflare Pages or a `vercel.json` for Vercel). In this file, set aggressive `Cache-Control` headers for immutable assets in the `/_astro/` directory (e.g., `Cache-Control: public, max-age=31536000, immutable`). For HTML pages, use a revalidation strategy (e.g., `Cache-Control: public, max-age=0, must-revalidate`).",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "After deployment, inspect the production site's CSS file to confirm its size is minimal and unused classes have been purged. Use browser dev tools' Network tab to inspect the response headers for assets and HTML documents, verifying that the `Cache-Control` headers are set as configured."
           },
           {
@@ -2025,7 +2025,7 @@
               "5.4"
             ],
             "details": "In `src/layouts/Layout.astro`, add `<link rel=\"preload\">` tags in the `<head>` for the LCP image (e.g., the hero image) and any critical fonts to prioritize their loading. If any components fetch data on the client-side, implement skeleton placeholder UIs. Finally, run a full Lighthouse audit on key pages (homepage, blog index, blog post) and analyze the results. Address any remaining issues to achieve a score of >90 across Performance, Accessibility, Best Practices, and SEO.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run Lighthouse in an incognito window to get accurate performance metrics. Test the site on a simulated 3G network using browser dev tools to assess perceived performance and loading behavior. Validate that LCP is under 2.5s, CLS is under 0.1, and FID (or INP) is low. Confirm the final Lighthouse scores are above 90."
           }
         ],
@@ -2043,7 +2043,7 @@
     ],
     "metadata": {
       "created": "2025-09-18T01:05:10.171Z",
-      "updated": "2025-09-18T03:41:00.325Z",
+      "updated": "2025-09-18T04:47:21.924Z",
       "description": "Tag created from git branch \"beta-version\""
     }
   }

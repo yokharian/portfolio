@@ -14,4 +14,23 @@ export default defineConfig({
     },
   },
   integrations: [tailwind(), sitemap()],
+  // Less aggressive caching strategy
+  build: {
+    inlineStylesheets: "auto",
+  },
+  // Configure caching headers for static assets
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          // Reduce chunk size for better caching
+          manualChunks: {
+            vendor: ["astro"],
+          },
+        },
+      },
+    },
+  },
+  // Configure output for better caching
+  output: "static",
 });

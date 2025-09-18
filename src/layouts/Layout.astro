@@ -42,6 +42,21 @@ const pageTitle = title.includes('Sofia') ? title : `${title} | Sofia Escobedo â
     <meta name="author" content="Sofia Escobedo">
     <link rel="canonical" href={canonicalUrl}>
     
+    <!-- Critical Resource Preloading -->
+    <link rel="preload" href="/assets/images/183728692.jpg" as="image" type="image/jpeg">
+    <link rel="preload" href="/assets/css/styles.css" as="style">
+    <link rel="preload" href="/assets/js/lang-bootstrap.js" as="script">
+    <link rel="preload" href="/assets/js/lang-switcher.js" as="script">
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Core Web Vitals optimization -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="color-scheme" content="light">
+    <meta name="format-detection" content="telephone=no">
+    
     <!-- Open Graph tags -->
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
@@ -62,6 +77,10 @@ const pageTitle = title.includes('Sofia') ? title : `${title} | Sofia Escobedo â
     <meta name="googlebot" content="index, follow">
     <meta name="theme-color" content="#0ea5e9">
     <meta name="msapplication-TileColor" content="#0ea5e9">
+    
+    <!-- Cache control headers for less aggressive caching -->
+    <meta http-equiv="Cache-Control" content="public, max-age=3600, s-maxage=7200">
+    <meta http-equiv="Expires" content="3600">
     
     <!-- Language alternates -->
     <link rel="alternate" href={`https://sofiaramirez.dev/en${currentPath.replace(/^\/[a-z]{2}/, '')}`} hreflang="en">
