@@ -1,17 +1,67 @@
-name: Deploy Amplify Backend
+name: CI & Deploy to aws
 
 on:
+  push:
+    branches: [ master, development ]
+  pull_request:
+    branches: [ master, development ]
   workflow_dispatch:
     inputs:
       branch:
         description: "Branch name to deploy (defaults to event branch)"
         required: false
-  push:
-    branches:
-      - master
+      reason:
+        description: "Optional note for the deploy log"
+        required: false
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build project
+      run: npm run build
+
+    - name: Run every test suite
+      run: npm run test
+      
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+    - name: Upload build artifacts
+      if: matrix.node-version == '18.x'
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: |
+          dist/
+          node_modules/
+        retention-days: 1
+
   deploy:
+    needs: test
+    if: github.event_name == 'push' && github.event_name != 'pull_request'
     environment: ${{ github.event.inputs.branch || github.ref_name }}
     name: Deploy with Amplify CLI
     runs-on: ubuntu-latest
@@ -23,6 +73,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: .
 
       - name: Use Node.js 18
         uses: actions/setup-node@v4
