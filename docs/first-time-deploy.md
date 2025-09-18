@@ -21,12 +21,13 @@ Use this checklist when preparing a fresh AWS Amplify deployment of the portfoli
 - In the Amplify console (App settings → General → Service role), assign the role from the previous steps to the app.
 - Future builds will automatically assume this role.
 
-## 5. Configure environment variables
-
-- Set `AWS_BUCKET_ASSETS` in the Amplify console (App settings → Environment variables) to the name of the assets bucket.
-- If this variable is missing at build time, the build will skip downloading assets from S3.
-
 ## 6. Deploy
 
-- Trigger the initial deployment from the Amplify console or push a commit to the connected branch.
-- Confirm that the build downloads the assets and the site deploys successfully.
+- Trigger the initial frontend deployment by pushing to a tracked branch. The repo uses GitHub’s built-in webhook integration to call your Amplify hosting webhook, so ensure the `amplify.yml` file is present in the repo for Amplify to pick up build settings.
+- Backend infrastructure deploys through `.github/workflows/ci-cd-aws.yml`, which runs tests/builds and then calls `npx ampx pipeline-deploy` via the Amplify CLI. Verify required AWS secrets (`AMPLIFY_APP_ID`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and optional `AWS_REGION`) are set before triggering the workflow.
+- Confirm that both the frontend webhook trigger and backend CLI deploy complete successfully in GitHub Actions and the Amplify console.
+
+## More info
+
+- [Deployment protection rules](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments#deployment-protection-rules)
+- [Github secret storage](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#secrets-context)
