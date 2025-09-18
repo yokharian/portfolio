@@ -4,11 +4,16 @@ frontend:
     preBuild:
       commands:
         - npm ci
-        - mkdir -p assets
-        - aws s3 sync s3://$AWS_BUCKET_ASSETS assets/ --region $AWS_REGION
     build:
       commands:
         - npm run build
+        - |
+          if [ -n "$AWS_BUCKET_ASSETS" ]; then
+            echo "Syncing assets from s3://$AWS_BUCKET_ASSETS"
+            aws s3 sync s3://$AWS_BUCKET_ASSETS assets/ ${AWS_REGION:+--region $AWS_REGION}
+          else
+            echo "AWS_BUCKET_ASSETS not set; skipping asset sync"
+          fi
   artifacts:
     baseDirectory: dist
     files:
