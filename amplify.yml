@@ -3,21 +3,29 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
-    build:
-      commands:
-        - npm run build
+        - npm ci --cache .npm --prefer-offline
+        - mkdir -p assets
         - |
           if [ -n "$AWS_BUCKET_ASSETS" ]; then
             echo "Syncing assets from s3://$AWS_BUCKET_ASSETS"
-            aws s3 sync s3://$AWS_BUCKET_ASSETS assets/ ${AWS_REGION:+--region $AWS_REGION}
+            rm -rf src/blog_posts/*
+            aws s3 sync s3://$AWS_BUCKET_ASSETS src/blog_posts/ ${AWS_REGION:+--region $AWS_REGION}
           else
             echo "AWS_BUCKET_ASSETS not set; skipping asset sync"
           fi
+    build:
+      commands:
+        - npm run build
   artifacts:
     baseDirectory: dist
     files:
       - '**/*'
   cache:
     paths:
+      - .npm/**/*
       - node_modules/**/*
+backend:
+  phases:
+    build:
+      commands:
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
