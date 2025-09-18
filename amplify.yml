@@ -10,7 +10,7 @@ frontend:
         - npm ci --cache .npm --prefer-offline
     build:
       commands:
-        - AWS_BUCKET=$(jq -r '.storage.bucket_name' amplify_outputs.json)
+        - AWS_BUCKET=$(node -p "require('./amplify_outputs.json').storage.bucket_name")
         - echo "AWS_BUCKET=$AWS_BUCKET" >> .env
         - |
           if [ -n "$AWS_BUCKET" ]; then
