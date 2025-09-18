@@ -266,9 +266,6 @@ dev-debug.log
 # Astro build output
 .astro/
 
-# 11ty build output
-_site/
-
 # Compiled client-side JavaScript
 src/assets/js/*.js
 src/assets/js/*.map
@@ -276,7 +273,18 @@ src/assets/js/*.map
 # Compiled client-side CSS
 src/assets/css/*.css
 
-# Task files
+# Taskmaster files
+# ALLOW
 !.taskmaster/
-# tasks.json
-# tasks/ 
+!.taskmaster/docs/
+# DENY
+/.aiassistant/rules/taskmaster.md
+/.cursor/rules/taskmaster/dev_workflow.mdc
+/.cursor/rules/taskmaster/taskmaster.mdc
+/.cursor/rules/cursor_rules.mdc
+/.cursor/rules/self_improve.mdc
+/.cursor/environment.json
+/.cursor/mcp.json
+/.junie/mcp/mcp.json
+/.junie/guidelines.md
+/.cursorignore

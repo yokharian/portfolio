@@ -10,13 +10,18 @@
 dist/
 build/
 out/
+node_modules/
 
 # taskmaster
-node_modules/
+# ALLOW
+!.taskmaster/
+!.taskmaster/docs/
+# DENY
 .taskmaster/generated/
 .taskmaster/tasks/
 .taskmaster/templates/
 .taskmaster/config.json
 .taskmaster/state.json
-_site/
+
+.astro/
 .idea/
