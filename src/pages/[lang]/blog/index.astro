@@ -65,25 +65,38 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
   description={`Blog posts and articles by ${siteData.author} - ${siteData.description}`}
   lang={currentLocale}
 >
-  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-    <header class="mb-12 text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-4">
-        Blog
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <header class="py-20 text-center bg-white/90 backdrop-blur-sm rounded-3xl mb-16 shadow-lg">
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 mb-6">
+        {currentLocale === 'en' ? 'Blog' : 'Blog'}
       </h1>
-      <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-        Insights, tutorials, and case studies on Python, AWS, and cloud architecture.
+      <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        {currentLocale === 'en' 
+          ? 'Insights, tutorials, and case studies on Python, AWS, and cloud architecture.'
+          : 'Perspectivas, tutoriales y estudios de caso sobre Python, AWS y arquitectura en la nube.'
+        }
       </p>
     </header>
 
     {featuredPosts.length > 0 && (
-      <section class="mb-12">
-        <h2 class="text-2xl font-semibold mb-6 text-slate-900">Featured Posts</h2>
+      <section class="mb-20">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {currentLocale === 'en' ? 'Featured Posts' : 'Publicaciones Destacadas'}
+          </h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            {currentLocale === 'en' 
+              ? 'Handpicked articles showcasing my most impactful projects and insights.'
+              : 'Artículos seleccionados que muestran mis proyectos e ideas más impactantes.'
+            }
+          </p>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {featuredPosts.map((post) => (
-            <article class="group relative rounded-xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200">
+            <article class="group relative rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl focus-within:shadow-xl hover:-translate-y-2 focus-within:-translate-y-2 overflow-hidden">
               <a 
                 href={`/${currentLocale}/blog/${post.baseSlug}`}
-                class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 aria-label={`Read ${post.data.title}`}
               >
                 <span class="sr-only">Read {post.data.title}</span>
@@ -142,18 +155,29 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
       </section>
     )}
 
-    <section>
-      <h2 class="text-2xl font-semibold mb-6 text-slate-900">
-        {featuredPosts.length > 0 ? 'All Posts' : 'Posts'}
-      </h2>
+    <section class="bg-gray-50/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          {featuredPosts.length > 0 
+            ? (currentLocale === 'en' ? 'All Posts' : 'Todas las Publicaciones')
+            : (currentLocale === 'en' ? 'Posts' : 'Publicaciones')
+          }
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          {currentLocale === 'en' 
+            ? 'Browse through all my technical articles and project case studies.'
+            : 'Explora todos mis artículos técnicos y estudios de caso de proyectos.'
+          }
+        </p>
+      </div>
       
       {regularPosts.length > 0 ? (
         <div class="space-y-6">
           {regularPosts.map((post) => (
-            <article class="group relative rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md focus-within:shadow-md hover:-translate-y-0.5 focus-within:-translate-y-0.5 duration-200">
+            <article class="group relative rounded-xl border border-gray-200 bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg focus-within:shadow-lg hover:-translate-y-1 focus-within:-translate-y-1 hover:bg-gray-50">
               <a 
                 href={`/${currentLocale}/blog/${post.baseSlug}`}
-                class="absolute inset-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                class="absolute inset-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 aria-label={`Read ${post.data.title}`}
               >
                 <span class="sr-only">Read {post.data.title}</span>

@@ -13,6 +13,10 @@
     @apply bg-gray-50 text-gray-800 antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-image: url('/assets/images/background.png');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    background-attachment: fixed;
   }
   
   /* Focus styles for accessibility */
