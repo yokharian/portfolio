@@ -45,16 +45,6 @@ jobs:
         name: codecov-umbrella
         fail_ci_if_error: false
 
-    - name: Upload build artifacts
-      if: matrix.node-version == '18.x'
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-artifacts
-        path: |
-          dist/
-          node_modules/
-        retention-days: 1
-
   deploy:
     needs: test
     if: github.event_name == 'push' && github.event_name != 'pull_request'
@@ -69,12 +59,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: .
 
       - name: Use Node.js 18
         uses: actions/setup-node@v4
