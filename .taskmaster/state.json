@@ -1,9 +1,10 @@
 {
-  "currentTag": "astro-migration",
-  "lastSwitched": "2025-09-17T18:18:20.656Z",
+  "currentTag": "beta-version",
+  "lastSwitched": "2025-09-18T01:26:50.162Z",
   "branchTagMapping": {
     "typescript-implement": "typescript-implement",
-    "astro-migration": "astro-migration"
+    "astro-migration": "astro-migration",
+    "beta-version": "beta-version"
   },
   "migrationNoticeShown": false
 }

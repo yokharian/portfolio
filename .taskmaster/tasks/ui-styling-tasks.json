@@ -1,0 +1,79 @@
+{
+  "ui-styling": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Tailwind CSS Theme Configuration and Foundation Setup",
+        "description": "Configure Tailwind CSS with custom brand colors, typography scale, and spacing system to establish the design foundation for the portfolio website",
+        "details": "Update tailwind.config.js to include custom brand colors (brand-600 for primary accent), extended gray scale, custom color variables for dynamic tag colors. Configure typography plugin with proper heading hierarchy (h1-h6), font weights, and line heights. Set up responsive font sizing utilities and consistent spacing system with proper container max-widths. Add custom animations for hover effects and transitions. Implement utility classes for skeumorphic shadows and gradient overlays. Configure purge settings to optimize bundle size.",
+        "testStrategy": "Verify custom colors render correctly across different components. Test typography scale responsiveness at different breakpoints (sm, md, lg, xl). Validate spacing consistency throughout the application. Check that unused CSS is properly purged in production build.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Enhanced Header and Navigation Components",
+        "description": "Implement redesigned header with proper branding, CTA button styling, and responsive language switcher following the design specifications",
+        "details": "Create/update Header.astro component with clean typography using text-2xl font-bold text-gray-900 for name display. Implement CTA button 'Book a 30 min call' with brand colors and skeumorphic shadow effects. Add language switcher EN/ES toggle with proper styling and functionality. Apply responsive padding (py-6 px-4 md:px-8) and max-width container (max-w-7xl mx-auto). Add subtle border-bottom with border-gray-100. Ensure proper TypeScript typing for all props and internationalization support.",
+        "testStrategy": "Test header responsiveness across mobile, tablet, and desktop viewports. Verify CTA button hover states and click functionality. Validate language switcher toggles correctly between English and Spanish. Check proper alignment and spacing on different screen sizes.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Main Page Layout and Hero Section Implementation",
+        "description": "Implement the complete main page layout including hero section, featured work, experience, and certifications sections with responsive design and enhanced visual styling",
+        "details": "Implement hero section with two-column responsive grid (grid-cols-1 lg:grid-cols-2). Style left column with large bold typography (text-5xl md:text-6xl font-bold), branded italic text (text-brand-600 italic), and description paragraph (text-xl text-gray-600 leading-relaxed). Add circular profile image (w-80 h-80 rounded-full) with proper scaling (object-cover). Create ProjectCard component with white background, rounded corners (rounded-xl), subtle borders and shadows, hover animations (hover:shadow-lg transition-all duration-300). Implement Featured Work section with responsive grid (grid-cols-1 md:grid-cols-2 lg:grid-cols-3). Add Experience section with enhanced cards featuring date/category badges, color-coded tags (bg-green-100 text-green-800), and improved hover states. Create Certifications section with light gray background (bg-gray-50) and responsive grid (grid-cols-2 md:grid-cols-3 lg:grid-cols-5).",
+        "testStrategy": "Verify hero section displays properly in two-column layout on desktop and single column on mobile. Test all card hover animations and transitions. Validate image loading and aspect ratios across different devices. Check color-coded tags display correctly with proper contrast ratios.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Blog System Styling and Content Rendering Enhancement",
+        "description": "Implement comprehensive blog styling including index page, individual post pages, content rendering, and language toggle functionality with proper typography and responsive design",
+        "details": "Style blog index page with clean page title typography and descriptive subtitle. Implement featured posts section with two-column grid and enhanced card design. Add regular posts section with list layout, thumbnail images, and hover states. Create PostBanner component for individual blog posts with full-width background images, dark overlay, post title, employer, and date range display. Implement dynamic tag colors in upper left corner of post banners. Style content area with description block, language toggle button (🇺🇸 English / 🇪🇸 Spanish), and markdown content using prose prose-lg styling. Add Technologies Used section with dynamic tag/badge display. Implement conditional Lucidchart embedding with proper iframe styling. Create RelatedPosts component with consistent card design.",
+        "testStrategy": "Test blog index page displays featured and regular posts correctly. Verify individual blog post pages render with proper hero banners and content formatting. Validate language toggle functionality switches content correctly. Check Lucidchart iframes display properly when present. Test related posts section displays consistently with main site design.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Performance Optimization and Cross-Browser Polish",
+        "description": "Implement performance optimizations, animations refinement, cross-browser compatibility, and final integration testing to ensure production readiness",
+        "details": "Optimize image loading with responsive srcset implementation, WebP format support, and lazy loading for below-fold content. Configure proper caching headers and CDN integration readiness. Implement critical CSS inlining and ensure Tailwind purging removes unused styles. Add smooth animations and transitions for all interactive elements including scale and shadow effects on cards, color transitions on links and buttons. Implement proper loading states with placeholders and smooth content transitions. Add accessible focus indicators and keyboard navigation support. Optimize Core Web Vitals: LCP with hero image optimization, CLS with proper image dimensions and stable layouts, FID with minimal JavaScript execution. Conduct cross-browser testing on Chrome, Firefox, Safari, and Edge. Implement progressive enhancement and graceful degradation for older browsers.",
+        "testStrategy": "Run Lighthouse audits to achieve >90 scores for all metrics. Test page load times on 3G connections (<3 seconds target). Verify animations and interactions work smoothly across all browsers. Validate accessibility compliance with WCAG guidelines. Check responsive design functionality on various device sizes and orientations.",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-18T01:23:48.854Z",
+      "updated": "2025-09-18T01:23:48.855Z",
+      "description": "Tasks for ui-styling context"
+    }
+  }
+}

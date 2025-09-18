@@ -1,0 +1,43 @@
+# Task ID: 3
+# Title: Homepage Sections Implementation
+# Status: pending
+# Dependencies: 1, 2
+# Priority: high
+# Description: Implement all main page sections including Hero, Featured Work, Experience, and Certifications with enhanced visual styling and responsive layouts
+# Details:
+Implement Hero section with two-column responsive grid (grid-cols-1 lg:grid-cols-2), left column with large bold typography (text-5xl md:text-6xl font-bold), branded italic text (text-brand-600 italic), description paragraph (text-xl text-gray-600 leading-relaxed), and right column with circular profile image (w-80 h-80 rounded-full) with proper object-cover scaling. Create Featured Work section with responsive grid (grid-cols-1 md:grid-cols-2 lg:grid-cols-3), white background cards with rounded corners (rounded-xl), subtle border and shadow effects, hover animations (hover:shadow-lg transition-all duration-300), and image overlay with dark gradient. Implement Experience section with enhanced cards featuring date/category badges, color-coded tags (bg-green-100 text-green-800), and improved hover states. Build Certifications section with responsive grid (grid-cols-2 md:grid-cols-3 lg:grid-cols-5), light gray background (bg-gray-50), centered certification badges (w-32 h-32), and clean typography for names and issuer information.
+
+# Test Strategy:
+Test responsive layouts across all breakpoints, verify hover animations and transitions work smoothly, validate image loading and aspect ratios, test card hover states and focus management, ensure proper spacing and alignment across sections, and verify dynamic color generation for tags works correctly.
+
+# Subtasks:
+## 1. Prepare Homepage Layout and Create Section Component Files [pending]
+### Dependencies: None
+### Description: Clean the boilerplate content from `src/app/page.tsx` and establish the main page layout. Create placeholder component files for Hero, FeaturedWork, Experience, and Certifications sections within the `src/components` directory to structure the implementation.
+### Details:
+In `src/app/page.tsx`, remove the default Next.js content and set up a `<main>` element. Inside, import and render the new (currently empty) components in the correct order: `<Hero />`, `<FeaturedWork />`, `<Experience />`, `<Certifications />`. Create the following empty files: `src/components/Hero.tsx`, `src/components/FeaturedWork.tsx`, `src/components/Experience.tsx`, and `src/components/Certifications.tsx`. Each file should export a basic React functional component.
+
+## 2. Implement the Hero Section Component [pending]
+### Dependencies: 3.1
+### Description: Develop the Hero section in `src/components/Hero.tsx` with a two-column responsive layout, large typography, branded text, and a circular profile image as per the design specifications.
+### Details:
+Implement a `section` with a `max-w-7xl mx-auto` container and responsive padding. Use a responsive grid (`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center`). The left column should contain an `h1` with `text-5xl md:text-6xl font-bold`, a `span` with `text-brand-600 italic`, and a `p` tag with `text-xl text-gray-600 leading-relaxed`. The right column should contain a Next.js `Image` component for the profile picture, styled with `w-80 h-80 rounded-full object-cover mx-auto lg:mx-0`.
+
+## 3. Implement the Featured Work Section and Project Card [pending]
+### Dependencies: 3.1
+### Description: Build the Featured Work section, including a responsive grid and a reusable project card component with specified styling, hover animations, and an image overlay effect.
+### Details:
+In `src/components/FeaturedWork.tsx`, create a section with a title and a responsive grid (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`). Create a new `ProjectCard.tsx` component. This card should have a white background, `rounded-xl` corners, a subtle border, and shadow. Implement a `hover:shadow-lg transition-all duration-300` effect. The card's image should feature an overlay with a dark gradient that appears on hover.
+
+## 4. Implement the Experience Section with Enhanced Cards [pending]
+### Dependencies: 3.1
+### Description: Create the Experience section, focusing on a list or timeline layout. Implement enhanced experience cards featuring date/category badges, color-coded skill tags, and improved hover states.
+### Details:
+In `src/components/Experience.tsx`, create a section with a title. Design and implement an `ExperienceCard.tsx` component. This card should display a job title, company, and date range. Include a small badge for the category (e.g., 'Full-time'). Use flexbox to display a list of skill tags, styled with classes like `bg-green-100 text-green-800 rounded-full px-3 py-1 text-sm`. Implement a distinct hover state, such as a border color change or a subtle lift effect.
+
+## 5. Implement the Certifications Section [pending]
+### Dependencies: 3.1
+### Description: Build the Certifications section with a responsive grid layout on a light gray background to display certification badges and their corresponding names and issuers.
+### Details:
+In `src/components/Certifications.tsx`, create a section with a `bg-gray-50` background and appropriate padding. Add a section title. Implement a responsive grid (`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8`). Each grid item should be a flex container (`flex flex-col items-center text-center`). It will contain a Next.js `Image` for the certification badge (`w-32 h-32 object-contain`), a `p` tag for the certification name (`font-semibold`), and another `p` tag for the issuer (`text-sm text-gray-500`).
+
