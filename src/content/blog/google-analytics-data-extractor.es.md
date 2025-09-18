@@ -1,6 +1,6 @@
 ---
-title: "Google Analytics data extractor"
-description: "Automated critical business process significantly reducing workload of the analytics team"
+title: "Extractor de datos de Google Analytics"
+description: "Automatizó un proceso crítico de negocio reduciendo significativamente la carga de trabajo del equipo de análisis"
 employer: "FairPlay"
 thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d922418dd077d9840a42db_67ce3c4ee965c5b385d529ac_google_analytics.gif"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf293d19d256af5e0dccd_67cbd68c8ae8762187bf946d_photo-1551288049-bebda4e38f71.jpeg"

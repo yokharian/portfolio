@@ -265,6 +265,7 @@ dev-debug.log
 
 # Astro build output
 .astro/
+public/
 
 # Compiled client-side JavaScript
 src/assets/js/*.js

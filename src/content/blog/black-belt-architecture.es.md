@@ -1,6 +1,6 @@
 ---
-title: "Black Belt Architecture"
-description: "demonstration of knowledge"
+title: "Arquitectura Black Belt"
+description: "Demostración de conocimiento avanzado en arquitectura de software"
 employer: "XalDigital"
 thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf293dbee0c171ba3e2cf_67cbde6602d17199fe025917_black%2520belt%2520badge.png"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf2934837c3315bfedf4f_67cbe17608ea1ae1f6d26cf0_67cbdbac9edb7468375dfbb5_photo-1457369804613-52c61a468e7d.jpeg"

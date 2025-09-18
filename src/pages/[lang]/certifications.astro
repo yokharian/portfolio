@@ -52,13 +52,16 @@ function formatDate(date: string | Date): string {
     }} />
   </slot>
 
-  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-    <header class="mb-12 text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-4">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <header class="mb-16 text-center">
+      <div class="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-sm font-medium mb-6">
+        {t.certifications.officialTag}
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-6">
         {t.certifications.heading}
       </h1>
-      <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-        Professional certifications and credentials demonstrating expertise in cloud technologies and software development.
+      <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+        {t.certifications.subtitle}
       </p>
     </header>
 

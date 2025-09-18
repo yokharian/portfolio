@@ -1,45 +1,111 @@
 {
   "en": {
-    "heading": "Certifications",
+    "heading": "4x Times Certified by AWS",
+    "subtitle": "As a self-taught professional, I learn quickly, adapt easily, and solve complex challenges with a flexible approach.",
+    "officialTag": "Official",
     "issuedOn": "Issued",
     "issuerLabel": "Issuer",
     "viewCredential": "View credential",
     "names": {
-      "awsSAA": {
-        "name": "AWS Solutions Architect Associate",
-        "issuer": "Amazon Web Services",
-        "issuedOn": "2023-06-15",
-        "credentialUrl": "https://www.credly.com/badges/aws-saa",
-        "imageUrl": "/assets/images/certifications/aws-saa.png"
-      },
       "awsDVA": {
-        "name": "AWS Developer Associate",
+        "name": "AWS Certified Developer - Associate",
         "issuer": "Amazon Web Services",
         "issuedOn": "2023-03-20",
         "credentialUrl": "https://www.credly.com/badges/aws-dva",
-        "imageUrl": "/assets/images/certifications/aws-dva.png"
+        "imageUrl": "/assets/images/certifications/developer_associate.png",
+        "badgeType": "hexagon",
+        "gradient": "blue"
+      },
+      "awsDBS": {
+        "name": "AWS Certified Database - Specialty",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-08-15",
+        "credentialUrl": "https://www.credly.com/badges/aws-dbs",
+        "imageUrl": "/assets/images/certifications/database_specialty.png",
+        "badgeType": "hexagon",
+        "gradient": "purple"
+      },
+      "awsCPF": {
+        "name": "AWS Certified Cloud Practitioner - Foundational",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-01-10",
+        "credentialUrl": "https://www.credly.com/badges/aws-cpf",
+        "imageUrl": "/assets/images/certifications/cloud_practitioner.png",
+        "badgeType": "hexagon",
+        "gradient": "gray"
+      },
+      "awsSAA": {
+        "name": "AWS Certified Solutions Architect - Associate",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-06-15",
+        "credentialUrl": "https://www.credly.com/badges/aws-saa",
+        "imageUrl": "/assets/images/certifications/solutions_architect.png",
+        "badgeType": "hexagon",
+        "gradient": "blue"
+      },
+      "terraformCA": {
+        "name": "Terraform Certified Associate",
+        "issuer": "HashiCorp",
+        "issuedOn": "2023-11-20",
+        "credentialUrl": "https://www.credly.com/badges/terraform-ca",
+        "imageUrl": "/assets/images/certifications/black belt badge.png",
+        "badgeType": "shield",
+        "gradient": "black"
       }
     }
   },
   "es": {
-    "heading": "Certificaciones",
+    "heading": "4x Veces Certificada por AWS",
+    "subtitle": "Como profesional autodidacta, aprendo rápidamente, me adapto fácilmente y resuelvo desafíos complejos con un enfoque flexible.",
+    "officialTag": "Oficial",
     "issuedOn": "Emitida",
     "issuerLabel": "Emisor",
     "viewCredential": "Ver credencial",
     "names": {
-      "awsSAA": {
-        "name": "AWS Solutions Architect Associate",
-        "issuer": "Amazon Web Services",
-        "issuedOn": "2023-06-15",
-        "credentialUrl": "https://www.credly.com/badges/aws-saa",
-        "imageUrl": "/assets/images/certifications/aws-saa.png"
-      },
       "awsDVA": {
-        "name": "AWS Developer Associate",
+        "name": "AWS Certified Developer - Associate",
         "issuer": "Amazon Web Services",
         "issuedOn": "2023-03-20",
         "credentialUrl": "https://www.credly.com/badges/aws-dva",
-        "imageUrl": "/assets/images/certifications/aws-dva.png"
+        "imageUrl": "/assets/images/certifications/developer_associate.png",
+        "badgeType": "hexagon",
+        "gradient": "blue"
+      },
+      "awsDBS": {
+        "name": "AWS Certified Database - Specialty",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-08-15",
+        "credentialUrl": "https://www.credly.com/badges/aws-dbs",
+        "imageUrl": "/assets/images/certifications/database_specialty.png",
+        "badgeType": "hexagon",
+        "gradient": "purple"
+      },
+      "awsCPF": {
+        "name": "AWS Certified Cloud Practitioner - Foundational",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-01-10",
+        "credentialUrl": "https://www.credly.com/badges/aws-cpf",
+        "imageUrl": "/assets/images/certifications/cloud_practitioner.png",
+        "badgeType": "hexagon",
+        "gradient": "gray"
+      },
+      "awsSAA": {
+        "name": "AWS Certified Solutions Architect - Associate",
+        "issuer": "Amazon Web Services",
+        "issuedOn": "2023-06-15",
+        "credentialUrl": "https://www.credly.com/badges/aws-saa",
+        "imageUrl": "/assets/images/certifications/solutions_architect.png",
+        "badgeType": "hexagon",
+        "gradient": "blue"
+      },
+      "terraformCA": {
+        "name": "Terraform Certified Associate",
+        "issuer": "HashiCorp",
+        "issuedOn": "2023-11-20",
+        "credentialUrl": "https://www.credly.com/badges/terraform-ca",
+        "imageUrl": "/assets/images/certifications/black belt badge.png",
+        "badgeType": "shield",
+        "gradient": "black"
       }
     }
   }
