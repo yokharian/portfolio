@@ -260,7 +260,7 @@ dev-debug.log
 
 # Astro build output
 .astro/
-public/
+public/assets/js/
 
 # Compiled client-side JavaScript
 src/assets/js/*.js
