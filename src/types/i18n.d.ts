@@ -14,7 +14,7 @@ export interface I18nOptions {
   strictMode?: boolean;
 }
 
-export type LanguageCode = 'en' | 'es';
+export type LanguageCode = "en" | "es";
 
 // Custom error classes
 export class I18nError extends Error {
@@ -22,23 +22,27 @@ export class I18nError extends Error {
     message: string,
     public readonly key: string,
     public readonly language: string,
-    public readonly context?: Record<string, unknown>
+    public readonly context?: Record<string, unknown>,
   ) {
     super(message);
-    this.name = 'I18nError';
+    this.name = "I18nError";
   }
 }
 
 export class TranslationNotFoundError extends I18nError {
   constructor(key: string, language: string) {
-    super(`Translation not found for key "${key}" in language "${language}"`, key, language);
-    this.name = 'TranslationNotFoundError';
+    super(
+      `Translation not found for key "${key}" in language "${language}"`,
+      key,
+      language,
+    );
+    this.name = "TranslationNotFoundError";
   }
 }
 
 export class InvalidLanguageError extends I18nError {
   constructor(language: string) {
-    super(`Unsupported language: "${language}"`, '', language);
-    this.name = 'InvalidLanguageError';
+    super(`Unsupported language: "${language}"`, "", language);
+    this.name = "InvalidLanguageError";
   }
 }

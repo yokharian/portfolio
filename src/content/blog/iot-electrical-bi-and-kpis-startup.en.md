@@ -46,7 +46,7 @@ As part of the project, I developed a Python script to easily check the executio
 
 ‍
 
-Finally, something that stood out a lot was how we made use of IaaS and visualization with **Grafana and Power BI with AWS Athena** while maintaining full visibility with tools like **CloudWatch** and **Sentry** 🔎. 
+Finally, something that stood out a lot was how we made use of IaaS and visualization with **Grafana and Power BI with AWS Athena** while maintaining full visibility with tools like **CloudWatch** and **Sentry** 🔎.
 
 This combination allowed us to maintain an efficient, economical and easily scalable operation in the future, especially for a startup with an **AGILE** methodology.‍
 💡 Our goal was to deliver key indicators **KPI’s** based on the information we collected from all our **Data Lake** sources with a business intelligence **BI** objective, for this with a combination of transactional **OLTP** databases and **OLAP** Analytics that we intended to achieve

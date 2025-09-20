@@ -1,7 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import JsonLD from '../../../components/JsonLD.astro';
-import { getCollection } from 'astro:content';
+import {getCollection} from 'astro:content';
 import {getI18nData, getSiteData} from "../../../data";
 
 const siteData = getSiteData();
@@ -9,42 +9,37 @@ const siteData = getSiteData();
 // Generate static paths for all blog posts
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
-
   // Remove null entries
-    return allPosts
-      .filter(post => post.data.published !== false)
-      .map(post => {
-          // Extract language and slug from the filename
-          // Format: nombre.en.md -> lang: en, slug: nombre
-          const filename = post.id;
-          const match = filename.match(/^(.+)\.(en|es)\.md$/);
-
-          if (!match) {
-              console.warn(`Unexpected filename format: ${filename}`);
-              return null;
-          }
-
-          const [, slug, lang] = match;
-
-          return {
-              params: {
-                  lang,
-                  slug
-              },
-              props: {
-                  post
-              }
-          };
-      })
-      .filter(Boolean);
+  return allPosts
+    .map(post => {
+      // Extract language and slug from the filename
+      // Format: nombre.en.md -> lang: en, slug: nombre
+      const filename = post.id;
+      const match = filename.match(/^(.+)\.(en|es)\.md$/);
+      if (!match) {
+        console.warn(`Unexpected filename format: ${filename}`);
+        return null;
+      }
+      const [, slug, lang] = match;
+      
+      return {
+        params: {
+          lang,
+          slug
+        },
+        props: {
+          post
+        }
+      };
+    })
 }
 
 // Get the post from props
-const { post } = Astro.props;
-const { lang, slug } = Astro.params;
+const {post} = Astro.props;
+const {lang, slug} = Astro.params;
 
 // Render the post content to HTML
-const { Content } = await post.render();
+const {Content} = await post.render();
 
 // Get current locale
 const currentLocale = lang || 'en';
@@ -53,10 +48,10 @@ const t = getI18nData(currentLocale);
 // Format date helper
 function formatDate(date: string | Date): string {
   const d = new Date(date);
-  return d.toLocaleDateString(currentLocale, { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  return d.toLocaleDateString(currentLocale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
 }
 
@@ -68,7 +63,7 @@ const relatedPosts = allPosts
   .filter(p => {
     const filename = p.id;
     const match = filename.match(/^(.+)\.(en|es)\.md$/);
-    return match && match[2] === currentLocale && p.id !== post.id && p.data.published !== false;
+    return match && match[2] === currentLocale && p.id !== post.id;
   })
   .map(p => {
     // Extract the base slug without language suffix
@@ -85,12 +80,12 @@ const relatedPosts = allPosts
 
 // Get the translation if it exists
 const translationKey = post.data.translationKey;
-const translatedPost = translationKey ? 
+const translatedPost = translationKey ?
   allPosts.find(p => {
     const filename = p.id;
     const match = filename.match(/^(.+)\.(en|es)\.md$/);
     return match && p.data.translationKey === translationKey && p.id !== post.id;
-  }) : 
+  }) :
   null;
 
 // Get base slug for translation links
@@ -99,271 +94,274 @@ const match = filename.match(/^(.+)\.(en|es)\.md$/);
 const baseSlug = match ? match[1] : post.slug;
 ---
 
-<Layout 
-  title={`${post.data.title} | ${siteData.title}`}
-  description={post.data.description}
-  lang={currentLocale}
+<Layout
+        title={`${post.data.title} | ${siteData.title}`}
+        description={post.data.description}
+        lang={currentLocale}
 >
-  <slot name="head">
-    <JsonLD type="Article" data={{
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": post.data.title,
-      "description": post.data.description,
-      "author": {
-        "@type": "Person",
-        "name": siteData.author
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": siteData.title,
-        "logo": {
-          "@type": "ImageObject",
-          "url": `${siteData.url}/assets/images/profile.svg`
-        }
-      },
-      "datePublished": post.data.pubDate || post.data.startDate,
-      "dateModified": post.data.endDate,
-      "image": post.data.thumbnail || post.data.banner,
-      "inLanguage": currentLocale,
-      "url": `${siteData.url}/${currentLocale}/blog/${slug}`
-    }} />
-  </slot>
+    <slot name="head">
+        <JsonLD type="Article" data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": post.data.title,
+          "description": post.data.description,
+          "author": {
+            "@type": "Person",
+            "name": siteData.author
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": siteData.title,
+            "logo": {
+              "@type": "ImageObject",
+              "url": `${siteData.url}/assets/images/183728692.jpg`
+            }
+          },
+          "datePublished": post.data.pubDate || post.data.startDate,
+          "dateModified": post.data.endDate,
+          "image": post.data.thumbnail || post.data.banner,
+          "inLanguage": currentLocale,
+          "url": `${siteData.url}/${currentLocale}/blog/${slug}`
+        }}/>
+    </slot>
 
-  <article class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-    <!-- Hero Section -->
-    <header class="relative mb-16">
-      {post.data.thumbnail && (
-        <div class="absolute inset-0 -z-10">
-          <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
-          <img 
-            src={post.data.thumbnail} 
-            alt={post.data.title}
-            class="w-full h-96 object-cover rounded-3xl"
-          />
-        </div>
-      )}
-      
-      <div class="relative py-20 px-8 md:px-12">
-        <div class="mb-6">
-          <a 
-            href={`/${currentLocale}/blog`}
-            class="inline-flex items-center text-sm text-white/80 hover:text-white font-medium transition-colors duration-200"
-          >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-            {currentLocale === 'en' ? 'Back to Blog' : 'Volver al Blog'}
-          </a>
-        </div>
-        
-        <div class="max-w-4xl">
-          <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 leading-tight">
-            {post.data.title}
-          </h1>
-          
-          <p class="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
-            {post.data.description}
-          </p>
-          
-          <div class="flex flex-wrap items-center gap-4 text-white/80">
-            {post.data.pubDate && (
-              <div class="flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
-                <span>{formatDate(post.data.pubDate)}</span>
-              </div>
-            )}
-            
-            {post.data.employer && (
-              <div class="flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                </svg>
-                <span>{post.data.employer}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- Main Content -->
-    <div class="prose prose-lg max-w-none">
-      <!-- Tags Section -->
-      {post.data.tags && post.data.tags.length > 0 && (
-        <div class="mb-8 p-6 bg-gray-50 rounded-2xl">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">
-            {currentLocale === 'en' ? 'Technologies Used' : 'Tecnologías Utilizadas'}
-          </h3>
-          <div class="flex flex-wrap gap-3">
-            {post.data.tags.map((tag: any) => (
-              <span 
-                class="inline-flex items-center rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 hover:bg-brand-200 transition-colors duration-200"
-              >
+    <article class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <!-- Hero Section -->
+        <header class="relative mb-16">
+          {post.data.thumbnail && (
+                  <div class="absolute inset-0 -z-10">
+                      <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
+                      <img
+                              src={post.data.thumbnail}
+                              alt={post.data.title}
+                              class="w-full h-96 object-cover rounded-3xl"
+                      />
+                  </div>
+          )}
+
+            <div class="relative py-20 px-8 md:px-12">
+                <div class="mb-6">
+                    <a
+                            href={`/${currentLocale}/blog`}
+                            class="inline-flex items-center text-sm text-white/80 hover:text-white font-medium transition-colors duration-200"
+                    >
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                      {currentLocale === 'en' ? 'Back to Blog' : 'Volver al Blog'}
+                    </a>
+                </div>
+
+                <div class="max-w-4xl">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 leading-tight">
+                      {post.data.title}
+                    </h1>
+
+                    <p class="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
+                      {post.data.description}
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-4 text-white/80">
+                      {post.data.pubDate && (
+                              <div class="flex items-center gap-2">
+                                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                  </svg>
+                                  <span>{formatDate(post.data.pubDate)}</span>
+                              </div>
+                      )}
+                      
+                      {post.data.employer && (
+                              <div class="flex items-center gap-2">
+                                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                  </svg>
+                                  <span>{post.data.employer}</span>
+                              </div>
+                      )}
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content -->
+        <div class="prose prose-lg max-w-none">
+            <!-- Tags Section -->
+          {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="mb-8 p-6 bg-gray-50 rounded-2xl">
+                      <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        {currentLocale === 'en' ? 'Technologies Used' : 'Tecnologías Utilizadas'}
+                      </h3>
+                      <div class="flex flex-wrap gap-3">
+                        {post.data.tags.map((tag: any) => (
+                                <span
+                                        class="inline-flex items-center rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700 hover:bg-brand-200 transition-colors duration-200"
+                                >
                 {tag.name}
               </span>
-            ))}
-          </div>
-        </div>
-      )}
-      
-      <!-- Language Toggle -->
-      {translatedPost && (
-        <div class="mb-8 p-4 bg-blue-50 rounded-xl border border-blue-200">
-          <div class="flex items-center justify-between">
-            <p class="text-blue-800 font-medium">
-              {currentLocale === 'en' 
-                ? 'This article is also available in Spanish' 
-                : 'Este artículo también está disponible en inglés'
-              }
-            </p>
-            <a 
-              href={`/${currentLocale === 'en' ? 'es' : 'en'}/blog/${baseSlug}`}
-              class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-            >
-              {currentLocale === 'en' ? '🇪🇸 Español' : '🇺🇸 English'}
-            </a>
-          </div>
-        </div>
-      )}
-      
-      <!-- Banner Image -->
-      {post.data.banner && (
-        <div class="aspect-video overflow-hidden rounded-2xl mb-12 shadow-lg">
-          <img 
-            src={post.data.banner} 
-            alt={post.data.title}
-            class="h-full w-full object-cover"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-      )}
-    </header>
+                        ))}
+                      </div>
+                  </div>
+          )}
 
-      <!-- Main Content -->
-      <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-brand-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
-        <Content />
-      </div>
+            <!-- Language Toggle -->
+          {translatedPost && (
+                  <div class="mb-8 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                      <div class="flex items-center justify-between">
+                          <p class="text-blue-800 font-medium">
+                            {currentLocale === 'en'
+                              ? 'This article is also available in Spanish'
+                              : 'Este artículo también está disponible en inglés'
+                            }
+                          </p>
+                          <a
+                                  href={`/${currentLocale === 'en' ? 'es' : 'en'}/blog/${baseSlug}`}
+                                  class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                          >
+                            {currentLocale === 'en' ? '🇪🇸 Español' : '🇺🇸 English'}
+                          </a>
+                      </div>
+                  </div>
+          )}
 
-      <!-- Lucidchart Diagram -->
-      {post.data.lucidchartUrl && (
-        <div class="mt-12 p-8 bg-gray-50 rounded-2xl border border-gray-200">
-          <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">
-            {currentLocale === 'en' ? 'Architecture Diagram' : 'Diagrama de Arquitectura'}
-          </h3>
-          <div class="aspect-video rounded-xl overflow-hidden shadow-lg">
-            <iframe 
-              src={post.data.lucidchartUrl}
-              class="w-full h-full"
-              title={`Architecture diagram for ${post.data.title}`}
-            ></iframe>
-          </div>
-        </div>
-      )}
+            <!-- Banner Image -->
+          {post.data.banner && (
+                  <div class="aspect-video overflow-hidden rounded-2xl mb-12 shadow-lg">
+                      <img
+                              src={post.data.banner}
+                              alt={post.data.title}
+                              class="h-full w-full object-cover"
+                              loading="eager"
+                              decoding="async"
+                      />
+                  </div>
+          )}
 
-      <!-- Related Posts -->
-      {relatedPosts.length > 0 && (
-        <section class="mt-20 bg-gray-50 rounded-3xl p-8 md:p-12">
-          <div class="text-center mb-12">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {currentLocale === 'en' ? 'Related Posts' : 'Publicaciones Relacionadas'}
-            </h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-              {currentLocale === 'en' 
-                ? 'Explore more articles on similar topics and technologies.'
-                : 'Explora más artículos sobre temas y tecnologías similares.'
-              }
-            </p>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {relatedPosts.map((relatedPost) => (
-            <article class="group relative rounded-2xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl focus-within:shadow-xl hover:-translate-y-2 focus-within:-translate-y-2 overflow-hidden">
-              <a 
-                href={`/${currentLocale}/blog/${relatedPost.baseSlug}`}
-                class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                aria-label={`Read ${relatedPost.data.title}`}
-              >
-                <span class="sr-only">Read {relatedPost.data.title}</span>
-              </a>
-              
-              {relatedPost.data.thumbnail && (
-                <div class="aspect-video overflow-hidden rounded-lg mb-3">
-                  <img 
-                    src={relatedPost.data.thumbnail} 
-                    alt={relatedPost.data.title}
-                    class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              )}
-              
-              <h3 class="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
-                {relatedPost.data.title}
-              </h3>
-              
-              <p class="text-sm text-slate-600 mb-2 line-clamp-2">
-                {relatedPost.data.description}
-              </p>
-              
-              <div class="text-xs text-slate-500">
-                {relatedPost.data.pubDate ? formatDate(relatedPost.data.pubDate) : 
-                 relatedPost.data.startDate ? formatDate(relatedPost.data.startDate) : 
-                 'No date'}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    )}
-  </article>
+            <!-- Main Content -->
+            <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-brand-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
+                <Content/>
+            </div>
+
+            <!-- Lucidchart Diagram -->
+          {post.data.lucidchartUrl && (
+                  <div class="mt-12 p-8 bg-gray-50 rounded-2xl border border-gray-200">
+                      <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+                        {currentLocale === 'en' ? 'Architecture Diagram' : 'Diagrama de Arquitectura'}
+                      </h3>
+                      <div class="aspect-video rounded-xl overflow-hidden shadow-lg">
+                          <iframe
+                                  src={post.data.lucidchartUrl}
+                                  class="w-full h-full"
+                                  title={`Architecture diagram for ${post.data.title}`}
+                          ></iframe>
+                      </div>
+                  </div>
+          )}
+
+            <!-- Related Posts -->
+          {relatedPosts.length > 0 && (
+                  <section class="mt-20 bg-gray-50 rounded-3xl p-8 md:p-12">
+                      <div class="text-center mb-12">
+                          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                            {currentLocale === 'en' ? 'Related Posts' : 'Publicaciones Relacionadas'}
+                          </h2>
+                          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                            {currentLocale === 'en'
+                              ? 'Explore more articles on similar topics and technologies.'
+                              : 'Explora más artículos sobre temas y tecnologías similares.'
+                            }
+                          </p>
+                      </div>
+                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {relatedPosts.map((relatedPost) => (
+                                <article
+                                        class="group relative rounded-2xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl focus-within:shadow-xl hover:-translate-y-2 focus-within:-translate-y-2 overflow-hidden">
+                                    <a
+                                            href={`/${currentLocale}/blog/${relatedPost.baseSlug}`}
+                                            class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                                            aria-label={`Read ${relatedPost.data.title}`}
+                                    >
+                                        <span class="sr-only">Read {relatedPost.data.title}</span>
+                                    </a>
+                                  
+                                  {relatedPost.data.thumbnail && (
+                                          <div class="aspect-video overflow-hidden rounded-lg mb-3">
+                                              <img
+                                                      src={relatedPost.data.thumbnail}
+                                                      alt={relatedPost.data.title}
+                                                      class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                                                      loading="lazy"
+                                                      decoding="async"
+                                              />
+                                          </div>
+                                  )}
+
+                                    <h3 class="text-lg font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
+                                      {relatedPost.data.title}
+                                    </h3>
+
+                                    <p class="text-sm text-slate-600 mb-2 line-clamp-2">
+                                      {relatedPost.data.description}
+                                    </p>
+
+                                    <div class="text-xs text-slate-500">
+                                      {relatedPost.data.pubDate ? formatDate(relatedPost.data.pubDate) :
+                                        relatedPost.data.startDate ? formatDate(relatedPost.data.startDate) :
+                                          'No date'}
+                                    </div>
+                                </article>
+                        ))}
+                      </div>
+                  </section>
+          )}
+    </article>
 </Layout>
 
 <style>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  .prose {
-    color: #334155;
-  }
-  
-  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    color: #0f172a;
-  }
-  
-  .prose a {
-    color: #0ea5e9;
-    text-decoration: none;
-  }
-  
-  .prose a:hover {
-    color: #0284c7;
-    text-decoration: underline;
-  }
-  
-  .prose code {
-    background-color: #f1f5f9;
-    padding: 0.125rem 0.25rem;
-    border-radius: 0.25rem;
-    font-size: 0.875em;
-  }
-  
-  .prose pre {
-    background-color: #1e293b;
-    color: #e2e8f0;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    overflow-x: auto;
-  }
-  
-  .prose pre code {
-    background-color: transparent;
-    padding: 0;
-  }
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .prose {
+        color: #334155;
+    }
+
+    .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+        color: #0f172a;
+    }
+
+    .prose a {
+        color: #0ea5e9;
+        text-decoration: none;
+    }
+
+    .prose a:hover {
+        color: #0284c7;
+        text-decoration: underline;
+    }
+
+    .prose code {
+        background-color: #f1f5f9;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-size: 0.875em;
+    }
+
+    .prose pre {
+        background-color: #1e293b;
+        color: #e2e8f0;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+    }
+
+    .prose pre code {
+        background-color: transparent;
+        padding: 0;
+    }
 </style>

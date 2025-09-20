@@ -31,6 +31,7 @@ I developed a robust **serverless backend infrastructure** using **AWS CDK**. Th
 - **Deletion**
 
 Key Features
+
 - **Secure JWT Authentication**:
 - Implemented **JSON Web Token (JWT)** authentication with **AWS API Gateway**.
 - Ensures safe and reliable data exchange between [Prime.ai]()’s frontend and backend systems.

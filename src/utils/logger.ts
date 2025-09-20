@@ -1,6 +1,6 @@
 /**
  * Advanced TypeScript Logger Utilities
- * 
+ *
  * Comprehensive logging utilities with:
  * - Custom error classes and type guards
  * - Advanced type annotations with generics and conditional types
@@ -10,7 +10,7 @@
  */
 
 // Type definitions
-export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+export type LogLevel = "debug" | "info" | "warn" | "error";
 
 export interface LoggerOptions {
   level?: LogLevel;
@@ -25,7 +25,7 @@ const LEVELS: Record<LogLevel, number> = {
   debug: 0,
   info: 1,
   warn: 2,
-  error: 3
+  error: 3,
 };
 
 // Enhanced logging function (consolidated from JS implementation)
@@ -42,8 +42,8 @@ export class Logger {
   private timestamp: boolean;
 
   constructor(options: LoggerOptions = {}) {
-    this.level = options.level || 'info';
-    this.prefix = options.prefix || '';
+    this.level = options.level || "info";
+    this.prefix = options.prefix || "";
     this.timestamp = options.timestamp !== false;
   }
 
@@ -53,42 +53,42 @@ export class Logger {
 
   private formatMessage(level: LogLevel, ...args: unknown[]): unknown[] {
     const parts: unknown[] = [];
-    
+
     if (this.timestamp) {
       const ts = new Date().toISOString();
       parts.push(`[${ts}]`);
     }
-    
+
     parts.push(`[${level.toUpperCase()}]`);
-    
+
     if (this.prefix) {
       parts.push(`[${this.prefix}]`);
     }
-    
+
     return [...parts, ...args];
   }
 
   debug(...args: unknown[]): void {
-    if (this.shouldLog('debug')) {
-      log('debug', ...this.formatMessage('debug', ...args));
+    if (this.shouldLog("debug")) {
+      log("debug", ...this.formatMessage("debug", ...args));
     }
   }
 
   info(...args: unknown[]): void {
-    if (this.shouldLog('info')) {
-      log('info', ...this.formatMessage('info', ...args));
+    if (this.shouldLog("info")) {
+      log("info", ...this.formatMessage("info", ...args));
     }
   }
 
   warn(...args: unknown[]): void {
-    if (this.shouldLog('warn')) {
-      log('warn', ...this.formatMessage('warn', ...args));
+    if (this.shouldLog("warn")) {
+      log("warn", ...this.formatMessage("warn", ...args));
     }
   }
 
   error(...args: unknown[]): void {
-    if (this.shouldLog('error')) {
-      log('error', ...this.formatMessage('error', ...args));
+    if (this.shouldLog("error")) {
+      log("error", ...this.formatMessage("error", ...args));
     }
   }
 }

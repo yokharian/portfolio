@@ -48,7 +48,7 @@ Como parte del proyecto, desarrollé un script de Python para verificar fácilme
 
 ‍
 
-Finalmente, algo que destacó fue cómo aprovechamos la infraestructura como servicio (IaaS) y la visualización con **Grafana** y Power BI con AWS Athena**, manteniendo al mismo tiempo una visibilidad completa con herramientas como **CloudWatch** y **Sentry** 🔎. 
+Finalmente, algo que destacó fue cómo aprovechamos la infraestructura como servicio (IaaS) y la visualización con **Grafana** y Power BI con AWS Athena**, manteniendo al mismo tiempo una visibilidad completa con herramientas como **CloudWatch** y **Sentry\*\* 🔎.
 
 Esta combinación nos permitió mantener una operación eficiente, económica y fácilmente escalable en el futuro, especialmente para una startup con una metodología **ÁGIL**.‍
 💡 Nuestro objetivo era entregar indicadores clave **KPI’s** basados ​​en la información que recogimos de todas nuestras fuentes de **Data Lake** con un objetivo de inteligencia empresarial **BI**, para esto con una combinación de bases de datos transaccionales **OLTP** y **OLAP** Analytics que pretendíamos lograr

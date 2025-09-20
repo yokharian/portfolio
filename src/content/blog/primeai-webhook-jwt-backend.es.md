@@ -31,6 +31,7 @@ Recientemente desarrollé una **infraestructura backend serverless** robusta uti
 - **Eliminación**
 
 Características Clave
+
 - **Autenticación JWT Segura**:
 - Implementé la autenticación **JSON Web Token (JWT)** con **AWS API Gateway**.
 - Garantiza un intercambio de datos seguro y confiable entre el frontend y el backend de [Prime.ai]().

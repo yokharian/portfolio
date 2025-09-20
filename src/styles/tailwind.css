@@ -4,5 +4,7 @@
 
 /* Custom tiny tweaks */
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+  }
 }

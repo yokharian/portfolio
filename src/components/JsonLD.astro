@@ -1,6 +1,6 @@
 ---
 // JSON-LD Structured Data Component for Astro
-import { getSiteData } from '../data';
+import {getSiteData} from '../data';
 
 export interface Props {
   type?: 'Person' | 'WebSite' | 'Article' | 'Organization' | 'BreadcrumbList' | 'ItemList';
@@ -8,7 +8,7 @@ export interface Props {
   jsonLdData?: Record<string, any>;
 }
 
-const { type, data, jsonLdData } = Astro.props;
+const {type, data, jsonLdData} = Astro.props;
 
 // Get site data
 const siteData = getSiteData();
@@ -34,5 +34,5 @@ const finalData = schemaData || defaultPersonSchema;
 ---
 
 {schemaData && (
-  <script type="application/ld+json" set:html={JSON.stringify(finalData)} />
-)}
+<script type="application/ld+json" set:html={JSON.stringify(finalData)}/>
+  )}
