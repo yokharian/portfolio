@@ -14,7 +14,7 @@ function getLocalizedUrl(path: string, locale: string): string {
 }
 
 // Get current path without locale prefix
-const currentPath = Astro.url.pathname.replace(/^\/[a-z]{2}\//, '/');
+let currentPath = Astro.url.pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
 if (currentPath === '') {
   currentPath = '/';
 }

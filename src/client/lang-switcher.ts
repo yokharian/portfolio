@@ -13,6 +13,7 @@ interface LangChangeEvent extends CustomEvent {
   };
 }
 
+// @ts-ignore = TS2300: Duplicate identifier 'LangSwitcher'.
 class LangSwitcher {
   private readonly supportedLanguages = ['en', 'es'] as const;
 
@@ -86,11 +87,13 @@ class LangSwitcher {
         if (isActive) {
           element.setAttribute('aria-current', 'true');
           element.setAttribute('aria-pressed', 'true');
-          element.classList.add('text-sky-700', 'font-semibold');
+          element.classList.add('bg-white', 'text-brand-700', 'shadow-sm', 'scale-105');
+          element.classList.remove('text-gray-600', 'hover:text-brand-700', 'hover:bg-white/50', 'hover:scale-102');
         } else {
           element.removeAttribute('aria-current');
           element.setAttribute('aria-pressed', 'false');
-          element.classList.remove('text-sky-700', 'font-semibold');
+          element.classList.remove('bg-white', 'text-brand-700', 'shadow-sm', 'scale-105');
+          element.classList.add('text-gray-600', 'hover:text-brand-700', 'hover:bg-white/50', 'hover:scale-102');
         }
       }
       // Animate text elements with data-i18n-key

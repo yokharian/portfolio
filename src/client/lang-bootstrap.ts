@@ -12,6 +12,7 @@ interface LangChangeEvent extends CustomEvent {
   };
 }
 
+// @ts-ignore = TS2300: Duplicate identifier 'LangBootstrap'.
 class LangBootstrap {
   private readonly supportedLanguages = ['en', 'es'] as const;
   private readonly storageKey = 'site.lang';

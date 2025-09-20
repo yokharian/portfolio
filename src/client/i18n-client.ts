@@ -19,6 +19,7 @@ interface LangChangeEvent extends CustomEvent {
   };
 }
 
+// @ts-ignore = TS2300: Duplicate identifier 'I18nClient'.
 class I18nClient {
   private dict: I18nData = {};
   private readonly supportedLanguages = ['en', 'es'] as const;
