@@ -1,11 +1,11 @@
 ---
 // Header component for Astro
-import i18nData from '../data/i18n.json';
-import siteData from '../data/site.json';
+import { getI18nData, getSiteData } from '../data';
 
 // Get current locale
 const currentLocale = Astro.currentLocale || 'en';
-const t = i18nData[currentLocale as keyof typeof i18nData];
+const t = getI18nData(currentLocale);
+const siteData = getSiteData();
 
 // Helper function to get localized URL
 function getLocalizedUrl(path: string, locale: string): string {
@@ -14,10 +14,13 @@ function getLocalizedUrl(path: string, locale: string): string {
 }
 
 // Get current path without locale prefix
-let currentPath = Astro.url.pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
-if (currentPath === '') {
-  currentPath = '/';
-}
+const currentPath = (() => {
+  let path = Astro.url.pathname.replace(/^\/[a-z]{2}(\/|$)/, '/');
+  if (path === '') {
+    path = '/';
+  }
+  return path;
+})();
 
 // Get alternate language URLs
 const enUrl = getLocalizedUrl(currentPath, 'en');
@@ -35,13 +38,13 @@ const esUrl = getLocalizedUrl(currentPath, 'es');
           href={getLocalizedUrl('/', currentLocale)} 
           class="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200"
         >
-          Home
+          {t.header.home}
         </a>
         <a 
           href={getLocalizedUrl('/blog', currentLocale)} 
           class="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200"
         >
-          Blog
+          {t.header.blog}
         </a>
         <a 
           href={getLocalizedUrl('/certifications', currentLocale)} 

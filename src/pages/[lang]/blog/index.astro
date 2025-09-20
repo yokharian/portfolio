@@ -70,13 +70,10 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <header class="py-20 text-center bg-white/90 backdrop-blur-sm rounded-3xl mb-16 shadow-lg">
       <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 mb-6">
-        {currentLocale === 'en' ? 'Blog' : 'Blog'}
+        {t.blog.title}
       </h1>
       <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        {currentLocale === 'en' 
-          ? 'Insights, tutorials, and case studies on Python, AWS, and cloud architecture.'
-          : 'Perspectivas, tutoriales y estudios de caso sobre Python, AWS y arquitectura en la nube.'
-        }
+        {t.blog.subtitle}
       </p>
     </header>
 
@@ -84,13 +81,10 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
       <section class="mb-20">
         <div class="text-center mb-12">
           <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {currentLocale === 'en' ? 'Featured Posts' : 'Publicaciones Destacadas'}
+            {t.blog.featured.title}
           </h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            {currentLocale === 'en' 
-              ? 'Handpicked articles showcasing my most impactful projects and insights.'
-              : 'Artículos seleccionados que muestran mis proyectos e ideas más impactantes.'
-            }
+            {t.blog.featured.subtitle}
           </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -129,7 +123,7 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
                   <span>
                     {post.data.pubDate ? formatDate(post.data.pubDate) : 
                      post.data.startDate ? formatDate(post.data.startDate) : 
-                     'No date'}
+                     t.common.noDate}
                   </span>
                   {post.data.employer && (
                     <span class="text-sky-600 font-medium">
@@ -161,14 +155,14 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
       <div class="text-center mb-12">
         <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           {featuredPosts.length > 0 
-            ? (currentLocale === 'en' ? 'All Posts' : 'Todas las Publicaciones')
-            : (currentLocale === 'en' ? 'Posts' : 'Publicaciones')
+            ? t.blog.all.title
+            : t.blog.posts.title
           }
         </h2>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-          {currentLocale === 'en' 
-            ? 'Browse through all my technical articles and project case studies.'
-            : 'Explora todos mis artículos técnicos y estudios de caso de proyectos.'
+          {featuredPosts.length > 0 
+            ? t.blog.all.subtitle
+            : t.blog.posts.subtitle
           }
         </p>
       </div>
@@ -211,7 +205,7 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
                     <span>
                       {post.data.pubDate ? formatDate(post.data.pubDate) : 
                        post.data.startDate ? formatDate(post.data.startDate) : 
-                       'No date'}
+                       t.common.noDate}
                     </span>
                     {post.data.employer && (
                       <span class="text-sky-600 font-medium">
@@ -239,7 +233,7 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
         </div>
       ) : (
         <div class="text-center py-12">
-          <p class="text-slate-600">No blog posts available at this time.</p>
+          <p class="text-slate-600">{t.blog.noPosts}</p>
         </div>
       )}
     </section>

@@ -16,13 +16,13 @@ export function getSiteData(): SiteData {
   return site;
 }
 
-export function getI18nData(language: string = 'en'): Object {
-  return i18n[language] || i18n.en || {};
+export function getI18nData(language: string = 'en'): I18nData[string] {
+  return i18n[language] || i18n.en || {} as I18nData[string];
 }
 
-export function getCertificationsData(language: string = 'en'): Object {
-  return certifications[language] || certifications.en || {};
+export function getCertificationsData(language: string = 'en'): CertificationsData[string] {
+  return certifications[language] || certifications.en || {} as CertificationsData[string];
 }
 
 // Re-export types
-export type { SiteData, I18nData, CertificationsData, Certification } from '../types/types';
+export type { SiteData, I18nData, CertificationsData, Certification } from '../types/data';

@@ -32,7 +32,31 @@
       }
     },
     "header": {
-      "cta": "Book a 30 min call"
+      "cta": "Book a 30 min call",
+      "home": "Home",
+      "blog": "Blog"
+    },
+    "blog": {
+      "title": "Blog",
+      "subtitle": "Insights, tutorials, and case studies on Python, AWS, and cloud architecture.",
+      "featured": {
+        "title": "Featured Posts",
+        "subtitle": "Handpicked articles showcasing my most impactful projects and insights."
+      },
+      "all": {
+        "title": "All Posts",
+        "subtitle": "Browse through all my technical articles and project case studies."
+      },
+      "posts": {
+        "title": "Posts",
+        "subtitle": "Browse through all my technical articles and project case studies."
+      },
+      "noPosts": "No blog posts available at this time."
+    },
+    "common": {
+      "noDate": "No date",
+      "readMore": "Read more",
+      "noCertifications": "No certifications available at this time."
     },
     "privacy": {
       "banner": {
@@ -75,7 +99,31 @@
       }
     },
     "header": {
-      "cta": "Agendar llamada de 30 min"
+      "cta": "Agendar llamada de 30 min",
+      "home": "Inicio",
+      "blog": "Blog"
+    },
+    "blog": {
+      "title": "Blog",
+      "subtitle": "Perspectivas, tutoriales y estudios de caso sobre Python, AWS y arquitectura en la nube.",
+      "featured": {
+        "title": "Publicaciones Destacadas",
+        "subtitle": "Artículos seleccionados que muestran mis proyectos e ideas más impactantes."
+      },
+      "all": {
+        "title": "Todas las Publicaciones",
+        "subtitle": "Explora todos mis artículos técnicos y estudios de caso de proyectos."
+      },
+      "posts": {
+        "title": "Publicaciones",
+        "subtitle": "Explora todos mis artículos técnicos y estudios de caso de proyectos."
+      },
+      "noPosts": "No hay publicaciones de blog disponibles en este momento."
+    },
+    "common": {
+      "noDate": "Sin fecha",
+      "readMore": "Leer más",
+      "noCertifications": "No hay certificaciones disponibles en este momento."
     },
     "privacy": {
       "banner": {
