@@ -18,6 +18,7 @@ export interface Props {
 }
 
 const { post, currentLocale } = Astro.props;
+
 const postUrl = `/${currentLocale}/blog/${post.slug}`;
 const heroImage = post.data.thumbnail || post.data.heroImage || '/assets/images/background.png';
 const tags = post.data.tags || [];
@@ -47,11 +48,11 @@ function formatMetadata(date: Date | string | undefined, employer?: string): str
 }
 ---
 
-<article class="group relative rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus-within:shadow-xl focus-within:-translate-y-1" role="listitem">
+<article class="group relative rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus-within:shadow-xl focus-within:-translate-y-1" role="listitem" data-blog-card>
   <a href={postUrl} class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label={`Read blog post: ${post.data.title}`}>
     <span class="sr-only">{post.data.title}</span>
   </a>
-  
+
   <!-- Image with rounded top corners -->
   <div class="aspect-video overflow-hidden rounded-t-2xl">
     <Image 
@@ -71,24 +72,24 @@ function formatMetadata(date: Date | string | undefined, employer?: string): str
   <div class="p-6 space-y-4">
     <!-- Company & Date metadata -->
     {formatMetadata(post.data.pubDate, post.data.employer) && (
-      <div class="text-sm text-gray-500 font-medium">
+      <div class="text-sm text-gray-500 font-medium transition-all duration-300" data-blog-metadata>
         {formatMetadata(post.data.pubDate, post.data.employer)}
       </div>
     )}
     
     <!-- Project title -->
-    <h3 class="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-brand-600 transition-colors">
+    <h3 class="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-brand-600 transition-all duration-300" data-blog-title>
       {post.data.title}
     </h3>
     
     <!-- Description -->
-    <p class="text-gray-600 line-clamp-3 leading-relaxed">
+    <p class="text-gray-600 line-clamp-3 leading-relaxed transition-all duration-300" data-blog-description>
       {post.data.description}
     </p>
     
     <!-- Tags -->
     {tags.length > 0 && (
-      <div class="flex flex-wrap gap-2" aria-label="Tags">
+      <div class="flex flex-wrap gap-2 transition-all duration-300" aria-label="Tags">
         {tags.slice(0, 3).map((tag: any) => (
           <span class="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
             {typeof tag === 'string' ? tag : tag.name || tag.toString()}

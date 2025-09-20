@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
 // Get current locale
 const currentLocale = Astro.currentLocale || 'en';
-const t = i18nData[currentLocale];
+const t = i18nData[currentLocale as keyof typeof i18nData];
 
 // Get all blog posts
 const allPosts = await getCollection('blog');

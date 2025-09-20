@@ -48,7 +48,7 @@ const { Content } = await post.render();
 
 // Get current locale
 const currentLocale = lang || 'en';
-const t = i18nData[currentLocale];
+const t = i18nData[currentLocale as keyof typeof i18nData];
 
 // Format date helper
 function formatDate(date: string | Date): string {
@@ -92,17 +92,17 @@ const translatedPost = translationKey ?
     return match && p.data.translationKey === translationKey && p.id !== post.id;
   }) : 
   null;
+
+// Get base slug for translation links
+const filename = post.id;
+const match = filename.match(/^(.+)\.(en|es)\.md$/);
+const baseSlug = match ? match[1] : post.slug;
 ---
 
 <Layout 
   title={`${post.data.title} | ${siteData.title}`}
   description={post.data.description}
   lang={currentLocale}
-  type="article"
-  publishedTime={post.data.pubDate || post.data.startDate}
-  modifiedTime={post.data.endDate}
-  author={siteData.author}
-  tags={post.data.tags?.map((tag: any) => tag.name)}
 >
   <slot name="head">
     <JsonLD type="Article" data={{
@@ -219,7 +219,7 @@ const translatedPost = translationKey ?
               }
             </p>
             <a 
-              href={`/${currentLocale === 'en' ? 'es' : 'en'}/blog/${translatedPost.baseSlug}`}
+              href={`/${currentLocale === 'en' ? 'es' : 'en'}/blog/${baseSlug}`}
               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
             >
               {currentLocale === 'en' ? '🇪🇸 Español' : '🇺🇸 English'}

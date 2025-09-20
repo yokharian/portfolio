@@ -5,7 +5,7 @@ import siteData from '../data/site.json';
 
 // Get current locale
 const currentLocale = Astro.currentLocale || 'en';
-const t = i18nData[currentLocale];
+const t = i18nData[currentLocale as keyof typeof i18nData];
 
 // Helper function to get localized URL
 function getLocalizedUrl(path: string, locale: string): string {
@@ -60,32 +60,30 @@ const esUrl = getLocalizedUrl(currentPath, 'es');
         {t.header.cta}
       </a>
       
-      <div class="flex items-center gap-1 text-sm bg-gray-100 rounded-lg p-1" data-lang-switcher>
-        <a 
-          data-lang-link="en" 
-          href={enUrl}
-          aria-label="Switch to English" 
-          class={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ease-in-out transform ${
-            currentLocale === 'en' 
-              ? 'bg-white text-brand-700 shadow-sm scale-105' 
-              : 'text-gray-600 hover:text-brand-700 hover:bg-white/50 hover:scale-102'
-          }`}
-        >
-          EN
-        </a>
-        <a 
-          data-lang-link="es" 
-          href={esUrl}
-          aria-label="Cambiar a Español" 
-          class={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ease-in-out transform ${
-            currentLocale === 'es' 
-              ? 'bg-white text-brand-700 shadow-sm scale-105' 
-              : 'text-gray-600 hover:text-brand-700 hover:bg-white/50 hover:scale-102'
-          }`}
-        >
-          ES
-        </a>
-      </div>
+             <div class="flex items-center gap-1 text-sm bg-gray-100 rounded-lg p-1">
+               <a 
+                 href={enUrl}
+                 aria-label="Switch to English" 
+                 class={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ease-in-out transform ${
+                   currentLocale === 'en' 
+                     ? 'bg-white text-brand-700 shadow-sm scale-105' 
+                     : 'text-gray-600 hover:text-brand-700 hover:bg-white/50 hover:scale-102'
+                 }`}
+               >
+                 EN
+               </a>
+               <a 
+                 href={esUrl}
+                 aria-label="Cambiar a Español" 
+                 class={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ease-in-out transform ${
+                   currentLocale === 'es' 
+                     ? 'bg-white text-brand-700 shadow-sm scale-105' 
+                     : 'text-gray-600 hover:text-brand-700 hover:bg-white/50 hover:scale-102'
+                 }`}
+               >
+                 ES
+               </a>
+             </div>
     </nav>
   </div>
 </header>

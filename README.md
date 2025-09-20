@@ -27,6 +27,7 @@ A modern, multilingual personal portfolio site built with Astro, Tailwind CSS, T
 - **[AMPLIFY_SETUP.md](docs/AMPLIFY_SETUP.md)** - AWS Amplify configuration guide
 - **[Authoring Guide](docs/authoring.md)** - Content creation guidelines
 - **[Client Development](docs/client-development.md)** - Client-side TypeScript development guide
+- **[Language Switching](docs/language-switching.md)** - Language switching architecture and technical decisions
 
 ## License
 

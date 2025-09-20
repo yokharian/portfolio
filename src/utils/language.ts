@@ -41,17 +41,7 @@ export function filterByLanguage<T extends { data?: { language?: string } }>(
 // -------- Language state helpers (SSR-safe) --------
 const STORAGE_KEY = 'site.lang';
 
-export function getSearchLang(search: string | null): LanguageCode | null {
-  if (!search) return null;
-  
-  try {
-    const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
-    const v = params.get('lang');
-    return v ? normalizeLang(v) : null;
-  } catch {
-    return null;
-  }
-}
+// Removed getSearchLang - no longer using query strings for language detection
 
 export function getPathLang(pathname: string | null): LanguageCode | null {
   if (!pathname || typeof pathname !== 'string') return null;
@@ -96,18 +86,16 @@ export function setStoredLanguage(lang: LanguageCode, storage: Storage | null): 
 }
 
 /**
- * Resolve initial language using URL > storage > browser > default
+ * Resolve initial language using path > storage > browser > default
+ * Query strings are no longer supported for language detection
  */
 export function resolveInitialLanguage(ctx: {
-  location?: { search?: string; pathname?: string } | null;
+  location?: { pathname?: string } | null;
   navigator?: Navigator | null;
   storage?: Storage | null;
   defaultLanguage?: LanguageCode;
 } = {}): LanguageCode {
   const { location, navigator, storage, defaultLanguage = 'en' } = ctx;
-  
-  const fromSearch = getSearchLang(location?.search || null);
-  if (fromSearch) return fromSearch;
   
   const fromPath = getPathLang(location?.pathname || null);
   if (fromPath) return fromPath;

@@ -6,9 +6,8 @@ This guide explains how to work with the client-side TypeScript code in this por
 
 The client-side code is located in `src/client/` and includes:
 
-- **Language switching functionality** (`lang-switcher.ts`, `lang-bootstrap.ts`)
-- **Internationalization** (`i18n-client.ts`)
-- **Real User Monitoring** (`rum.ts`)
+- **Real User Monitoring** (`rum.ts`) - Analytics and performance tracking
+- **Language switching is now static** - No JavaScript required, uses pure HTML/CSS
 
 ## Development Workflow
 
@@ -71,15 +70,9 @@ npm run build
 
 ```
 src/client/
-├── lang-bootstrap.ts    # Language detection and initialization
-├── lang-switcher.ts     # Language switching UI interactions
-├── i18n-client.ts       # Client-side internationalization
 └── rum.ts              # Real User Monitoring
 
 public/assets/js/       # Transpiled JavaScript output
-├── lang-bootstrap.js
-├── lang-switcher.js
-├── i18n-client.js
 └── rum.js
 ```
 
@@ -93,53 +86,72 @@ Client-side code uses `tsconfig.client.json` with:
 - **Strict mode**: Enabled
 - **Source maps**: Disabled (for production)
 
-## Language Switching Feature
+## Language Switching (Static Implementation)
 
-The language switching functionality works as follows:
+The language switching functionality is now **completely static** and works as follows:
 
-1. **`lang-bootstrap.ts`**: Detects initial language from URL, localStorage, or browser
-2. **`lang-switcher.ts`**: Handles UI interactions for language switching
-3. **`i18n-client.ts`**: Updates text content based on selected language
+1. **Route-based navigation**: Uses `/en` and `/es` URL paths
+2. **No JavaScript required**: Pure HTML/CSS implementation
+3. **Server-side rendering**: Content is rendered in the correct language by Astro
 
 ### Key Features
 
-- **Progressive Enhancement**: Works without JavaScript
-- **URL Preservation**: Maintains current page with language parameter
-- **Accessibility**: Full keyboard navigation and ARIA support
-- **Persistence**: Remembers language choice in localStorage
+- **Zero JavaScript**: No client-side code for language switching
+- **Route-based**: Each language has its own URL path
+- **SEO-friendly**: Clean URLs for search engines
+- **Accessibility**: Works with screen readers and keyboard navigation
+- **Performance**: No JavaScript overhead for language switching
 
-### HTML Requirements
+### HTML Implementation
 
-The language switcher expects these HTML attributes:
+The language switcher is implemented as static HTML:
 
 ```html
-<!-- Container -->
-<div data-lang-switcher>
-  <!-- Language links -->
-  <a href="/en/" data-lang-link="en">English</a>
-  <a href="/es/" data-lang-link="es">Español</a>
+<!-- Static language switcher -->
+<div class="flex items-center gap-1 text-sm bg-gray-100 rounded-lg p-1">
+  <a href="/en/blog" class="px-3 py-1.5 rounded-md font-medium">EN</a>
+  <a href="/es/blog" class="px-3 py-1.5 rounded-md font-medium">ES</a>
 </div>
+```
 
-<!-- Internationalized content -->
-<h1 data-i18n-key="title">Default Title</h1>
-<img data-i18n-attr="alt:image.alt" src="image.jpg" alt="Default Alt" />
+### URL Structure
+
+```
+/en/                    # Home page in English
+/es/                    # Home page in Spanish
+/en/blog               # Blog in English
+/es/blog               # Blog in Spanish
+/en/blog/post-slug     # Individual post in English
+/es/blog/post-slug     # Individual post in Spanish
+/en/certifications     # Certifications in English
+/es/certifications     # Certifications in Spanish
+```
+
+## Real User Monitoring (RUM)
+
+The only remaining client-side functionality is Real User Monitoring:
+
+### Features
+
+- **Performance tracking**: Core Web Vitals and performance metrics
+- **Error monitoring**: JavaScript errors and unhandled promises
+- **User interactions**: Button clicks and form submissions
+- **Custom events**: Language switches and other user actions
+
+### Configuration
+
+RUM is configured in `src/data/rum-config.json`:
+
+```json
+{
+  "enabled": false,
+  "applicationId": "your-app-id",
+  "applicationVersion": "1.0.0",
+  "endpoint": "https://dataplane.rum.us-east-1.amazonaws.com"
+}
 ```
 
 ## Troubleshooting
-
-### Language Switching Not Working
-
-1. **Check if files are transpiled**:
-
-   ```bash
-   npm run transpile:client
-   ```
-
-2. **Verify HTML structure**: Ensure `data-lang-link` attributes are present
-
-3. **Check browser console**: Look for JavaScript errors
-
-4. **Clear browser cache**: Hard refresh (Ctrl+F5 / Cmd+Shift+R)
 
 ### Development Issues
 
@@ -154,11 +166,11 @@ The language switcher expects these HTML attributes:
 ## Best Practices
 
 1. **Use two terminals** for development to ensure client code is always up to date
-2. **Test language switching** after making changes to client code
-3. **Check both languages** to ensure i18n is working correctly
-4. **Use TypeScript strict mode** for better code quality
-5. **Keep client code minimal** and focused on UI interactions
-6. **Stop both processes** when done developing (Ctrl+C in each terminal)
+2. **Test both languages** to ensure content is properly localized
+3. **Use TypeScript strict mode** for better code quality
+4. **Keep client code minimal** and focused on essential functionality
+5. **Stop both processes** when done developing (Ctrl+C in each terminal)
+6. **Test without JavaScript** to ensure language switching works for all users
 
 ## Integration with Astro
 
@@ -166,15 +178,8 @@ The client-side code is loaded in the main layout:
 
 ```astro
 <!-- In Layout.astro -->
-<script src="/assets/js/lang-bootstrap.js"></script>
-<script src="/assets/js/i18n-client.js"></script>
-<script src="/assets/js/lang-switcher.js"></script>
-<script src="/assets/js/rum.js"></script>
+<script id="rum-config" type="application/json">{"enabled": false}</script>
+<script src="/assets/js/rum.js" defer is:inline></script>
 ```
 
-The order matters:
-
-1. `lang-bootstrap.js` - Initializes language
-2. `i18n-client.js` - Sets up translations
-3. `lang-switcher.js` - Enables switching
-4. `rum.js` - Analytics (optional)
+Only RUM is loaded as client-side JavaScript. Language switching is handled entirely by Astro's routing system.
