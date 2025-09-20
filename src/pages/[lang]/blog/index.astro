@@ -58,7 +58,6 @@ function formatDate(date: string | Date): string {
 }
 
 // Get featured posts
-const featuredPosts = posts.filter(post => post.data.featured === true);
 const regularPosts = posts.filter(post => post.data.featured !== true);
 ---
 
@@ -77,96 +76,8 @@ const regularPosts = posts.filter(post => post.data.featured !== true);
       </p>
     </header>
 
-    {featuredPosts.length > 0 && (
-      <section class="mb-20">
-        <div class="text-center mb-12">
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {t.blog.featured.title}
-          </h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            {t.blog.featured.subtitle}
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {featuredPosts.map((post) => (
-            <article class="group relative rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl focus-within:shadow-xl hover:-translate-y-2 focus-within:-translate-y-2 overflow-hidden">
-              <a 
-                href={`/${currentLocale}/blog/${post.baseSlug}`}
-                class="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                aria-label={`Read ${post.data.title}`}
-              >
-                <span class="sr-only">Read {post.data.title}</span>
-              </a>
-              
-              {post.data.thumbnail && (
-                <div class="aspect-video overflow-hidden rounded-t-xl">
-                  <img 
-                    src={post.data.thumbnail} 
-                    alt={post.data.title}
-                    class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              )}
-              
-              <div class="p-6">
-                <h3 class="text-xl font-semibold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors">
-                  {post.data.title}
-                </h3>
-                
-                <p class="text-slate-600 mb-4 line-clamp-3">
-                  {post.data.description}
-                </p>
-                
-                <div class="flex items-center justify-between text-sm text-slate-500">
-                  <span>
-                    {post.data.pubDate ? formatDate(post.data.pubDate) : 
-                     post.data.startDate ? formatDate(post.data.startDate) : 
-                     t.common.noDate}
-                  </span>
-                  {post.data.employer && (
-                    <span class="text-sky-600 font-medium">
-                      {post.data.employer}
-                    </span>
-                  )}
-                </div>
-                
-                {post.data.tags && post.data.tags.length > 0 && (
-                  <div class="mt-4 flex flex-wrap gap-2">
-                    {post.data.tags.slice(0, 3).map((tag: any) => (
-                      <span 
-                        class="inline-block rounded px-2 py-1 text-xs font-medium"
-                        style={`background-color: ${tag.color}; color: ${tag.color.replace('hsla(', 'hsla(').replace(/,\s*[0-9.]+\)$/, ', 1)')}`}
-                      >
-                        {tag.name}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    )}
-
     <section class="bg-gray-50/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-          {featuredPosts.length > 0 
-            ? t.blog.all.title
-            : t.blog.posts.title
-          }
-        </h2>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-          {featuredPosts.length > 0 
-            ? t.blog.all.subtitle
-            : t.blog.posts.subtitle
-          }
-        </p>
-      </div>
-      
+
       {regularPosts.length > 0 ? (
         <div class="space-y-6">
           {regularPosts.map((post) => (
