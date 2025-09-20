@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650">
+  <defs>
+    <style>
+      .lane { fill:#fff7e6; stroke:#e6d8bf; stroke-width:1.5; }
+      .lifeline { stroke:#e8d9b8; stroke-width:3; }
+      .label { font:16px 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill:#222; }
+      .small { font:13px 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill:#444; }
+      .note { font:12px 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill:#6b6b6b; }
+      .msg { stroke:#222; stroke-width:2; fill:none; }
+      .msg-dash { stroke:#222; stroke-width:2; fill:none; stroke-dasharray:6 6; }
+      .opt-box { fill:none; stroke:#d9b88f; stroke-width:2; stroke-dasharray:8 6; }
+      .opt-tag { fill:#fff0d6; stroke:#d9b88f; stroke-width:1; rx:6; ry:6; }
+      .act { fill:#e8d1ff; stroke:#c9a7ff; stroke-width:1.5; }
+      .num { fill:#000; }
+      .numText { font:12px 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill:#fff; text-anchor:middle; dominant-baseline:central; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#222"/>
+    </marker>
+  </defs>
+
+  <!-- top lane headers -->
+  <rect x="60"  y="20" width="180" height="50" class="lane"/>
+  <rect x="410" y="20" width="180" height="50" class="lane"/>
+  <rect x="760" y="20" width="180" height="50" class="lane"/>
+  <text x="150" y="52" class="label" text-anchor="middle">Customer</text>
+  <text x="500" y="52" class="label" text-anchor="middle">Satws</text>
+  <text x="850" y="52" class="label" text-anchor="middle">SAT</text>
+
+  <!-- lifelines -->
+  <line x1="150" y1="70" x2="150" y2="620" class="lifeline"/>
+  <line x1="500" y1="70" x2="500" y2="620" class="lifeline"/>
+  <line x1="850" y1="70" x2="850" y2="620" class="lifeline"/>
+
+  <!-- activation bars -->
+  <rect x="492" y="110" width="16" height="130" class="act"/>
+  <rect x="842" y="470" width="16" height="60" class="act"/>
+
+  <!-- 1 Create Extraction -->
+  <line x1="150" y1="120" x2="492" y2="120" class="msg" marker-end="url(#arrow)"/>
+  <text x="320" y="105" class="label" text-anchor="middle">Create Extraction (POST /extractions)</text>
+  <circle cx="140" cy="120" r="12" class="num"/><text x="140" y="120" class="numText">1</text>
+
+  <!-- opt 1 -->
+  <rect x="75" y="135" width="250" height="55" class="opt-box"/>
+  <rect x="85" y="140" width="36" height="20" class="opt-tag"/>
+  <text x="103" y="155" class="small" text-anchor="middle">opt</text>
+  <text x="200" y="168" class="note" text-anchor="middle">[when webhooks are enabled]</text>
+
+  <!-- 2 Credential Response -->
+  <line x1="492" y1="160" x2="150" y2="160" class="msg-dash" marker-end="url(#arrow)"/>
+  <text x="320" y="180" class="small" text-anchor="middle">Credential Response</text>
+  <circle cx="505" cy="160" r="12" class="num"/><text x="505" y="160" class="numText">2</text>
+
+  <!-- 3 extraction.created -->
+  <line x1="492" y1="210" x2="150" y2="210" class="msg-dash" marker-end="url(#arrow)"/>
+  <text x="320" y="230" class="small" text-anchor="middle">Send "extraction.created" Event</text>
+  <circle cx="505" cy="210" r="12" class="num"/><text x="505" y="210" class="numText">3</text>
+
+  <!-- opt 2 -->
+  <rect x="75" y="215" width="330" height="70" class="opt-box"/>
+  <rect x="85" y="220" width="36" height="20" class="opt-tag"/>
+  <text x="103" y="235" class="small" text-anchor="middle">opt</text>
+  <text x="240" y="253" class="note" text-anchor="middle">[when webhooks are enabled and status change to running]</text>
+
+  <!-- 4 extraction.updated -->
+  <line x1="492" y1="285" x2="150" y2="285" class="msg-dash" marker-end="url(#arrow)"/>
+  <text x="320" y="305" class="small" text-anchor="middle">Send "extraction.updated" Event</text>
+  <circle cx="505" cy="285" r="12" class="num"/><text x="505" y="285" class="numText">4</text>
+
+  <!-- 5 Connect to SAT -->
+  <line x1="500" y1="360" x2="842" y2="360" class="msg" marker-end="url(#arrow)"/>
+  <text x="670" y="345" class="label" text-anchor="middle">Connect to the SAT on behalf of the taxpayer</text>
+  <circle cx="490" cy="360" r="12" class="num"/><text x="490" y="360" class="numText">5</text>
+
+  <!-- 6 Download data points -->
+  <line x1="842" y1="470" x2="500" y2="470" class="msg-dash" marker-end="url(#arrow)"/>
+  <text x="670" y="490" class="small" text-anchor="middle">Download data points</text>
+  <circle cx="855" cy="470" r="12" class="num"/><text x="855" y="470" class="numText">6</text>
+
+  <!-- opt 3 -->
+  <rect x="75" y="495" width="250" height="55" class="opt-box"/>
+  <rect x="85" y="500" width="36" height="20" class="opt-tag"/>
+  <text x="103" y="515" class="small" text-anchor="middle">opt</text>
+  <text x="200" y="528" class="note" text-anchor="middle">[when webhooks are enabled]</text>
+
+  <!-- 7 final extraction.updated -->
+  <line x1="492" y1="540" x2="150" y2="540" class="msg-dash" marker-end="url(#arrow)"/>
+  <text x="320" y="560" class="small" text-anchor="middle">Send "extraction.updated" Event</text>
+  <circle cx="505" cy="540" r="12" class="num"/><text x="505" y="540" class="numText">7</text>
+
+  <!-- bottom lane headers (added) -->
+  <rect x="60"  y="580" width="180" height="50" class="lane"/>
+  <rect x="410" y="580" width="180" height="50" class="lane"/>
+  <rect x="760" y="580" width="180" height="50" class="lane"/>
+  <text x="150" y="612" class="label" text-anchor="middle">Customer</text>
+  <text x="500" y="612" class="label" text-anchor="middle">Satws</text>
+  <text x="850" y="612" class="label" text-anchor="middle">SAT</text>
+</svg>
