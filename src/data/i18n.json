@@ -1,9 +1,9 @@
 {
   "en": {
     "hero": {
-      "title": "Python & AWS Solutions Architect",
-      "subtitle": "I design, build, and scale data-intensive systems in the cloud.",
-      "cta": "Read Blog"
+      "title": "Python developer with 5 years of experience",
+      "cta": "Book a 30 min call",
+      "subtitle": "I help companies and startups create scalable solutions with AI, Python, and Cloud."
     },
     "home": {
       "featured": {
@@ -13,8 +13,23 @@
       }
     },
     "experience": {
-      "heading": "Technical Expertise",
-      "subtitle": "Core technologies and frameworks I work with to build scalable cloud solutions."
+      "heading": "Professional Services",
+      "subtitle": "I turn complex problems into scalable, automated solutions.",
+      "card1": {
+        "title": "Python Development",
+        "description": "Web and backend apps in Python, APIs and microservices, process automation and database integration.",
+        "tags": ["Python", "FastAPI", "Automation"]
+      },
+      "card2": {
+        "title": "AWS Cloud Solutions",
+        "description": "Serverless apps with Lambda and DynamoDB, CI/CD pipelines, cloud cost optimization, and data workflows with AWS Glue.",
+        "tags": ["AWS Lambda", "Step Functions", "DynamoDB"]
+      },
+      "card3": {
+        "title": "AI-Powered Development",
+        "description": "AI models for business apps, smart chatbots, process automation with Python and AI, and predictive analytics.",
+        "tags": ["AI Training", "Prompt Engineering", "LLMs"]
+      }
     },
     "certifications": {
       "heading": "Certifications",
@@ -22,41 +37,23 @@
       "officialTag": "Official",
       "issuedOn": "Issued",
       "issuerLabel": "Issuer",
-      "viewCredential": "View credential",
-      "names": {
-        "awsSAA": {
-          "name": "AWS Certified Solutions Architect – Associate",
-          "issuer": "Amazon Web Services (AWS)",
-          "alt": "AWS Solutions Architect Associate certification badge"
-        }
-      }
+      "viewCredential": "View credential"
     },
     "header": {
       "cta": "Book a 30 min call",
       "home": "Home",
-      "blog": "Blog"
+      "blog": "Professional Experience",
+      "certifications": "Certifications"
     },
     "blog": {
-      "title": "Blog",
-      "subtitle": "Insights, tutorials, and case studies on Python, AWS, and cloud architecture.",
-      "featured": {
-        "title": "Featured Posts",
-        "subtitle": "Handpicked articles showcasing my most impactful projects and insights."
-      },
-      "all": {
-        "title": "All Posts",
-        "subtitle": "Browse through all my technical articles and project case studies."
-      },
-      "posts": {
-        "title": "Posts",
-        "subtitle": "Browse through all my technical articles and project case studies."
-      },
-      "noPosts": "No blog posts available at this time."
+      "title": "Professional Experience",
+      "subtitle": "Read more about my work and the technologies I have worked with. I have worked on a wide range of projects, from small to large, from simple to complex."
     },
     "common": {
-      "noDate": "No date",
+      "noPosts": "Error displaying posts.",
+      "noDate": "Error displaying date.",
       "readMore": "Read more",
-      "noCertifications": "No certifications available at this time."
+      "noCertifications": "Error displaying certifications."
     },
     "privacy": {
       "banner": {
@@ -64,13 +61,36 @@
         "accept": "Accept",
         "decline": "Decline"
       }
+    },
+    "jsonld": {
+      "person": {
+        "name": "Sofia Escobedo",
+        "jobTitle": "Python Developer",
+        "description": "Python developer specialized in AI, Python, and Cloud.",
+        "image": "https://sofia.escobedo.mx/assets/images/183728692.jpg",
+        "knowsAbout": ["Python", "AWS"],
+        "occupation": {
+          "name": "Python Developer",
+          "description": "I create scalable solutions with AI, Python, and Cloud."
+        }
+      },
+      "website": {
+        "name": "Sofia Escobedo - Portfolio",
+        "description": "Python developer personal portfolio.",
+        "author": "Sofia Escobedo",
+        "inLanguage": ["en", "es"],
+        "searchAction": {
+          "target": "https://sofia.escobedo.mx/blog/?q={search_term_string}",
+          "queryInput": "required name=search_term_string"
+        }
+      }
     }
   },
   "es": {
     "hero": {
-      "title": "Arquitecta de Soluciones Python y AWS",
-      "subtitle": "Diseño, construyo y escalo sistemas intensivos en datos en la nube.",
-      "cta": "Leer Blog"
+      "title": "Desarrolladora de Python con 5 años de experiencia",
+      "subtitle": "Ayudo a empresas y startups a crear soluciones escalables con IA, Python y la nube.",
+      "cta": "Llamada de 30 min"
     },
     "home": {
       "featured": {
@@ -80,8 +100,23 @@
       }
     },
     "experience": {
-      "heading": "Experiencia Técnica",
-      "subtitle": "Tecnologías principales y frameworks con los que trabajo para construir soluciones escalables en la nube."
+      "heading": "Servicios Profesionales",
+      "subtitle": "Tecnologías principales y frameworks con los que trabajo para construir soluciones escalables en la nube.",
+      "card1": {
+        "title": "Desarrollo con Python",
+        "description": "Aplicaciones web y backend en Python, APIs y microservicios, automatización de procesos e integración con bases de datos.",
+        "tags": ["Python", "FastAPI", "Automatización"]
+      },
+      "card2": {
+        "title": "Soluciones en AWS",
+        "description": "Aplicaciones serverless con Lambda y DynamoDB, pipelines CI/CD, optimización de costos, flujos de datos con AWS Glue.",
+        "tags": ["AWS Lambda", "Step Functions", "DynamoDB"]
+      },
+      "card3": {
+        "title": "Desarrollo Potenciado con IA",
+        "description": "Modelos de IA en aplicaciones, chatbots inteligentes, automatización de procesos con Python e IA, y analítica predictiva.",
+        "tags": ["AI Training", "Prompt Engineering", "LLMs"]
+      }
     },
     "certifications": {
       "heading": "Certificaciones",
@@ -89,47 +124,52 @@
       "officialTag": "Official",
       "issuedOn": "Emitido",
       "issuerLabel": "Emisor",
-      "viewCredential": "Ver credencial",
-      "names": {
-        "awsSAA": {
-          "name": "AWS Certified Solutions Architect – Associate",
-          "issuer": "Amazon Web Services (AWS)",
-          "alt": "Insignia de certificación AWS Solutions Architect Associate"
-        }
-      }
+      "viewCredential": "Ver credencial"
     },
     "header": {
-      "cta": "Agendar llamada de 30 min",
+      "cta": "Llamada de 30 min",
       "home": "Inicio",
-      "blog": "Blog"
+      "blog": "Experiencia Profesional",
+      "certifications": "Certificaciones"
     },
     "blog": {
-      "title": "Blog",
-      "subtitle": "Perspectivas, tutoriales y estudios de caso sobre Python, AWS y arquitectura en la nube.",
-      "featured": {
-        "title": "Publicaciones Destacadas",
-        "subtitle": "Artículos seleccionados que muestran mis proyectos e ideas más impactantes."
-      },
-      "all": {
-        "title": "Todas las Publicaciones",
-        "subtitle": "Explora todos mis artículos técnicos y estudios de caso de proyectos."
-      },
-      "posts": {
-        "title": "Publicaciones",
-        "subtitle": "Explora todos mis artículos técnicos y estudios de caso de proyectos."
-      },
-      "noPosts": "No hay publicaciones de blog disponibles en este momento."
+      "title": "Experiencia Profesional",
+      "subtitle": "Lee más sobre mi trabajo y las tecnologías con las que he trabajado. He trabajado en una amplia gama de proyectos, desde pequeños hasta grandes, desde simples hasta complejos."
     },
     "common": {
-      "noDate": "Sin fecha",
+      "noPosts": "Error al mostrar las publicaciones.",
+      "noDate": "Error al mostrar la fecha.",
       "readMore": "Leer más",
-      "noCertifications": "No hay certificaciones disponibles en este momento."
+      "noCertifications": "Error al mostrar las certificaciones."
     },
     "privacy": {
       "banner": {
         "text": "Utilizamos análisis para mejorar tu experiencia. Tus datos se procesan de forma anónima.",
         "accept": "Aceptar",
         "decline": "Rechazar"
+      }
+    },
+    "jsonld": {
+      "person": {
+        "name": "Sofia Escobedo",
+        "jobTitle": "Desarrolladora Python",
+        "description": "Desarrolladora Python especializada en IA, Python y la nube.",
+        "image": "https://sofia.escobedo.mx/assets/images/183728692.jpg",
+        "knowsAbout": ["Python", "AWS"],
+        "occupation": {
+          "name": "Desarrolladora Python",
+          "description": "Creo soluciones escalables con IA, Python y la nube."
+        }
+      },
+      "website": {
+        "name": "Sofia Escobedo - Portafolio",
+        "description": "Portafolio personal de desarrolladora Python.",
+        "author": "Sofia Escobedo",
+        "inLanguage": ["en", "es"],
+        "searchAction": {
+          "target": "https://sofia.escobedo.mx/blog/?q={search_term_string}",
+          "queryInput": "required name=search_term_string"
+        }
       }
     }
   }

@@ -5,7 +5,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://sofiaramirez.dev", // Update with your actual domain
+  site: "https://sofia.escobedo.mx",
   i18n: {
     defaultLocale: "en",
     locales: ["en", "es"],

@@ -1,4 +1,93 @@
 // TypeScript types for data files
+export interface I18nData {
+  [language: string]: {
+    hero: {
+      title: string;
+      subtitle: string;
+      cta: string;
+    };
+    home: {
+      featured: {
+        heading: string;
+        subtitle: string;
+        viewAll: string;
+      };
+    };
+    experience: {
+      heading: string;
+      subtitle: string;
+      card1: {
+        title: string;
+        description: string;
+        tags: string[];
+      };
+      card2: {
+        title: string;
+        description: string;
+        tags: string[];
+      };
+      card3: {
+        title: string;
+        description: string;
+        tags: string[];
+      };
+    };
+    certifications: {
+      heading: string;
+      subtitle: string;
+      officialTag: string;
+      issuedOn: string;
+      issuerLabel: string;
+      viewCredential: string;
+    };
+    header: {
+      cta: string;
+      home: string;
+      blog: string;
+      certifications: string;
+    };
+    blog: {
+      title: string;
+      subtitle: string;
+    };
+    common: {
+      noPosts: string;
+      noDate: string;
+      readMore: string;
+      noCertifications: string;
+    };
+    privacy: {
+      banner: {
+        text: string;
+        accept: string;
+        decline: string;
+      };
+    };
+    jsonld: {
+      person: {
+        name: string;
+        jobTitle: string;
+        description: string;
+        image: string;
+        knowsAbout: string[];
+        occupation: {
+          name: string;
+          description: string;
+        };
+      };
+      website: {
+        name: string;
+        description: string;
+        author: string;
+        inLanguage: string[];
+        searchAction: {
+          target: string;
+          queryInput: string;
+        };
+      };
+    };
+  };
+}
 
 export interface SiteData {
   title: string;
@@ -24,76 +113,6 @@ export interface SiteData {
     [slug: string]: {
       "main-page": boolean;
       "blog-page": boolean;
-    };
-  };
-}
-
-export interface I18nData {
-  [language: string]: {
-    hero: {
-      title: string;
-      subtitle: string;
-      cta: string;
-    };
-    home: {
-      featured: {
-        heading: string;
-        subtitle: string;
-        viewAll: string;
-      };
-    };
-    experience: {
-      heading: string;
-      subtitle: string;
-    };
-    certifications: {
-      heading: string;
-      subtitle: string;
-      officialTag: string;
-      issuedOn: string;
-      issuerLabel: string;
-      viewCredential: string;
-      names: {
-        [key: string]: {
-          name: string;
-          issuer: string;
-          alt: string;
-        };
-      };
-    };
-    header: {
-      cta: string;
-      home: string;
-      blog: string;
-    };
-    blog: {
-      title: string;
-      subtitle: string;
-      featured: {
-        title: string;
-        subtitle: string;
-      };
-      all: {
-        title: string;
-        subtitle: string;
-      };
-      posts: {
-        title: string;
-        subtitle: string;
-      };
-      noPosts: string;
-    };
-    common: {
-      noDate: string;
-      readMore: string;
-      noCertifications: string;
-    };
-    privacy: {
-      banner: {
-        text: string;
-        accept: string;
-        decline: string;
-      };
     };
   };
 }

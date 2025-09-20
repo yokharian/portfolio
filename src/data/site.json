@@ -15,7 +15,7 @@
     "github": "https://github.com/yokharian"
   },
   "seo": {
-    "defaultImage": "/assets/images/183728692.jpg",
+    "defaultImage": "/assets/images/Hr8f6M2C68H8s7DZz2PA.png",
     "themeColor": "#2563eb",
     "msTileColor": "#0ea5e9"
   },
@@ -34,7 +34,7 @@
     },
     "directus-backend": {
       "main-page": false,
-      "blog-page": true
+      "blog-page": false
     },
     "google-analytics-data-extractor": {
       "main-page": true,
@@ -53,7 +53,7 @@
       "blog-page": true
     },
     "primeai-webhook-jwt-backend": {
-      "main-page": false,
+      "main-page": true,
       "blog-page": true
     }
   }

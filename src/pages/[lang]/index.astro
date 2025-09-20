@@ -2,8 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import BlogCard from '../../components/BlogCard.astro';
 import JsonLD from '../../components/JsonLD.astro';
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import {Image} from 'astro:assets';
+import {getCollection} from 'astro:content';
 import {getI18nData, getCertificationsData, getSiteData, type Certification} from '../../data';
 
 const siteData = getSiteData();
@@ -11,8 +11,8 @@ const siteData = getSiteData();
 // Generate static paths for homepage
 export async function getStaticPaths() {
   return [
-    { params: { lang: 'en' } },
-    { params: { lang: 'es' } }
+    {params: {lang: 'en'}},
+    {params: {lang: 'es'}}
   ];
 }
 
@@ -55,259 +55,264 @@ const latestPosts = allPosts
   })
 
 // Get certifications for current locale
-const certifications:Certification[] = certificationsData.names? Object.values(certificationsData.names) : [];
+const certifications: Certification[] = certificationsData.names ? Object.values(certificationsData.names) : [];
 ---
 
-<Layout 
-  title={siteData.title}
-  description={siteData.description}
-  lang={currentLocale}
+<Layout
+        title={siteData.title}
+        description={siteData.description}
+        lang={currentLocale}
 >
-  <slot name="head">
-    <link rel="preload" as="image" href="/assets/images/183728692.jpg">
-    <JsonLD type="Person" data={{
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Sofia Escobedo",
-      "url": "https://sofiaescobedo.com",
-      "jobTitle": "Python & AWS Developer",
-      "description": "Python and AWS solutions architect specializing in data-intensive systems in the cloud.",
-      "image": "https://sofiaescobedo.com/assets/images/183728692.jpg",
-      "sameAs": [
-        "https://github.com/sofia-escobedo",
-        "https://linkedin.com/in/sofia-escobedo"
-      ],
-      "knowsAbout": [
-        "Python",
-        "AWS",
-        "Cloud Architecture",
-        "Data Engineering",
-        "Machine Learning",
-        "DevOps"
-      ],
-      "hasOccupation": {
-        "@type": "Occupation",
-        "name": "Python & AWS Developer",
-        "description": "Design, build, and scale data-intensive systems in the cloud"
-      }
-    }} />
-    <JsonLD type="WebSite" data={{
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Sofia Escobedo - Portfolio",
-      "url": "https://sofiaescobedo.com",
-      "description": "Portfolio of Sofia Escobedo: Python and AWS solutions architect.",
-      "author": {
-        "@type": "Person",
-        "name": "Sofia Escobedo"
-      },
-      "inLanguage": ["en", "es"],
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://sofiaescobedo.com/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }} />
-  </slot>
+    <slot name="head">
+        <link rel="preload" as="image" href="/assets/images/183728692.jpg">
+        <JsonLD type="Person" data={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": t.jsonld.person.name,
+          "url": siteData.url,
+          "jobTitle": t.jsonld.person.jobTitle,
+          "description": t.jsonld.person.description,
+          "image": t.jsonld.person.image,
+          "sameAs": [
+            siteData.socialUrls.github,
+            siteData.socialUrls.linkedin
+          ],
+          "knowsAbout": t.jsonld.person.knowsAbout,
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": t.jsonld.person.occupation.name,
+            "description": t.jsonld.person.occupation.description
+          }
+        }}/>
+        <JsonLD type="WebSite" data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": t.jsonld.website.name,
+          "url": siteData.url,
+          "description": t.jsonld.website.description,
+          "author": {
+            "@type": "Person",
+            "name": t.jsonld.website.author
+          },
+          "inLanguage": t.jsonld.website.inLanguage,
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": t.jsonld.website.searchAction.target,
+            "query-input": t.jsonld.website.searchAction.queryInput
+          }
+        }}/>
+    </slot>
 
     <main id="main" class="min-h-screen">
-    <section id="hero" class="py-24 fade-in" aria-labelledby="hero-title">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div class="space-y-8 slide-up" data-anim="hero">
-          <h1 id="hero-title" class="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight" data-i18n-key="hero.title">
-            {t.hero.title.split(' ').slice(0, -1).join(' ')} 
-            <span class="text-brand-600 italic">{t.hero.title.split(' ').slice(-1)}</span>
-          </h1>
-          <p class="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl" data-anim="subheading" data-i18n-key="hero.subtitle">
-            {t.hero.subtitle}
-          </p>
-            <div class="mt-8 stagger-animation stagger-1" data-anim="cta">
-              <a href={`/${currentLocale}/#blog`} class="inline-flex items-center rounded-lg bg-brand-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-brand-700 hover-glow focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 smooth-transition hover-lift" data-i18n-key="hero.cta">
-              {t.hero.cta}
-              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-        <div class="relative stagger-animation stagger-2" data-anim="profile">
-          <div class="w-96 h-96 mx-auto lg:mx-0 relative hover-scale">
-            <div class="absolute inset-0 bg-gradient-to-br from-brand-100 to-brand-200 rounded-full transform rotate-3 smooth-transition"></div>
-            <Image 
-              src="/assets/images/183728692.jpg" 
-              alt="Professional profile photo of Sofia" 
-              width={384}
-              height={384}
-              class="relative w-full h-full rounded-full object-cover shadow-2xl border-4 border-white"
-              format="webp"
-              quality={90}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <section id="hero" class="py-24 fade-in" aria-labelledby="hero-title">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8 slide-up" data-anim="hero">
+                        <h1 id="hero-title"
+                            class="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight"
+                            data-i18n-key="hero.title">
+                          {t.hero.title.split(' ').slice(0, -1).join(' ')}
+                            <span class="text-brand-600 italic">{t.hero.title.split(' ').slice(-1)}</span>
+                        </h1>
+                        <p class="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl" data-anim="subheading"
+                           data-i18n-key="hero.subtitle">
+                          {t.hero.subtitle}
+                        </p>
+                        <div class="mt-8 stagger-animation stagger-1" data-anim="cta">
+                            <a href={`/${currentLocale}/#blog`}
+                               class="inline-flex items-center rounded-lg bg-brand-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-brand-700 hover-glow focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 smooth-transition hover-lift"
+                               data-i18n-key="hero.cta">
+                              {t.hero.cta}
+                                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative stagger-animation stagger-2" data-anim="profile">
+                        <div class="w-96 h-96 mx-auto lg:mx-0 relative hover-scale">
+                            <div class="absolute inset-0 bg-gradient-to-br from-brand-100 to-brand-200 rounded-full transform rotate-3 smooth-transition"></div>
+                            <Image
+                                    src="/assets/images/183728692.jpg"
+                                    alt="Professional profile photo of Sofia"
+                                    width={384}
+                                    height={384}
+                                    class="relative w-full h-full rounded-full object-cover shadow-2xl border-4 border-white"
+                                    format="webp"
+                                    quality={90}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section id="blog" class="py-20 projects-section" aria-labelledby="blog-title" role="region">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 id="blog-title" class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 transition-all duration-500 ease-in-out" data-i18n-key="home.featured.heading">
-          {t.home.featured.heading}
-        </h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-500 ease-in-out" data-i18n-key="home.featured.subtitle">
-          {t.home.featured.subtitle}
-        </p>
-      </div>
-      
-      <!-- Grid layout matching Real Life Projects style - 4 columns desktop, 2 mobile -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" role="list">
-        {latestPosts.map((post, index) => (
-          <div class={`project-stagger project-stagger-${(index % 8) + 1}`}>
-            <BlogCard post={post} currentLocale={currentLocale} />
-          </div>
-        ))}
-      </div>
-      
-      <div class="mt-12 text-center">
-        <a href={`/${currentLocale}/blog/`} class="inline-flex items-center rounded-lg bg-gray-100 px-6 py-3 text-gray-700 hover:bg-gray-200 font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" data-i18n-key="home.featured.viewAll">
-          {t.home.featured.viewAll}
-          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </section>
+        <section id="blog" class="py-20 projects-section" aria-labelledby="blog-title" role="region">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 id="blog-title"
+                        class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 transition-all duration-500 ease-in-out"
+                        data-i18n-key="home.featured.heading">
+                      {t.home.featured.heading}
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-500 ease-in-out"
+                       data-i18n-key="home.featured.subtitle">
+                      {t.home.featured.subtitle}
+                    </p>
+                </div>
 
-    <section id="certifications" class="py-20" aria-labelledby="certifications-title" role="region">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <!-- Left side - Text content -->
-        <div class="space-y-6">
-          <div class="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-sm font-medium mb-4">
-            {t.certifications.officialTag}
-          </div>
-          <h2 id="certifications-title" class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 transition-all duration-500 ease-in-out" data-i18n-key="certifications.heading">
-            {t.certifications.heading}
-          </h2>
-          <p class="text-lg text-gray-600 leading-relaxed transition-all duration-500 ease-in-out" data-i18n-key="certifications.subtitle">
-            {t.certifications.subtitle}
-          </p>
-        </div>
-        
-      <!-- Certification badges grid - 3 columns desktop, 2 mobile -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6 justify-items-center" role="list">
-        {certifications.map((cert: any, index: number) => (
-          <div class="relative group" role="listitem">
-            <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer" class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-2xl" aria-label={`${t.certifications.viewCredential}: ${cert.name}`}>
-              <span class="sr-only">{t.certifications.viewCredential}: {cert.name}</span>
-              <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-visible transition-all duration-500 hover:scale-110 hover:rotate-2 group-hover:z-10 relative certification-container" style={`animation-delay: ${index * 0.1}s`}>
-                <Image 
-                  src={cert.imageUrl} 
-                  alt={cert.name} 
-                  width={144}
-                  height={144}
-                  loading="lazy" 
-                  decoding="async" 
-                  class="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
-                  format="webp"
-                  quality={85}
-                />
-              </div>
-            </a>
-          </div>
-        ))}
-        </div>
-      </div>
+                <!-- Grid layout matching Real Life Projects style - 3 columns desktop, 2 mobile -->
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+                  {latestPosts.map((post, index) => (
+                          <div class={`project-stagger project-stagger-${(index % 8) + 1}`}>
+                              <BlogCard post={post} currentLocale={currentLocale}/>
+                          </div>
+                  ))}
+                </div>
 
-      <script type="application/ld+json" set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "itemListElement": certifications.map((cert: any) => ({
-          "@type": "EducationalOccupationalCredential",
-          "name": cert.name,
-          "url": cert.credentialUrl,
-          "issuer": {"@type": "Organization", "name": cert.issuer},
-          "datePublished": cert.issuedOn
-        }))
-      })}></script>
-    </div>
-  </section>
+                <div class="mt-12 text-center">
+                    <a href={`/${currentLocale}/blog/`}
+                       class="inline-flex items-center rounded-lg bg-gray-100 px-6 py-3 text-gray-700 hover:bg-gray-200 font-semibold shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                       data-i18n-key="home.featured.viewAll">
+                      {t.home.featured.viewAll}
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <section id="experience" class="py-20" aria-labelledby="experience-title" role="region">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 id="experience-title" class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-500 ease-in-out" data-i18n-key="experience.heading">
-          {t.experience.heading}
-        </h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-500 ease-in-out" data-i18n-key="experience.subtitle">
-          {t.experience.subtitle}
-        </p>
-      </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center group hover-lift hover-glow stagger-animation stagger-1">
-          <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Python & AWS</h3>
-          <p class="text-gray-600 mb-4">
-            {currentLocale === 'en' 
-              ? 'Serverless architectures, data pipelines, and cloud-native applications.'
-              : 'Arquitecturas serverless, pipelines de datos y aplicaciones nativas de la nube.'
-            }
-          </p>
-          <div class="flex flex-wrap justify-center gap-2">
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Python</span>
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">AWS Lambda</span>
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">API Gateway</span>
-          </div>
-        </div>
-        
-          <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center group hover-lift hover-glow stagger-animation stagger-2">
-          <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">Data Engineering</h3>
-          <p class="text-gray-600 mb-4">
-            {currentLocale === 'en' 
-              ? 'ETL processes, data warehousing, and real-time analytics solutions.'
-              : 'Procesos ETL, data warehousing y soluciones de análisis en tiempo real.'
-            }
-          </p>
-          <div class="flex flex-wrap justify-center gap-2">
-            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Apache Airflow</span>
-            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">DynamoDB</span>
-            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">S3</span>
-          </div>
-        </div>
-        
-          <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center group hover-lift hover-glow stagger-animation stagger-3">
-          <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900 mb-2">DevOps & CI/CD</h3>
-          <p class="text-gray-600 mb-4">
-            {currentLocale === 'en' 
-              ? 'Automated deployments, infrastructure as code, and monitoring solutions.'
-              : 'Despliegues automatizados, infraestructura como código y soluciones de monitoreo.'
-            }
-          </p>
-          <div class="flex flex-wrap justify-center gap-2">
-            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Docker</span>
-            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">GitHub Actions</span>
-            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">CloudFormation</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <section id="certifications" class="py-20" aria-labelledby="certifications-title" role="region">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- Left side - Text content -->
+                    <div class="space-y-6">
+                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-sm font-medium mb-4">
+                          {t.certifications.officialTag}
+                        </div>
+                        <h2 id="certifications-title"
+                            class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 transition-all duration-500 ease-in-out"
+                            data-i18n-key="certifications.heading">
+                          {t.certifications.heading}
+                        </h2>
+                        <p class="text-lg text-gray-600 leading-relaxed transition-all duration-500 ease-in-out"
+                           data-i18n-key="certifications.subtitle">
+                          {t.certifications.subtitle}
+                        </p>
+                    </div>
+
+                    <!-- Certification badges grid - 3 columns desktop, 2 mobile -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 justify-items-center" role="list">
+                      {certifications.map((cert: any, index: number) => (
+                              <div class="relative group" role="listitem">
+                                  <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer"
+                                     class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-2xl"
+                                     aria-label={`${t.certifications.viewCredential}: ${cert.name}`}>
+                                      <span class="sr-only">{t.certifications.viewCredential}: {cert.name}</span>
+                                      <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-visible transition-all duration-500 hover:scale-110 hover:rotate-2 group-hover:z-10 relative certification-container"
+                                           style={`animation-delay: ${index * 0.1}s`}>
+                                          <Image
+                                                  src={cert.imageUrl}
+                                                  alt={cert.name}
+                                                  width={144}
+                                                  height={144}
+                                                  loading="lazy"
+                                                  decoding="async"
+                                                  class="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
+                                                  format="webp"
+                                                  quality={85}
+                                          />
+                                      </div>
+                                  </a>
+                              </div>
+                      ))}
+                    </div>
+                </div>
+
+                <script type="application/ld+json" set:html={JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "ItemList",
+                  "itemListElement": certifications.map((cert: any) => ({
+                    "@type": "EducationalOccupationalCredential",
+                    "name": cert.name,
+                    "url": cert.credentialUrl,
+                    "issuer": {"@type": "Organization", "name": cert.issuer},
+                    "datePublished": cert.issuedOn
+                  }))
+                })}></script>
+            </div>
+        </section>
+
+        <section id="experience" class="py-20" aria-labelledby="experience-title" role="region">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 id="experience-title"
+                        class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-500 ease-in-out"
+                        data-i18n-key="experience.heading">
+                      {t.experience.heading}
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-500 ease-in-out"
+                       data-i18n-key="experience.subtitle">
+                      {t.experience.subtitle}
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center group hover-lift hover-glow stagger-animation stagger-1">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">{t.experience.card1.title}</h3>
+                        <p class="text-gray-600 mb-4">
+                          {t.experience.card1.description}
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-2">
+                          {t.experience.card1.tags.map((tag: string) => (
+                                  <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">{tag}</span>
+                          ))}
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center group hover-lift hover-glow stagger-animation stagger-2">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">{t.experience.card2.title}</h3>
+                        <p class="text-gray-600 mb-4">
+                          {t.experience.card2.description}
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-2">
+                          {t.experience.card2.tags.map((tag: string) => (
+                                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">{tag}</span>
+                          ))}
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center group hover-lift hover-glow stagger-animation stagger-3">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">{t.experience.card3.title}</h3>
+                        <p class="text-gray-600 mb-4">
+                          {t.experience.card3.description}
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-2">
+                          {t.experience.card3.tags.map((tag: string) => (
+                                  <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">{tag}</span>
+                          ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
 </Layout>

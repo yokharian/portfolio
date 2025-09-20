@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://sofiaescobedo.dev/sitemap.xml
+Sitemap: https://sofia.escobedo.mx/sitemap.xml
 
 # Disallow admin or private areas (if any)
 # Disallow: /admin/
