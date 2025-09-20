@@ -1,21 +1,60 @@
 {
   "title": "Sofia Escobedo — Portfolio",
-  "description": "Portfolio of Sofia Escobedo: Python and AWS solutions architect.",
+  "description": "Python developer personal portfolio.",
   "defaultLanguage": "en",
   "url": "https://sofia.escobedo.mx",
   "author": "Sofia Escobedo",
   "email": "sofia@escobedo.mx",
-  "githubUrl": "https://github.com/sofiaescobedo",
-  "linkedinUrl": "https://linkedin.com/in/sofiaescobedo",
-  "calendlyUrl": "https://calendly.com/sofiaescobedo",
+  "githubUrl": "https://github.com/yokharian",
+  "linkedinUrl": "https://linkedin.com/in/yokharian",
+  "calendlyUrl": "https://calendly.com/yokharian",
   "currentYear": 2025,
   "socialUrls": {
-    "github": "https://github.com/sofia-escobedo",
-    "linkedin": "https://linkedin.com/in/sofia-escobedo"
+    "calendlyUrl": "https://calendly.com/yokharian",
+    "linkedin": "https://linkedin.com/in/yokharian",
+    "github": "https://github.com/yokharian"
   },
   "seo": {
     "defaultImage": "/assets/images/183728692.jpg",
     "themeColor": "#2563eb",
     "msTileColor": "#0ea5e9"
+  },
+  "displayBlogPages": {
+    "apache-airflow-architecture-design": {
+      "main-page": true,
+      "blog-page": true
+    },
+    "big-data-etls": {
+      "main-page": false,
+      "blog-page": true
+    },
+    "black-belt-architecture": {
+      "main-page": false,
+      "blog-page": false
+    },
+    "directus-backend": {
+      "main-page": false,
+      "blog-page": true
+    },
+    "google-analytics-data-extractor": {
+      "main-page": true,
+      "blog-page": true
+    },
+    "invoice-extraction-automation": {
+      "main-page": true,
+      "blog-page": true
+    },
+    "iot-electrical-bi-and-kpis-startup": {
+      "main-page": true,
+      "blog-page": true
+    },
+    "mfa-for-git-repositories": {
+      "main-page": true,
+      "blog-page": true
+    },
+    "primeai-webhook-jwt-backend": {
+      "main-page": false,
+      "blog-page": true
+    }
   }
 }

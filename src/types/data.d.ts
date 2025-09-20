@@ -20,6 +20,12 @@ export interface SiteData {
     themeColor: string;
     msTileColor: string;
   };
+  displayBlogPages: {
+    [slug: string]: {
+      "main-page": boolean;
+      "blog-page": boolean;
+    };
+  };
 }
 
 export interface I18nData {

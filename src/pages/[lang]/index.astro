@@ -29,7 +29,13 @@ const latestPosts = allPosts
     // Check if filename ends with current locale
     const filename = post.id;
     const match = filename.match(/^(.+)\.(en|es)\.md$/);
-    return match && match[2] === currentLocale;
+    if (!match || match[2] !== currentLocale) return false;
+    
+    // Extract the base slug without language suffix
+    const baseSlug = match[1];
+    
+    // Check if this post should be displayed on main page according to site.json
+    return siteData.displayBlogPages[baseSlug]?.["main-page"] === true;
   })
   .map(post => {
     // Extract the base slug without language suffix
@@ -47,7 +53,6 @@ const latestPosts = allPosts
     const dateB = b.data.pubDate || b.data.startDate || b.slug;
     return new Date(dateB).getTime() - new Date(dateA).getTime();
   })
-  .slice(0, 6); // Show 6 posts instead of 5
 
 // Get certifications for current locale
 const certifications:Certification[] = certificationsData.names? Object.values(certificationsData.names) : [];
@@ -157,7 +162,7 @@ const certifications:Certification[] = certificationsData.names? Object.values(c
       
       <!-- Grid layout matching Real Life Projects style - 4 columns desktop, 2 mobile -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" role="list">
-        {latestPosts.slice(0, 8).map((post, index) => (
+        {latestPosts.map((post, index) => (
           <div class={`project-stagger project-stagger-${(index % 8) + 1}`}>
             <BlogCard post={post} currentLocale={currentLocale} />
           </div>
