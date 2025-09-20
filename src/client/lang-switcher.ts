@@ -25,43 +25,6 @@ class LangSwitcher {
     return this.supportedLanguages.includes(lang as any) ? lang! : 'en';
   }
 
-  private updateURLParam(lang: string): void {
-    try {
-      const url = new URL(window.location.href);
-      url.searchParams.set('lang', lang);
-      // Preserve hash
-      const newUrl = url.pathname + '?' + url.searchParams.toString() + (window.location.hash || '');
-      window.history.replaceState({}, '', newUrl);
-    } catch (e) {
-      // Ignore errors
-    }
-  }
-
-  private updateSwitcherUI(lang: string): void {
-    try {
-      const links = document.querySelectorAll('[data-lang-link]');
-      if (!links) return;
-
-      for (let i = 0; i < links.length; i++) {
-        const element = links[i] as HTMLElement;
-        const target = element.getAttribute('data-lang-link');
-        const isActive = target === lang;
-
-        if (isActive) {
-          element.setAttribute('aria-current', 'true');
-          element.setAttribute('aria-pressed', 'true');
-          element.classList.add('text-sky-700', 'font-semibold');
-        } else {
-          element.removeAttribute('aria-current');
-          element.setAttribute('aria-pressed', 'false');
-          element.classList.remove('text-sky-700', 'font-semibold');
-        }
-      }
-    } catch (e) {
-      // Ignore errors
-    }
-  }
-
   private onClick = (e: Event): void => {
     const element = e.currentTarget as HTMLElement;
     const target = element?.getAttribute('data-lang-link');
@@ -97,6 +60,65 @@ class LangSwitcher {
       (e.currentTarget as HTMLElement)?.click();
     }
   };
+
+  private updateURLParam(lang: string): void {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      // Preserve hash
+      const newUrl = url.pathname + '?' + url.searchParams.toString() + (window.location.hash || '');
+      window.history.replaceState({}, '', newUrl);
+    } catch (e) {
+      // Ignore errors
+    }
+  }
+
+  private updateSwitcherUI(lang: string): void {
+    try {
+      const links = document.querySelectorAll('[data-lang-link]');
+      if (!links) return;
+
+      for (let i = 0; i < links.length; i++) {
+        const element = links[i] as HTMLElement;
+        const target = element.getAttribute('data-lang-link');
+        const isActive = target === lang;
+
+        if (isActive) {
+          element.setAttribute('aria-current', 'true');
+          element.setAttribute('aria-pressed', 'true');
+          element.classList.add('text-sky-700', 'font-semibold');
+        } else {
+          element.removeAttribute('aria-current');
+          element.setAttribute('aria-pressed', 'false');
+          element.classList.remove('text-sky-700', 'font-semibold');
+        }
+      }
+      // Animate text elements with data-i18n-key
+      this.animateTextElements();
+    } catch (e) {
+      // Ignore errors
+    }
+  }
+
+  private animateTextElements(): void {
+    try {
+      const elements = document.querySelectorAll('[data-i18n-key]');
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i] as HTMLElement;
+        // Add fade out effect
+        element.style.opacity = '0.3';
+        element.style.transform = 'translateY(10px)';
+
+        // After a short delay, fade back in
+        setTimeout(() => {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, 150);
+      }
+    } catch (e) {
+      // Ignore errors
+    }
+  }
 
   private init(): void {
     const container = document.querySelector('[data-lang-switcher]') as HTMLElement;
