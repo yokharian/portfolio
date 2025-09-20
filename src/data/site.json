@@ -8,5 +8,14 @@
   "githubUrl": "https://github.com/sofiaescobedo",
   "linkedinUrl": "https://linkedin.com/in/sofiaescobedo",
   "calendlyUrl": "https://calendly.com/sofiaescobedo",
-  "currentYear": 2025
+  "currentYear": 2025,
+  "socialUrls": {
+    "github": "https://github.com/sofia-escobedo",
+    "linkedin": "https://linkedin.com/in/sofia-escobedo"
+  },
+  "seo": {
+    "defaultImage": "/assets/images/183728692.jpg",
+    "themeColor": "#2563eb",
+    "msTileColor": "#0ea5e9"
+  }
 }
