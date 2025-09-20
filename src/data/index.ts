@@ -1,5 +1,5 @@
 // Data loading utilities
-import type { SiteData, I18nData, CertificationsData } from './types';
+import type { SiteData, I18nData, CertificationsData } from '../types/data';
 
 // Import JSON data
 import siteData from './site.json';
@@ -16,13 +16,13 @@ export function getSiteData(): SiteData {
   return site;
 }
 
-export function getI18nData(language: string = 'en'): any {
+export function getI18nData(language: string = 'en'): Object {
   return i18n[language] || i18n.en || {};
 }
 
-export function getCertificationsData(language: string = 'en'): any {
+export function getCertificationsData(language: string = 'en'): Object {
   return certifications[language] || certifications.en || {};
 }
 
 // Re-export types
-export type { SiteData, I18nData, CertificationsData, Certification } from './types';
+export type { SiteData, I18nData, CertificationsData, Certification } from '../types/types';

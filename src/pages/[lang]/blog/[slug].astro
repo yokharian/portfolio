@@ -2,41 +2,41 @@
 import Layout from '../../../layouts/Layout.astro';
 import JsonLD from '../../../components/JsonLD.astro';
 import { getCollection } from 'astro:content';
-import i18nData from '../../../data/i18n.json';
-import siteData from '../../../data/site.json';
+import {getI18nData, getSiteData} from "../../../data";
+
+const siteData = getSiteData();
 
 // Generate static paths for all blog posts
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
-  
-  const paths = allPosts
-    .filter(post => post.data.published !== false)
-    .map(post => {
-      // Extract language and slug from the filename
-      // Format: nombre.en.md -> lang: en, slug: nombre
-      const filename = post.id;
-      const match = filename.match(/^(.+)\.(en|es)\.md$/);
-      
-      if (!match) {
-        console.warn(`Unexpected filename format: ${filename}`);
-        return null;
-      }
-      
-      const [, slug, lang] = match;
-      
-      return {
-        params: { 
-          lang, 
-          slug 
-        },
-        props: { 
-          post 
-        }
-      };
-    })
-    .filter(Boolean); // Remove null entries
-  
-  return paths;
+
+  // Remove null entries
+    return allPosts
+      .filter(post => post.data.published !== false)
+      .map(post => {
+          // Extract language and slug from the filename
+          // Format: nombre.en.md -> lang: en, slug: nombre
+          const filename = post.id;
+          const match = filename.match(/^(.+)\.(en|es)\.md$/);
+
+          if (!match) {
+              console.warn(`Unexpected filename format: ${filename}`);
+              return null;
+          }
+
+          const [, slug, lang] = match;
+
+          return {
+              params: {
+                  lang,
+                  slug
+              },
+              props: {
+                  post
+              }
+          };
+      })
+      .filter(Boolean);
 }
 
 // Get the post from props
@@ -48,7 +48,7 @@ const { Content } = await post.render();
 
 // Get current locale
 const currentLocale = lang || 'en';
-const t = i18nData[currentLocale as keyof typeof i18nData];
+const t = getI18nData(currentLocale);
 
 // Format date helper
 function formatDate(date: string | Date): string {

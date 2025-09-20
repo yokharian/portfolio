@@ -1,8 +1,10 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import i18nData from '../../../data/i18n.json';
-import siteData from '../../../data/site.json';
+import {getI18nData, getSiteData} from "../../../data";
+
+const siteData = getSiteData();
+
 
 // Generate static paths for blog index pages
 export async function getStaticPaths() {
@@ -14,7 +16,7 @@ export async function getStaticPaths() {
 
 // Get current locale
 const currentLocale = Astro.currentLocale || 'en';
-const t = i18nData[currentLocale as keyof typeof i18nData];
+const t = getI18nData(currentLocale);
 
 // Get all blog posts
 const allPosts = await getCollection('blog');

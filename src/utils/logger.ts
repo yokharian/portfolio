@@ -19,21 +19,7 @@ export interface LoggerOptions {
 }
 
 // Custom error classes
-export class LoggerError extends Error {
-  constructor(
-    message: string,
-    public readonly context?: Record<string, unknown>
-  ) {
-    super(message);
-    this.name = 'LoggerError';
-  }
-}
-
 // Type guards
-export function isValidLogLevel(value: unknown): value is LogLevel {
-  return typeof value === 'string' && ['debug', 'info', 'warn', 'error'].includes(value);
-}
-
 // Log levels with numeric values for comparison
 const LEVELS: Record<LogLevel, number> = {
   debug: 0,
@@ -105,25 +91,7 @@ export class Logger {
       log('error', ...this.formatMessage('error', ...args));
     }
   }
-
-  setLevel(level: LogLevel): void {
-    if (!isValidLogLevel(level)) {
-      throw new LoggerError(`Invalid log level: ${level}`);
-    }
-    this.level = level;
-  }
-
-  setPrefix(prefix: string): void {
-    this.prefix = prefix;
-  }
-
-  setTimestamp(enabled: boolean): void {
-    this.timestamp = enabled;
-  }
 }
 
 // Default logger instance (consolidated from JS implementation)
 export const logger = new Logger();
-
-// Re-export constants and types
-export const LOG_LEVELS = Object.keys(LEVELS) as LogLevel[];

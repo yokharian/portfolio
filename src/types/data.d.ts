@@ -1,54 +1,40 @@
-// TypeScript definitions for JSON data files
+// TypeScript types for data files
 
-export interface Certification {
-  id: string;
-  nameKey: string;
-  issuerKey: string;
-  issueDate: string;
-  credentialUrl: string;
-  badgeImage: string;
-  altKey: string;
-}
-
-export interface I18nLanguage {
-  name: string;
-  nativeName: string;
+export interface SiteData {
+  title: string;
+  description: string;
+  defaultLanguage: string;
+  url: string;
+  author: string;
+  email: string;
+  githubUrl: string;
+  linkedinUrl: string;
+  calendlyUrl: string;
+  currentYear: number;
 }
 
 export interface I18nData {
-  [languageCode: string]: {
-    hero: {
-      title: string;
-      subtitle: string;
-      cta: string;
-    };
-    home: {
-      featured: {
-        heading: string;
-        viewAll: string;
-      };
-    };
-    certifications: {
-      heading: string;
-      issuedOn: string;
-      issuerLabel: string;
-      viewCredential: string;
-      names: {
-        [key: string]: {
-          name: string;
-          issuer: string;
-          alt: string;
-        };
-      };
-    };
-    header: {
-      cta: string;
-    };
+  [language: string]: {
+    [key: string]: any;
   };
 }
 
-// Type for the certifications array
-export type CertificationsData = Certification[];
+export interface Certification {
+  name: string;
+  issuer: string;
+  issuedOn: string;
+  credentialUrl: string;
+  imageUrl?: string;
+}
 
-// Type for the i18n data object
-export type I18nDataObject = I18nData;
+export interface CertificationsData {
+  [language: string]: {
+    heading: string;
+    issuedOn: string;
+    issuerLabel: string;
+    viewCredential: string;
+    names: {
+      [key: string]: Certification;
+    };
+  };
+}

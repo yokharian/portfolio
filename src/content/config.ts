@@ -24,7 +24,8 @@ const blog = defineCollection({
   })
 });
 
-// Export collections
+// Export collections (required by astro)
+// noinspection JSUnusedGlobalSymbols
 export const collections = {
   blog
 };

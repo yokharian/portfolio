@@ -1,8 +1,11 @@
 {
-  "rumApplicationId": "your-rum-application-id",
-  "rumGuestRoleArn": "arn:aws:iam::your-account:role/your-rum-guest-role",
-  "rumIdentityPoolId": "your-identity-pool-id",
+  "rumApplicationId": "395df225-86d8-4a53-b962-dfcdc2dd9280",
+  "rumApplicationVersion": "1.0.0",
   "rumRegion": "us-east-1",
-  "rumEndpoint": "https://dataplane.rum.us-east-1.amazonaws.com",
-  "rumApplicationVersion": "1.0.0"
+  "sessionSampleRate": 1 ,
+  "endpoint": "https://dataplane.rum.us-east-1.amazonaws.com" ,
+  "telemetries": ["performance","errors","http"] ,
+  "allowCookies": true ,
+  "enableXRay": false ,
+  "signing": true
 }

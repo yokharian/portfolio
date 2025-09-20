@@ -4,9 +4,9 @@ import BlogCard from '../../components/BlogCard.astro';
 import JsonLD from '../../components/JsonLD.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import i18nData from '../../data/i18n.json';
-import siteData from '../../data/site.json';
-import certificationsData from '../../data/certifications.json';
+import {getI18nData, getCertificationsData, getSiteData, type Certification} from '../../data';
+
+const siteData = getSiteData();
 
 // Generate static paths for homepage
 export async function getStaticPaths() {
@@ -18,7 +18,9 @@ export async function getStaticPaths() {
 
 // Get current locale
 const currentLocale = Astro.currentLocale || 'en';
-const t = i18nData[currentLocale];
+const t = getI18nData(currentLocale);
+const certificationsData = getCertificationsData(currentLocale)
+
 
 // Get blog posts for latest posts section
 const allPosts = await getCollection('blog');
@@ -48,19 +50,7 @@ const latestPosts = allPosts
   .slice(0, 6); // Show 6 posts instead of 5
 
 // Get certifications for current locale
-const certifications = certificationsData[currentLocale]?.names ? Object.values(certificationsData[currentLocale].names) : [];
-
-// No longer needed - using blog posts instead
-
-// Format date helper
-function formatDate(date: string | Date): string {
-  const d = new Date(date);
-  return d.toLocaleDateString(currentLocale, { 
-    year: 'numeric', 
-    month: '2-digit', 
-    day: '2-digit' 
-  });
-}
+const certifications:Certification[] = certificationsData.names? Object.values(certificationsData.names) : [];
 ---
 
 <Layout 

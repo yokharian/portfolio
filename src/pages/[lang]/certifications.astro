@@ -1,9 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import JsonLD from '../../components/JsonLD.astro';
-import i18nData from '../../data/i18n.json';
-import siteData from '../../data/site.json';
-import certificationsData from '../../data/certifications.json';
+import {getI18nData, getCertificationsData, getSiteData, type Certification} from '../../data';
+
+const siteData = getSiteData();
 
 // Generate static paths for certifications page
 export async function getStaticPaths() {
@@ -15,10 +15,11 @@ export async function getStaticPaths() {
 
 // Get current locale
 const currentLocale = Astro.currentLocale || 'en';
-const t = i18nData[currentLocale];
+const t = getI18nData(currentLocale);
+const certificationsData = getCertificationsData(currentLocale)
 
 // Get certifications for current locale
-const certifications = certificationsData[currentLocale]?.names ? Object.values(certificationsData[currentLocale].names) : [];
+const certifications:Certification[] = certificationsData.names? Object.values(certificationsData.names) : [];
 
 // Format date helper
 function formatDate(date: string | Date): string {

@@ -12,11 +12,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import {
-  TranslationDictionary,
-  I18nConfig,
-  InterpolationVars,
-  I18nOptions,
-  LanguageCode,
+  type TranslationDictionary,
+  type InterpolationVars,
+  type I18nOptions,
+  type LanguageCode,
   I18nError,
   TranslationNotFoundError,
   InvalidLanguageError
@@ -53,6 +52,7 @@ function loadTranslations(): TranslationDictionary {
   
   // Return cached translations if still valid
   if (translationCache && (now - cacheTimestamp) < CACHE_TTL) {
+    // noinspection JSUnusedGlobalSymbols
     logger.debug({ cacheAge: now - cacheTimestamp }, 'Using cached translations');
     return translationCache;
   }
@@ -77,7 +77,8 @@ function loadTranslations(): TranslationDictionary {
     // Update cache
     translationCache = translations;
     cacheTimestamp = now;
-    
+
+    // noinspection JSUnusedGlobalSymbols
     logger.info({ path: translationsPath, languages: Object.keys(translations) }, 'Translations loaded successfully');
     return translations;
   } catch (error) {
@@ -119,18 +120,6 @@ function get<T>(
 function normalizeLanguage(lang: LanguageCode): LanguageCode {
   const supported: LanguageCode[] = ['en', 'es'];
   return supported.includes(lang) ? lang : 'en';
-}
-
-// Enhanced interpolation with type safety
-function interpolateTemplate(template: string, vars: InterpolationVars): string {
-  if (!template || typeof template !== 'string') {
-    return '';
-  }
-  
-  return template.replace(/\{\{\s*(\w+)\s*\}\}/g, (match, varName) => {
-    const value = vars[varName];
-    return value !== undefined ? String(value) : match;
-  });
 }
 
 // Advanced translation function with comprehensive error handling and logging
@@ -179,7 +168,8 @@ export function t(
       }
       
       const fallback = fallbackToKey ? key : '';
-      logger.info({ key, lang: normalizedLang, fallback }, 'Using fallback translation');
+        // noinspection JSUnusedGlobalSymbols
+        logger.info({ key, lang: normalizedLang, fallback }, 'Using fallback translation');
       return fallback;
     }
     
@@ -199,75 +189,3 @@ export function t(
     throw new I18nError(`Translation failed: ${errorMessage}`, key, lang, { vars, options });
   }
 }
-
-// Language detection utilities
-export function getLanguageFromUrl(url: string, supportedLanguages: LanguageCode[] = ['en', 'es']): LanguageCode {
-  if (!url || typeof url !== 'string') {
-    return 'en';
-  }
-  
-  try {
-    const pathSegments = url.split('/').filter(Boolean);
-    const potentialLang = pathSegments[0] as LanguageCode;
-    
-    return supportedLanguages.includes(potentialLang) ? potentialLang : 'en';
-  } catch (error) {
-    console.warn(`[I18n] Error parsing language from URL: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    return 'en';
-  }
-}
-
-export function getLanguageFromPathname(pathname: string, supportedLanguages: LanguageCode[] = ['en', 'es']): LanguageCode {
-  if (!pathname || typeof pathname !== 'string') {
-    return 'en';
-  }
-  
-  try {
-    const match = pathname.match(/^\/(en|es)(\/|$)/i);
-    const potentialLang = match?.[1] ? match[1].toLowerCase() as LanguageCode : null;
-    
-    return potentialLang && supportedLanguages.includes(potentialLang) ? potentialLang : 'en';
-  } catch (error) {
-    console.warn(`[I18n] Error parsing language from pathname: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    return 'en';
-  }
-}
-
-// Translation validation utilities
-export function validateTranslationKey(key: string, lang: LanguageCode = 'en'): boolean {
-  try {
-    const translation = t(key, lang, {}, { fallbackToKey: false, warnOnMissing: false });
-    return translation !== '';
-  } catch {
-    return false;
-  }
-}
-
-export function getAvailableLanguages(): LanguageCode[] {
-  return ['en', 'es'];
-}
-
-// Cache management
-export function clearTranslationCache(): void {
-  translationCache = null;
-  cacheTimestamp = 0;
-}
-
-export function isTranslationCacheValid(): boolean {
-  return translationCache !== null && (Date.now() - cacheTimestamp) < CACHE_TTL;
-}
-
-// Re-export types and error classes
-export type { 
-  TranslationDictionary, 
-  I18nConfig, 
-  InterpolationVars, 
-  I18nOptions, 
-  LanguageCode 
-} from '../types/i18n';
-
-export { 
-  I18nError, 
-  TranslationNotFoundError, 
-  InvalidLanguageError 
-} from '../types/i18n';
