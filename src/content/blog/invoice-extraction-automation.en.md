@@ -1,6 +1,6 @@
 ---
 title: "Invoice extractor"
-description: "Automated critical business process significantly reducing workload of the finance team"
+description: "Significantly reduced workload of the finance team"
 employer: "FairPlay"
 thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d92242c06869415245b864_67ce679edc8eb91cc34e3929_invoice-extraction.gif"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf293d19d256af5e0dccd_67cbd68c8ae8762187bf946d_photo-1551288049-bebda4e38f71.jpeg"

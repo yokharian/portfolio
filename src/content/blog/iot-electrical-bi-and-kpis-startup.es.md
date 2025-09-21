@@ -1,6 +1,6 @@
 ---
-title: "Data processing pipeline"
-description: "Cloud and backend infrastructure to measure the electrical usage and cost of industrial factories through IoT electrical sensors"
+title: "Flujo de procesamiento de datos"
+description: "Infraestructura Cloud para medir el consumo eléctrico y el costo de fábricas industriales mediante sensores eléctricos"
 employer: "Next-E"
 thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d92240da86c17b3a696589_67ce272c8f2c435d49843740_nextethumbnail3.gif"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf29308ea1ae1f6dc483e_67cb925d445935b57d5f7800_photo-1461088945293-0c17689e48ac.jpeg"

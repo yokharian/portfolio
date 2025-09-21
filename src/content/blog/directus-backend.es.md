@@ -43,3 +43,5 @@ Una vez lista, CodeBuild recupera la imagen de ECR nuevamente y la despliega en 
 Además, la base de datos está alojada en **Amazon RDS** dentro de una **VPC**, asegurando que todo esté seguro. Gracias a esta arquitectura, la canalización se mantiene **automatizada** y **escalable**, reduciendo el trabajo manual y permitiendo lanzamientos rápidos con cada envío de código.
 
 Consulta el diagrama de infraestructura de AWS 👇
+
+![diagrama](/assets/images/276273238a789dfcec12cf0c6e9ca71b8751857a.png)

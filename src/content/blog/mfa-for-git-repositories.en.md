@@ -32,4 +32,4 @@ With **Boto3**, the Python library for interacting with AWS services, I used it 
 
 Finally, the system **generates a QR code** 📱 that can be scanned with a phone. This QR code contains the information needed to access the repositories. This solution benefited more than 50 coworkers, regardless of their operating system.
 
-‍
+![diagram](/assets/images/c422657f7f886b740f482e3b2988c71aab3466c2.png)‍

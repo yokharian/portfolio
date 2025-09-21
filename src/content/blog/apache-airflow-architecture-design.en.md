@@ -1,6 +1,6 @@
 ---
-title: "PaaS to IaaS Redesign"
-description: "Significantly reduced infrastructure expenses in AWS MWAA, optimizing long-term investments purchasing EC2 and RDS servers"
+title: "Scalable ETL pipelines"
+description: "Significantly reduced infrastructure expenses in AWS"
 employer: "Next-e"
 thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d92dc6621095a7279c95d7_67d91797085b62e84594c222_portfolio%2520thumbnails-4.webp"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbe1da6e6df1b12e3845c7_67cbdb1089836af946d606fd_photo-1515879218367-8466d910aaa4.jpeg"

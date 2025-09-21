@@ -1,6 +1,6 @@
 ---
-title: "JWT REST API Backend"
-description: "Developed a REST API backend to reliably process external webhook requests, maintaining high-quality standards including GitOps, Infrastructure as Code, and Unit & Integration testing"
+title: "Backend with JWT authorization"
+description: "Maintaining high-quality standards, I developed a REST API that integrates with an authorization system & webhook requests"
 employer: "Lighthouse Technologies"
 thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d92242543f77f7fa5bdcaf_67ce4288b0a55050e6651d96_jwt%2520primeai2.gif"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf2938dcac0c620425d98_67cbd4e5d19d256af5d102f7_photo-1515879218367-8466d910aaa4.jpeg"
@@ -51,3 +51,4 @@ Any changes made to user data are instantly reflected in our database.
 ‍
 
 ‍
+![diagram](/assets/images/33afa5c4bf8fc9d4c50343d099d5c0953fe5aaec.png)

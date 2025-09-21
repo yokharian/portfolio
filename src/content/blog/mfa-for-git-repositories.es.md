@@ -1,6 +1,6 @@
 ---
-title: "MFA security for GIT repositories"
-description: "Enhanced security by implementing Multi-Factor Authentication for over 50 team members"
+title: "Seguridad MFA para repositorios GIT"
+description: "Mejoré la seguridad de los repositorios al implementar doble factor para más de 50 compañeros de trabajo"
 employer: "XalDigital"
 thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d9223fc72e0e95f5afa6c4_67ce16d4ec624e2b73332f3f_mfa%2520for%2520git.gif"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbe41e022e968fe92ed459_67cbdfe83b32df846e2a44a4_photo-1732320935426-395f3c1d38be.jpeg"
@@ -33,3 +33,4 @@ Con **Boto3**, la biblioteca de Python para interactuar con los servicios de AWS
 Por último, el sistema **genera un código QR** 📱 que puede ser escaneado con un teléfono. Este código QR contiene la información necesaria para acceder a los repositorios. Esta solución benefició a más de 50 compañeros de trabajo, independientemente de su sistema operativo.
 
 ‍
+![diagrama](/assets/images/c422657f7f886b740f482e3b2988c71aab3466c2.png)‍

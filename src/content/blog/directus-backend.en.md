@@ -43,3 +43,5 @@ Once ready, CodeBuild retrieves the image from ECR again and deploys it to an **
 Furthermore, the database is hosted on **Amazon RDS** within a **VPC**, ensuring that everything is secure. Thanks to this architecture, the pipeline remains **automated** and **scalable**, reducing manual work and allowing for quick releases with every code push.
 
 Check out the AWS infrastructure diagram 👇
+
+![diagram](/assets/images/276273238a789dfcec12cf0c6e9ca71b8751857a.png)
