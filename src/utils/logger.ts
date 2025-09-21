@@ -30,9 +30,8 @@ const LEVELS: Record<LogLevel, number> = {
 
 // Enhanced logging function (consolidated from JS implementation)
 function log(level: LogLevel, ...args: unknown[]): void {
-  const ts = new Date().toISOString();
   // eslint-disable-next-line no-console
-  console[level](`[${ts}] [${level.toUpperCase()}]`, ...args);
+  console[level](...args);
 }
 
 // Logger class with enhanced functionality
@@ -70,25 +69,29 @@ export class Logger {
 
   debug(...args: unknown[]): void {
     if (this.shouldLog("debug")) {
-      log("debug", ...this.formatMessage("debug", ...args));
+      const formatted = this.formatMessage("debug", ...args);
+      log("debug", ...formatted);
     }
   }
 
   info(...args: unknown[]): void {
     if (this.shouldLog("info")) {
-      log("info", ...this.formatMessage("info", ...args));
+      const formatted = this.formatMessage("info", ...args);
+      log("info", ...formatted);
     }
   }
 
   warn(...args: unknown[]): void {
     if (this.shouldLog("warn")) {
-      log("warn", ...this.formatMessage("warn", ...args));
+      const formatted = this.formatMessage("warn", ...args);
+      log("warn", ...formatted);
     }
   }
 
   error(...args: unknown[]): void {
     if (this.shouldLog("error")) {
-      log("error", ...this.formatMessage("error", ...args));
+      const formatted = this.formatMessage("error", ...args);
+      log("error", ...formatted);
     }
   }
 }
