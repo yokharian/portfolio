@@ -4,7 +4,7 @@
   "private": true,
   "description": "Personal portfolio site built with Astro and Tailwind CSS.",
   "scripts": {
-    "dev": "npm run transpile:client && astro dev",
+    "dev": "astro dev",
     "start": "astro dev",
     "build": "npm run transpile:client && astro build",
     "preview": "astro preview",

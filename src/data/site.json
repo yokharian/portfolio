@@ -26,7 +26,7 @@
     },
     "big-data-etls": {
       "main-page": false,
-      "blog-page": true
+      "blog-page": false
     },
     "black-belt-architecture": {
       "main-page": false,
@@ -34,7 +34,7 @@
     },
     "directus-backend": {
       "main-page": false,
-      "blog-page": false
+      "blog-page": true
     },
     "google-analytics-data-extractor": {
       "main-page": true,
