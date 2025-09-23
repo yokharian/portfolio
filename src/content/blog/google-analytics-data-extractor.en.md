@@ -2,7 +2,7 @@
 title: "Google Analytics data extractor"
 description: "Automated critical business process significantly reducing workload of the analytics team"
 employer: "FairPlay"
-thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d922418dd077d9840a42db_67ce3c4ee965c5b385d529ac_google_analytics.gif"
+thumbnail: "/assets/images/google-analytics.webp"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf293d19d256af5e0dccd_67cbd68c8ae8762187bf946d_photo-1551288049-bebda4e38f71.jpeg"
 startDate: "Thu Feb 04 2021 05:33:00 GMT+0000 (Coordinated Universal Time)"
 endDate: ""

@@ -2,7 +2,7 @@
 title: "Big Data ETL migrations"
 description: "Executed multiple ETL migration projects from Oracle to AWS Glue, with strong emphasis on detailed requirement collection and comprehensive planning"
 employer: "XalDigital"
-thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d922414a1a67225db976dd_67ce51d93112315f92886c3f_big%2520data%2520etls.gif"
+thumbnail: "/assets/images/etls-bigdata.webp"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbe41e022e968fe92ed459_67cbdfe83b32df846e2a44a4_photo-1732320935426-395f3c1d38be.jpeg"
 startDate: "Fri Nov 01 2024 06:00:00 GMT+0000 (Coordinated Universal Time)"
 endDate: "Fri Nov 01 2024 06:00:00 GMT+0000 (Coordinated Universal Time)"

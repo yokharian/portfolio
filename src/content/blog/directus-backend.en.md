@@ -2,7 +2,7 @@
 title: "Backend CI/CD container orchestation"
 description: "Using ECS that is ❝similar to kubernetes❞ automatically deployed via Jenkins I deployed a container"
 employer: "Lighthouse Technologies"
-thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d922403d2d66358aadb22f_67ce3b6e78e6d8f70b924301_jenkins%2520ecs.gif"
+thumbnail: "/assets/images/jenkins-ecs.webp"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf29408ea1ae1f6dc48f4_67cbd53bc957f1d484626cff_photo-1504253163759-c23fccaebb55.jpeg"
 startDate: "Tue Nov 12 2024 06:00:00 GMT+0000 (Coordinated Universal Time)"
 endDate: "Mon Jul 29 2024 05:00:00 GMT+0000 (Coordinated Universal Time)"

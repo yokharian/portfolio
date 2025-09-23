@@ -2,7 +2,7 @@
 title: "Seguridad MFA para repositorios GIT"
 description: "Mejoré la seguridad de los repositorios al implementar doble factor para más de 50 compañeros de trabajo"
 employer: "XalDigital"
-thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d9223fc72e0e95f5afa6c4_67ce16d4ec624e2b73332f3f_mfa%2520for%2520git.gif"
+thumbnail: "/assets/images/mfa-for-git.webp"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbe41e022e968fe92ed459_67cbdfe83b32df846e2a44a4_photo-1732320935426-395f3c1d38be.jpeg"
 startDate: "Mon Jan 08 2024 06:00:00 GMT+0000 (Coordinated Universal Time)"
 endDate: "Thu Feb 09 2023 06:00:00 GMT+0000 (Coordinated Universal Time)"

@@ -7,7 +7,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     employer: z.string().optional(),
-    thumbnail: z.string().url().optional(),
+    thumbnail: z.string(),
     banner: z.string().url().optional(),
     startDate: z.string().optional(),
     endDate: z.string().optional(),

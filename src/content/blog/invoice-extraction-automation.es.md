@@ -2,7 +2,7 @@
 title: "Extractor de facturas"
 description: "Reduje significativamente la carga de trabajo del equipo de finanzas"
 employer: "FairPlay"
-thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d92242c06869415245b864_67ce679edc8eb91cc34e3929_invoice-extraction.gif"
+thumbnail: "/assets/images/invoice-extraction.webp"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbf293d19d256af5e0dccd_67cbd68c8ae8762187bf946d_photo-1551288049-bebda4e38f71.jpeg"
 startDate: "Sat Jun 05 2021 04:33:00 GMT+0000 (Coordinated Universal Time)"
 endDate: ""

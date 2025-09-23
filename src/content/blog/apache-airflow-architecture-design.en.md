@@ -2,7 +2,7 @@
 title: "Scalable ETL pipelines"
 description: "Significantly reduced infrastructure expenses in AWS"
 employer: "Next-e"
-thumbnail: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67d92dc6621095a7279c95d7_67d91797085b62e84594c222_portfolio%2520thumbnails-4.webp"
+thumbnail: "/assets/images/airflow.webp"
 banner: "https://cdn.prod.website-files.com/67c3a771f50ee86278e081b8/67cbe1da6e6df1b12e3845c7_67cbdb1089836af946d606fd_photo-1515879218367-8466d910aaa4.jpeg"
 startDate: "Tue Mar 08 2022 19:02:00 GMT+0000 (Coordinated Universal Time)"
 endDate: "Fri May 09 2025 17:00:00 GMT+0000 (Coordinated Universal Time)"
