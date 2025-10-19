@@ -119,9 +119,12 @@ const certifications: Certification[] = certificationsData.names ? Object.values
                           {t.hero.subtitle}
                         </p>
                         <div class="mt-8 stagger-animation stagger-1" data-anim="cta">
-                            <a href={`/${currentLocale}/#blog`}
+                            <a href={siteData.calendlyUrl}
                                class="inline-flex items-center rounded-lg bg-brand-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-brand-700 hover-glow focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 smooth-transition hover-lift"
-                               data-i18n-key="hero.cta">
+                               data-i18n-key="hero.cta"
+                               data-rum-id="schedule_call"
+                               onclick="if(window.recordRumEvent){window.recordRumEvent('cta_click', {button: 'schedule_call'});}"
+                            >
                               {t.hero.cta}
                                 <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
